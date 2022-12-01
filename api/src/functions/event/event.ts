@@ -1,8 +1,8 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
 import {
-  ActionType,
   Alarm,
   createEvent as _createEvent,
+  DateArray,
   DurationObject,
   EventAttributes,
 } from 'ics'
@@ -10,28 +10,45 @@ import { z } from 'zod'
 
 import { logger } from 'src/lib/logger'
 
-const Schema = z.object({
+const DateSchema = z
+  .string()
+  .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date' })
+  .transform((s) => new Date(s))
+
+export const UserSchema = z.object({
   title: z.string(),
   description: z.string(),
-  start: z.number().array().length(5).transform(castToFiveNumbers),
-  end: z.number().array().length(5).transform(castToFiveNumbers),
+  start: DateSchema,
+  end: DateSchema,
   alarms: z.string().optional(),
-  action: z.string().optional().transform(castToActionType),
 })
 
-function castToFiveNumbers(
-  ns: number[]
-): [number, number, number, number, number] {
-  if (ns.length !== 5) throw new Error(`Expected 5 numbers, got ${ns}`)
-  return ns as [number, number, number, number, number]
+export type UserSchema = z.infer<typeof UserSchema>
+
+export function convertToEvent(data: UserSchema): EventAttributes {
+  let alarms: Alarm[] = []
+  if (data.alarms)
+    alarms = parseDurations(data.alarms).map((duration) => ({
+      action: 'audio',
+      trigger: { ...duration, before: true },
+      description: data.title,
+    }))
+  return {
+    ...data,
+    alarms,
+    start: convertToDateArray(data.start),
+    end: convertToDateArray(data.end),
+  }
 }
 
-// export type ActionType = 'audio' | 'display' | 'email' | 'procedure' | undefined
-function castToActionType(s?: string): ActionType | undefined {
-  const valid = ['audio', 'display', 'email', 'procedure', undefined]
-  if (!valid.includes(s))
-    throw new Error(`Invalid action type: expected one of ${valid}, got ${s}`)
-  return s as ActionType | undefined
+function convertToDateArray(d: Date): DateArray {
+  return [
+    d.getUTCFullYear(),
+    d.getUTCMonth() + 1,
+    d.getUTCDate(),
+    d.getUTCHours(),
+    d.getUTCMinutes(),
+  ]
 }
 
 function parseUnit(
@@ -64,6 +81,10 @@ export function parseDuration(s: string): DurationObject {
     d[unit] = n
   }
   return d
+}
+
+export function parseDurations(s: string): DurationObject[] {
+  return s.split(',').map(parseDuration)
 }
 
 function createEvent(attrs: EventAttributes): Promise<string> {
@@ -111,14 +132,15 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   } catch (e) {
     return { statusCode: 400, body: e }
   }
-  const result = Schema.safeParse(body)
+  const result = UserSchema.safeParse(body)
   if (result.success === false) {
     return { statusCode: 400, body: result.error }
   }
 
-  let icsData: string
+  let icsStr: string
   try {
-    icsData = await createEvent(result.data)
+    const icsData = convertToEvent(result.data)
+    icsStr = await createEvent(icsData)
   } catch (e) {
     return { statusCode: 500, body: e }
   }
@@ -126,6 +148,6 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ event: icsData }),
+    body: JSON.stringify({ event: icsStr }),
   }
 }
