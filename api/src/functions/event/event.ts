@@ -8,8 +8,6 @@ import {
 } from 'ics'
 import { z } from 'zod'
 
-import { logger } from 'src/lib/logger'
-
 const DateSchema = z
   .string()
   .refine((s) => !isNaN(Date.parse(s)), { message: 'Invalid date' })
@@ -36,6 +34,10 @@ export function convertToEvent(data: UserSchema): EventAttributes {
   return {
     ...data,
     alarms,
+    startInputType: 'utc',
+    startOutputType: 'utc',
+    endInputType: 'utc',
+    endOutputType: 'utc',
     start: convertToDateArray(data.start),
     end: convertToDateArray(data.end),
   }
@@ -113,8 +115,6 @@ function createEvent(attrs: EventAttributes): Promise<string> {
  * function, and execution environment.
  */
 export const handler = async (event: APIGatewayEvent, _context: Context) => {
-  logger.info('Invoked event function')
-
   if (event.httpMethod !== 'POST') {
     return { statusCode: 405, body: 'Method not allowed' }
   }
@@ -138,8 +138,9 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
   }
 
   let icsStr: string
+  let icsData: EventAttributes
   try {
-    const icsData = convertToEvent(result.data)
+    icsData = convertToEvent(result.data)
     icsStr = await createEvent(icsData)
   } catch (e) {
     return { statusCode: 500, body: e }
@@ -147,7 +148,10 @@ export const handler = async (event: APIGatewayEvent, _context: Context) => {
 
   return {
     statusCode: 200,
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ event: icsStr }),
+    headers: {
+      'Content-Type': 'text/calendar',
+      'Content-Disposition': `attachment; filename="${icsData.title}.ics"`,
+    },
+    body: icsStr,
   }
 }
