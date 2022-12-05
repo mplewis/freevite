@@ -3636,13 +3636,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@popperjs/core@npm:^2.6.0":
-  version: 2.11.6
-  resolution: "@popperjs/core@npm:2.11.6"
-  checksum: 90b1361ab1a19cd351e482a88cb6cf13cf25973e20797bf9b97223e64b87bde8d9668ab2f33be24475e2a092d362ac256c361b16ea4e4ab5b21f2aeaef5f9bb7
-  languageName: node
-  linkType: hard
-
 "@prisma/client@npm:4.6.1":
   version: 4.6.1
   resolution: "@prisma/client@npm:4.6.1"
@@ -8500,15 +8493,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bootstrap@npm:^5.1.3":
-  version: 5.2.3
-  resolution: "bootstrap@npm:5.2.3"
-  peerDependencies:
-    "@popperjs/core": ^2.11.6
-  checksum: 3db5d1e1047fb17ee5b62d830597424179f9cffd2139a89e932ee6bb66b7ec5bdb519028ec07d633bb1926a7fea6c4b5625846478da272f6aacd74d4920dbeb9
-  languageName: node
-  linkType: hard
-
 "boxen@npm:5.1.2, boxen@npm:^5.1.2":
   version: 5.1.2
   resolution: "boxen@npm:5.1.2"
@@ -9168,44 +9152,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"chart.js@npm:^2.9.4":
-  version: 2.9.4
-  resolution: "chart.js@npm:2.9.4"
-  dependencies:
-    chartjs-color: ^2.1.0
-    moment: ^2.10.2
-  checksum: 59bef7f0fdb3a52c66a4ba9821285d90db59b8c45bfc1be328e09e2d712cca8d6a804a64a25f0f67d979e81c11bb4be894ce99248f425724873fe5c3dff75cc7
-  languageName: node
-  linkType: hard
-
-"chartjs-color-string@npm:^0.6.0":
-  version: 0.6.0
-  resolution: "chartjs-color-string@npm:0.6.0"
-  dependencies:
-    color-name: ^1.0.0
-  checksum: 09097db49b7de080e49593e1e9234101fb38574dfeb1e014d0bc0fcbeb306ae6d20f81eadc75e1eb3ba5242440a3a4bc7a0660f98b0900544d53a9a3c2c90351
-  languageName: node
-  linkType: hard
-
-"chartjs-color@npm:^2.1.0":
-  version: 2.4.1
-  resolution: "chartjs-color@npm:2.4.1"
-  dependencies:
-    chartjs-color-string: ^0.6.0
-    color-convert: ^1.9.3
-  checksum: a36a6d5975b592464aba3e9dcee342b2de77f110c88b1a75a791df24211bcaf782be3d61896a79a5ac55f5d3c8a26b7f6986db9bd8d340826bc759ecc43505bd
-  languageName: node
-  linkType: hard
-
-"chartjs-plugin-datalabels@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "chartjs-plugin-datalabels@npm:0.7.0"
-  peerDependencies:
-    chart.js: ">= 2.7.0 < 3"
-  checksum: 8e8b1db6f5a1e30dec6a9bdf726a8d3abcfd04b930733c9fee8b1370f960336bd588acd938b33e6c67acbc4c85d31252fe02be1e19165eba7ac0d90a010ffecf
-  languageName: node
-  linkType: hard
-
 "checkpoint-client@npm:1.1.21":
   version: 1.1.21
   resolution: "checkpoint-client@npm:1.1.21"
@@ -9546,7 +9492,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-convert@npm:^1.9.0, color-convert@npm:^1.9.3":
+"color-convert@npm:^1.9.0":
   version: 1.9.3
   resolution: "color-convert@npm:1.9.3"
   dependencies:
@@ -9571,7 +9517,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"color-name@npm:^1.0.0, color-name@npm:^1.1.4, color-name@npm:~1.1.4":
+"color-name@npm:^1.1.4, color-name@npm:~1.1.4":
   version: 1.1.4
   resolution: "color-name@npm:1.1.4"
   checksum: a1a3f914156960902f46f7f56bc62effc6c94e84b2cae157a526b1c1f74b677a47ec602bf68a61abfa2b42d15b7c5651c6dbe72a43af720bc588dff885b10f95
@@ -10497,13 +10443,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"custom-event-polyfill@npm:^1.0.7":
-  version: 1.0.7
-  resolution: "custom-event-polyfill@npm:1.0.7"
-  checksum: b73c90d646d78f4acdff5453fa0f165f6d5506e32d074ca57d27f2bb7d9412356dab8cec7c00a0956b069e4987a8546a2c2c4b866d155e9fc4c27d223a225b78
-  languageName: node
-  linkType: hard
-
 "cyclist@npm:^1.0.1":
   version: 1.0.1
   resolution: "cyclist@npm:1.0.1"
@@ -10848,15 +10787,6 @@ __metadata:
   dependencies:
     repeat-string: ^1.5.4
   checksum: 969c7f5a04fc3f8c52eb3b9db2fd4ba20b9b9ce56c5659ebf4cf93ba6c1be68b651665d053affbe99e76733cf7d134546cdd6be038af368f8365f42a646d5fb8
-  languageName: node
-  linkType: hard
-
-"detect-autofill@npm:^1.1.3":
-  version: 1.1.4
-  resolution: "detect-autofill@npm:1.1.4"
-  dependencies:
-    custom-event-polyfill: ^1.0.7
-  checksum: 2fa6e4821488790566c193b5bf984f48c1ac703cc9bfd8c0f3fe577ada291cbab71e43db8b673c9f5fb2245c4c433baf6dacaa22b6dfc26c2febc81c5ad77fc9
   languageName: node
   linkType: hard
 
@@ -17354,13 +17284,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"moment@npm:^2.10.2":
-  version: 2.29.4
-  resolution: "moment@npm:2.29.4"
-  checksum: 844c6f3ce42862ac9467c8ca4f5e48a00750078682cc5bda1bc0e50cc7ca88e2115a0f932d65a06e4a90e26cb78892be9b3ca3dd6546ca2c4d994cebb787fc2b
-  languageName: node
-  linkType: hard
-
 "move-concurrently@npm:^1.0.1":
   version: 1.0.1
   resolution: "move-concurrently@npm:1.0.1"
@@ -18637,13 +18560,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"perfect-scrollbar@npm:^1.5.0":
-  version: 1.5.5
-  resolution: "perfect-scrollbar@npm:1.5.5"
-  checksum: 10f0c3a1205328b22e232be4ee9f0e832e96fb5b6c524d1d04e11f97ad910018c1c0659af145e0ae0dc2b41e67a96df12787de5366ff5ba86034339071ca722b
-  languageName: node
-  linkType: hard
-
 "picocolors@npm:^0.2.1":
   version: 0.2.1
   resolution: "picocolors@npm:0.2.1"
@@ -18805,13 +18721,6 @@ __metadata:
   dependencies:
     "@babel/runtime": ^7.17.8
   checksum: 1d054d1fea18ac7d921ca91504ffcf1ef0f505eda6acbfec6e205a98ebfea80b658664995deb35907dabc5f75f287dc2894812503a8aed28285bb91f25cf7400
-  languageName: node
-  linkType: hard
-
-"popper.js@npm:^1.16.1":
-  version: 1.16.1
-  resolution: "popper.js@npm:1.16.1"
-  checksum: 1c1a826f757edb5b8c2049dfd7a9febf6ae1e9d0e51342fc715b49a0c1020fced250d26484619883651e097c5764bbcacd2f31496e3646027f079dd83e072681
   languageName: node
   linkType: hard
 
@@ -20736,10 +20645,8 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@redwoodjs/core": 3.5.0
-    "@tailwindcss/forms": ^0.5.3
     ics: ^2.41.0
     prettier-plugin-tailwindcss: ^0.2.0
-    tw-elements: ^1.0.0-alpha13
     zod: ^3.19.1
   languageName: unknown
   linkType: soft
@@ -22181,7 +22088,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tailwindcss@npm:^3.0.7, tailwindcss@npm:^3.2.4":
+"tailwindcss@npm:^3.2.4":
   version: 3.2.4
   resolution: "tailwindcss@npm:3.2.4"
   dependencies:
@@ -22841,23 +22748,6 @@ __metadata:
   version: 0.0.0
   resolution: "tty-browserify@npm:0.0.0"
   checksum: c0c68206565f1372e924d5cdeeff1a0d9cc729833f1da98c03d78be8f939e5f61a107bd0ab77d1ef6a47d62bb0e48b1081fbea273acf404959e22fd3891439c5
-  languageName: node
-  linkType: hard
-
-"tw-elements@npm:^1.0.0-alpha13":
-  version: 1.0.0-alpha9
-  resolution: "tw-elements@npm:1.0.0-alpha9"
-  dependencies:
-    "@popperjs/core": ^2.6.0
-    bootstrap: ^5.1.3
-    chart.js: ^2.9.4
-    chartjs-plugin-datalabels: ^0.7.0
-    deepmerge: ^4.2.2
-    detect-autofill: ^1.1.3
-    perfect-scrollbar: ^1.5.0
-    popper.js: ^1.16.1
-    tailwindcss: ^3.0.7
-  checksum: aa201f9cbe34d8ec846fb555b8722067240fb677f982511c1e4af5bcf7e832f6c7c03007e5a5b662f9e4f363e429077fb49cfdd917ca38cdadb7840b7ed4e61e
   languageName: node
   linkType: hard
 
@@ -23747,6 +23637,7 @@ __metadata:
     "@redwoodjs/forms": 3.5.0
     "@redwoodjs/router": 3.5.0
     "@redwoodjs/web": 3.5.0
+    "@tailwindcss/forms": ^0.5.3
     autoprefixer: ^10.4.13
     postcss: ^8.4.19
     postcss-loader: ^7.0.2
