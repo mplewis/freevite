@@ -13,6 +13,9 @@
     ]
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@redwoodjs/forms": "3.5.0",
     "@redwoodjs/router": "3.5.0",
     "@redwoodjs/web": "3.5.0",

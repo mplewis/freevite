@@ -2181,6 +2181,43 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@fortawesome/fontawesome-common-types@npm:6.2.1":
+  version: 6.2.1
+  resolution: "@fortawesome/fontawesome-common-types@npm:6.2.1"
+  checksum: c3201eb35cf33f202a165715482c9473450c57633d798c039bb7d4f0f8e48769b838457c1b1e75eaa08f2f416e43c2e5304fa76b285b327264badb5137ea6e7e
+  languageName: node
+  linkType: hard
+
+"@fortawesome/fontawesome-svg-core@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@fortawesome/fontawesome-svg-core@npm:6.2.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": 6.2.1
+  checksum: 495d799904326098ed96ca829c0404359ff0a058d3400f725dcab51b9a209eaa66d78b1515461c6423a6b94105419b685a4bf093bd63cddf847dbc866bec6f18
+  languageName: node
+  linkType: hard
+
+"@fortawesome/free-solid-svg-icons@npm:^6.2.1":
+  version: 6.2.1
+  resolution: "@fortawesome/free-solid-svg-icons@npm:6.2.1"
+  dependencies:
+    "@fortawesome/fontawesome-common-types": 6.2.1
+  checksum: 0fd465ee60ba8056dabc9aebc81c3f125fb50307dc1b7bd69401fce793fcd537a9977ff71c03fa78091e19fb77fb4b6e12a0436ff476edaa5ffe99bcd866708e
+  languageName: node
+  linkType: hard
+
+"@fortawesome/react-fontawesome@npm:^0.2.0":
+  version: 0.2.0
+  resolution: "@fortawesome/react-fontawesome@npm:0.2.0"
+  dependencies:
+    prop-types: ^15.8.1
+  peerDependencies:
+    "@fortawesome/fontawesome-svg-core": ~1 || ~6
+    react: ">=16.3"
+  checksum: cf1bd3840dfe1b39d2d5ee92ac49ba3aabad95d05dd6374368a5a1e5f140c8e497d11599290cb70afc6c856bb3228628269199e9659ce8f3132692a2d1e464a5
+  languageName: node
+  linkType: hard
+
 "@gar/promisify@npm:^1.0.1, @gar/promisify@npm:^1.1.3":
   version: 1.1.3
   resolution: "@gar/promisify@npm:1.1.3"
@@ -23634,6 +23671,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "web@workspace:web"
   dependencies:
+    "@fortawesome/fontawesome-svg-core": ^6.2.1
+    "@fortawesome/free-solid-svg-icons": ^6.2.1
+    "@fortawesome/react-fontawesome": ^0.2.0
     "@redwoodjs/forms": 3.5.0
     "@redwoodjs/router": 3.5.0
     "@redwoodjs/web": 3.5.0
