@@ -92,38 +92,41 @@ const EventForm = () => {
             <li key={i}>{msg}</li>
           ))}
         </ul>
-        <details style={{ cursor: 'pointer' }}>
-          <summary>How do I set reminders?</summary>
-          <p>
-            You can set one or more reminders to trigger with your event by
-            listing them here, separated by commas.
-          </p>
-          <p>
-            You can use the date units <strong>w</strong> for weeks,{' '}
-            <strong>d</strong> for days, <strong>h</strong> for hours,{' '}
-            <strong>m</strong> for minutes, and <strong>s</strong> for seconds.
-            This syntax is flexible and supports spelling out the full unit
-            names.
-          </p>
-          <p>
-            For example:
-            <ul>
-              <li>
-                <code>1w,1d</code> will set reminders for 1 week before and 1
-                day before
-              </li>
-              <li>
-                <code>2 hours, 15 minutes</code> will set reminders for 2 hours
-                before and 15 minutes before.
-              </li>
-            </ul>
-          </p>
-        </details>
+        <RemindersHelp />
       </label>
 
       <Submit>Save</Submit>
     </Form>
   )
 }
+
+const RemindersHelp = () => (
+  <details style={{ cursor: 'pointer' }}>
+    <summary>How do I set reminders?</summary>
+    <p>
+      You can set one or more reminders to trigger with your event by listing
+      them here, separated by commas.
+    </p>
+    <p>
+      You can use the date units <strong>w</strong> for weeks,{' '}
+      <strong>d</strong> for days, <strong>h</strong> for hours,{' '}
+      <strong>m</strong> for minutes, and <strong>s</strong> for seconds. This
+      syntax is flexible and supports spelling out the full unit names.
+    </p>
+    <p>
+      For example:
+      <ul>
+        <li>
+          <code>1w,1d</code> will set reminders for 1 week before and 1 day
+          before
+        </li>
+        <li>
+          <code>2 hours, 15 minutes</code> will set reminders for 2 hours before
+          and 15 minutes before.
+        </li>
+      </ul>
+    </p>
+  </details>
+)
 
 export default EventForm
