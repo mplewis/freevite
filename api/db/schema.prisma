@@ -18,6 +18,7 @@ model Event {
   expiresAt DateTime
   visible   Boolean  @default(false)
 
+  slug        String
   title       String
   description String
   start       DateTime
