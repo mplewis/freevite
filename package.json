@@ -24,6 +24,7 @@
   },
   "packageManager": "yarn@3.2.4",
   "dependencies": {
+    "dayjs": "^1.11.7",
     "ics": "^2.41.0",
     "zod": "^3.19.1"
   }

@@ -10526,6 +10526,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"dayjs@npm:^1.11.7":
+  version: 1.11.7
+  resolution: "dayjs@npm:1.11.7"
+  checksum: 41a54853c8b8bf0fa94a5559eec98b3e4d11b31af81a9558a159d40adeaafb1f3414e8c41a4e3277281d97687d8252f400015e1f715b47f8c24d88a9ebd43626
+  languageName: node
+  linkType: hard
+
 "debounce@npm:^1.2.0":
   version: 1.2.1
   resolution: "debounce@npm:1.2.1"
@@ -20682,6 +20689,7 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@redwoodjs/core": 3.5.0
+    dayjs: ^1.11.7
     ics: ^2.41.0
     prettier-plugin-tailwindcss: ^0.2.0
     zod: ^3.19.1
@@ -23679,6 +23687,7 @@ __metadata:
     "@redwoodjs/web": 3.5.0
     "@tailwindcss/forms": ^0.5.3
     autoprefixer: ^10.4.13
+    humanize-string: 2.1.0
     postcss: ^8.4.19
     postcss-loader: ^7.0.2
     prop-types: 15.8.1
