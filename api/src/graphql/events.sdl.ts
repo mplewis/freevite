@@ -7,6 +7,7 @@ export const schema = gql`
     confirmed: Boolean!
     expiresAt: DateTime!
     visible: Boolean!
+    slug: String!
     title: String!
     description: String!
     start: DateTime!
@@ -17,6 +18,8 @@ export const schema = gql`
   type Query {
     events: [Event!]! @requireAuth
     event(id: Int!): Event @requireAuth
+    eventBySlug(slug: String!): Event @requireAuth
+    eventByToken(token: String!): Event @requireAuth
   }
 
   input CreateEventInput {
@@ -24,6 +27,7 @@ export const schema = gql`
     confirmed: Boolean!
     expiresAt: DateTime!
     visible: Boolean!
+    slug: String!
     title: String!
     description: String!
     start: DateTime!
@@ -36,6 +40,7 @@ export const schema = gql`
     confirmed: Boolean
     expiresAt: DateTime
     visible: Boolean
+    slug: String
     title: String
     description: String
     start: DateTime

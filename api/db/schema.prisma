@@ -13,12 +13,12 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  token     String
+  token     String   @unique
   confirmed Boolean  @default(false)
   expiresAt DateTime
   visible   Boolean  @default(false)
 
-  slug        String
+  slug        String   @unique
   title       String
   description String
   start       DateTime

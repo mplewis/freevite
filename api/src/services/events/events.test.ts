@@ -25,22 +25,24 @@ describe('events', () => {
   scenario('creates a event', async () => {
     const result = await createEvent({
       input: {
-        token: 'String',
-        expiresAt: '2022-12-15T23:57:54.112Z',
+        token: 'String4965646',
+        expiresAt: '2022-12-16T23:11:00.415Z',
+        slug: 'String7145003',
         title: 'String',
         description: 'String',
-        start: '2022-12-15T23:57:54.112Z',
-        end: '2022-12-15T23:57:54.112Z',
+        start: '2022-12-16T23:11:00.415Z',
+        end: '2022-12-16T23:11:00.415Z',
         reminders: 'String',
       },
     })
 
-    expect(result.token).toEqual('String')
-    expect(result.expiresAt).toEqual(new Date('2022-12-15T23:57:54.112Z'))
+    expect(result.token).toEqual('String4965646')
+    expect(result.expiresAt).toEqual(new Date('2022-12-16T23:11:00.415Z'))
+    expect(result.slug).toEqual('String7145003')
     expect(result.title).toEqual('String')
     expect(result.description).toEqual('String')
-    expect(result.start).toEqual(new Date('2022-12-15T23:57:54.112Z'))
-    expect(result.end).toEqual(new Date('2022-12-15T23:57:54.112Z'))
+    expect(result.start).toEqual(new Date('2022-12-16T23:11:00.415Z'))
+    expect(result.end).toEqual(new Date('2022-12-16T23:11:00.415Z'))
     expect(result.reminders).toEqual('String')
   })
 
@@ -48,10 +50,10 @@ describe('events', () => {
     const original = (await event({ id: scenario.event.one.id })) as Event
     const result = await updateEvent({
       id: original.id,
-      input: { token: 'String2' },
+      input: { token: 'String99785112' },
     })
 
-    expect(result.token).toEqual('String2')
+    expect(result.token).toEqual('String99785112')
   })
 
   scenario('deletes a event', async (scenario: StandardScenario) => {

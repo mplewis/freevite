@@ -5,23 +5,25 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
   event: {
     one: {
       data: {
-        token: 'String',
-        expiresAt: '2022-12-15T23:57:54.122Z',
+        token: 'String434184',
+        expiresAt: '2022-12-16T23:11:00.447Z',
+        slug: 'String3338473',
         title: 'String',
         description: 'String',
-        start: '2022-12-15T23:57:54.122Z',
-        end: '2022-12-15T23:57:54.122Z',
+        start: '2022-12-16T23:11:00.447Z',
+        end: '2022-12-16T23:11:00.447Z',
         reminders: 'String',
       },
     },
     two: {
       data: {
-        token: 'String',
-        expiresAt: '2022-12-15T23:57:54.122Z',
+        token: 'String4016761',
+        expiresAt: '2022-12-16T23:11:00.447Z',
+        slug: 'String8862604',
         title: 'String',
         description: 'String',
-        start: '2022-12-15T23:57:54.122Z',
-        end: '2022-12-15T23:57:54.122Z',
+        start: '2022-12-16T23:11:00.447Z',
+        end: '2022-12-16T23:11:00.447Z',
         reminders: 'String',
       },
     },

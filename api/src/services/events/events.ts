@@ -12,6 +12,12 @@ export const event: QueryResolvers['event'] = ({ id }) => {
   })
 }
 
+export const eventBySlug: QueryResolvers['eventBySlug'] = ({ slug }) =>
+  db.event.findUnique({ where: { slug } })
+
+export const eventByToken: QueryResolvers['eventByToken'] = ({ token }) =>
+  db.event.findUnique({ where: { token } })
+
 export const createEvent: MutationResolvers['createEvent'] = ({ input }) => {
   return db.event.create({
     data: input,
