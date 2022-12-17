@@ -1,6 +1,9 @@
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
+import { ForbiddenError } from '@redwoodjs/graphql-server'
+
 import { db } from 'src/lib/db'
+import { checkVisibility } from 'src/lib/visibility'
 
 export const events: QueryResolvers['events'] = () => {
   return db.event.findMany()
@@ -12,8 +15,12 @@ export const event: QueryResolvers['event'] = ({ id }) => {
   })
 }
 
-export const eventBySlug: QueryResolvers['eventBySlug'] = ({ slug }) =>
-  db.event.findUnique({ where: { slug } })
+export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
+  const event = await db.event.findUnique({ where: { slug } })
+  if (!checkVisibility(event).visible)
+    throw new ForbiddenError('Event not found')
+  return event
+}
 
 export const eventByToken: QueryResolvers['eventByToken'] = ({ token }) =>
   db.event.findUnique({ where: { token } })
