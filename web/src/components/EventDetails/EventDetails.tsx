@@ -1,6 +1,11 @@
 import dayjs from 'dayjs'
+import relativeTime from 'dayjs/plugin/relativeTime'
+import utc from 'dayjs/plugin/utc'
 
 import Calendar from '../Calendar/Calendar'
+
+dayjs.extend(relativeTime)
+dayjs.extend(utc)
 
 interface Event {
   token: string
@@ -19,6 +24,12 @@ interface Props {
   event: Event
 }
 
+const relTime = (date: string) => {
+  const now = dayjs()
+  const d = dayjs(date)
+  return `${d.format('ddd MMM D, h:mm a')} (${now.to(d)})`
+}
+
 const EventDetails = ({ event }: Props) => {
   const { start } = event
   const s = dayjs(start)
@@ -28,13 +39,21 @@ const EventDetails = ({ event }: Props) => {
 
   return (
     <>
-      <div className="flex gap-4 prose">
+      <div className="flex gap-4">
         <div className="flex-initial">
           <Calendar month={month} day={day} time={time} />
         </div>
         <div>
           <h1>{event.title}</h1>
           <p>{event.description}</p>
+          <ul>
+            <li>
+              <strong>Start:</strong> {relTime(event.start)}
+            </li>
+            <li>
+              <strong>End:</strong> {relTime(event.end)}
+            </li>
+          </ul>
         </div>
       </div>
     </>

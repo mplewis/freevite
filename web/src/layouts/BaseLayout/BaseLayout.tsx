@@ -4,7 +4,9 @@ type BaseLayoutProps = {
 
 const BaseLayout = ({ children }: BaseLayoutProps) => {
   return (
-    <div className="container max-w-screen-md mx-auto my-4">{children}</div>
+    <div className="container mx-auto my-4 max-w-screen-md px-2">
+      {children}
+    </div>
   )
 }
 

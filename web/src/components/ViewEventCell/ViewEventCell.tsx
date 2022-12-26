@@ -1,9 +1,7 @@
-import dayjs from 'dayjs'
 import { ViewEventQuery } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
-import Calendar from '../Calendar/Calendar'
 import EventDetails from '../EventDetails/EventDetails'
 
 export const QUERY = gql`
