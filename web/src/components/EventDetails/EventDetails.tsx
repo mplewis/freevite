@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
 import ReactMarkdown from 'react-markdown'
@@ -7,6 +8,7 @@ import Calendar from '../Calendar/Calendar'
 
 dayjs.extend(relativeTime)
 dayjs.extend(utc)
+dayjs.extend(duration)
 
 interface Event {
   token: string
@@ -31,6 +33,10 @@ const relTime = (date: string) => {
   return `${d.format('ddd MMM D, h:mm a')} (${now.to(d)})`
 }
 
+const dur = (start: string, end: string) => {
+  return dayjs.duration(dayjs(end).diff(dayjs(start))).humanize()
+}
+
 const EventDetails = ({ event }: Props) => {
   const { start } = event
   const s = dayjs(start)
@@ -46,11 +52,6 @@ const EventDetails = ({ event }: Props) => {
         </div>
         <div>
           <h1>{event.title}</h1>
-          <div>
-            <ReactMarkdown linkTarget={'_blank'} allowedElements={['p', 'a']}>
-              {event.description}
-            </ReactMarkdown>
-          </div>
           <ul>
             <li>
               <strong>Start:</strong> {relTime(event.start)}
@@ -58,7 +59,15 @@ const EventDetails = ({ event }: Props) => {
             <li>
               <strong>End:</strong> {relTime(event.end)}
             </li>
+            <li>
+              <strong>Duration:</strong> {dur(event.start, event.end)}
+            </li>
           </ul>
+          <div>
+            <ReactMarkdown linkTarget={'_blank'} allowedElements={['p', 'a']}>
+              {event.description}
+            </ReactMarkdown>
+          </div>
         </div>
       </div>
     </>
