@@ -1,6 +1,7 @@
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
+import ReactMarkdown from 'react-markdown'
 
 import Calendar from '../Calendar/Calendar'
 
@@ -39,13 +40,17 @@ const EventDetails = ({ event }: Props) => {
 
   return (
     <>
-      <div className="flex gap-4">
+      <div className="prose flex gap-4">
         <div className="flex-initial">
           <Calendar month={month} day={day} time={time} />
         </div>
         <div>
           <h1>{event.title}</h1>
-          <p>{event.description}</p>
+          <div>
+            <ReactMarkdown linkTarget={'_blank'} allowedElements={['p', 'a']}>
+              {event.description}
+            </ReactMarkdown>
+          </div>
           <ul>
             <li>
               <strong>Start:</strong> {relTime(event.start)}
