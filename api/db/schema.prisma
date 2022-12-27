@@ -24,4 +24,5 @@ model Event {
   start       DateTime
   end         DateTime
   reminders   String
+  // TODO: location
 }
