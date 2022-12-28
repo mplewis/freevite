@@ -1,29 +1,12 @@
-import { Alarm, DateArray, EventAttributes } from 'ics'
+const rehypeFilter = import('react-markdown/lib/rehype-filter.js')
+const rehypeStringify = import('rehype-stringify')
+const remarkParse = import('remark-parse')
+const remarkRehype = import('remark-rehype')
+const Unified = import('unified')
 
-import { parseDurations } from './parse'
-import { UserSchema } from './types'
+import { DateArray } from 'ics'
 
-export function convertToEvent(data: UserSchema): EventAttributes {
-  let alarms: Alarm[] = []
-  if (data.alarms)
-    alarms = parseDurations(data.alarms).map((duration) => ({
-      action: 'audio',
-      trigger: { ...duration, before: true },
-      description: data.title,
-    }))
-  return {
-    ...data,
-    alarms,
-    startInputType: 'utc',
-    startOutputType: 'utc',
-    endInputType: 'utc',
-    endOutputType: 'utc',
-    start: convertToDateArray(data.start),
-    end: convertToDateArray(data.end),
-  }
-}
-
-function convertToDateArray(d: Date): DateArray {
+export function convertToDateArray(d: Date): DateArray {
   return [
     d.getUTCFullYear(),
     d.getUTCMonth() + 1,
@@ -31,4 +14,16 @@ function convertToDateArray(d: Date): DateArray {
     d.getUTCHours(),
     d.getUTCMinutes(),
   ]
+}
+
+export async function markdownToHTML(markdown: string): Promise<string> {
+  const allowedElements = ['a', 'p', 'ul', 'li', 'strong', 'em', 'hr', 'br']
+  const unified = (await Unified).unified
+  const v = await unified()
+    .use((await remarkParse).default)
+    .use((await remarkRehype).default)
+    .use((await rehypeStringify).default)
+    .use((await rehypeFilter).default, { allowedElements })
+    .process(markdown)
+  return String(v)
 }

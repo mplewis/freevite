@@ -1,6 +1,6 @@
 import { mockHttpEvent } from '@redwoodjs/testing/api'
 
-import { handler } from './downloadIcs'
+import { handler } from './ics'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-functions

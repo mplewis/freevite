@@ -4,11 +4,8 @@ import dayjs from 'dayjs'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import utc from 'dayjs/plugin/utc'
-import rehypeFilter from 'react-markdown/lib/rehype-filter'
-import rehypeStringify from 'rehype-stringify'
-import remarkParse from 'remark-parse'
-import remarkRehype from 'remark-rehype'
-import { unified } from 'unified'
+
+import { markdownToHTML } from 'src/lib/convert'
 
 import Calendar from '../Calendar/Calendar'
 
@@ -49,18 +46,6 @@ function toGcalDate(date: string) {
   return `${dayjs(date).utc().format(GCAL_DATE_FORMAT)}Z`
 }
 
-async function toHTML(markdown: string) {
-  const v = await unified()
-    .use(remarkParse)
-    .use(remarkRehype)
-    .use(rehypeStringify)
-    .use(rehypeFilter, {
-      allowedElements: ['a', 'p', 'ul', 'li', 'strong', 'em'],
-    })
-    .process(markdown)
-  return String(v)
-}
-
 function queryString(params: Record<string, string>) {
   return Object.entries(params)
     .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
@@ -84,7 +69,7 @@ const EventDetails = ({ event }: Props) => {
 
   const [html, setHtml] = useState('')
   useEffect(() => {
-    ;(async () => setHtml(await toHTML(event.description)))()
+    ;(async () => setHtml(await markdownToHTML(event.description)))()
   })
 
   const desc = (html: string) => (
