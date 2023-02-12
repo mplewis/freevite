@@ -1,7 +1,10 @@
-import { Link, routes } from '@redwoodjs/router'
+import { useParams } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import ViewEventByTokenCell from 'src/components/ViewEventByTokenCell'
+
 const EditEventPage = () => {
+  const { token } = useParams()
   return (
     <>
       <MetaTags title="EditEvent" description="EditEvent page" />
@@ -10,10 +13,8 @@ const EditEventPage = () => {
       <p>
         Find me in <code>./web/src/pages/EditEventPage/EditEventPage.tsx</code>
       </p>
-      <p>
-        My default route is named <code>editEvent</code>, link to me with `
-        <Link to={routes.editEvent()}>EditEvent</Link>`
-      </p>
+
+      <ViewEventByTokenCell token={token} />
     </>
   )
 }
