@@ -41,7 +41,7 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
   }
 }
 
-export const handler = async (e: APIGatewayEvent, _context: Context) => {
+export async function handler(e: APIGatewayEvent, _context: Context) {
   const slug = e.queryStringParameters?.event
   if (!slug) return { statusCode: 400, body: 'Missing event slug' }
   const event = await eventBySlug({ slug })

@@ -11,7 +11,8 @@ import dayjs from 'dayjs'
 
 const data: Prisma.EventCreateArgs['data'][] = [
   {
-    token: generateToken(),
+    editToken: generateToken(),
+    previewToken: generateToken(),
     confirmed: true,
     expiresAt: dayjs().add(3, 'day').toDate(),
     visible: true,

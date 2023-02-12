@@ -13,10 +13,11 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  token     String   @unique
-  confirmed Boolean  @default(false)
-  expiresAt DateTime
-  visible   Boolean  @default(false)
+  editToken    String   @unique
+  previewToken String   @unique
+  confirmed    Boolean  @default(false)
+  expiresAt    DateTime
+  visible      Boolean  @default(false)
 
   slug        String   @unique
   title       String

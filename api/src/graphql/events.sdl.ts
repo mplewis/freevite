@@ -3,8 +3,12 @@ export const schema = gql`
     id: Int!
     createdAt: DateTime!
     updatedAt: DateTime!
-    token: String!
+    editToken: String!
+    previewToken: String!
+
+    ownerEmail: String!
     confirmed: Boolean!
+
     expiresAt: DateTime!
     visible: Boolean!
     slug: String!
@@ -19,25 +23,16 @@ export const schema = gql`
     events: [Event!]! @requireAuth
     event(id: Int!): Event @requireAuth
     eventBySlug(slug: String!): Event @requireAuth
-    eventByToken(token: String!): Event @requireAuth
+    eventByEditToken(token: String!): Event @requireAuth
+    eventByPreviewToken(token: String!): Event @requireAuth
   }
 
   input CreateEventInput {
-    token: String!
-    confirmed: Boolean!
-    expiresAt: DateTime!
-    visible: Boolean!
-    slug: String!
+    ownerEmail: String!
     title: String!
-    description: String!
-    start: DateTime!
-    end: DateTime!
-    reminders: String!
   }
 
   input UpdateEventInput {
-    token: String
-    confirmed: Boolean
     expiresAt: DateTime
     visible: Boolean
     slug: String
