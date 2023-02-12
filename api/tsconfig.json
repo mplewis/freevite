@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "strict": true,
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "baseUrl": "./",
     "rootDirs": [
       "./src",

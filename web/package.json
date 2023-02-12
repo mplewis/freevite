@@ -13,25 +13,11 @@
     ]
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@redwoodjs/forms": "3.5.0",
-    "@redwoodjs/router": "3.5.0",
-    "@redwoodjs/web": "3.5.0",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.8",
-    "humanize-string": "2.1.0",
+    "@redwoodjs/forms": "4.1.2",
+    "@redwoodjs/router": "4.1.2",
+    "@redwoodjs/web": "4.1.2",
     "prop-types": "15.8.1",
     "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-markdown": "^8.0.4",
-    "rehype-stringify": "^9.0.3"
-  },
-  "devDependencies": {
-    "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.19",
-    "postcss-loader": "^7.0.2",
-    "tailwindcss": "^3.2.4"
+    "react-dom": "17.0.2"
   }
 }

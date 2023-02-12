@@ -7,20 +7,12 @@
 // 'src/pages/HomePage/HomePage.js'         -> HomePage
 // 'src/pages/Admin/BooksPage/BooksPage.js' -> AdminBooksPage
 
-import { Router, Route, Set } from '@redwoodjs/router'
-
-import BaseLayout from './layouts/BaseLayout/BaseLayout'
+import { Router, Route } from '@redwoodjs/router'
 
 const Routes = () => {
   return (
     <Router>
-      <Set wrap={BaseLayout}>
-        <Route notfound page={NotFoundPage} />
-        <Route path="/" page={HomePage} name="home" />
-        <Route path="/new" page={NewEventPage} name="newEvent" />
-        <Route path="/edit/{token}" page={EditEventPage} name="editEvent" />
-        <Route path="/e/{slug}" page={ViewEventPage} name="viewEvent" />
-      </Set>
+      <Route notfound page={NotFoundPage} />
     </Router>
   )
 }

@@ -8,9 +8,7 @@
     "pflannery.vscode-versionlens",
     "editorconfig.editorconfig",
     "prisma.prisma",
-    "graphql.vscode-graphql",
-    "csstools.postcss",
-    "bradlc.vscode-tailwindcss"
+    "graphql.vscode-graphql"
   ],
   "unwantedRecommendations": []
 }
