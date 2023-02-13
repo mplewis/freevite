@@ -1,0 +1,7 @@
+- [x] Home Page -> nav, etc.
+- [ ] Create Event Page -> Create Event Form
+- [x] Event Created Page
+- [ ] Edit Event Page -> Edit Event Cell -> Edit Event Form
+- [ ] Delete Event Page -> Delete Event Cell -> Delete Event Confirmation Component
+- [ ] Preview Event Page -> Preview Event Cell -> Show Event Component
+- [ ] View Event Page -> View Event Cell -> View Event Component
