@@ -6329,7 +6329,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/jest@npm:*, @types/jest@npm:29.4.0":
+"@types/jest@npm:*, @types/jest@npm:29.4.0, @types/jest@npm:^29.4.0":
   version: 29.4.0
   resolution: "@types/jest@npm:29.4.0"
   dependencies:
@@ -10887,6 +10887,13 @@ __metadata:
   version: 2.29.3
   resolution: "date-fns@npm:2.29.3"
   checksum: aa9128c876ef69a05988029d6aa3d7e5c47a1e978f18b77b48126683d1a2e6605a16c3f5293ca9f4ca790d0755b5061fcea5b469f097871cd53f6590a5c1adc4
+  languageName: node
+  linkType: hard
+
+"dayjs@npm:^1.11.7":
+  version: 1.11.7
+  resolution: "dayjs@npm:1.11.7"
+  checksum: 41a54853c8b8bf0fa94a5559eec98b3e4d11b31af81a9558a159d40adeaafb1f3414e8c41a4e3277281d97687d8252f400015e1f715b47f8c24d88a9ebd43626
   languageName: node
   linkType: hard
 
@@ -20753,6 +20760,8 @@ __metadata:
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
     "@redwoodjs/core": 4.1.2
+    "@types/jest": ^29.4.0
+    dayjs: ^1.11.7
   languageName: unknown
   linkType: soft
 
