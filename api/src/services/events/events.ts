@@ -1,6 +1,8 @@
 import dayjs from 'dayjs'
 import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
+import { validate } from '@redwoodjs/api'
+
 import { db } from 'src/lib/db'
 import { generateToken } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
@@ -30,8 +32,19 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
 
-export const createEvent: MutationResolvers['createEvent'] = ({ input }) =>
-  db.event.create({ data: { ...defaultEventParams(), ...input } })
+export const createEvent: MutationResolvers['createEvent'] = ({ input }) => {
+  console.log({ input })
+  validate(input.ownerEmail, 'email', { email: true })
+  validate(input.title, 'title', {
+    custom: {
+      with: () => {
+        if (input.title.trim().length === 0)
+          throw new Error('Title must not be blank')
+      },
+    },
+  })
+  return db.event.create({ data: { ...defaultEventParams(), ...input } })
+}
 
 export const updateEvent: MutationResolvers['updateEvent'] = ({
   editToken,

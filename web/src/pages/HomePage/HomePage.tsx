@@ -9,14 +9,7 @@ const HomePage = () => {
       <h1>HomePage</h1>
 
       <p>
-        <Link
-          to={routes.eventCreated({
-            title: 'My Cool Event',
-            email: 'user@example.com',
-          })}
-        >
-          EventCreated
-        </Link>
+        <Link to={routes.newEvent()}>NewEvent</Link>
       </p>
     </>
   )
