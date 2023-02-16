@@ -5,6 +5,7 @@
 - [ ] Delete Event Page -> Delete Event Cell -> Delete Event Confirmation Component
 - [ ] Preview Event Page -> Preview Event Cell -> Show Event Component
 - [ ] View Event Page -> View Event Cell -> View Event Component
-- [ ] Install Tailwind
-- [ ] Base layout
+- [x] Install Tailwind
+- [x] Base layout
 - [ ] Navbar
+- [ ] Not found page
