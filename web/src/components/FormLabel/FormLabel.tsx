@@ -11,7 +11,7 @@ const FormLabel = ({ name, text, children }: Props) => {
     <label className="block" htmlFor={name}>
       {text}
       {children}
-      <FieldError name={name} className="error block" />
+      <FieldError name={name} className="error block text-error" />
     </label>
   )
 }

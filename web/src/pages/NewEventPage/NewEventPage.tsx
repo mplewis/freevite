@@ -1,3 +1,4 @@
+import classNames from 'classnames'
 import {
   CreateEventMutation,
   CreateEventMutationVariables,
@@ -9,10 +10,9 @@ import { MetaTags, useMutation } from '@redwoodjs/web'
 
 import FormLabel from 'src/components/FormLabel/FormLabel'
 
-const fieldAttrs = {
-  className: 'block w-full',
-  errorClassName: 'error block',
-}
+const className = classNames('block', 'w-full')
+const errorClassName = classNames(className, 'error')
+const fieldAttrs = { className, errorClassName }
 
 interface FormValues {
   ownerEmail: string
@@ -59,7 +59,7 @@ const NewEventPage = () => {
         <FormLabel name="title" text="Title">
           <TextField
             name="title"
-            // validation={{ required: true }}
+            validation={{ required: true }}
             {...fieldAttrs}
           />
         </FormLabel>

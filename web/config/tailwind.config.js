@@ -2,7 +2,9 @@
 module.exports = {
   content: ['src/**/*.{js,jsx,ts,tsx}'],
   theme: {
-    extend: {},
+    colors: {
+      error: '#e74c3c',
+    },
   },
   plugins: [require('@tailwindcss/forms'), require('@tailwindcss/typography')],
 }

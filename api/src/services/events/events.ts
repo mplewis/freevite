@@ -32,8 +32,9 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
 
-export const createEvent: MutationResolvers['createEvent'] = ({ input }) => {
-  console.log({ input })
+export const createEvent: MutationResolvers['createEvent'] = async ({
+  input,
+}) => {
   validate(input.ownerEmail, 'email', { email: true })
   validate(input.title, 'title', {
     custom: {
@@ -43,6 +44,8 @@ export const createEvent: MutationResolvers['createEvent'] = ({ input }) => {
       },
     },
   })
+  // wait for 1 second
+  await new Promise((resolve) => setTimeout(resolve, 1000))
   return db.event.create({ data: { ...defaultEventParams(), ...input } })
 }
 
