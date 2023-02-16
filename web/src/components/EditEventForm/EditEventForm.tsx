@@ -1,24 +1,31 @@
+import dayjs from 'dayjs'
+import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
 } from 'types/graphql'
 
 import {
+  Controller,
   Form,
   FormError,
-  InputField,
   Submit,
   TextAreaField,
   TextField,
+  DatetimeLocalField,
+  useForm,
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 
 import { fieldAttrs } from 'src/classes'
 import FormLabel from 'src/components/FormLabel/FormLabel'
 
+dayjs.extend(utc)
+dayjs.extend(timezone)
+
 export type Props = {
-  editToken: string
-  data: FormValues
+  event: FormValues
 }
 
 interface FormValues {
@@ -48,7 +55,22 @@ const UPDATE_EVENT = gql`
   }
 `
 
-const EditEventForm = () => {
+const EditEventForm = ({ event }: Props) => {
+  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+  // const tzPretty = tz.replace(/_/g, ' ')
+  const toLocal = (d: string) => dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
+  const toUTC = (d: string) => dayjs.tz(d, tz).utc().toISOString()
+
+  const { editToken } = event
+
+  const { control } = useForm({
+    defaultValues: {
+      ...event,
+      start: toLocal(event.start),
+      end: toLocal(event.end),
+    },
+  })
+
   const [save, { loading, error }] = useMutation<
     UpdateEventMutation,
     UpdateEventMutationVariables
@@ -58,63 +80,96 @@ const EditEventForm = () => {
     },
   })
 
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone.replace('_', ' ')
-  // const [alarms, setAlarms] = useState([] as Alarm[])
-  // const alarmMsgs = alarms.map((a) => alarmToString(a))
-
   return (
     <Form
       onSubmit={(input: FormValues) =>
-        save({ variables: { editToken, input } })
+        save({
+          variables: {
+            editToken,
+            input: {
+              ...input,
+              start: toUTC(input.start),
+              end: toUTC(input.end),
+            },
+          },
+        })
       }
     >
       <FormError error={error} wrapperClassName="form-error" />
 
-      <FormLabel name="title" text="Title">
-        <TextField
-          name="title"
-          validation={{ required: true }}
-          {...fieldAttrs}
-        />
-      </FormLabel>
+      <Controller
+        control={control}
+        name="title"
+        render={({ field }) => {
+          return (
+            <FormLabel name="title" text="Title">
+              <TextField
+                name="title"
+                validation={{ required: true }}
+                onChange={field.onChange}
+                value={field.value}
+                {...fieldAttrs}
+              />
+            </FormLabel>
+          )
+        }}
+      />
 
-      <FormLabel name="description" text="Description">
-        <TextAreaField
-          name="description"
-          validation={{ required: true }}
-          rows={4}
-          {...fieldAttrs}
-        />
-      </FormLabel>
+      <div>Timezone: {tz}</div>
+      <Controller
+        control={control}
+        name="start"
+        render={({ field }) => {
+          return (
+            <FormLabel name="start" text="Start">
+              <DatetimeLocalField
+                name="start"
+                validation={{ required: true }}
+                onChange={field.onChange}
+                value={field.value}
+                {...fieldAttrs}
+              />
+            </FormLabel>
+          )
+        }}
+      />
 
-      <FormLabel name="start" text="Start">
-        <InputField
-          type="datetime-local"
-          name="start"
-          validation={{ required: true }}
-          {...fieldAttrs}
-        />
-        <span className="ml-3">Timezone: {tz}</span>
-      </FormLabel>
+      <Controller
+        control={control}
+        name="end"
+        render={({ field }) => {
+          return (
+            <FormLabel name="end" text="End">
+              <DatetimeLocalField
+                name="end"
+                validation={{ required: true }}
+                onChange={field.onChange}
+                value={field.value}
+                {...fieldAttrs}
+              />
+            </FormLabel>
+          )
+        }}
+      />
 
-      <FormLabel name="end" text="End">
-        <InputField
-          type="datetime-local"
-          name="end"
-          validation={{ required: true }}
-          {...fieldAttrs}
-        />
-        <span className="ml-3">Timezone: {tz}</span>
-      </FormLabel>
-
-      {/* <FormLabel name="reminders" text="Reminders">
-          <TextField name="reminders" {...fieldAttrs} />
-          <ul>
-            {alarmMsgs.map((msg, i) => (
-              <li key={i}>{msg}</li>
-            ))}
-          </ul>
-        </FormLabel> */}
+      <Controller
+        control={control}
+        name="description"
+        render={({ field }) => {
+          return (
+            <FormLabel name="description" text="Description">
+              <TextAreaField
+                name="description"
+                validation={{ required: true }}
+                rows={4}
+                onChange={field.onChange}
+                value={field.value}
+                {...fieldAttrs}
+              />
+            </FormLabel>
+          )
+        }}
+      />
 
       <Submit disabled={loading}>Save</Submit>
     </Form>

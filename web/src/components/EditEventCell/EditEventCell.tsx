@@ -5,9 +5,12 @@ import type {
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import EditEventForm from '../EditEventForm/EditEventForm'
+
 export const QUERY = gql`
   query FindEditEventQuery($editToken: String!) {
     event: eventByEditToken(editToken: $editToken) {
+      editToken
       expiresAt
       visible
       slug
@@ -33,5 +36,5 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindEditEventQuery, FindEditEventQueryVariables>) => {
-  return <div>{JSON.stringify(event)}</div>
+  return <EditEventForm event={event} />
 }
