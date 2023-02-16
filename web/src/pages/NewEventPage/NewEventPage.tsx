@@ -1,18 +1,20 @@
-import classNames from 'classnames'
 import {
   CreateEventMutation,
   CreateEventMutationVariables,
 } from 'types/graphql'
 
-import { Form, TextField, EmailField, FormError } from '@redwoodjs/forms'
+import {
+  Form,
+  TextField,
+  EmailField,
+  FormError,
+  Submit,
+} from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 
+import { fieldAttrs } from 'src/classes'
 import FormLabel from 'src/components/FormLabel/FormLabel'
-
-const className = classNames('block', 'w-full')
-const errorClassName = classNames(className, 'error')
-const fieldAttrs = { className, errorClassName }
 
 interface FormValues {
   ownerEmail: string
@@ -64,9 +66,7 @@ const NewEventPage = () => {
           />
         </FormLabel>
 
-        <button type="submit" disabled={loading}>
-          Submit
-        </button>
+        <Submit disabled={loading}>Submit</Submit>
       </Form>
     </>
   )

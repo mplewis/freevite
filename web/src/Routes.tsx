@@ -14,6 +14,7 @@ import BaseLayout from './layouts/BaseLayout/BaseLayout'
 const Routes = () => {
   return (
     <Router>
+      <Route path="/edit-event" page={EditEventPage} name="editEvent" />
       <Set wrap={BaseLayout}>
         <Route path="/" page={HomePage} name="home" />
         <Route path="/new" page={NewEventPage} name="newEvent" />
