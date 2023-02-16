@@ -57,7 +57,7 @@ const UPDATE_EVENT = gql`
 
 const EditEventForm = ({ event }: Props) => {
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  // const tzPretty = tz.replace(/_/g, ' ')
+  const tzPretty = tz.replace(/_/g, ' ')
   const toLocal = (d: string) => dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
   const toUTC = (d: string) => dayjs.tz(d, tz).utc().toISOString()
 
@@ -71,7 +71,7 @@ const EditEventForm = ({ event }: Props) => {
     },
   })
 
-  const [save, { loading, error }] = useMutation<
+  const [_save, { loading, error }] = useMutation<
     UpdateEventMutation,
     UpdateEventMutationVariables
   >(UPDATE_EVENT, {
@@ -80,21 +80,17 @@ const EditEventForm = ({ event }: Props) => {
     },
   })
 
+  function save(input: FormValues) {
+    input = {
+      ...input,
+      start: toUTC(input.start),
+      end: toUTC(input.end),
+    }
+    _save({ variables: { editToken, input } })
+  }
+
   return (
-    <Form
-      onSubmit={(input: FormValues) =>
-        save({
-          variables: {
-            editToken,
-            input: {
-              ...input,
-              start: toUTC(input.start),
-              end: toUTC(input.end),
-            },
-          },
-        })
-      }
-    >
+    <Form onSubmit={save}>
       <FormError error={error} wrapperClassName="form-error" />
 
       <Controller
@@ -115,7 +111,7 @@ const EditEventForm = ({ event }: Props) => {
         }}
       />
 
-      <div>Timezone: {tz}</div>
+      <div>Timezone: {tzPretty}</div>
       <Controller
         control={control}
         name="start"
