@@ -22,4 +22,4 @@ api/src/lib/generateGraphiQLHeader.*
 coverage
 
 # legacy code worktree
-old
+_old
