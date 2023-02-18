@@ -12,13 +12,12 @@ import {
   FormError,
   Submit,
   useForm,
-  Controller,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
-import { emailMatcher, isEmail } from 'src/logic/validations'
+import { isEmail } from 'src/logic/validations'
 import { fieldAttrs } from 'src/style/classes'
 
 interface FormValues {
@@ -36,10 +35,8 @@ const CREATE_EVENT = gql`
 `
 
 const NewEventPage = () => {
-  const formMethods = useForm({
-    defaultValues: { ownerEmail: '', title: '' },
-  })
-  const { control, formState, watch } = formMethods
+  const formMethods = useForm({ defaultValues: { ownerEmail: '', title: '' } })
+  const { formState, watch } = formMethods
 
   watch((values) => {
     console.log(values)
@@ -69,37 +66,21 @@ const NewEventPage = () => {
         formMethods={formMethods}
         onSubmit={(input: FormValues) => create({ variables: { input } })}
       >
-        <Controller
-          control={control}
-          name="ownerEmail"
-          render={({ field }) => (
-            <FormField name="ownerEmail" text="Email Address">
-              <EmailField
-                name="ownerEmail"
-                validation={{ ...isEmail }}
-                onChange={field.onChange}
-                value={field.value}
-                {...fieldAttrs.input}
-              />
-            </FormField>
-          )}
-        />
+        <FormField name="ownerEmail" text="Email Address">
+          <EmailField
+            name="ownerEmail"
+            validation={{ ...isEmail }}
+            {...fieldAttrs.input}
+          />
+        </FormField>
 
-        <Controller
-          control={control}
-          name="title"
-          render={({ field }) => (
-            <FormField name="title" text="Title">
-              <TextField
-                name="title"
-                validation={{ required: true }}
-                onChange={field.onChange}
-                value={field.value}
-                {...fieldAttrs.input}
-              />
-            </FormField>
-          )}
-        />
+        <FormField name="title" text="Title">
+          <TextField
+            name="title"
+            validation={{ required: true }}
+            {...fieldAttrs.input}
+          />
+        </FormField>
 
         <Submit
           className="button is-primary"

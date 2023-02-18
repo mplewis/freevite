@@ -7,7 +7,6 @@ import {
 } from 'types/graphql'
 
 import {
-  Controller,
   Form,
   FormError,
   Submit,
@@ -18,17 +17,17 @@ import {
 } from '@redwoodjs/forms'
 import { useMutation } from '@redwoodjs/web'
 
-import { fieldAttrs } from 'src/style/classes'
 import FormField from 'src/components/FormField/FormField'
+import { fieldAttrs } from 'src/style/classes'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
 export type Props = {
-  event: FormValues
+  event: Event
 }
 
-interface FormValues {
+interface Event {
   editToken: string
   expiresAt: string
   visible: boolean
@@ -38,6 +37,10 @@ interface FormValues {
   start: string
   end: string
   reminders: string
+}
+
+interface State extends Event {
+  __typename: string
 }
 
 const UPDATE_EVENT = gql`
@@ -63,21 +66,24 @@ const EditEventForm = ({ event }: Props) => {
   const toLocal = (d: string) => dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
   const toUTC = (d: string) => dayjs.tz(d, tz).utc().toISOString()
 
-  const eventToState = (e: FormValues) => ({
+  const eventToState = (e: Event) => ({
     ...e,
     start: toLocal(e.start),
     end: toLocal(e.end),
   })
-  const stateToEvent = (s: FormValues) => ({
-    ...s,
-    start: toUTC(s.start),
-    end: toUTC(s.end),
-  })
+  const stateToEvent = (s: State) => {
+    const e = {
+      ...s,
+      start: toUTC(s.start),
+      end: toUTC(s.end),
+    }
+    delete e.editToken
+    delete e.__typename
+    return e
+  }
 
-  const formMethods = useForm({
-    defaultValues: eventToState(event),
-  })
-  const { control, formState, reset } = formMethods
+  const formMethods = useForm({ defaultValues: eventToState(event) })
+  const { formState, reset } = formMethods
 
   const [save, { loading, error }] = useMutation<
     UpdateEventMutation,
@@ -92,77 +98,45 @@ const EditEventForm = ({ event }: Props) => {
   return (
     <Form
       formMethods={formMethods}
-      onSubmit={(data: FormValues) =>
+      onSubmit={(data: State) =>
         save({ variables: { editToken, input: stateToEvent(data) } })
       }
     >
-      <Controller
-        control={control}
-        name="title"
-        render={({ field }) => (
-          <FormField name="title" text="Title">
-            <TextField
-              name="title"
-              validation={{ required: true }}
-              onChange={field.onChange}
-              value={field.value}
-              {...fieldAttrs.input}
-            />
-          </FormField>
-        )}
-      />
+      <FormField name="title" text="Title">
+        <TextField
+          name="title"
+          validation={{ required: true }}
+          {...fieldAttrs.input}
+        />
+      </FormField>
 
       <div className="is-italic mb-3">
         Start/end times are in your local timezone, <strong>{tzPretty}</strong>
       </div>
-      <Controller
-        control={control}
-        name="start"
-        render={({ field }) => (
-          <FormField name="start" text="Start">
-            <DatetimeLocalField
-              name="start"
-              validation={{ required: true }}
-              onChange={field.onChange}
-              value={field.value}
-              {...fieldAttrs.input}
-            />
-          </FormField>
-        )}
-      />
+      <FormField name="start" text="Start">
+        <DatetimeLocalField
+          name="start"
+          validation={{ required: true }}
+          {...fieldAttrs.input}
+        />
+      </FormField>
 
-      <Controller
-        control={control}
-        name="end"
-        render={({ field }) => (
-          <FormField name="end" text="End">
-            <DatetimeLocalField
-              name="end"
-              validation={{ required: true }}
-              onChange={field.onChange}
-              value={field.value}
-              {...fieldAttrs.input}
-            />
-          </FormField>
-        )}
-      />
+      <FormField name="end" text="End">
+        <DatetimeLocalField
+          name="end"
+          validation={{ required: true }}
+          {...fieldAttrs.input}
+        />
+      </FormField>
 
-      <Controller
-        control={control}
-        name="description"
-        render={({ field }) => (
-          <FormField name="description" text="Description">
-            <TextAreaField
-              name="description"
-              validation={{ required: true }}
-              rows={8}
-              onChange={field.onChange}
-              value={field.value}
-              {...fieldAttrs.textarea}
-            />
-          </FormField>
-        )}
-      />
+      <FormField name="description" text="Description">
+        <TextAreaField
+          name="description"
+          validation={{ required: true }}
+          rows={8}
+          {...fieldAttrs.textarea}
+        />
+      </FormField>
 
       <Submit
         className="button is-primary"
