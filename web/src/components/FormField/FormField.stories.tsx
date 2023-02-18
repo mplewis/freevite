@@ -13,13 +13,13 @@
 
 import type { ComponentMeta } from '@storybook/react'
 
-import FormLabel from './FormLabel'
+import FormField from './FormField'
 
 export const generated = () => {
-  return <FormLabel />
+  return <FormField />
 }
 
 export default {
   title: 'Components/FormLabel',
-  component: FormLabel,
-} as ComponentMeta<typeof FormLabel>
+  component: FormField,
+} as ComponentMeta<typeof FormField>

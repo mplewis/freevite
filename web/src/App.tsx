@@ -4,7 +4,7 @@ import { RedwoodApolloProvider } from '@redwoodjs/web/apollo'
 import FatalErrorPage from 'src/pages/FatalErrorPage'
 import Routes from 'src/Routes'
 
-import './index.css'
+import './index.scss'
 
 const App = () => (
   <FatalErrorBoundary page={FatalErrorPage}>

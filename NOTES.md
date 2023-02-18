@@ -9,3 +9,4 @@
 - [x] Base layout
 - [ ] Navbar
 - [ ] Not found page
+- [x] Replace Tailwind with Bulma

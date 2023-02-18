@@ -24,6 +24,8 @@
   },
   "packageManager": "yarn@3.4.1",
   "dependencies": {
-    "dayjs": "^1.11.7"
+    "dayjs": "^1.11.7",
+    "remeda": "^1.6.2",
+    "type-fest": "^3.6.0"
   }
 }

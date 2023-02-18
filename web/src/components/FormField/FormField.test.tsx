@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import FormLabel from './FormLabel'
+import FormField from './FormField'
 
 //   Improve this test with help from the Redwood Testing Doc:
 //    https://redwoodjs.com/docs/testing#testing-components
@@ -8,7 +8,7 @@ import FormLabel from './FormLabel'
 describe('FormLabel', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<FormLabel />)
+      render(<FormField />)
     }).not.toThrow()
   })
 })
