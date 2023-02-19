@@ -1,6 +1,8 @@
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
+  DeleteEventMutation,
+  DeleteEventMutationVariables,
 } from 'types/graphql'
 
 import {
@@ -14,7 +16,7 @@ import {
   FieldError,
   CheckboxField,
 } from '@redwoodjs/forms'
-import { Link, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
@@ -56,6 +58,14 @@ const UPDATE_EVENT = gql`
   }
 `
 
+const DELETE_EVENT = gql`
+  mutation DeleteEventMutation($editToken: String!) {
+    deleteEvent(editToken: $editToken) {
+      id
+    }
+  }
+`
+
 function eventToState(e: Event): Event {
   return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
 }
@@ -81,6 +91,31 @@ const EditEventForm = (props: Props) => {
     refetchQueries: [{ query: QUERY, variables: { editToken } }],
     awaitRefetchQueries: true,
   })
+
+  const [destroy] = useMutation<
+    DeleteEventMutation,
+    DeleteEventMutationVariables
+  >(DELETE_EVENT, {
+    onCompleted: () => {
+      alert('Event deleted.')
+      navigate(routes.home())
+    },
+    onError: (error) => {
+      alert(`Sorry, something went wrong:\n${error}`)
+    },
+  })
+
+  const promptDestroy = () => {
+    const resp = prompt(
+      `Warning! You are about to permanently delete the event "${event.title}". This action cannot be undone. To confirm, type "DELETE":`
+    )
+    if (resp === null) return
+    if (resp !== 'DELETE') {
+      alert('Confirmation failed. Event was not deleted.')
+      return
+    }
+    destroy({ variables: { editToken } })
+  }
 
   let savable = true
   if (loading) savable = false
@@ -191,6 +226,11 @@ const EditEventForm = (props: Props) => {
           Save Changes
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
+        <div className="mt-3">
+          <button className="button is-danger" onClick={promptDestroy}>
+            Delete Event
+          </button>
+        </div>
       </Form>
     </>
   )

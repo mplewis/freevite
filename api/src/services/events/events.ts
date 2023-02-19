@@ -28,6 +28,7 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   editToken,
 }) => {
   const event = await db.event.findUnique({ where: { editToken } })
+  if (!event) return null
   if (!event.confirmed)
     await db.event.update({ where: { editToken }, data: { confirmed: true } })
   return event

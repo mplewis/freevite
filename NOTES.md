@@ -2,7 +2,7 @@
 - [x] Create Event Page -> Create Event Form
 - [x] Event Created Page
 - [x] Edit Event Page -> Edit Event Cell -> Edit Event Form
-- [ ] Delete Event Page -> Delete Event Cell -> Delete Event Confirmation Component
+- [x] Delete Event button
 - [x] Preview Event Page -> Preview Event Cell -> Show Event Component
 - [ ] View Event Page -> View Event Cell -> View Event Component
 - [x] Install Tailwind
@@ -10,7 +10,8 @@
 - [ ] Navbar
 - [ ] Not found page
 - [x] Replace Tailwind with Bulma
-- [ ] Edit: expiry, visible field
+- [x] Edit: expiry, visible field
 - [x] Confirm event on first edit click
 - [ ] Delete reminders
 - [ ] Job to delete expired events
+- [ ] Send email
