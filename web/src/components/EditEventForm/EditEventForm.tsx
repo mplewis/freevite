@@ -18,7 +18,7 @@ import {
 import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
-import { fieldAttrs, formErrorAttrs } from 'src/style/classes'
+import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)

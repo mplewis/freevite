@@ -17,8 +17,8 @@ import { navigate, routes } from '@redwoodjs/router'
 import { MetaTags, useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
-import { isEmail } from 'src/logic/validations'
-import { fieldAttrs, formErrorAttrs } from 'src/style/classes'
+import { isEmail } from 'src/logic/validation'
+import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 interface FormValues {
   ownerEmail: string

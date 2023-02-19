@@ -10,3 +10,6 @@
 - [ ] Navbar
 - [ ] Not found page
 - [x] Replace Tailwind with Bulma
+- [ ] Edit: expiry, visible field
+- [ ] Confirm event on first edit click
+- [ ] Delete reminders

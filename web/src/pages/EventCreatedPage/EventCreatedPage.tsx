@@ -1,13 +1,9 @@
-import { useLocation } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-import { parseQueryString } from 'src/url'
+import { queryValues } from 'src/logic/path'
 
 const EventCreatedPage = () => {
-  const { search } = useLocation()
-  const [query] = React.useState(search)
-  const queryPairs = parseQueryString(query)
-  const { title, email } = queryPairs
+  const { title, email } = queryValues()
 
   return (
     <>
