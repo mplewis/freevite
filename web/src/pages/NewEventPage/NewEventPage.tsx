@@ -18,7 +18,7 @@ import { MetaTags, useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
 import { isEmail } from 'src/logic/validations'
-import { fieldAttrs } from 'src/style/classes'
+import { fieldAttrs, formErrorAttrs } from 'src/style/classes'
 
 interface FormValues {
   ownerEmail: string
@@ -86,7 +86,7 @@ const NewEventPage = () => {
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}
         </Submit>
-        <FormError error={error} wrapperClassName="form-error" />
+        <FormError error={error} {...formErrorAttrs} />
       </Form>
     </>
   )

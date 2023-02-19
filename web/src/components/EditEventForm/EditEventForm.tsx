@@ -18,7 +18,7 @@ import {
 import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
-import { fieldAttrs } from 'src/style/classes'
+import { fieldAttrs, formErrorAttrs } from 'src/style/classes'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
@@ -153,7 +153,7 @@ const EditEventForm = ({ event }: Props) => {
       >
         Save Changes
       </Submit>
-      <FormError error={error} wrapperClassName="form-error has-text-danger" />
+      <FormError error={error} {...formErrorAttrs} />
     </Form>
   )
 }

@@ -17,3 +17,7 @@ export const fieldAttrs = R.mapToObj(
     },
   ]
 )
+
+export const formErrorAttrs = {
+  wrapperClassName: classNames('has-text-weight-bold', 'has-text-danger'),
+}
