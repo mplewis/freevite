@@ -1,3 +1,5 @@
+import { useEffect } from 'react'
+
 import dayjs from 'dayjs'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
@@ -14,7 +16,10 @@ import {
   TextField,
   DatetimeLocalField,
   useForm,
+  Controller,
+  FieldError,
 } from '@redwoodjs/forms'
+import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
@@ -24,10 +29,10 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 
 export type Props = {
-  event: EventProp
+  event: EventWithTokens
 }
 
-interface Event {
+type Event = {
   expiresAt: string
   visible: boolean
   slug: string
@@ -38,13 +43,9 @@ interface Event {
   reminders: string
 }
 
-interface EventProp extends Event {
+type EventWithTokens = Event & {
   editToken: string
   previewToken: string
-}
-
-interface State extends Event {
-  __typename: string
 }
 
 const UPDATE_EVENT = gql`
@@ -62,31 +63,25 @@ const UPDATE_EVENT = gql`
   }
 `
 
-const EditEventForm = ({ event }: Props) => {
-  const { editToken } = event
-  event = { ...event }
-  delete event.editToken
-  delete event.previewToken
+const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
+const tzPretty = tz.replace(/_/g, ' ')
 
-  const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-  const tzPretty = tz.replace(/_/g, ' ')
-  const toLocal = (d: string) => dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
-  const toUTC = (d: string) => dayjs.tz(d, tz).utc().toISOString()
+function toLocal(d: string | Date): string {
+  return dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
+}
+function toUTC(d: string | Date): string {
+  return dayjs.tz(d, tz).utc().toISOString()
+}
 
-  const eventToState = (e: Event) => ({
-    ...e,
-    start: toLocal(e.start),
-    end: toLocal(e.end),
-  })
-  const stateToEvent = (s: State) => {
-    const e = {
-      ...s,
-      start: toUTC(s.start),
-      end: toUTC(s.end),
-    }
-    delete e.__typename
-    return e
-  }
+function eventToState(e: Event): Event {
+  return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
+}
+function stateToEvent(s: Event): Event {
+  return { ...s, start: toUTC(s.start), end: toUTC(s.end) }
+}
+
+const EditEventForm = (props: Props) => {
+  const { editToken, previewToken, ...event } = props.event
 
   const formMethods = useForm({
     mode: 'all',
@@ -98,69 +93,112 @@ const EditEventForm = ({ event }: Props) => {
     UpdateEventMutation,
     UpdateEventMutationVariables
   >(UPDATE_EVENT, {
-    onCompleted: (data) => {
-      reset(eventToState({ ...data.updateEvent }))
+    onCompleted: () => {
+      reset(null, { keepValues: true })
       console.log('Saved') // TODO: toast?
     },
   })
 
+  let savable = true
+  if (loading) savable = false
+  if (!formState.isDirty) savable = false
+  if (!formState.isValid) savable = false
+
   return (
-    <Form
-      formMethods={formMethods}
-      onSubmit={(state: State) =>
-        save({ variables: { editToken, input: stateToEvent(state) } })
-      }
-    >
-      <FormField name="title" text="Title">
-        <TextField
-          name="title"
-          validation={{ required: true }}
-          {...fieldAttrs.input}
-        />
-      </FormField>
+    <>
+      <p className="mt-3">
+        {formState.isDirty ? (
+          <button className="button" disabled>
+            To preview, save your changes &raquo;
+          </button>
+        ) : (
+          <Link
+            to={routes.previewEvent({ token: previewToken })}
+            className="button"
+          >
+            Preview this event &raquo;{' '}
+          </Link>
+        )}
+      </p>
 
-      <div className="is-italic mb-3">
-        Start/end times are in your local timezone, <strong>{tzPretty}</strong>
-      </div>
-      <FormField name="start" text="Start">
-        <DatetimeLocalField
+      <hr />
+
+      <Form
+        formMethods={formMethods}
+        onSubmit={(state: Event) =>
+          save({ variables: { editToken, input: stateToEvent(state) } })
+        }
+      >
+        <FormField name="title" text="Title">
+          <TextField
+            name="title"
+            validation={{ required: true }}
+            {...fieldAttrs.input}
+          />
+        </FormField>
+
+        <div className="is-italic mb-3">
+          Start/end times are in your local timezone,{' '}
+          <strong>{tzPretty}</strong>
+        </div>
+
+        <Controller
+          control={formMethods.control}
           name="start"
-          validation={{ required: true }}
-          {...fieldAttrs.input}
-        />
-      </FormField>
-
-      <FormField name="end" text="End">
-        <DatetimeLocalField
-          name="end"
-          validation={{
+          render={({ field }) => (
+            <label className="label" htmlFor="start">
+              Start
+              <div className="control">
+                <input className="input" type="datetime-local" {...field} />
+              </div>
+              <FieldError name="start" className="error has-text-danger" />
+            </label>
+          )}
+          rules={{
             required: true,
             validate: () =>
               getValues().end <= getValues().start
                 ? 'End date must be after the start date'
                 : true,
           }}
-          {...fieldAttrs.input}
         />
-      </FormField>
 
-      <FormField name="description" text="Description">
-        <TextAreaField
-          name="description"
-          validation={{ required: true }}
-          rows={8}
-          {...fieldAttrs.textarea}
+        <Controller
+          control={formMethods.control}
+          name="end"
+          render={({ field }) => (
+            <label className="label" htmlFor="end">
+              End
+              <div className="control">
+                <input className="input" type="datetime-local" {...field} />
+              </div>
+              <FieldError name="end" className="error has-text-danger" />
+            </label>
+          )}
+          rules={{
+            required: true,
+            validate: () =>
+              getValues().end <= getValues().start
+                ? 'End date must be after the start date'
+                : true,
+          }}
         />
-      </FormField>
 
-      <Submit
-        className="button is-primary"
-        disabled={loading || !formState.isDirty || !formState.isValid}
-      >
-        Save Changes
-      </Submit>
-      <FormError error={error} {...formErrorAttrs} />
-    </Form>
+        <FormField name="description" text="Description">
+          <TextAreaField
+            name="description"
+            validation={{ required: true }}
+            rows={8}
+            {...fieldAttrs.textarea}
+          />
+        </FormField>
+
+        <Submit className="button is-primary" disabled={!savable}>
+          Save Changes
+        </Submit>
+        <FormError error={error} {...formErrorAttrs} />
+      </Form>
+    </>
   )
 }
 
