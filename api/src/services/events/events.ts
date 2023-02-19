@@ -44,15 +44,23 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
       },
     },
   })
-  // wait for 1 second
-  await new Promise((resolve) => setTimeout(resolve, 1000))
   return db.event.create({ data: { ...defaultEventParams(), ...input } })
 }
 
 export const updateEvent: MutationResolvers['updateEvent'] = ({
   editToken,
   input,
-}) => db.event.update({ data: input, where: { editToken } })
+}) => {
+  validate(input.end, 'end', {
+    custom: {
+      with: () => {
+        if (!dayjs(input.end).isAfter(dayjs(input.start)))
+          throw new Error('End date must be after the start date')
+      },
+    },
+  })
+  return db.event.update({ data: input, where: { editToken } })
+}
 
 export const deleteEvent: MutationResolvers['deleteEvent'] = ({ editToken }) =>
   db.event.delete({ where: { editToken } })

@@ -35,13 +35,11 @@ const CREATE_EVENT = gql`
 `
 
 const NewEventPage = () => {
-  const formMethods = useForm({ defaultValues: { ownerEmail: '', title: '' } })
-  const { formState, watch } = formMethods
-
-  watch((values) => {
-    console.log(values)
-    console.log(formState.isValid)
+  const formMethods = useForm({
+    mode: 'onTouched',
+    defaultValues: { ownerEmail: '', title: '' },
   })
+  const { formState } = formMethods
 
   const [redirecting, setRedirecting] = useState(false)
 
@@ -69,7 +67,7 @@ const NewEventPage = () => {
         <FormField name="ownerEmail" text="Email Address">
           <EmailField
             name="ownerEmail"
-            validation={{ ...isEmail }}
+            validation={{ required: true, ...isEmail }}
             {...fieldAttrs.input}
           />
         </FormField>
@@ -88,7 +86,6 @@ const NewEventPage = () => {
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}
         </Submit>
-
         <FormError error={error} wrapperClassName="form-error" />
       </Form>
     </>

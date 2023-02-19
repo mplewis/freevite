@@ -82,8 +82,11 @@ const EditEventForm = ({ event }: Props) => {
     return e
   }
 
-  const formMethods = useForm({ defaultValues: eventToState(event) })
-  const { formState, reset } = formMethods
+  const formMethods = useForm({
+    mode: 'all',
+    defaultValues: eventToState(event),
+  })
+  const { formState, reset, getValues } = formMethods
 
   const [save, { loading, error }] = useMutation<
     UpdateEventMutation,
@@ -98,8 +101,8 @@ const EditEventForm = ({ event }: Props) => {
   return (
     <Form
       formMethods={formMethods}
-      onSubmit={(data: State) =>
-        save({ variables: { editToken, input: stateToEvent(data) } })
+      onSubmit={(state: State) =>
+        save({ variables: { editToken, input: stateToEvent(state) } })
       }
     >
       <FormField name="title" text="Title">
@@ -124,7 +127,13 @@ const EditEventForm = ({ event }: Props) => {
       <FormField name="end" text="End">
         <DatetimeLocalField
           name="end"
-          validation={{ required: true }}
+          validation={{
+            required: true,
+            validate: () =>
+              getValues().end <= getValues().start
+                ? 'End date must be after the start date'
+                : true,
+          }}
           {...fieldAttrs.input}
         />
       </FormField>
