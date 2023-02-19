@@ -89,7 +89,7 @@ const EditEventForm = (props: Props) => {
     UpdateEventMutationVariables
   >(UPDATE_EVENT, {
     onCompleted: () => {
-      reset(null, { keepValues: true })
+      reset(getValues())
       console.log('Saved') // TODO: toast?
     },
     refetchQueries: [{ query: QUERY, variables: { editToken } }],
@@ -231,7 +231,6 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        {/* FIXME: This is buggy on save. */}
         <label htmlFor="visible" className="checkbox is-block mb-3">
           <CheckboxField
             id="visible"
