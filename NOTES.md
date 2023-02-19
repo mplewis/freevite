@@ -13,3 +13,4 @@
 - [ ] Edit: expiry, visible field
 - [ ] Confirm event on first edit click
 - [ ] Delete reminders
+- [ ] Job to delete expired events

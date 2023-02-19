@@ -13,7 +13,6 @@ import {
   Controller,
   FieldError,
   CheckboxField,
-  SelectField,
 } from '@redwoodjs/forms'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -29,7 +28,6 @@ export type Props = {
 }
 
 type Event = {
-  expiresAt: string
   visible: boolean
   slug: string
   title: string
@@ -47,7 +45,6 @@ type EventWithTokens = Event & {
 const UPDATE_EVENT = gql`
   mutation UpdateEventMutation($editToken: String!, $input: UpdateEventInput!) {
     updateEvent(editToken: $editToken, input: $input) {
-      expiresAt
       visible
       slug
       title
@@ -146,6 +143,7 @@ const EditEventForm = (props: Props) => {
                 : true,
           }}
         />
+
         <Controller
           control={formMethods.control}
           name="end"
@@ -166,6 +164,10 @@ const EditEventForm = (props: Props) => {
                 : true,
           }}
         />
+        <div className="is-italic mb-3">
+          Your event will be deleted from the system 30 days after it ends.
+        </div>
+
         <FormField name="description" text="Description">
           <TextAreaField
             name="description"

@@ -7,7 +7,6 @@ export const schema = gql`
     previewToken: String!
     ownerEmail: String!
     confirmed: Boolean!
-    expiresAt: DateTime!
     visible: Boolean!
     slug: String!
     title: String!
@@ -29,7 +28,6 @@ export const schema = gql`
   }
 
   input UpdateEventInput {
-    expiresAt: DateTime
     visible: Boolean
     slug: String
     title: String

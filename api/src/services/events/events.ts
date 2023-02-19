@@ -10,7 +10,6 @@ import { checkVisibility } from 'src/lib/visibility'
 const defaultEventParams = () => ({
   editToken: generateToken(),
   previewToken: generateToken(),
-  expiresAt: dayjs().add(1, 'day').toISOString(),
   slug: generateToken({ count: 8, prefix: 'my_event_' }),
   description:
     'Fill in your event description here.\n\nYou can use **Markdown** to style this section. Learn more at https://www.markdownguide.org.',

@@ -12,7 +12,6 @@ export const QUERY = gql`
     event: eventByEditToken(editToken: $editToken) {
       editToken
       previewToken
-      expiresAt
       visible
       slug
       title
