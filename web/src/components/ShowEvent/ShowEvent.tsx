@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 import { markdownToHTML } from 'src/convert/markdown'
 
 export interface Props {
@@ -22,9 +23,14 @@ const ShowEvent = ({ event }: Props) => {
   }, [description])
   return (
     <div>
-      <h1>{title}</h1>
-      <p>{start}</p>
-      <p>{end}</p>
+      <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>
+      <p className="mb-3">
+        <strong>From:</strong> {prettyDate(start)} ({prettyUntil(start)})
+      </p>
+      <p className="mb-3">
+        <strong>To:</strong> {prettyDate(end)} ({prettyBetween(start, end)}{' '}
+        long)
+      </p>
       <p>Add to Google Calendar</p>
       <p>Add to iCal</p>
       <hr />

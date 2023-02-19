@@ -1,8 +1,3 @@
-import { useEffect } from 'react'
-
-import dayjs from 'dayjs'
-import timezone from 'dayjs/plugin/timezone'
-import utc from 'dayjs/plugin/utc'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -14,7 +9,6 @@ import {
   Submit,
   TextAreaField,
   TextField,
-  DatetimeLocalField,
   useForm,
   Controller,
   FieldError,
@@ -23,12 +17,10 @@ import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
+import { toLocal, toUTC, tzPretty } from 'src/convert/date'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
-
-dayjs.extend(utc)
-dayjs.extend(timezone)
 
 export type Props = {
   event: EventWithTokens
@@ -64,16 +56,6 @@ const UPDATE_EVENT = gql`
     }
   }
 `
-
-const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-const tzPretty = tz.replace(/_/g, ' ')
-
-function toLocal(d: string | Date): string {
-  return dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
-}
-function toUTC(d: string | Date): string {
-  return dayjs.tz(d, tz).utc().toISOString()
-}
 
 function eventToState(e: Event): Event {
   return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
