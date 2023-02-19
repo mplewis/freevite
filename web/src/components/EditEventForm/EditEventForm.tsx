@@ -24,11 +24,10 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 
 export type Props = {
-  event: Event
+  event: EventProp
 }
 
 interface Event {
-  editToken: string
   expiresAt: string
   visible: boolean
   slug: string
@@ -37,6 +36,11 @@ interface Event {
   start: string
   end: string
   reminders: string
+}
+
+interface EventProp extends Event {
+  editToken: string
+  previewToken: string
 }
 
 interface State extends Event {
@@ -60,6 +64,9 @@ const UPDATE_EVENT = gql`
 
 const EditEventForm = ({ event }: Props) => {
   const { editToken } = event
+  event = { ...event }
+  delete event.editToken
+  delete event.previewToken
 
   const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
   const tzPretty = tz.replace(/_/g, ' ')
@@ -77,7 +84,6 @@ const EditEventForm = ({ event }: Props) => {
       start: toUTC(s.start),
       end: toUTC(s.end),
     }
-    delete e.editToken
     delete e.__typename
     return e
   }
@@ -93,7 +99,7 @@ const EditEventForm = ({ event }: Props) => {
     UpdateEventMutationVariables
   >(UPDATE_EVENT, {
     onCompleted: (data) => {
-      reset(eventToState({ ...data.updateEvent, editToken }))
+      reset(eventToState({ ...data.updateEvent }))
       console.log('Saved') // TODO: toast?
     },
   })

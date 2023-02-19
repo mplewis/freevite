@@ -7,9 +7,6 @@ const EditEventPage = () => {
   return (
     <>
       <MetaTags title="EditEvent" description="EditEvent page" />
-
-      <h1>EditEventPage</h1>
-
       <EditEventCell editToken={queryValue('token')} />
     </>
   )

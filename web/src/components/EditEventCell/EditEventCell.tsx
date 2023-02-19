@@ -3,6 +3,7 @@ import type {
   FindEditEventQueryVariables,
 } from 'types/graphql'
 
+import { Link, routes } from '@redwoodjs/router'
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import EditEventForm from '../EditEventForm/EditEventForm'
@@ -11,6 +12,7 @@ export const QUERY = gql`
   query FindEditEventQuery($editToken: String!) {
     event: eventByEditToken(editToken: $editToken) {
       editToken
+      previewToken
       expiresAt
       visible
       slug
@@ -36,5 +38,19 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindEditEventQuery, FindEditEventQueryVariables>) => {
-  return <EditEventForm event={event} />
+  return (
+    <>
+      <h1>Edit Event</h1>
+      <p className="mt-3">
+        <Link
+          to={routes.previewEvent({ token: event.previewToken })}
+          className="button"
+        >
+          Preview this event &raquo;
+        </Link>
+      </p>
+      <hr />
+      <EditEventForm event={event} />
+    </>
+  )
 }

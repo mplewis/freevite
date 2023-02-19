@@ -10,6 +10,7 @@ import ShowEvent from '../ShowEvent/ShowEvent'
 export const QUERY = gql`
   query FindPreviewEventQuery($previewToken: String!) {
     event: eventByPreviewToken(previewToken: $previewToken) {
+      ownerEmail
       visible
       title
       description
@@ -35,12 +36,17 @@ export const Success = ({
   return (
     <>
       <h1>Event Preview</h1>
-      <p className="is-italic">
+      <p className="is-italic mb-3">
         This is a preview of your event.
         <br />
         This event is currently{' '}
         <strong>{event.visible ? 'visible' : 'NOT visible'}</strong> to the
         public.
+      </p>
+      <p>
+        <button className="button link" onClick={() => history.back()}>
+          &laquo; Go back
+        </button>
       </p>
       <hr />
       <ShowEvent event={event} />
