@@ -12,6 +12,8 @@ import {
   useForm,
   Controller,
   FieldError,
+  CheckboxField,
+  SelectField,
 } from '@redwoodjs/forms'
 import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -67,10 +69,8 @@ function stateToEvent(s: Event): Event {
 const EditEventForm = (props: Props) => {
   const { editToken, previewToken, ...event } = props.event
 
-  const formMethods = useForm({
-    mode: 'all',
-    defaultValues: eventToState(event),
-  })
+  const defaultValues = eventToState(event)
+  const formMethods = useForm({ mode: 'all', defaultValues })
   const { formState, reset, getValues } = formMethods
 
   const [save, { loading, error }] = useMutation<
@@ -122,12 +122,10 @@ const EditEventForm = (props: Props) => {
             {...fieldAttrs.input}
           />
         </FormField>
-
         <div className="is-italic mb-3">
           Start/end times are in your local timezone,{' '}
           <strong>{tzPretty}</strong>
         </div>
-
         <Controller
           control={formMethods.control}
           name="start"
@@ -148,7 +146,6 @@ const EditEventForm = (props: Props) => {
                 : true,
           }}
         />
-
         <Controller
           control={formMethods.control}
           name="end"
@@ -169,7 +166,6 @@ const EditEventForm = (props: Props) => {
                 : true,
           }}
         />
-
         <FormField name="description" text="Description">
           <TextAreaField
             name="description"
@@ -178,6 +174,16 @@ const EditEventForm = (props: Props) => {
             {...fieldAttrs.textarea}
           />
         </FormField>
+
+        {/* FIXME: This is buggy on save. */}
+        <label htmlFor="visible" className="checkbox is-block mb-3">
+          <CheckboxField
+            id="visible"
+            name="visible"
+            defaultChecked={event.visible}
+          />
+          <span className="ml-2">Make this event visible to the public</span>
+        </label>
 
         <Submit className="button is-primary" disabled={!savable}>
           Save Changes
