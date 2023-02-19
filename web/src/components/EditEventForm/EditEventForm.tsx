@@ -25,6 +25,8 @@ import { useMutation } from '@redwoodjs/web'
 import FormField from 'src/components/FormField/FormField'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
+import { QUERY } from '../EditEventCell'
+
 dayjs.extend(utc)
 dayjs.extend(timezone)
 
@@ -97,6 +99,8 @@ const EditEventForm = (props: Props) => {
       reset(null, { keepValues: true })
       console.log('Saved') // TODO: toast?
     },
+    refetchQueries: [{ query: QUERY, variables: { editToken } }],
+    awaitRefetchQueries: true,
   })
 
   let savable = true

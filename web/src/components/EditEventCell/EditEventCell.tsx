@@ -37,6 +37,8 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindEditEventQuery, FindEditEventQueryVariables>) => {
+  event = { ...event }
+  delete event.__typename
   return (
     <>
       <h1>Edit Event</h1>
