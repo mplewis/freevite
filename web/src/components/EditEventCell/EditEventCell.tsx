@@ -12,6 +12,7 @@ export const QUERY = gql`
     event: eventByEditToken(editToken: $editToken) {
       editToken
       previewToken
+      confirmed
       visible
       slug
       title

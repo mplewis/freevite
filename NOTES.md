@@ -4,7 +4,7 @@
 - [x] Edit Event Page -> Edit Event Cell -> Edit Event Form
 - [x] Delete Event button
 - [x] Preview Event Page -> Preview Event Cell -> Show Event Component
-- [ ] View Event Page -> View Event Cell -> View Event Component
+- [x] View Event Page -> View Event Cell -> View Event Component
 - [x] Install Tailwind
 - [x] Base layout
 - [ ] Navbar

@@ -19,6 +19,7 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
+import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
 import { toLocal, toUTC, tzPretty } from 'src/convert/date'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
@@ -31,6 +32,7 @@ export type Props = {
 
 type Event = {
   visible: boolean
+  confirmed: boolean
   slug: string
   title: string
   description: string
@@ -70,7 +72,9 @@ function eventToState(e: Event): Event {
   return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
 }
 function stateToEvent(s: Event): Event {
-  return { ...s, start: toUTC(s.start), end: toUTC(s.end) }
+  s = { ...s, start: toUTC(s.start), end: toUTC(s.end) }
+  delete s.confirmed
+  return s
 }
 
 const EditEventForm = (props: Props) => {
@@ -122,9 +126,24 @@ const EditEventForm = (props: Props) => {
   if (!formState.isDirty) savable = false
   if (!formState.isValid) savable = false
 
+  const { visible } = checkVisibility(event)
+
   return (
     <>
-      <p className="mt-3">
+      <p className="mb-3">
+        {visible && (
+          <a
+            href={routes.viewEvent({ slug: event.slug })}
+            className="button is-primary"
+            target="_blank"
+            rel="noreferrer"
+          >
+            View the public event page &raquo;
+          </a>
+        )}
+      </p>
+
+      <p className="mb-3">
         {formState.isDirty ? (
           <button className="button" disabled>
             To preview, save your changes &raquo;

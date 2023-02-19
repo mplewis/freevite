@@ -20,6 +20,7 @@ const Routes = () => {
         <Route path="/created" page={EventCreatedPage} name="eventCreated" />
         <Route path="/edit" page={EditEventPage} name="editEvent" />
         <Route path="/preview" page={PreviewEventPage} name="previewEvent" />
+        <Route path="/event/{slug}" page={ViewEventPage} name="viewEvent" />
       </Set>
       <Route notfound page={NotFoundPage} />
     </Router>
