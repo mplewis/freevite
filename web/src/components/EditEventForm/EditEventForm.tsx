@@ -94,7 +94,6 @@ const EditEventForm = (props: Props) => {
   >(UPDATE_EVENT, {
     onCompleted: () => {
       reset(getValues())
-      console.log('Saved') // TODO: toast?
     },
     refetchQueries: [{ query: QUERY, variables: { editToken } }],
     awaitRefetchQueries: true,

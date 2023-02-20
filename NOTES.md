@@ -19,3 +19,10 @@
 - [x] Slug field in edit event
 - [ ] Sample event page
 - [x] Limit access to fields
+- [x] GCal link
+- [ ] .ics function + link
+- [ ] Add To icons
+- [ ] Discard changes
+- [ ] Prompt on navigate away before destroying changes
+- [ ] Location field
+- [ ] Field length enforcement
