@@ -16,8 +16,15 @@ export const schema = gql`
     reminders: String!
   }
 
+  type PublicEvent {
+    title: String!
+    description: String!
+    start: DateTime!
+    end: DateTime!
+  }
+
   type Query {
-    eventBySlug(slug: String!): Event @skipAuth
+    eventBySlug(slug: String!): PublicEvent @skipAuth
     eventByEditToken(editToken: String!): Event @skipAuth
     eventByPreviewToken(previewToken: String!): Event @skipAuth
   }

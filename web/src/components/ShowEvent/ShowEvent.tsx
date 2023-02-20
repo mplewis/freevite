@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 import { markdownToHTML } from 'src/convert/markdown'
+import Typ from '../Typ/Typ'
 
 export interface Props {
   event: {
-    ownerEmail: string
     title: string
     description: string
     start: string
@@ -14,7 +14,7 @@ export interface Props {
 }
 
 const ShowEvent = ({ event }: Props) => {
-  const { ownerEmail, title, description, start, end } = event
+  const { title, description, start, end } = event
   const [htmlDesc, setHtmlDesc] = useState<string>(
     '<em>Rendering Markdown description...</em>'
   )
@@ -22,21 +22,12 @@ const ShowEvent = ({ event }: Props) => {
     markdownToHTML(description).then(setHtmlDesc)
   }, [description])
   return (
-    <div>
-      <em>
-        <p>
-          The below event was created by{' '}
-          <a href={`mailto:${ownerEmail}`} target="_blank" rel="noreferrer">
-            {ownerEmail}
-          </a>
-          .
-        </p>
-        <p>
-          Freevite is not associated with any user-generated content. Please
-          report abuse to{' '}
-          <a href="mailto:abuse@freevite.com">abuse@freevite.com</a>.
-        </p>
-      </em>
+    <div className="mt-3">
+      <Typ x="p" className="is-italic">
+        The user-generated content below is not owned by Freevite. Please
+        report abuse to{' '}
+        <a href="mailto:abuse@freevite.com">abuse@freevite.com</a>.
+      </Typ>
       <hr />
       <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>
       <p className="mb-3">

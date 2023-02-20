@@ -67,7 +67,7 @@ const NewEventPage = () => {
         <FormField name="ownerEmail" text="Email Address">
           <Typ x="labelDetails">
             No passwords needed. We&apos;ll email you a link to manage your
-            event.
+            event. Your email address stays private.
           </Typ>
           <EmailField
             name="ownerEmail"

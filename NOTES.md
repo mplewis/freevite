@@ -17,3 +17,5 @@
 - [ ] Send email
 - [ ] Not found cells
 - [x] Slug field in edit event
+- [ ] Sample event page
+- [x] Limit access to fields
