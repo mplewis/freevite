@@ -26,6 +26,7 @@
   "dependencies": {
     "dayjs": "^1.11.7",
     "remeda": "^1.6.2",
+    "ts-pattern": "^4.2.0",
     "type-fest": "^3.6.0"
   }
 }

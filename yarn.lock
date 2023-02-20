@@ -21449,6 +21449,7 @@ __metadata:
     dayjs: ^1.11.7
     prettier-plugin-tailwindcss: ^0.2.3
     remeda: ^1.6.2
+    ts-pattern: ^4.2.0
     type-fest: ^3.6.0
   languageName: unknown
   linkType: soft
@@ -23507,6 +23508,13 @@ __metadata:
   version: 4.1.4
   resolution: "ts-pattern@npm:4.1.4"
   checksum: e35b9ea7fc6b52d65c3259b52b4e16970f8fe2b906fa8970ecbaa2ef9ef10d3963cf1941773eecc1b2ccac1d622a595532aa567ca4c4b36942772d53e510fbcb
+  languageName: node
+  linkType: hard
+
+"ts-pattern@npm:^4.2.0":
+  version: 4.2.0
+  resolution: "ts-pattern@npm:4.2.0"
+  checksum: 639f60e21bef7246e820c81190b04914f0bd8730b464fa7e8d3c18c2263f7d68023ad8afb5ba2904f54b9fb86f17f5006d7003723525a8c34676dd1d7197791c
   languageName: node
   linkType: hard
 
