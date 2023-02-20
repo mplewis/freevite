@@ -16,4 +16,4 @@
 - [ ] Job to delete expired events
 - [ ] Send email
 - [ ] Not found cells
-- [ ] Slug field in edit event
+- [x] Slug field in edit event

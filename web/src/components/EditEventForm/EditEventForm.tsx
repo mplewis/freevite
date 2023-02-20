@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -19,12 +21,14 @@ import {
 import { Link, navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
+import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
 import { toLocal, toUTC, tzPretty } from 'src/convert/date'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
+import Typ from '../Typ/Typ'
 
 import { PreView } from './PreView'
 
@@ -130,6 +134,10 @@ const EditEventForm = (props: Props) => {
 
   const { visible } = checkVisibility(event)
 
+  const [currSlug, setCurrSlug] = useState(event.slug)
+  const eventLink = routes.viewEvent({ slug: currSlug })
+  const fqEventLink = fqUrlForPath(eventLink)
+
   return (
     <>
       <PreView
@@ -154,18 +162,25 @@ const EditEventForm = (props: Props) => {
             {...fieldAttrs.input}
           />
         </FormField>
-        <div className="is-italic mb-3">
-          Start/end times are in your local timezone,{' '}
-          <strong>{tzPretty}</strong>
-        </div>
+
         <Controller
           control={formMethods.control}
           name="start"
           render={({ field }) => (
             <label className="label" htmlFor="start">
               Start
+              <br />
+              <Typ x="labelDetails">
+                Start/end times are in your local timezone,{' '}
+                <strong>{tzPretty}</strong>
+              </Typ>
               <div className="control">
-                <input className="input" type="datetime-local" {...field} />
+                <input
+                  id="start"
+                  className="input"
+                  type="datetime-local"
+                  {...field}
+                />
               </div>
               <FieldError name="start" className="error has-text-danger" />
             </label>
@@ -186,7 +201,12 @@ const EditEventForm = (props: Props) => {
             <label className="label" htmlFor="end">
               End
               <div className="control">
-                <input className="input" type="datetime-local" {...field} />
+                <input
+                  id="end"
+                  className="input"
+                  type="datetime-local"
+                  {...field}
+                />
               </div>
               <FieldError name="end" className="error has-text-danger" />
             </label>
@@ -199,11 +219,39 @@ const EditEventForm = (props: Props) => {
                 : true,
           }}
         />
-        <div className="is-italic mb-3">
-          Your event will be deleted from the system 30 days after it ends.
-        </div>
+
+        <FormField name="slug" text="Slug">
+          <Typ x="labelDetails">
+            Your event&apos;s public link will be <code>{fqEventLink}</code>
+          </Typ>
+          <TextField
+            name="slug"
+            validation={{
+              required: true,
+              validate: {
+                chars: (slug) => {
+                  if (!/^[a-z0-9-]+$/.test(slug))
+                    return 'slug can only contain lowercase letters, numbers, and dashes'
+                },
+              },
+            }}
+            onChange={(e) => setCurrSlug(e.target.value)}
+            {...fieldAttrs.input}
+          />
+        </FormField>
 
         <FormField name="description" text="Description">
+          <Typ x="labelDetails">
+            You can use{' '}
+            <a
+              href="https://www.markdownguide.org"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Markdown
+            </a>{' '}
+            to style this section.
+          </Typ>
           <TextAreaField
             name="description"
             validation={{ required: true }}

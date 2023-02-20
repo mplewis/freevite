@@ -24,7 +24,9 @@ export const Navbar = () => (
 
       <div id="navbar-content" className="navbar-menu">
         <div className="navbar-start">
-          <div className="navbar-item">The free event platform</div>
+          <div className="navbar-item">
+            The simple event platform – free forever.
+          </div>
         </div>
 
         <div className="navbar-end">
