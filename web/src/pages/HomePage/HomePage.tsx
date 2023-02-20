@@ -39,9 +39,10 @@ const HomePage = () => {
           <div className="column">
             <Typ x="subhead">Vanity URLs</Typ>
             <Typ x="p">
-              When you create an event, you can pick any URL that isn&apos;t
-              already taken. For example:{' '}
-              <code>freevite.com/event/my-birthday-party</code>
+              Your event gets a URL that&apos;s short enough to send in a text
+              message:
+              <br />
+              <code>freevite.com/event/my-party</code>
             </Typ>
           </div>
           <div className="column">

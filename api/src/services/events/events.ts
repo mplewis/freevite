@@ -4,13 +4,21 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
-import { generateToken } from 'src/lib/token'
+import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
 
-const defaultEventParams = () => ({
+const defaultEventParams = (title) => ({
   editToken: generateToken(),
   previewToken: generateToken(),
-  slug: generateToken({ count: 8, prefix: 'my_event_' }),
+  slug: generateToken({
+    count: 8,
+    charset: alphaLower,
+    prefix:
+      title
+        .replace(/[^a-z0-9-]/gi, '-')
+        .replace(/-+/g, '-')
+        .toLowerCase() + '-',
+  }),
   description:
     'Fill in your event description here.\n\nYou can use **Markdown** to style this section. Learn more at https://www.markdownguide.org.',
   start: dayjs().add(7, 'day').toISOString(),
@@ -49,7 +57,9 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
       },
     },
   })
-  return db.event.create({ data: { ...defaultEventParams(), ...input } })
+  return db.event.create({
+    data: { ...defaultEventParams(input.title), ...input },
+  })
 }
 
 export const updateEvent: MutationResolvers['updateEvent'] = ({

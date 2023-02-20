@@ -28,8 +28,17 @@ export const PreView = ({ isPublic, dirty, slug, previewToken }: Props) => {
     <>
       <Typ x="p">
         Your event is currently{' '}
-        <strong>{isPublic ? 'visible' : 'NOT visible'}</strong> to the public at{' '}
-        <code>{fqEventLink}</code>
+        <strong>{isPublic ? 'visible' : 'NOT visible'}</strong> to the public
+        {isPublic && (
+          <>
+            {' '}
+            at
+            <a href={eventLink} target="_blank" rel="noreferrer">
+              <code>{fqEventLink}</code>
+            </a>
+          </>
+        )}
+        .
       </Typ>
       <Typ x="p">
         {isPublic && (

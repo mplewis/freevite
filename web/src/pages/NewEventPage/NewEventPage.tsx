@@ -66,11 +66,12 @@ const NewEventPage = () => {
       >
         <FormField name="ownerEmail" text="Email Address">
           <Typ x="labelDetails">
-            No passwords. We&apos;ll email you a link to manage your event.
+            No passwords needed. We&apos;ll email you a link to manage your
+            event.
           </Typ>
           <EmailField
             name="ownerEmail"
-            validation={{ required: true, ...isEmail }}
+            validation={{ ...isEmail }}
             {...fieldAttrs.input}
           />
         </FormField>
