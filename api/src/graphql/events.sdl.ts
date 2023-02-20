@@ -13,7 +13,6 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
-    reminders: String!
   }
 
   type PublicEvent {
@@ -41,7 +40,6 @@ export const schema = gql`
     description: String
     start: DateTime
     end: DateTime
-    reminders: String
   }
 
   type Mutation {

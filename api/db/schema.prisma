@@ -25,5 +25,4 @@ model Event {
   description String
   start       DateTime
   end         DateTime
-  reminders   String
 }

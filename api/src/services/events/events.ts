@@ -23,7 +23,6 @@ const defaultEventParams = (title) => ({
     'Fill in your event description here.\n\nYou can use **Markdown** to style this section. Learn more at https://www.markdownguide.org.',
   start: dayjs().add(7, 'day').toISOString(),
   end: dayjs().add(7, 'day').add(1, 'hour').toISOString(),
-  reminders: '1 day, 30 minutes',
 })
 
 export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {

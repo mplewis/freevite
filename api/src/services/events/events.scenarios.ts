@@ -1,5 +1,4 @@
 import type { Prisma, Event } from '@prisma/client'
-import dayjs from 'dayjs'
 
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
@@ -17,7 +16,6 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
         description: 'String',
         start: '2023-02-12T23:13:37.652Z',
         end: '2023-02-12T23:13:37.652Z',
-        reminders: 'String',
       },
     },
     invisible: {
@@ -32,7 +30,6 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
         description: 'String',
         start: '2023-02-12T23:13:37.652Z',
         end: '2023-02-12T23:13:37.652Z',
-        reminders: 'String',
       },
     },
   },

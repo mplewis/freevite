@@ -44,7 +44,6 @@ type Event = {
   description: string
   start: string
   end: string
-  reminders: string
 }
 
 type EventWithTokens = Event & {
@@ -61,7 +60,6 @@ const UPDATE_EVENT = gql`
       description
       start
       end
-      reminders
     }
   }
 `

@@ -12,7 +12,7 @@
 - [x] Replace Tailwind with Bulma
 - [x] Edit: expiry, visible field
 - [x] Confirm event on first edit click
-- [ ] Delete reminders
+- [x] Delete reminders
 - [ ] Job to delete expired events
 - [ ] Send email
 - [ ] Not found cells
