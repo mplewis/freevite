@@ -14,9 +14,11 @@ import {
   useForm,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
-import { MetaTags, useMutation } from '@redwoodjs/web'
+import { useMutation } from '@redwoodjs/web'
 
 import FormField from 'src/components/FormField/FormField'
+import PageHead from 'src/components/PageHead/PageHead'
+import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
@@ -56,15 +58,16 @@ const NewEventPage = () => {
 
   return (
     <>
-      <MetaTags title="NewEvent" description="NewEvent page" />
-
-      <h1>NewEventPage</h1>
+      <PageHead title="Create New Event" desc="Create a new event." />
 
       <Form
         formMethods={formMethods}
         onSubmit={(input: FormValues) => create({ variables: { input } })}
       >
         <FormField name="ownerEmail" text="Email Address">
+          <Typ x="labelDetails">
+            No passwords. We&apos;ll email you a link to manage your event.
+          </Typ>
           <EmailField
             name="ownerEmail"
             validation={{ required: true, ...isEmail }}
@@ -73,6 +76,7 @@ const NewEventPage = () => {
         </FormField>
 
         <FormField name="title" text="Title">
+          <Typ x="labelDetails">You can change this at any time.</Typ>
           <TextField
             name="title"
             validation={{ required: true }}
@@ -81,7 +85,7 @@ const NewEventPage = () => {
         </FormField>
 
         <Submit
-          className="button is-primary"
+          className="button is-success"
           disabled={loading || redirecting || !formState.isValid}
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}

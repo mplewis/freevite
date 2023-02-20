@@ -26,6 +26,8 @@ import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
 
+import { PreView } from './PreView'
+
 export type Props = {
   event: EventWithTokens
 }
@@ -130,33 +132,12 @@ const EditEventForm = (props: Props) => {
 
   return (
     <>
-      <p className="mb-3">
-        {visible && (
-          <a
-            href={routes.viewEvent({ slug: event.slug })}
-            className="button is-primary"
-            target="_blank"
-            rel="noreferrer"
-          >
-            View the public event page &raquo;
-          </a>
-        )}
-      </p>
-
-      <p className="mb-3">
-        {formState.isDirty ? (
-          <button className="button" disabled>
-            To preview, save your changes &raquo;
-          </button>
-        ) : (
-          <Link
-            to={routes.previewEvent({ token: previewToken })}
-            className="button"
-          >
-            Preview this event &raquo;{' '}
-          </Link>
-        )}
-      </p>
+      <PreView
+        isPublic={visible}
+        dirty={formState.isDirty}
+        slug={event.slug}
+        previewToken={previewToken}
+      />
 
       <hr />
 
@@ -240,7 +221,7 @@ const EditEventForm = (props: Props) => {
           <span className="ml-2">Make this event visible to the public</span>
         </label>
 
-        <Submit className="button is-primary" disabled={!savable}>
+        <Submit className="button is-success" disabled={!savable}>
           Save Changes
         </Submit>
         <FormError error={error} {...formErrorAttrs} />

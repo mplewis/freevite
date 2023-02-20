@@ -28,11 +28,8 @@ export const Navbar = () => (
         </div>
 
         <div className="navbar-end">
-          <div className="navbar-item">
-            <div className="buttons">
-              {/* <a className="button is-primary has-text-weight-semibold">
-                Create an event
-              </a> */}
+          {window.location.pathname === routes.home() && (
+            <div className="navbar-item">
               <Link
                 to={routes.newEvent()}
                 className="button is-primary has-text-weight-semibold"
@@ -40,7 +37,7 @@ export const Navbar = () => (
                 Create an event
               </Link>
             </div>
-          </div>
+          )}
         </div>
       </div>
     </nav>

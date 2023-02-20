@@ -1,12 +1,14 @@
-import { MetaTags } from '@redwoodjs/web'
-
+import PageHead from 'src/components/PageHead/PageHead'
 import PreviewEventCell from 'src/components/PreviewEventCell'
 import { queryValue } from 'src/logic/path'
 
 const PreviewEventPage = () => {
   return (
     <>
-      <MetaTags title="PreviewEvent" description="PreviewEvent page" />
+      <PageHead
+        title="Preview Event"
+        desc="Preview an event before making it public."
+      />
       <PreviewEventCell previewToken={queryValue('token')} />
     </>
   )

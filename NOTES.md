@@ -7,7 +7,7 @@
 - [x] View Event Page -> View Event Cell -> View Event Component
 - [x] Install Tailwind
 - [x] Base layout
-- [ ] Navbar
+- [x] Navbar
 - [ ] Not found page
 - [x] Replace Tailwind with Bulma
 - [x] Edit: expiry, visible field
@@ -15,3 +15,5 @@
 - [ ] Delete reminders
 - [ ] Job to delete expired events
 - [ ] Send email
+- [ ] Not found cells
+- [ ] Slug field in edit event

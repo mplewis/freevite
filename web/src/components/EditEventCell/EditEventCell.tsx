@@ -39,10 +39,5 @@ export const Success = ({
 }: CellSuccessProps<FindEditEventQuery, FindEditEventQueryVariables>) => {
   event = { ...event }
   delete event.__typename
-  return (
-    <>
-      <h1>Edit Event</h1>
-      <EditEventForm event={event} />
-    </>
-  )
+  return <EditEventForm event={event} />
 }
