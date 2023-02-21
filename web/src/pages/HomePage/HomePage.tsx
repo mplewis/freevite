@@ -1,6 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
+import { SITE_HOST } from 'src/apiLib/config'
 import Typ from 'src/components/Typ'
 
 const HomePage = () => {
@@ -42,7 +43,7 @@ const HomePage = () => {
               Your event gets a URL that&apos;s short enough to send in a text
               message:
               <br />
-              <code>freevite.app/event/my-party</code>
+              <code>{SITE_HOST}/event/my-party</code>
             </Typ>
           </div>
           <div className="column">

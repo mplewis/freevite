@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 
+import { SITE_HOST } from 'src/apiLib/config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 import { markdownToHTML } from 'src/convert/markdown'
 
@@ -50,7 +51,7 @@ const ShowEvent = ({ event }: Props) => {
     <div className="mt-3">
       <Typ x="p" className="is-italic">
         The user-generated content below is not owned by Freevite. Please report
-        abuse to <a href="mailto:abuse@freevite.app">abuse@freevite.app</a>.
+        abuse to <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
       </Typ>
       <hr />
       <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>
