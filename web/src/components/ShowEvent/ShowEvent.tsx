@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 
-import { SITE_HOST } from 'src/apiLib/config'
+import { SITE_HOST } from 'src/app.config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 import { markdownToHTML } from 'src/convert/markdown'
 
