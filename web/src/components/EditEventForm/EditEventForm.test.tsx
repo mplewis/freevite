@@ -8,7 +8,21 @@ import EditEventForm from './EditEventForm'
 describe('EditEventForm', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<EditEventForm />)
+      render(
+        <EditEventForm
+          event={{
+            editToken: 'editToken',
+            previewToken: 'previewToken',
+            visible: true,
+            confirmed: true,
+            slug: 'slug',
+            title: 'title',
+            description: 'description',
+            start: '2021-01-01T00:00:00.000Z',
+            end: '2021-01-01T00:00:00.000Z',
+          }}
+        />
+      )
     }).not.toThrow()
   })
 })

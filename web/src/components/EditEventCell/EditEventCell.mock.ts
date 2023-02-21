@@ -1,6 +1,7 @@
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({
-  editEvent: {
+  event: {
     id: 42,
+    slug: 'test',
   },
 })

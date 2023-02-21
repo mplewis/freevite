@@ -1,4 +1,5 @@
 import { render } from '@redwoodjs/testing/web'
+
 import { Loading, Empty, Failure, Success } from './EditEventCell'
 import { standard } from './EditEventCell.mock'
 
@@ -35,7 +36,7 @@ describe('EditEventCell', () => {
 
   it('renders Success successfully', async () => {
     expect(() => {
-      render(<Success editEvent={standard().editEvent} />)
+      render(<Success event={standard().event} />)
     }).not.toThrow()
   })
 })

@@ -16,7 +16,6 @@ export interface Props {
 export const PreView = ({ isPublic, dirty, slug, previewToken }: Props) => {
   const eventLink = routes.viewEvent({ slug })
   const fqEventLink = fqUrlForPath(eventLink)
-  console.log({ eventLink, fqEventLink })
   const [copied, setCopied] = useState(false)
 
   const copyLink = () => {

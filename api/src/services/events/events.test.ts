@@ -56,7 +56,6 @@ describe('events', () => {
     const original = (await eventByEditToken({
       editToken: scenario.event.visible.editToken,
     })) as Event
-    console.log({ original })
     const result = await updateEvent({
       editToken: original.editToken,
       input: { title: 'My going-away party' },

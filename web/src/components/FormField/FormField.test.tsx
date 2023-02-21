@@ -1,3 +1,4 @@
+import { Form } from '@redwoodjs/forms'
 import { render } from '@redwoodjs/testing/web'
 
 import FormField from './FormField'
@@ -8,7 +9,13 @@ import FormField from './FormField'
 describe('FormLabel', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<FormField />)
+      render(
+        <Form>
+          <FormField name="name" text="text">
+            <input name="some-input" />
+          </FormField>
+        </Form>
+      )
     }).not.toThrow()
   })
 })
