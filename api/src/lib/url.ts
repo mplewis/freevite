@@ -1,3 +1,5 @@
+import { SITE_HOST } from './config'
+
 export function fqUrlForPath(path: string) {
-  return `https://${process.env.SITE_HOST}${path}`
+  return `https://${SITE_HOST}${path}`
 }

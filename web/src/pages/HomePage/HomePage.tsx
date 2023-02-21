@@ -42,7 +42,7 @@ const HomePage = () => {
               Your event gets a URL that&apos;s short enough to send in a text
               message:
               <br />
-              <code>freevite.com/event/my-party</code>
+              <code>freevite.app/event/my-party</code>
             </Typ>
           </div>
           <div className="column">

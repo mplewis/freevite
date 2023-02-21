@@ -50,7 +50,7 @@ const ShowEvent = ({ event }: Props) => {
     <div className="mt-3">
       <Typ x="p" className="is-italic">
         The user-generated content below is not owned by Freevite. Please report
-        abuse to <a href="mailto:abuse@freevite.com">abuse@freevite.com</a>.
+        abuse to <a href="mailto:abuse@freevite.app">abuse@freevite.app</a>.
       </Typ>
       <hr />
       <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>

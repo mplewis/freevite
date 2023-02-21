@@ -26,3 +26,10 @@
 - [ ] Prompt on navigate away before destroying changes
 - [ ] Location field
 - [ ] Field length enforcement
+- [ ] Clean up codebase + tests
+- [ ] CI
+- [ ] Deploy to Netlify
+- [ ] Open Graph basic data for each page
+- [ ] Open Graph image generation
+- [ ] Logging
+- [x] Buy domain
