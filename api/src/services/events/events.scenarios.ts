@@ -15,7 +15,7 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
         title: 'String',
         description: 'String',
         start: '2023-02-12T23:13:37.652Z',
-        end: '2023-02-12T23:13:37.652Z',
+        end: '2023-02-12T23:14:37.652Z',
       },
     },
     invisible: {
@@ -29,7 +29,7 @@ export const standard = defineScenario<Prisma.EventCreateArgs>({
         title: 'String',
         description: 'String',
         start: '2023-02-12T23:13:37.652Z',
-        end: '2023-02-12T23:13:37.652Z',
+        end: '2023-02-12T23:14:37.652Z',
       },
     },
   },

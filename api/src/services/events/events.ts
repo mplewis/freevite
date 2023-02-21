@@ -65,14 +65,16 @@ export const updateEvent: MutationResolvers['updateEvent'] = ({
   editToken,
   input,
 }) => {
-  validate(input.end, 'end', {
-    custom: {
-      with: () => {
-        if (!dayjs(input.end).isAfter(dayjs(input.start)))
-          throw new Error('End date must be after the start date')
+  if (input.end) {
+    validate(input.end, 'end', {
+      custom: {
+        with: () => {
+          if (!dayjs(input.end).isAfter(dayjs(input.start)))
+            throw new Error('End date must be after the start date')
+        },
       },
-    },
-  })
+    })
+  }
   return db.event.update({ data: input, where: { editToken } })
 }
 
