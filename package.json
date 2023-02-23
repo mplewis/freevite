@@ -27,7 +27,7 @@
     "type-fest": "^3.6.0"
   },
   "devDependencies": {
-    "@redwoodjs/core": "4.1.4",
+    "@redwoodjs/core": "4.2.0",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
     "@types/sanitize-html": "^2.8.0",
