@@ -19,3 +19,13 @@
   from = "/*"
   to = "/200.html"
   status = 200
+
+[functions]
+  external_node_modules = [
+    'unist-util-visit',
+    'react-markdown',
+    'rehype-stringify',
+    'remark-parse',
+    'remark-rehype',
+    'unified',
+  ]
