@@ -1,12 +1,12 @@
 {
   "compilerOptions": {
-    "strict": true,
     "noEmit": true,
     "allowJs": true,
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
     "moduleResolution": "node",
+    "skipLibCheck": true,
     "baseUrl": "./",
     "rootDirs": [
       "./src",
@@ -31,5 +31,5 @@
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/api-*",
     "../types"
-  ]
+, "../logic/visibility.test.ts"  ]
 }

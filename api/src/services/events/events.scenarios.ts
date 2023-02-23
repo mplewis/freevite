@@ -1,30 +1,35 @@
 import type { Prisma, Event } from '@prisma/client'
+
 import type { ScenarioData } from '@redwoodjs/testing/api'
 
 export const standard = defineScenario<Prisma.EventCreateArgs>({
   event: {
-    one: {
+    visible: {
       data: {
-        token: 'String434184',
-        expiresAt: '2022-12-16T23:11:00.447Z',
-        slug: 'String3338473',
+        editToken: 'String1328327',
+        previewToken: 'String571517',
+        ownerEmail: 'String',
+        confirmed: true,
+        visible: true,
+        slug: 'String6210380',
         title: 'String',
         description: 'String',
-        start: '2022-12-16T23:11:00.447Z',
-        end: '2022-12-16T23:11:00.447Z',
-        reminders: 'String',
+        start: '2023-02-12T23:13:37.652Z',
+        end: '2023-02-12T23:14:37.652Z',
       },
     },
-    two: {
+    invisible: {
       data: {
-        token: 'String4016761',
-        expiresAt: '2022-12-16T23:11:00.447Z',
-        slug: 'String8862604',
+        editToken: 'String948979',
+        previewToken: 'String2012098',
+        ownerEmail: 'String',
+        confirmed: true,
+        visible: false,
+        slug: 'String3041401',
         title: 'String',
         description: 'String',
-        start: '2022-12-16T23:11:00.447Z',
-        end: '2022-12-16T23:11:00.447Z',
-        reminders: 'String',
+        start: '2023-02-12T23:13:37.652Z',
+        end: '2023-02-12T23:14:37.652Z',
       },
     },
   },

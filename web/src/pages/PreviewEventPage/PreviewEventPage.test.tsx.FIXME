@@ -1,0 +1,23 @@
+// FIXME: This test can't run because the Markdown stuff is ESModules.
+
+// import { LocationProvider } from '@redwoodjs/router'
+// import { render } from '@redwoodjs/testing/web'
+
+// import PreviewEventPage from './PreviewEventPage'
+
+// //   Improve this test with help from the Redwood Testing Doc:
+// //   https://redwoodjs.com/docs/testing#testing-pages-layouts
+
+// describe('PreviewEventPage', () => {
+//   it('renders successfully', () => {
+//     expect(() => {
+//       render(
+//         <LocationProvider
+//           location={{ pathname: '', search: '?token=deadbeefcafe' }}
+//         >
+//           <PreviewEventPage />
+//         </LocationProvider>
+//       )
+//     }).not.toThrow()
+//   })
+// })

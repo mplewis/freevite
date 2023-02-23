@@ -1,0 +1,25 @@
+$primary: #8e44ad;
+$green: #27ae60;
+@import "bulma/bulma.sass";
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap');
+
+* {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6, .logo {
+	font-family: 'Josefin Sans', sans-serif;
+}
+
+.logo {
+	font-weight: 700;
+	font-size: 24px
+}
+
+footer {
+	opacity: 0.5;
+	transition: opacity 0.3s;
+	&:hover {
+		opacity: 1;
+	}
+}

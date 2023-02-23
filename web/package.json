@@ -13,25 +13,28 @@
     ]
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "@redwoodjs/forms": "3.5.0",
-    "@redwoodjs/router": "3.5.0",
-    "@redwoodjs/web": "3.5.0",
-    "@tailwindcss/forms": "^0.5.3",
-    "@tailwindcss/typography": "^0.5.8",
-    "humanize-string": "2.1.0",
-    "prop-types": "15.8.1",
+    "@redwoodjs/forms": "4.1.4",
+    "@redwoodjs/router": "4.1.4",
+    "@redwoodjs/web": "4.1.4",
+    "bulma": "^0.9.4",
+    "classnames": "^2.3.2",
+    "dayjs": "^1.11.7",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "react-markdown": "^8.0.4",
-    "rehype-stringify": "^9.0.3"
+    "react-markdown": "^8.0.5",
+    "rehype-stringify": "^9.0.3",
+    "remark-parse": "^10.0.1",
+    "remark-rehype": "^10.1.0",
+    "unified": "^10.1.2",
+    "unist": "^8.0.11",
+    "unist-util-visit": "^4.1.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.4.13",
-    "postcss": "^8.4.19",
+    "postcss": "^8.4.21",
     "postcss-loader": "^7.0.2",
-    "tailwindcss": "^3.2.4"
+    "prop-types": "15.8.1",
+    "sass": "^1.58.3",
+    "sass-loader": "^13.2.0"
   }
 }

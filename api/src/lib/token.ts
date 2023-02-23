@@ -1,10 +1,24 @@
-const chars = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+export const alphanumeric =
+  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+export const alphaLower = 'abcdefghijklmnopqrstuvwxyz'
 
-export function generateToken(): string {
-  const count = 32
+export type Params = {
+  count: number
+  charset: string
+  prefix: string
+}
+
+const defaultParams: Params = {
+  count: 32,
+  charset: alphanumeric,
+  prefix: '',
+}
+
+export function generateToken(params?: Partial<Params>): string {
+  const { count, charset, prefix } = { ...defaultParams, ...params }
   const result = []
   for (let i = 0; i < count; i++) {
-    result.push(chars[Math.floor(Math.random() * chars.length)])
+    result.push(charset[Math.floor(Math.random() * charset.length)])
   }
-  return result.join('')
+  return `${prefix}${result.join('')}`
 }

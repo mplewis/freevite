@@ -1,19 +1,12 @@
-import { Link, routes } from '@redwoodjs/router'
-import { MetaTags } from '@redwoodjs/web'
+import EditEventCell from 'src/components/EditEventCell'
+import PageHead from 'src/components/PageHead/PageHead'
+import { queryValue } from 'src/logic/path'
 
 const EditEventPage = () => {
   return (
     <>
-      <MetaTags title="EditEvent" description="EditEvent page" />
-
-      <h1>EditEventPage</h1>
-      <p>
-        Find me in <code>./web/src/pages/EditEventPage/EditEventPage.tsx</code>
-      </p>
-      <p>
-        My default route is named <code>editEvent</code>, link to me with `
-        <Link to={routes.editEvent()}>EditEvent</Link>`
-      </p>
+      <PageHead title="Edit Event" desc="Edit your event details." />
+      <EditEventCell editToken={queryValue('token')} />
     </>
   )
 }

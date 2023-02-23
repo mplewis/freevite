@@ -3,54 +3,48 @@ export const schema = gql`
     id: Int!
     createdAt: DateTime!
     updatedAt: DateTime!
-    token: String!
+    editToken: String!
+    previewToken: String!
+    ownerEmail: String!
     confirmed: Boolean!
-    expiresAt: DateTime!
     visible: Boolean!
     slug: String!
     title: String!
     description: String!
     start: DateTime!
     end: DateTime!
-    reminders: String!
+  }
+
+  type PublicEvent {
+    title: String!
+    description: String!
+    start: DateTime!
+    end: DateTime!
   }
 
   type Query {
-    events: [Event!]! @requireAuth
-    event(id: Int!): Event @requireAuth
-    eventBySlug(slug: String!): Event @requireAuth
-    eventByToken(token: String!): Event @requireAuth
+    eventBySlug(slug: String!): PublicEvent @skipAuth
+    eventByEditToken(editToken: String!): Event @skipAuth
+    eventByPreviewToken(previewToken: String!): Event @skipAuth
   }
 
   input CreateEventInput {
-    token: String!
-    confirmed: Boolean!
-    expiresAt: DateTime!
-    visible: Boolean!
-    slug: String!
+    ownerEmail: String!
     title: String!
-    description: String!
-    start: DateTime!
-    end: DateTime!
-    reminders: String!
   }
 
   input UpdateEventInput {
-    token: String
-    confirmed: Boolean
-    expiresAt: DateTime
     visible: Boolean
     slug: String
     title: String
     description: String
     start: DateTime
     end: DateTime
-    reminders: String
   }
 
   type Mutation {
-    createEvent(input: CreateEventInput!): Event! @requireAuth
-    updateEvent(id: Int!, input: UpdateEventInput!): Event! @requireAuth
-    deleteEvent(id: Int!): Event! @requireAuth
+    createEvent(input: CreateEventInput!): Event! @skipAuth
+    updateEvent(editToken: String!, input: UpdateEventInput!): Event! @skipAuth
+    deleteEvent(editToken: String!): Event! @skipAuth
   }
 `

@@ -1,0 +1,16 @@
+// FIXME: This test can't run because the Markdown stuff is ESModules.
+
+// import { render } from '@redwoodjs/testing/web'
+
+// import ViewEventPage from './ViewEventPage'
+
+// //   Improve this test with help from the Redwood Testing Doc:
+// //   https://redwoodjs.com/docs/testing#testing-pages-layouts
+
+// describe('ViewEventPage', () => {
+//   it('renders successfully', () => {
+//     expect(() => {
+//       render(<ViewEventPage />)
+//     }).not.toThrow()
+//   })
+// })
