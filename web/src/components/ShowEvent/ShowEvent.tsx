@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react'
-
 import dayjs from 'dayjs'
 
 import { markdownToHTML } from 'src/apiLib/markdown'
@@ -43,14 +41,7 @@ function gcalLink(event: Event, descHTML: string) {
 const ShowEvent = ({ event }: Props) => {
   const { title, description, start, end, slug } = event
   const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
-
-  const [htmlDesc, setHtmlDesc] = useState<string>(
-    '<em>Rendering Markdown description...</em>'
-  )
-
-  useEffect(() => {
-    markdownToHTML(description).then(setHtmlDesc)
-  }, [description])
+  const htmlDesc = markdownToHTML(description)
 
   return (
     <div className="mt-3">
