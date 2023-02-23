@@ -25,7 +25,7 @@ jobs:
           node-version: '16'
           cache: yarn
       - run: yarn install --immutable
-      - run: env | base64
+      - run: env
         env:
           DATABASE_URL: postgres://username:password@localhost:5432/ci_test
       - run: yarn jest
