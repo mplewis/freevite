@@ -6433,6 +6433,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/marked@npm:^4.0.8":
+  version: 4.0.8
+  resolution: "@types/marked@npm:4.0.8"
+  checksum: 881438a5624f52757b23b9703a11957f9ecd9aa7cc50e8c0e92165c0a3c3e628cb09e47f2f0d0034670cdafe21a64abd62fffb0c03c4fa316ab99f7dbd75119b
+  languageName: node
+  linkType: hard
+
 "@types/mdast@npm:^3.0.0":
   version: 3.0.10
   resolution: "@types/mdast@npm:3.0.10"
@@ -6604,6 +6611,15 @@ __metadata:
   version: 0.12.0
   resolution: "@types/retry@npm:0.12.0"
   checksum: 7c5c9086369826f569b83a4683661557cab1361bac0897a1cefa1a915ff739acd10ca0d62b01071046fe3f5a3f7f2aec80785fe283b75602dc6726781ea3e328
+  languageName: node
+  linkType: hard
+
+"@types/sanitize-html@npm:^2.8.0":
+  version: 2.8.0
+  resolution: "@types/sanitize-html@npm:2.8.0"
+  dependencies:
+    htmlparser2: ^8.0.0
+  checksum: af2b691c9bbf1f72334335fa671de58ba5e2ce082d1b8527627ad764a598e6d9ce0dc4fb1fcfb4bb28905aa6c40ebfa16bbb84364c85077431d4ccf7ade9c722
   languageName: node
   linkType: hard
 
@@ -14514,7 +14530,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"htmlparser2@npm:^8.0.1":
+"htmlparser2@npm:^8.0.0, htmlparser2@npm:^8.0.1":
   version: 8.0.1
   resolution: "htmlparser2@npm:8.0.1"
   dependencies:
@@ -15374,7 +15390,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"is-plain-object@npm:5.0.0":
+"is-plain-object@npm:5.0.0, is-plain-object@npm:^5.0.0":
   version: 5.0.0
   resolution: "is-plain-object@npm:5.0.0"
   checksum: 893e42bad832aae3511c71fd61c0bf61aa3a6d853061c62a307261842727d0d25f761ce9379f7ba7226d6179db2a3157efa918e7fe26360f3bf0842d9f28942c
@@ -17249,6 +17265,15 @@ __metadata:
   version: 1.0.4
   resolution: "markdown-escapes@npm:1.0.4"
   checksum: cf3f2231191d9df61cd1d02a50a55a5c89ab9cebfe75572950f4844b93a41d561eed2d82e42732d55f2c55fa0d426b51df3a7f378b4068ae1e2923bb758a9cc8
+  languageName: node
+  linkType: hard
+
+"marked@npm:^4.2.12":
+  version: 4.2.12
+  resolution: "marked@npm:4.2.12"
+  bin:
+    marked: bin/marked.js
+  checksum: ce8a2d0def715480f23ade1ee72ad74c9cdfe614442da88dac22049500566cf3e6a1fa41e70c4061bb378beba9896bb4bd542f58aa4a30c1f431e553a461ffe6
   languageName: node
   linkType: hard
 
@@ -19132,6 +19157,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"parse-srcset@npm:^1.0.2":
+  version: 1.0.2
+  resolution: "parse-srcset@npm:1.0.2"
+  checksum: 2f268e3d110d4c53d06ed2a8e8ee61a7da0cee13bf150819a6da066a8ca9b8d15b5600d6e6cae8be940e2edc50ee7c1e1052934d6ec858324065ecef848f0497
+  languageName: node
+  linkType: hard
+
 "parse5-htmlparser2-tree-adapter@npm:^7.0.0":
   version: 7.0.0
   resolution: "parse5-htmlparser2-tree-adapter@npm:7.0.0"
@@ -20000,7 +20032,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"postcss@npm:^8.2.15, postcss@npm:^8.4.17, postcss@npm:^8.4.19, postcss@npm:^8.4.21":
+"postcss@npm:^8.2.15, postcss@npm:^8.3.11, postcss@npm:^8.4.17, postcss@npm:^8.4.19, postcss@npm:^8.4.21":
   version: 8.4.21
   resolution: "postcss@npm:8.4.21"
   dependencies:
@@ -21480,12 +21512,16 @@ __metadata:
   dependencies:
     "@redwoodjs/core": 4.1.4
     "@types/jest": ^29.4.0
+    "@types/marked": ^4.0.8
+    "@types/sanitize-html": ^2.8.0
     dayjs: ^1.11.7
+    marked: ^4.2.12
     prettier-plugin-tailwindcss: ^0.2.3
     rehype-stringify: ^9.0.3
     remark-parse: ^10.0.1
     remark-rehype: ^10.1.0
     remeda: ^1.6.2
+    sanitize-html: ^2.10.0
     ts-pattern: ^4.2.0
     type-fest: ^3.6.0
     unified: ^10.1.2
@@ -21624,6 +21660,20 @@ __metadata:
   bin:
     sane: ./src/cli.js
   checksum: 7d0991ecaa10b02c6d0339a6f7e31db776971f3b659a351916dcc7ce3464671e72b54d80bcce118e39d4343e1e56c699fe35f6cb89fbd88b07095b72841cbfb0
+  languageName: node
+  linkType: hard
+
+"sanitize-html@npm:^2.10.0":
+  version: 2.10.0
+  resolution: "sanitize-html@npm:2.10.0"
+  dependencies:
+    deepmerge: ^4.2.2
+    escape-string-regexp: ^4.0.0
+    htmlparser2: ^8.0.0
+    is-plain-object: ^5.0.0
+    parse-srcset: ^1.0.2
+    postcss: ^8.3.11
+  checksum: e84083413e10354097bb444f8533b644739c81d48adf460f1c4702a0acc00e297928ae318e763ddc0c138403d38aa6b41c97d267ca25df24818e8d418a8ccc5a
   languageName: node
   linkType: hard
 
