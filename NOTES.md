@@ -36,3 +36,4 @@
 - [ ] Dark mode
 - [ ] Fix site host config from env var
 - [ ] Connect to db
+- [ ] Lint and typecheck
