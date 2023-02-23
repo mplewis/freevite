@@ -1,7 +1,6 @@
 interface Event {
   confirmed: boolean
   visible: boolean
-  expiresAt: Date
 }
 
 export function checkVisibility(
@@ -11,7 +10,5 @@ export function checkVisibility(
   if (!e.confirmed) return { visible: false, reason: 'Event is not confirmed' }
   if (!e.visible)
     return { visible: false, reason: 'Event is not set to visible' }
-  if (e.expiresAt < new Date())
-    return { visible: false, reason: 'Event is expired' }
   return { visible: true }
 }

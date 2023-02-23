@@ -13,16 +13,16 @@ model Event {
   createdAt DateTime @default(now())
   updatedAt DateTime @default(now()) @updatedAt
 
-  token     String   @unique
-  confirmed Boolean  @default(false)
-  expiresAt DateTime
-  visible   Boolean  @default(false)
+  editToken    String @unique
+  previewToken String @unique
+
+  ownerEmail String
+  confirmed  Boolean @default(false)
+  visible    Boolean @default(false)
 
   slug        String   @unique
   title       String
   description String
   start       DateTime
   end         DateTime
-  reminders   String
-  // TODO: location
 }

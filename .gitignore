@@ -19,3 +19,7 @@ api/src/lib/generateGraphiQLHeader.*
 !.yarn/releases
 !.yarn/sdks
 !.yarn/versions
+coverage
+
+# legacy code worktree
+_old
