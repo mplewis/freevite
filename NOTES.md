@@ -1,19 +1,23 @@
-- [ ] .ics function + link
 - [ ] Add To icons
+- [ ] Captcha
 - [ ] Dark mode
 - [ ] Discard changes
 - [ ] Favicon
 - [ ] Field length enforcement
+- [ ] Fix disabled tests now that Markdown works
 - [ ] Job to delete expired events
 - [ ] Location field
-- [ ] Logging
 - [ ] Not found cells
 - [ ] Not found page
 - [ ] Open Graph basic data for each page
 - [ ] Open Graph image generation
 - [ ] Prompt on navigate away before destroying changes
+- [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [ ] Send email
+- [ ] Sentry
+- [ ] Tests with Vitest
+- [x] .ics function + link
 - [x] Base layout
 - [x] Buy domain
 - [x] CI

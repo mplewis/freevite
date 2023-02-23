@@ -6,11 +6,6 @@
       "web"
     ]
   },
-  "devDependencies": {
-    "@redwoodjs/core": "4.1.4",
-    "@types/jest": "^29.4.0",
-    "prettier-plugin-tailwindcss": "^0.2.3"
-  },
   "eslintConfig": {
     "extends": "@redwoodjs/eslint-config",
     "root": true
@@ -25,8 +20,17 @@
   "packageManager": "yarn@3.4.1",
   "dependencies": {
     "dayjs": "^1.11.7",
+    "marked": "^4.2.12",
     "remeda": "^1.6.2",
+    "sanitize-html": "^2.10.0",
     "ts-pattern": "^4.2.0",
     "type-fest": "^3.6.0"
+  },
+  "devDependencies": {
+    "@redwoodjs/core": "4.1.4",
+    "@types/jest": "^29.4.0",
+    "@types/marked": "^4.0.8",
+    "@types/sanitize-html": "^2.8.0",
+    "prettier-plugin-tailwindcss": "^0.2.3"
   }
 }

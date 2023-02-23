@@ -20,6 +20,7 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
+    slug: String!
   }
 
   type Query {

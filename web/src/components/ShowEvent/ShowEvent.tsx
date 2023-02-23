@@ -1,10 +1,8 @@
-import { useEffect, useState } from 'react'
-
 import dayjs from 'dayjs'
 
+import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
-import { markdownToHTML } from 'src/convert/markdown'
 
 import Typ from '../Typ/Typ'
 
@@ -17,6 +15,7 @@ interface Event {
   description: string
   start: string
   end: string
+  slug: string
 }
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
@@ -40,13 +39,10 @@ function gcalLink(event: Event, descHTML: string) {
 }
 
 const ShowEvent = ({ event }: Props) => {
-  const { title, description, start, end } = event
-  const [htmlDesc, setHtmlDesc] = useState<string>(
-    '<em>Rendering Markdown description...</em>'
-  )
-  useEffect(() => {
-    markdownToHTML(description).then(setHtmlDesc)
-  }, [description])
+  const { title, description, start, end, slug } = event
+  const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
+  const htmlDesc = markdownToHTML(description)
+
   return (
     <div className="mt-3">
       <Typ x="p" className="is-italic">
@@ -67,7 +63,11 @@ const ShowEvent = ({ event }: Props) => {
           Add to Google Calendar
         </a>
       </Typ>
-      <Typ x="p">Add to iCal</Typ>
+      <Typ x="p">
+        <a href={icsLink} target="_blank" rel="noreferrer">
+          Add to iCal
+        </a>
+      </Typ>
       <hr />
       <Typ x="p" className="content">
         <div dangerouslySetInnerHTML={{ __html: htmlDesc }} />
