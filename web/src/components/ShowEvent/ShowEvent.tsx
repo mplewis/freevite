@@ -69,11 +69,9 @@ const ShowEvent = ({ event }: Props) => {
       </Typ>
       <Typ x="p">Add to iCal</Typ>
       <hr />
-      <Typ
-        x="p"
-        className="content"
-        dangerouslySetInnerHTML={{ __html: htmlDesc }}
-      />
+      <Typ x="p" className="content">
+        <div dangerouslySetInnerHTML={{ __html: htmlDesc }} />
+      </Typ>
     </div>
   )
 }

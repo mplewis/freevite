@@ -18,7 +18,7 @@ import {
   FieldError,
   CheckboxField,
 } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
+import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import { fqUrlForPath } from 'src/apiLib/url'
