@@ -1,4 +1,3 @@
-- [ ] .ics function + link
 - [ ] Add To icons
 - [ ] Captcha
 - [ ] Dark mode
@@ -17,6 +16,7 @@
 - [ ] Sample event page
 - [ ] Send email
 - [ ] Tests with Vitest
+- [x] .ics function + link
 - [x] Base layout
 - [x] Buy domain
 - [x] CI
