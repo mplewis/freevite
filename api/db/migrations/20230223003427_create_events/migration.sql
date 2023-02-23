@@ -1,20 +1,20 @@
 -- CreateTable
 CREATE TABLE "Event" (
-    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-    "createdAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "updatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "id" SERIAL NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "editToken" TEXT NOT NULL,
     "previewToken" TEXT NOT NULL,
     "ownerEmail" TEXT NOT NULL,
     "confirmed" BOOLEAN NOT NULL DEFAULT false,
-    "expiresAt" DATETIME NOT NULL,
     "visible" BOOLEAN NOT NULL DEFAULT false,
     "slug" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "description" TEXT NOT NULL,
-    "start" DATETIME NOT NULL,
-    "end" DATETIME NOT NULL,
-    "reminders" TEXT NOT NULL
+    "start" TIMESTAMP(3) NOT NULL,
+    "end" TIMESTAMP(3) NOT NULL,
+
+    CONSTRAINT "Event_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
