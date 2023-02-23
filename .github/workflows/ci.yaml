@@ -30,4 +30,4 @@ jobs:
       - run: yarn rw prisma generate
       # - run: yarn rw type-check
       - run: yarn rw test --watch=false
-      # - run: yarn rw lint
+      - run: yarn rw lint

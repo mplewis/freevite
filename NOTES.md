@@ -35,5 +35,5 @@
 - [x] Buy domain
 - [ ] Dark mode
 - [ ] Fix site host config from env var
-- [ ] Connect to db
-- [ ] Lint and typecheck
+- [x] Connect to db
+- [x] Lint and typecheck
