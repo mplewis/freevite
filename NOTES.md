@@ -4,6 +4,7 @@
 - [ ] Discard changes
 - [ ] Favicon
 - [ ] Field length enforcement
+- [ ] Fix disabled tests now that Markdown works
 - [ ] Job to delete expired events
 - [ ] Location field
 - [ ] Logging
