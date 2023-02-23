@@ -34,6 +34,6 @@
 - [ ] Logging
 - [x] Buy domain
 - [ ] Dark mode
-- [ ] Fix site host config from env var
+- [x] Fix site host config from env var
 - [x] Connect to db
 - [x] Lint and typecheck
