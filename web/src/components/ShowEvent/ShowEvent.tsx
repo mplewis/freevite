@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react'
 
 import dayjs from 'dayjs'
 
+import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
-import { markdownToHTML } from 'src/convert/markdown'
 
 import Typ from '../Typ/Typ'
 
