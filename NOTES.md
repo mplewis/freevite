@@ -1,5 +1,6 @@
 - [ ] .ics function + link
 - [ ] Add To icons
+- [ ] Captcha
 - [ ] Dark mode
 - [ ] Discard changes
 - [ ] Favicon
@@ -14,6 +15,7 @@
 - [ ] Prompt on navigate away before destroying changes
 - [ ] Sample event page
 - [ ] Send email
+- [ ] Tests with Vitest
 - [x] Base layout
 - [x] Buy domain
 - [x] CI
