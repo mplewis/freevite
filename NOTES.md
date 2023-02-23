@@ -27,9 +27,13 @@
 - [ ] Location field
 - [ ] Field length enforcement
 - [x] Clean up codebase + tests
-- [ ] CI
+- [x] CI
 - [x] Deploy to Netlify
 - [ ] Open Graph basic data for each page
 - [ ] Open Graph image generation
 - [ ] Logging
 - [x] Buy domain
+- [ ] Dark mode
+- [ ] Fix site host config from env var
+- [ ] Connect to db
+- [ ] Lint and typecheck
