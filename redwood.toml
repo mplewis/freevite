@@ -11,6 +11,7 @@
   apiUrl = "/.netlify/functions"
   includeEnvironmentVariables = [
     'SITE_HOST',
+    'DEPLOY_PRIME_URL', # Netlify
   ]
 [api]
   port = 8911
