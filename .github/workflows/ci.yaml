@@ -27,6 +27,8 @@ jobs:
       - run: yarn install --immutable
       # - run: yarn rw prisma generate
       - run: env > .env # HACK to get DATABASE_URL into Prisma
+        env:
+          DATABASE_URL: postgresql://username:password@localhost:5432/ci_test
       # - run: yarn rw type-check
       - run: yarn rw test --watch=false
         env:
