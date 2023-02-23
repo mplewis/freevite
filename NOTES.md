@@ -28,7 +28,7 @@
 - [ ] Field length enforcement
 - [x] Clean up codebase + tests
 - [ ] CI
-- [ ] Deploy to Netlify
+- [x] Deploy to Netlify
 - [ ] Open Graph basic data for each page
 - [ ] Open Graph image generation
 - [ ] Logging
