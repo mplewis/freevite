@@ -18,6 +18,8 @@ jobs:
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+    env:
+      DATABASE_URL: postgresql://username:password@localhost:5432/ci_test
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -26,11 +28,7 @@ jobs:
           cache: yarn
       - run: yarn install --immutable
       # - run: yarn rw prisma generate
-      - run: env > .env # HACK to get DATABASE_URL into Prisma
-        env:
-          DATABASE_URL: postgresql://username:password@localhost:5432/ci_test
+      # - run: env > .env # HACK to get DATABASE_URL into Prisma
       # - run: yarn rw type-check
       - run: yarn rw test --watch=false
-        env:
-          DATABASE_URL: postgresql://username:password@localhost:5432/ci_test
       # - run: yarn rw lint
