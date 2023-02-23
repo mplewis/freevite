@@ -13,6 +13,7 @@
 - [ ] Open Graph basic data for each page
 - [ ] Open Graph image generation
 - [ ] Prompt on navigate away before destroying changes
+- [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [ ] Send email
 - [ ] Tests with Vitest

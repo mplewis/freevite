@@ -1,6 +1,6 @@
 import { Node } from 'unist'
-import { visit } from 'unist-util-visit'
 
+const unistUtilVisit = import('unist-util-visit')
 const rehypeFilter = import('react-markdown/lib/rehype-filter.js')
 const rehypeStringify = import('rehype-stringify')
 const remarkParse = import('remark-parse')
@@ -12,7 +12,8 @@ interface HTMLNode extends Node {
   properties: Record<string, string>
 }
 
-function addTargetBlank() {
+async function addTargetBlank() {
+  const { visit } = await unistUtilVisit
   return (tree: Node) => {
     visit(tree, 'element', (node: HTMLNode) => {
       if (node.tagName !== 'a') return
@@ -29,6 +30,7 @@ export async function markdownToHTML(markdown: string): Promise<string> {
     .use((await remarkRehype).default)
     .use((await rehypeStringify).default)
     .use((await rehypeFilter).default, { allowedElements })
+    // @ts-expect-error HACK: types don't match here; fix this along with the ESM stuff
     .use(addTargetBlank)
     .process(markdown)
   return String(v)

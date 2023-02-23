@@ -17,6 +17,7 @@ interface Event {
   description: string
   start: string
   end: string
+  slug: string
 }
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
@@ -40,13 +41,17 @@ function gcalLink(event: Event, descHTML: string) {
 }
 
 const ShowEvent = ({ event }: Props) => {
-  const { title, description, start, end } = event
+  const { title, description, start, end, slug } = event
+  const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
+
   const [htmlDesc, setHtmlDesc] = useState<string>(
     '<em>Rendering Markdown description...</em>'
   )
+
   useEffect(() => {
     markdownToHTML(description).then(setHtmlDesc)
   }, [description])
+
   return (
     <div className="mt-3">
       <Typ x="p" className="is-italic">
@@ -67,7 +72,11 @@ const ShowEvent = ({ event }: Props) => {
           Add to Google Calendar
         </a>
       </Typ>
-      <Typ x="p">Add to iCal</Typ>
+      <Typ x="p">
+        <a href={icsLink} target="_blank" rel="noreferrer">
+          Add to iCal
+        </a>
+      </Typ>
       <hr />
       <Typ x="p" className="content">
         <div dangerouslySetInnerHTML={{ __html: htmlDesc }} />
