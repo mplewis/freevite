@@ -1,39 +1,40 @@
-- [x] Home Page -> nav, etc.
-- [x] Create Event Page -> Create Event Form
-- [x] Event Created Page
-- [x] Edit Event Page -> Edit Event Cell -> Edit Event Form
-- [x] Delete Event button
-- [x] Preview Event Page -> Preview Event Cell -> Show Event Component
-- [x] View Event Page -> View Event Cell -> View Event Component
-- [x] Install Tailwind
-- [x] Base layout
-- [x] Navbar
-- [ ] Not found page
-- [x] Replace Tailwind with Bulma
-- [x] Edit: expiry, visible field
-- [x] Confirm event on first edit click
-- [x] Delete reminders
-- [ ] Job to delete expired events
-- [ ] Send email
-- [ ] Not found cells
-- [x] Slug field in edit event
-- [ ] Sample event page
-- [x] Limit access to fields
-- [x] GCal link
 - [ ] .ics function + link
 - [ ] Add To icons
+- [ ] Dark mode
 - [ ] Discard changes
-- [ ] Prompt on navigate away before destroying changes
-- [ ] Location field
+- [ ] Favicon
 - [ ] Field length enforcement
-- [x] Clean up codebase + tests
-- [x] CI
-- [x] Deploy to Netlify
+- [ ] Job to delete expired events
+- [ ] Location field
+- [ ] Logging
+- [ ] Not found cells
+- [ ] Not found page
 - [ ] Open Graph basic data for each page
 - [ ] Open Graph image generation
-- [ ] Logging
+- [ ] Prompt on navigate away before destroying changes
+- [ ] Sample event page
+- [ ] Send email
+- [x] Base layout
 - [x] Buy domain
-- [ ] Dark mode
-- [x] Fix site host config from env var
+- [x] CI
+- [x] Clean up codebase + tests
+- [x] Confirm event on first edit click
 - [x] Connect to db
+- [x] Create Event Page -> Create Event Form
+- [x] Delete Event button
+- [x] Delete reminders
+- [x] Deploy to Netlify
+- [x] Edit Event Page -> Edit Event Cell -> Edit Event Form
+- [x] Edit: expiry, visible field
+- [x] Event Created Page
+- [x] Fix site host config from env var
+- [x] GCal link
+- [x] Home Page -> nav, etc.
+- [x] Install Tailwind
+- [x] Limit access to fields
 - [x] Lint and typecheck
+- [x] Navbar
+- [x] Preview Event Page -> Preview Event Cell -> Show Event Component
+- [x] Replace Tailwind with Bulma
+- [x] Slug field in edit event
+- [x] View Event Page -> View Event Cell -> View Event Component
