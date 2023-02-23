@@ -7,7 +7,6 @@
 - [ ] Fix disabled tests now that Markdown works
 - [ ] Job to delete expired events
 - [ ] Location field
-- [ ] Logging
 - [ ] Not found cells
 - [ ] Not found page
 - [ ] Open Graph basic data for each page
@@ -16,6 +15,7 @@
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [ ] Send email
+- [ ] Sentry
 - [ ] Tests with Vitest
 - [x] .ics function + link
 - [x] Base layout
