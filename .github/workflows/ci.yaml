@@ -10,8 +10,8 @@ jobs:
         image: postgres
         ports: ['5432:5432']
         env:
-          POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: username
+          POSTGRES_PASSWORD: password
           POSTGRES_DB: ci_test
         options: >-
           --health-cmd pg_isready
@@ -27,7 +27,7 @@ jobs:
       - run: yarn install --immutable
       - run: env
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/ci_test
+          DATABASE_URL: postgres://username:password@localhost:5432/ci_test
       - run: yarn jest
         env:
-          DATABASE_URL: postgres://postgres:postgres@localhost:5432/ci_test
+          DATABASE_URL: postgres://username:password@localhost:5432/ci_test
