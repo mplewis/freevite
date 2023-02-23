@@ -25,7 +25,8 @@ jobs:
           node-version: '16'
           cache: yarn
       - run: yarn install --immutable
-      - run: yarn rw prisma generate
+      # - run: yarn rw prisma generate
+      - run: env > .env # HACK to get DATABASE_URL into Prisma
       # - run: yarn rw type-check
       - run: yarn rw test --watch=false
         env:
