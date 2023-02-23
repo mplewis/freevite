@@ -21482,9 +21482,15 @@ __metadata:
     "@types/jest": ^29.4.0
     dayjs: ^1.11.7
     prettier-plugin-tailwindcss: ^0.2.3
+    rehype-stringify: ^9.0.3
+    remark-parse: ^10.0.1
+    remark-rehype: ^10.1.0
     remeda: ^1.6.2
     ts-pattern: ^4.2.0
     type-fest: ^3.6.0
+    unified: ^10.1.2
+    unist: ^8.0.11
+    unist-util-visit: ^4.1.2
   languageName: unknown
   linkType: soft
 
@@ -24664,14 +24670,8 @@ __metadata:
     react: 17.0.2
     react-dom: 17.0.2
     react-markdown: ^8.0.5
-    rehype-stringify: ^9.0.3
-    remark-parse: ^10.0.1
-    remark-rehype: ^10.1.0
     sass: ^1.58.3
     sass-loader: ^13.2.0
-    unified: ^10.1.2
-    unist: ^8.0.11
-    unist-util-visit: ^4.1.2
   languageName: unknown
   linkType: soft
 
