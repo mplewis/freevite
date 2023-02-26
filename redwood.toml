@@ -10,8 +10,9 @@
   port = 8910
   apiUrl = "/.netlify/functions"
   includeEnvironmentVariables = [
-    'SITE_HOST',
     'DEPLOY_PRIME_URL', # Netlify
+    'SENTRY_DSN',
+    'SITE_HOST',
   ]
 [api]
   port = 8911

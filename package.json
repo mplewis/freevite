@@ -19,6 +19,7 @@
   },
   "packageManager": "yarn@3.4.1",
   "dependencies": {
+    "@sentry/serverless": "^7.38.0",
     "dayjs": "^1.11.7",
     "marked": "^4.2.12",
     "remeda": "^1.6.2",

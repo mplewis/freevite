@@ -6,8 +6,9 @@ import services from 'src/services/**/*.{js,ts}'
 
 import { db } from 'src/lib/db'
 import { logger } from 'src/lib/logger'
+import { wrap } from 'src/lib/sentry'
 
-export const handler = createGraphQLHandler({
+const baseHandler = createGraphQLHandler({
   loggerConfig: { logger, options: {} },
   directives,
   sdls,
@@ -17,3 +18,5 @@ export const handler = createGraphQLHandler({
     db.$disconnect()
   },
 })
+
+export const handler = wrap(baseHandler)

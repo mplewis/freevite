@@ -3,6 +3,7 @@ import { createEvent, EventAttributes } from 'ics'
 
 import { convertToDateArray } from 'src/lib/date'
 import { markdownToHTML } from 'src/lib/markdown'
+import { wrap } from 'src/lib/sentry'
 import { eventBySlug } from 'src/services/events/events'
 
 export interface Event {
@@ -38,7 +39,7 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
   }
 }
 
-export async function handler(e: APIGatewayEvent) {
+async function baseHandler(e: APIGatewayEvent) {
   const slug = e.queryStringParameters?.event
   if (!slug) return { statusCode: 400, body: 'Missing event slug' }
   const event = await eventBySlug({ slug })
@@ -61,3 +62,5 @@ export async function handler(e: APIGatewayEvent) {
     },
   }
 }
+
+export const handler = wrap(baseHandler)
