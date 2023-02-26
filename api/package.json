@@ -5,6 +5,10 @@
   "dependencies": {
     "@redwoodjs/api": "4.2.0",
     "@redwoodjs/graphql-server": "4.2.0",
-    "ics": "^3.1.0"
+    "ics": "^3.1.0",
+    "nodemailer": "^6.9.1"
+  },
+  "devDependencies": {
+    "@types/nodemailer": "^6.4.7"
   }
 }

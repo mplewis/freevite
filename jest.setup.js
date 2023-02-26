@@ -1,1 +1,6 @@
 process.env.SITE_HOST = 'example.com'
+process.env.SMTP_HOST = 'smtp.example.com'
+process.env.SMTP_USER = 'username'
+process.env.SMTP_PASS = 'password'
+process.env.FROM_NAME = 'Freevite Test'
+process.env.FROM_EMAIL = 'test@freevite.app'

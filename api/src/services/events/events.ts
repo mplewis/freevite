@@ -4,6 +4,7 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
+import { sendEventDetails } from 'src/lib/email/template'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
 
@@ -56,9 +57,11 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
       },
     },
   })
-  return db.event.create({
+  const event = await db.event.create({
     data: { ...defaultEventParams(input.title), ...input },
   })
+  await sendEventDetails(event)
+  return event
 }
 
 export const updateEvent: MutationResolvers['updateEvent'] = ({
