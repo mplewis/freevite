@@ -15,7 +15,6 @@
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [ ] Send email
-- [ ] Sentry
 - [ ] Tests with Vitest
 - [x] .ics function + link
 - [x] Base layout
@@ -40,5 +39,6 @@
 - [x] Navbar
 - [x] Preview Event Page -> Preview Event Cell -> Show Event Component
 - [x] Replace Tailwind with Bulma
+- [x] Sentry
 - [x] Slug field in edit event
 - [x] View Event Page -> View Event Cell -> View Event Component
