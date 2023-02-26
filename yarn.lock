@@ -6584,6 +6584,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@types/nodemailer@npm:^6.4.7":
+  version: 6.4.7
+  resolution: "@types/nodemailer@npm:6.4.7"
+  dependencies:
+    "@types/node": "*"
+  checksum: 368ddc1faf9c393ae7192dd0f0c049e9aa38cc8214a6ec62a1ad93b8479a17c69b6f552b9ac34a57539a3070f52292d14795f0c2d066637eebd945976898cd7e
+  languageName: node
+  linkType: hard
+
 "@types/normalize-package-data@npm:^2.4.0":
   version: 2.4.1
   resolution: "@types/normalize-package-data@npm:2.4.1"
@@ -7902,7 +7911,9 @@ __metadata:
   dependencies:
     "@redwoodjs/api": 4.2.0
     "@redwoodjs/graphql-server": 4.2.0
+    "@types/nodemailer": ^6.4.7
     ics: ^3.1.0
+    nodemailer: ^6.9.1
   languageName: unknown
   linkType: soft
 
@@ -10184,7 +10195,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"common-tags@npm:1.8.2":
+"common-tags@npm:1.8.2, common-tags@npm:^1.8.2":
   version: 1.8.2
   resolution: "common-tags@npm:1.8.2"
   checksum: 23efe47ff0a1a7c91489271b3a1e1d2a171c12ec7f9b35b29b2fce51270124aff0ec890087e2bc2182c1cb746e232ab7561aaafe05f1e7452aea733d2bfe3f63
@@ -17989,6 +18000,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"nodemailer@npm:^6.9.1":
+  version: 6.9.1
+  resolution: "nodemailer@npm:6.9.1"
+  checksum: adeaef441e31025776e8b1fa818e4b260850fbb60150f6ff7210e4de443bb32f0881a8a4967c42bb108d620f68f18369a42db29fe7cdec5e4ec09b0ddd51b19c
+  languageName: node
+  linkType: hard
+
 "nodemon@npm:2.0.20":
   version: 2.0.20
   resolution: "nodemon@npm:2.0.20"
@@ -20995,6 +21013,7 @@ __metadata:
     "@types/jest": ^29.4.0
     "@types/marked": ^4.0.8
     "@types/sanitize-html": ^2.8.0
+    common-tags: ^1.8.2
     dayjs: ^1.11.7
     marked: ^4.2.12
     prettier-plugin-tailwindcss: ^0.2.3
