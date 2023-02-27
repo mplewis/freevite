@@ -21,7 +21,8 @@ const defaultEventParams = (title) => ({
         .toLowerCase() + '-',
   }),
   description:
-    'Fill in your event description here.\n\nYou can use **Markdown** to style this section. Learn more at https://www.markdownguide.org.',
+    'Fill in your event description here.\n\n' +
+    'You can use **Markdown** to style this section. Learn more at https://www.markdownguide.org.',
   start: dayjs().add(7, 'day').toISOString(),
   end: dayjs().add(7, 'day').add(1, 'hour').toISOString(),
 })

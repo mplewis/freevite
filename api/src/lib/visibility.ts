@@ -3,6 +3,11 @@ interface Event {
   visible: boolean
 }
 
+/**
+ * Check if an event is visible to the public.
+ * @param e The event in question
+ * @returns true if this event is visible, false otherwise
+ */
 export function checkVisibility(
   e: Event | null | undefined
 ): { visible: true } | { visible: false; reason: string } {

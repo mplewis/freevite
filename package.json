@@ -6,10 +6,6 @@
       "web"
     ]
   },
-  "eslintConfig": {
-    "extends": "@redwoodjs/eslint-config",
-    "root": true
-  },
   "engines": {
     "node": ">=16.19 <=18.x",
     "yarn": ">=1.15"
@@ -33,6 +29,7 @@
     "@types/marked": "^4.0.8",
     "@types/sanitize-html": "^2.8.0",
     "common-tags": "^1.8.2",
+    "eslint-plugin-jsdoc": "^40.0.0",
     "prettier-plugin-tailwindcss": "^0.2.3"
   }
 }

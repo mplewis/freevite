@@ -21,6 +21,11 @@ const allowedTags = [
   'ul',
 ]
 
+/**
+ * Convert a Markdown document to HTML, sanitizing the content and opening links in a new window.
+ * @param markdown The Markdown document
+ * @returns The converted HTML
+ */
 export function markdownToHTML(markdown: string): string {
   const html = marked.parse(markdown)
   const clean = sanitize(html, { allowedTags })

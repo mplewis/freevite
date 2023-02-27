@@ -114,7 +114,8 @@ const EditEventForm = (props: Props) => {
 
   const promptDestroy = () => {
     const resp = prompt(
-      `Warning! You are about to permanently delete the event "${event.title}". This action cannot be undone. To confirm, type "DELETE":`
+      `Warning! You are about to permanently delete the event "${event.title}". ` +
+        'This action cannot be undone. To confirm, type "DELETE":'
     )
     if (resp === null) return
     if (resp !== 'DELETE') {
