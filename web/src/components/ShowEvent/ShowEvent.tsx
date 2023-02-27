@@ -6,6 +6,9 @@ import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 
 import Typ from '../Typ/Typ'
 
+import GCal from './gcal.svg'
+import ICS from './ics.svg'
+
 export interface Props {
   event: Event
 }
@@ -19,6 +22,7 @@ interface Event {
 }
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
+const ICON_WIDTH = '200px'
 
 function toGcalDate(date: string) {
   return dayjs(date).utc().format(GCAL_DATE_FORMAT)
@@ -38,6 +42,12 @@ function gcalLink(event: Event, descHTML: string) {
   return `https://calendar.google.com/calendar/r/eventedit?${query}`
 }
 
+const IconBox = ({ children }) => (
+  <div className="mr-1" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
+    {children}
+  </div>
+)
+
 const ShowEvent = ({ event }: Props) => {
   const { title, description, start, end, slug } = event
   const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
@@ -45,11 +55,10 @@ const ShowEvent = ({ event }: Props) => {
 
   return (
     <div className="mt-3">
-      <Typ x="p" className="is-italic">
+      <Typ x="p" className="is-italic pb-5">
         The user-generated content below is not owned by Freevite. Please report
         abuse to <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
       </Typ>
-      <hr />
       <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>
       <Typ x="p">
         <strong>From:</strong> {prettyDate(start)} ({prettyUntil(start)})
@@ -58,20 +67,22 @@ const ShowEvent = ({ event }: Props) => {
         <strong>To:</strong> {prettyDate(end)} ({prettyBetween(start, end)}{' '}
         long)
       </Typ>
-      <Typ x="p">
-        <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
-          Add to Google Calendar
-        </a>
-      </Typ>
-      <Typ x="p">
-        <a href={icsLink} target="_blank" rel="noreferrer">
-          Add to iCal
-        </a>
-      </Typ>
-      <hr />
-      <Typ x="p" className="content">
-        <div dangerouslySetInnerHTML={{ __html: htmlDesc }} />
-      </Typ>
+      <div className="mt-4 mb-3">
+        <IconBox>
+          <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
+            <GCal aria-label="Add to Google Calendar" />
+          </a>
+        </IconBox>
+        <IconBox>
+          <a href={icsLink} target="_blank" rel="noreferrer">
+            <ICS aria-label="Add to Apple Calendar" />
+          </a>
+        </IconBox>
+      </div>
+      <div
+        className="content pb-2"
+        dangerouslySetInnerHTML={{ __html: htmlDesc }}
+      />
     </div>
   )
 }

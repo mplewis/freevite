@@ -1,4 +1,4 @@
-- [ ] Add To icons
+- [x] Add To icons
 - [ ] Captcha
 - [ ] Dark mode
 - [ ] Discard changes
