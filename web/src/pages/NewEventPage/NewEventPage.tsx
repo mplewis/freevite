@@ -72,6 +72,7 @@ const NewEventPage = () => {
           <EmailField
             name="ownerEmail"
             validation={{ ...isEmail }}
+            disabled={loading}
             {...fieldAttrs.input}
           />
         </FormField>
@@ -81,6 +82,7 @@ const NewEventPage = () => {
           <TextField
             name="title"
             validation={{ required: true }}
+            disabled={loading}
             {...fieldAttrs.input}
           />
         </FormField>
