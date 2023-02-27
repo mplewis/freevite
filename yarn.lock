@@ -9284,6 +9284,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bulma-prefers-dark@npm:^0.1.0-beta.1":
+  version: 0.1.0-beta.1
+  resolution: "bulma-prefers-dark@npm:0.1.0-beta.1"
+  checksum: dad1d93deefd34b6dd3910402c322dadfbfe2ae64225adc9629ca2405c75b7672e45bece2662d3eedd045725b7ddf21da5128e7ac67c67d82a721a3580f32fb5
+  languageName: node
+  linkType: hard
+
 "bulma@npm:^0.9.4":
   version: 0.9.4
   resolution: "bulma@npm:0.9.4"
@@ -24036,6 +24043,7 @@ __metadata:
     "@redwoodjs/web": 4.2.0
     autoprefixer: ^10.4.13
     bulma: ^0.9.4
+    bulma-prefers-dark: ^0.1.0-beta.1
     classnames: ^2.3.2
     dayjs: ^1.11.7
     postcss: ^8.4.21

@@ -1,19 +1,50 @@
+@import "bulma/sass/utilities/initial-variables.sass";
+
 $primary: #8e44ad;
 $green: #27ae60;
-@import "bulma/bulma.sass";
-@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap');
+$blue: #2980b9;
+$link-dark: #3498db;
+$dark: $black-ter;
 
-* {
-	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-}
+$body-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+$text-dark: $grey-lighter;
+$text-strong: $dark;
+
+$code: $dark;
+$code-background: $white-ter;
+$code-dark: $white;
+
+@import "bulma/bulma.sass";
+@import "bulma-prefers-dark/bulma-prefers-dark.sass";
+@import url('https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@400;600;700&display=swap');
 
 h1, h2, h3, h4, h5, h6, .logo {
 	font-family: 'Josefin Sans', sans-serif;
+	color: $black-ter;
+	@media (prefers-color-scheme: dark) {
+		color: $white-ter;
+	}
+}
+
+.content { // override
+	h1, h2, h3, h4, h5, h6, .logo {
+		color: $black-ter;
+		@media (prefers-color-scheme: dark) {
+			color: $white-ter;
+		}
+	}
 }
 
 .logo {
 	font-weight: 700;
-	font-size: 24px
+	font-size: 24px;
+	@include until($desktop) {
+		padding-left: 0px;
+	}
+}
+
+nav .button {
+	margin-top: -4px; // fix promo buttons making navbar jitter
 }
 
 footer {

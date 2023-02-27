@@ -61,6 +61,7 @@ const NewEventPage = () => {
       <PageHead title="Create New Event" desc="Create a new event." />
 
       <Form
+        className="mt-3"
         formMethods={formMethods}
         onSubmit={(input: FormValues) => create({ variables: { input } })}
       >
@@ -88,7 +89,7 @@ const NewEventPage = () => {
         </FormField>
 
         <Submit
-          className="button is-success"
+          className="button is-success mt-3"
           disabled={loading || redirecting || !formState.isValid}
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}
