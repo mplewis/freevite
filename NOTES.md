@@ -1,4 +1,3 @@
-- [x] Add To icons
 - [ ] Captcha
 - [ ] Dark mode
 - [ ] Discard changes
@@ -15,6 +14,7 @@
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [x] .ics function + link
+- [x] Add To icons
 - [x] Base layout
 - [x] Buy domain
 - [x] CI
