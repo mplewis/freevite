@@ -1,6 +1,6 @@
 import { useLocation } from '@redwoodjs/router'
 
-import { parseQueryString } from 'src/url'
+import { parseQueryString } from 'src/logic/url'
 
 export function queryValues() {
   const { search } = useLocation()
