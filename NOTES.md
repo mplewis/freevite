@@ -1,9 +1,9 @@
 - [ ] Captcha
-- [ ] Dark mode
 - [ ] Discard changes
 - [ ] Favicon
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
+- [ ] Install aggressive docstring linter
 - [ ] Job to delete expired events
 - [ ] Location field
 - [ ] Not found cells
@@ -22,6 +22,7 @@
 - [x] Confirm event on first edit click
 - [x] Connect to db
 - [x] Create Event Page -> Create Event Form
+- [x] Dark mode
 - [x] Delete Event button
 - [x] Delete reminders
 - [x] Deploy to Netlify
