@@ -14,7 +14,6 @@
 - [ ] Prompt on navigate away before destroying changes
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
-- [ ] Tests with Vitest
 - [x] .ics function + link
 - [x] Base layout
 - [x] Buy domain
@@ -36,6 +35,7 @@
 - [x] Limit access to fields
 - [x] Lint and typecheck
 - [x] Navbar
+- [x] Prerender core routes
 - [x] Preview Event Page -> Preview Event Cell -> Show Event Component
 - [x] Replace Tailwind with Bulma
 - [x] Send email
