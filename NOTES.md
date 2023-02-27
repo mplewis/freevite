@@ -3,7 +3,6 @@
 - [ ] Favicon
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
-- [ ] Install aggressive docstring linter
 - [ ] Job to delete expired events
 - [ ] Location field
 - [ ] Not found cells
@@ -32,6 +31,7 @@
 - [x] Fix site host config from env var
 - [x] GCal link
 - [x] Home Page -> nav, etc.
+- [x] Install aggressive docstring linter
 - [x] Install Tailwind
 - [x] Limit access to fields
 - [x] Lint and typecheck
