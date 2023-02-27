@@ -1,6 +1,5 @@
 - [ ] Captcha
 - [ ] Discard changes
-- [ ] Favicon
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
 - [ ] Job to delete expired events
@@ -28,6 +27,7 @@
 - [x] Edit Event Page -> Edit Event Cell -> Edit Event Form
 - [x] Edit: expiry, visible field
 - [x] Event Created Page
+- [x] Favicon
 - [x] Fix site host config from env var
 - [x] GCal link
 - [x] Home Page -> nav, etc.
