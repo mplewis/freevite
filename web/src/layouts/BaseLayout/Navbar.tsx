@@ -1,14 +1,15 @@
 import { Link, routes } from '@redwoodjs/router'
 
+import { prerenderSafe } from 'src/logic/prerender'
+
 export const Navbar = () => {
   let showLearn = false
   let showCreate = false
-  try {
+  prerenderSafe(() => {
     showLearn = window.location.pathname.startsWith('/event/')
     showCreate = window.location.pathname === routes.home() || showLearn
-  } catch (e) {
-    // noop
-  }
+  })
+
   return (
     <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
