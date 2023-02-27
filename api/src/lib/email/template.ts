@@ -10,6 +10,11 @@ interface Event {
   editToken: string
 }
 
+/**
+ * Email the admin link for a newly-created event to its owner.
+ * @param event The newly-created event
+ * @returns The result of the send operation
+ */
 export async function sendEventDetails(event: Event) {
   return sendEmail({
     to: event.ownerEmail,

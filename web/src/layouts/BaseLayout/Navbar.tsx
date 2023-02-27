@@ -62,6 +62,9 @@ export const Navbar = () => {
 
 let registered = false
 
+/**
+ * Register the navbar burger button to expand the mobile menu. Safe to call multiple times.
+ */
 export function registerBurger() {
   if (registered) return
 

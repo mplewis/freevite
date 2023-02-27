@@ -14,6 +14,11 @@ const defaultParams: Params = {
   prefix: '',
 }
 
+/**
+ * Generate a random alphanumeric (or other charset) token.
+ * @param params Options for generating the token
+ * @returns The random token
+ */
 export function generateToken(params?: Partial<Params>): string {
   const { count, charset, prefix } = { ...defaultParams, ...params }
   const result = []
