@@ -156,6 +156,7 @@ const EditEventForm = (props: Props) => {
           <TextField
             name="title"
             validation={{ required: true }}
+            disabled={loading}
             {...fieldAttrs.input}
           />
         </FormField>
@@ -176,6 +177,7 @@ const EditEventForm = (props: Props) => {
                   id="start"
                   className="input"
                   type="datetime-local"
+                  disabled={loading}
                   {...field}
                 />
               </div>
@@ -202,6 +204,7 @@ const EditEventForm = (props: Props) => {
                   id="end"
                   className="input"
                   type="datetime-local"
+                  disabled={loading}
                   {...field}
                 />
               </div>
@@ -223,6 +226,7 @@ const EditEventForm = (props: Props) => {
           </Typ>
           <TextField
             name="slug"
+            disabled={loading}
             validation={{
               required: true,
               validate: {
@@ -253,6 +257,7 @@ const EditEventForm = (props: Props) => {
             name="description"
             validation={{ required: true }}
             rows={8}
+            disabled={loading}
             {...fieldAttrs.textarea}
           />
         </FormField>
@@ -262,6 +267,7 @@ const EditEventForm = (props: Props) => {
             id="visible"
             name="visible"
             defaultChecked={event.visible}
+            disabled={loading}
           />
           <span className="ml-2">Make this event visible to the public</span>
         </label>
@@ -271,7 +277,11 @@ const EditEventForm = (props: Props) => {
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
         <div className="mt-3">
-          <button className="button is-danger" onClick={promptDestroy}>
+          <button
+            className="button is-danger"
+            disabled={loading}
+            onClick={promptDestroy}
+          >
             Delete Event
           </button>
         </div>

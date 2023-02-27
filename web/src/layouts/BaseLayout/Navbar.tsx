@@ -1,8 +1,14 @@
 import { Link, routes } from '@redwoodjs/router'
 
 export const Navbar = () => {
-  const showLearn = window.location.pathname.startsWith('/event/')
-  const showCreate = window.location.pathname === routes.home() || showLearn
+  let showLearn = false
+  let showCreate = false
+  try {
+    showLearn = window.location.pathname.startsWith('/event/')
+    showCreate = window.location.pathname === routes.home() || showLearn
+  } catch (e) {
+    // noop
+  }
   return (
     <>
       <nav className="navbar" role="navigation" aria-label="main navigation">
