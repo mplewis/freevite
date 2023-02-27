@@ -43,7 +43,7 @@ function gcalLink(event: Event, descHTML: string) {
 }
 
 const IconBox = ({ children }) => (
-  <div className="mr-1" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
+  <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
     {children}
   </div>
 )
@@ -59,7 +59,7 @@ const ShowEvent = ({ event }: Props) => {
         The user-generated content below is not owned by Freevite. Please report
         abuse to <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
       </Typ>
-      <h1 className="is-size-3 has-text-weight-bold mb-3">{title}</h1>
+      <h1 className="is-size-3 has-text-weight-bold mb-1">{title}</h1>
       <Typ x="p">
         <strong>From:</strong> {prettyDate(start)} ({prettyUntil(start)})
       </Typ>
@@ -67,7 +67,7 @@ const ShowEvent = ({ event }: Props) => {
         <strong>To:</strong> {prettyDate(end)} ({prettyBetween(start, end)}{' '}
         long)
       </Typ>
-      <div className="mt-4 mb-3">
+      <div className="mt-4 mb-4">
         <IconBox>
           <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
             <GCal aria-label="Add to Google Calendar" />

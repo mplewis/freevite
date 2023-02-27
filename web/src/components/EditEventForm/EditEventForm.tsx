@@ -262,7 +262,7 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        <label htmlFor="visible" className="checkbox is-block mb-3">
+        <label htmlFor="visible" className="checkbox is-block mb-5 py-3">
           <CheckboxField
             id="visible"
             name="visible"

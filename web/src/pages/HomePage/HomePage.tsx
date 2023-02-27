@@ -78,15 +78,6 @@ const HomePage = () => {
 
       <Typ x="head">FAQ</Typ>
 
-      <Typ x="subhead">What is Freevite and who is behind it?</Typ>
-      <Typ x="p">
-        Freevite is an open-source project created by{' '}
-        <a href="https://mplewis.com" target="_blank" rel="noreferrer">
-          Matt Lewis
-        </a>
-        .
-      </Typ>
-
       <Typ x="subhead">Why did you build Freevite?</Typ>
       <Typ x="p">
         I deleted my Facebook account in 2020, but I miss how easy it was to
@@ -100,24 +91,26 @@ const HomePage = () => {
       <Typ x="subhead">How am I allowed to use Freevite?</Typ>
       <Typ x="p">
         Freevite is a service that I personally host and maintain for the free
-        use of everyone to manage their own events. Abuse of these computing
+        use of individuals to manage their own events. Abuse of these computing
         resources or misuse for other purposes (e.g. arbitrary data storage) is
-        forbidden.
+        forbidden. I make a best effort to keep Freevite online, but I provide
+        no uptime guarantees. I reserve the right to update the application
+        without warning.
       </Typ>
       <Typ x="p">
         Freevite is an antifascist service. You are not allowed to use this
         service for events that promote racism, sexism, homophobia, transphobia,
-        or any other form of bigotry.
-      </Typ>
-      <Typ x="p">
-        Violation of any of these rules will result in a permanent ban.
+        or any other form of bigotry. Violation of any of these rules will
+        result in a permanent ban.
       </Typ>
 
       <Typ x="subhead">How do you manage my data?</Typ>
       <Typ x="p">
-        I respect your right to privacy. I will never sell any of your data from
-        this website. I do not use third-party analytics or tracking tools. I
-        will never send you spam emails or share your email address with anyone.
+        I respect your right to privacy. I will never sell your data to a third
+        party. I will never send you spam emails or share your email address
+        with anyone. The only third-party analytics tool I use is{' '}
+        <a href="https://sentry.io">Sentry</a> for the purpose of monitoring
+        site health.
       </Typ>
     </>
   )
