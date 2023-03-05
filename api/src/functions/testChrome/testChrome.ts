@@ -32,14 +32,11 @@ export const handler = async (_event: APIGatewayEvent, _context: Context) => {
     args: chromium.args,
     defaultViewport: ogImageSize,
     headless: true,
-    // dumpio: true,
   })
 
   const page = await browser.newPage()
   await page.setContent(indexHtml, { waitUntil: 'domcontentloaded' })
-  // await page.goto('https://example.com', { waitUntil: 'domcontentloaded' })
-  const screenshot = await page.screenshot({ path: '/tmp/screenshot.png' })
-  const title = await page.title()
+  const screenshot = await page.screenshot()
   await browser.close()
 
   return {
@@ -47,7 +44,5 @@ export const handler = async (_event: APIGatewayEvent, _context: Context) => {
     headers: { 'Content-Type': 'image/png' },
     body: screenshot.toString('base64'),
     isBase64Encoded: true,
-    // headers: { 'Content-Type': 'text/plain' },
-    // body: title,
   }
 }
