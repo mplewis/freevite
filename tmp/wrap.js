@@ -5,20 +5,34 @@ const elems = ['.title', '.desc']
 
 function analyzeLineBreaks(el, suffix = '') {
   const content = el.textContent
-  lastHeight = 0
-  breakpoints = []
-  for (let i = 1; i <= content.length; i++) {
+  const iSpaces = content
+    .split('')
+    .map((c, i) => (c === ' ' ? i : null))
+    .filter((i) => i !== null)
+  iSpaces.push(content.length)
+
+  console.log(content, iSpaces)
+  const lenHeight = []
+  for (let i of iSpaces) {
     const inText = content.slice(0, i)
-    const text = inText + suffix
+    let text = inText
+    if (i < content.length) text += suffix
     el.textContent = text
     const { height } = el.getBoundingClientRect()
-    if (height > lastHeight) {
-      breakpoints.push(inText.length)
-      lastHeight = height
-    }
+    lenHeight.push({ text, height })
   }
+
+  const bestForHeight = []
+  let last = lenHeight[0]
+  for (let curr of lenHeight.slice(1)) {
+    if (curr.height > last.height) bestForHeight.push(last)
+    last = curr
+  }
+  bestForHeight.push(lenHeight[lenHeight.length - 1])
+  for (let x of bestForHeight) console.log(x)
+
   el.textContent = content
-  return breakpoints
+  return bestForHeight
 }
 
 function ellipsize(parent, el, params = {}) {
@@ -27,28 +41,28 @@ function ellipsize(parent, el, params = {}) {
   const { bottom: elBottom } = el.getBoundingClientRect()
   withinBounds = elBottom <= parentBottom
 
+  const selected = [el.textContent]
+
   if (!withinBounds) {
-    // element doesn't fit within parent, so trim by character with ellipsis
-    const content = el.textContent
-    for (let i = content.length; i > 0; i--) {
-      el.textContent = content.slice(0, i) + suffix // TODO: Break on word
-      const { bottom: elBottom } = el.getBoundingClientRect()
-      if (elBottom <= parentBottom) return
+    const byLine = analyzeLineBreaks(el, suffix)
+    for (let i = byLine.length - 1; i >= 0; i--) {
+      const { text } = byLine[i]
+      el.textContent = text
+      const { bottom } = el.getBoundingClientRect()
+      if (bottom <= parentBottom) {
+        selected.push(text)
+        break
+      }
     }
-    return
   }
 
   if (maxLines) {
-    const breaksAt = analyzeLineBreaks(el, ELLIPSIS)
-    withinLines = breaksAt.length <= maxLines
-    if (!withinLines) {
-      // element has too many lines, so trim by line
-      const content = el.textContent
-      const oneCharTooLong = breaksAt[maxLines]
-      el.textContent = content.slice(0, oneCharTooLong - 1) + suffix // TODO: Break on word
-      return
-    }
+    const byLine = analyzeLineBreaks(el, suffix)
+    selected.push(byLine[maxLines - 1].text)
   }
+
+  const shortest = selected.reduce((a, b) => (a.length < b.length ? a : b))
+  el.textContent = shortest
 }
 
 const parent = document.querySelector('.container')
