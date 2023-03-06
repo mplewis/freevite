@@ -1,22 +1,33 @@
 import chromium from '@sparticuz/chromium'
 import type { APIGatewayEvent, Context } from 'aws-lambda'
-import pug from 'pug'
+import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
 const ogImageSize = { width: 1200, height: 630 }
 
-const indexPug = `
-doctype html
-html(lang='en')
-  head
-    meta(charset='UTF-8')
-    meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='viewport', content='width=device-width, initial-scale=1.0')
-    title My Preview Page
-  body
-    h1 This is a preview page
-    p And here is some preview text!
-    p Today is #{date}
+const indexHbs = `
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://unpkg.com/bulma@0.9.4/css/bulma.min.css">
+    <title>My Preview Page</title>
+    {{{style}}}
+  </head>
+  <body>
+    <h1>This is a preview page</h1>
+    <p>And here is some preview text!</p>
+    <p>Today is {{date}}</p>
+  </body>
+</html>
+`
+
+const style = `
+<style>
+  body {
+    color: red;
+  }
+</style>
 `
 
 export const handler = async (_event: APIGatewayEvent, _context: Context) => {
@@ -29,7 +40,7 @@ export const handler = async (_event: APIGatewayEvent, _context: Context) => {
 }
 
 function renderTemplate(values: Record<string, string>): string {
-  return pug.compile(indexPug)(values)
+  return Handlebars.compile(indexHbs)({ ...values, style })
 }
 
 async function renderImage(values: Record<string, string>): Promise<string> {
