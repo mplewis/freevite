@@ -19,7 +19,6 @@ body {
   text-align: center;
   border-radius: 48px;
   overflow: hidden;
-  margin-left: -12px; /* HACK to fix excessive left side margin */
 }
 
 .month {
@@ -58,27 +57,25 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 32px;
+  max-height: 566px; /* 598px - m-4 (1rem) * 2 */
 }
 
 .title {
   font-family: "Josefin Sans", sans-serif;
   font-size: 100px;
   line-height: 0.9;
-  max-height: 300px;
-  text-overflow: ellipsis;
 }
 
 .desc {
   font-size: 60px;
-  line-height: 1.1;
+  line-height: 1;
   overflow: hidden;
-  text-overflow: ellipsis;
-  max-height: 500px;
+  padding-bottom: 12px;
 }
 `
 
 const body = `
-<div class="summary m-4">
+<div class="summary">
   <div class="date">
     <div class="month">{{month}}</div>
     <div class="rest">
@@ -93,6 +90,79 @@ const body = `
 </div>
 `
 
+const script = `
+const ELLIPSIS = '…'
+
+function analyzeLineBreaks(el, suffix = '') {
+  const content = el.textContent
+  const iSpaces = content
+    .split('')
+    .map((c, i) => (c === ' ' ? i : null))
+    .filter((i) => i !== null)
+  iSpaces.push(content.length)
+
+  const lenHeight = []
+  for (let i of iSpaces) {
+    const inText = content.slice(0, i)
+    let text = inText
+    if (i < content.length) text += suffix
+    el.textContent = text
+    const { height } = el.getBoundingClientRect()
+    lenHeight.push({ text, height })
+  }
+
+  const bestForHeight = []
+  let last = lenHeight[0]
+  for (let curr of lenHeight.slice(1)) {
+    if (curr.height > last.height) bestForHeight.push(last)
+    last = curr
+  }
+  bestForHeight.push(lenHeight[lenHeight.length - 1])
+
+  el.textContent = content
+  return bestForHeight
+}
+
+function ellipsize(parent, el, params = {}) {
+  const { suffix, maxLines } = { suffix: ELLIPSIS, maxLines: null, ...params }
+  const { bottom: parentBottom } = parent.getBoundingClientRect()
+  const { bottom: elBottom } = el.getBoundingClientRect()
+  withinBounds = elBottom <= parentBottom
+
+  const selected = [el.textContent]
+
+  if (!withinBounds) {
+    const byLine = analyzeLineBreaks(el, suffix)
+    for (let i = byLine.length - 1; i >= 0; i--) {
+      const { text } = byLine[i]
+      el.textContent = text
+      const { bottom } = el.getBoundingClientRect()
+      if (bottom <= parentBottom) {
+        selected.push(text)
+        break
+      }
+    }
+  }
+
+  if (maxLines) {
+    const byLine = analyzeLineBreaks(el, suffix)
+    selected.push(byLine[Math.min(maxLines - 1, byLine.length - 1)].text)
+  }
+
+  const shortest = selected.reduce((a, b) => (a.length < b.length ? a : b))
+  el.textContent = shortest
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const container = document.querySelector('.summary')
+  const title = document.querySelector('.title')
+  const desc = document.querySelector('.desc')
+
+  ellipsize(container, title, { maxLines: 3 })
+  ellipsize(container, desc)
+})
+`
+
 const indexHbs = `
 <!DOCTYPE html>
 <html lang="en">
@@ -104,16 +174,7 @@ const indexHbs = `
   </head>
   <body>
     <div class="m-4">${body}</div>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery.dotdotdot/4.1.0/dotdotdot.min.js">
-    </script>
-    <script>
-      document.addEventListener("DOMContentLoaded", () => {
-        ['.title', '.desc'].forEach(sel => {
-          let wrapper = document.querySelector(sel)
-          new Dotdotdot(wrapper, {watch: true, height: 'watch'})
-        })
-      })
-    </script>
+    <script>${script}</script>
   </body>
 </html>
 `
@@ -123,7 +184,7 @@ export const handler = async (_event: APIGatewayEvent, _context: Context) => {
     'This is some sample text. It is very long because I want to see how it wraps. ' +
     'I hope it looks good. However, I am not sure if it will. I guess we will see.'
   const screenshotData = await renderImage({
-    title: 'Long Event Title Here',
+    title: 'Very Very Very Long Event Title Here',
     details: lorem,
     month: 'Dec',
     day: '10',
@@ -143,6 +204,7 @@ function renderTemplate(values: Record<string, string>): string {
 
 async function renderImage(values: Record<string, string>): Promise<string> {
   const indexHtml = renderTemplate(values)
+  console.log(indexHtml)
 
   const executablePath =
     process.env.LOCAL_CHROMIUM || (await chromium.executablePath())
