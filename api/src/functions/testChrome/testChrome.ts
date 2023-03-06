@@ -120,7 +120,8 @@ const indexHbs = `
 
 export const handler = async (_event: APIGatewayEvent, _context: Context) => {
   const lorem =
-    'This is some sample text. It is very long because I want to see how it wraps. I hope it looks good. However, I am not sure if it will. I guess we will see.'
+    'This is some sample text. It is very long because I want to see how it wraps. ' +
+    'I hope it looks good. However, I am not sure if it will. I guess we will see.'
   const screenshotData = await renderImage({
     title: 'Long Event Title Here',
     details: lorem,
@@ -129,6 +130,7 @@ export const handler = async (_event: APIGatewayEvent, _context: Context) => {
     time: '16:00-22:00 MST',
   })
   return {
+    statusCode: 200,
     headers: { 'Content-Type': 'image/png' },
     body: screenshotData,
     isBase64Encoded: true,
