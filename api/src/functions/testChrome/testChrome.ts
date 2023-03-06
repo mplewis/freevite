@@ -8,6 +8,10 @@ const ogImageSize = { width: 1200, height: 630 }
 const style = `
 @import url("https://fonts.googleapis.com/css2?family=Josefin+Sans:wght@600");
 
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
 .date {
   width: 598px;
   height: 598px;
@@ -60,22 +64,26 @@ const style = `
   font-family: "Josefin Sans", sans-serif;
   font-size: 100px;
   line-height: 0.9;
+  max-height: 300px;
+  text-overflow: ellipsis;
 }
 
 .desc {
   font-size: 60px;
   line-height: 1.1;
+  overflow: hidden;
   text-overflow: ellipsis;
+  max-height: 500px;
 }
 `
 
 const body = `
 <div class="summary m-4">
   <div class="date">
-    <div class="month">Dec</div>
+    <div class="month">{{month}}</div>
     <div class="rest">
-      <div class="day">10</div>
-      <div class="time">16:00-22:00 MST</div>
+      <div class="day">{{day}}</div>
+      <div class="time">{{time}}</div>
     </div>
   </div>
   <div class="details">
@@ -100,9 +108,11 @@ const indexHbs = `
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", () => {
-        let wrapper = document.querySelector(".desc");
-        new Dotdotdot(wrapper);
-      });
+        ['.title', '.desc'].forEach(sel => {
+          let wrapper = document.querySelector(sel)
+          new Dotdotdot(wrapper, {watch: true, height: 'watch'})
+        })
+      })
     </script>
   </body>
 </html>
@@ -110,13 +120,13 @@ const indexHbs = `
 
 export const handler = async (_event: APIGatewayEvent, _context: Context) => {
   const lorem =
-    'Come to my birthday party! It will be a lot of fun and there will be such and such. ' +
-    'Lorem ipsum dolor sit amet, etc., etc., etc.'
-  const title = 'My Cool Event'
+    'This is some sample text. It is very long because I want to see how it wraps. I hope it looks good. However, I am not sure if it will. I guess we will see.'
   const screenshotData = await renderImage({
-    date: new Date().toString(),
-    title,
+    title: 'Long Event Title Here',
     details: lorem,
+    month: 'Dec',
+    day: '10',
+    time: '16:00-22:00 MST',
   })
   return {
     headers: { 'Content-Type': 'image/png' },
