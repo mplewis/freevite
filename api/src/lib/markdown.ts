@@ -34,7 +34,9 @@ export function markdownToHTML(markdown: string): string {
 }
 
 /**
- *
+ * Convert a Markdown document to plain text, sanitizing the content.
+ * @param markdown The Markdown document
+ * @returns The converted plain text
  */
 export function markdownToText(markdown: string): string {
   const html = marked.parse(markdown)
