@@ -10,6 +10,7 @@
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
 - [ ] Store editor's timezone with each event and use it to generate preview image times
+- [ ] When date is too far away, use year in preview
 - [x] .ics function + link
 - [x] Add To icons
 - [x] Base layout
