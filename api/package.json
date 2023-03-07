@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@redwoodjs/api": "4.2.0",
-    "@redwoodjs/graphql-server": "4.2.0",
+    "@redwoodjs/api": "4.2.2",
+    "@redwoodjs/graphql-server": "4.2.2",
     "@sparticuz/chromium": "^111.0.0",
     "handlebars": "^4.7.7",
     "ics": "^3.1.0",
