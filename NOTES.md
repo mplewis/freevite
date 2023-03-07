@@ -6,11 +6,10 @@
 - [ ] Location field
 - [ ] Not found cells
 - [ ] Not found page
-- [ ] Open Graph basic data for each page
-- [ ] Open Graph image generation
 - [ ] Prompt on navigate away before destroying changes
 - [ ] QR code for ICS/GCal links
 - [ ] Sample event page
+- [ ] Store editor's timezone with each event and use it to generate preview image times
 - [x] .ics function + link
 - [x] Add To icons
 - [x] Base layout
@@ -36,6 +35,8 @@
 - [x] Limit access to fields
 - [x] Lint and typecheck
 - [x] Navbar
+- [x] Open Graph basic data for each page
+- [x] Open Graph image generation
 - [x] Prerender core routes
 - [x] Preview Event Page -> Preview Event Cell -> Show Event Component
 - [x] Replace Tailwind with Bulma

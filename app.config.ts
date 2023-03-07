@@ -14,4 +14,7 @@ export let SITE_HOST = process.env.SITE_HOST
 if (context === 'deploy-preview' || context === 'branch-deploy')
   SITE_HOST = extractAfterHTTPS(process.env.DEPLOY_PRIME_URL)
 
+const protocol = SITE_HOST?.startsWith('localhost') ? 'http' : 'https'
+export const SITE_URL = `${protocol}://${SITE_HOST}` as const
+
 export const CI = process.env.NODE_ENV === 'test'

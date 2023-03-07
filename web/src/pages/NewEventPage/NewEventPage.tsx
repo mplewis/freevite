@@ -58,7 +58,10 @@ const NewEventPage = () => {
 
   return (
     <>
-      <PageHead title="Create New Event" desc="Create a new event." />
+      <PageHead
+        title="Create New Event"
+        desc="Create a new event on Freevite, the simple event platform. No signup required."
+      />
 
       <Form
         className="mt-3"

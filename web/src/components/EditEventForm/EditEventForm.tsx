@@ -28,6 +28,7 @@ import { toLocal, toUTC, tzPretty } from 'src/convert/date'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
+import PageHead from '../PageHead/PageHead'
 import Typ from '../Typ/Typ'
 
 import { PreView } from './PreView'
@@ -138,6 +139,11 @@ const EditEventForm = (props: Props) => {
 
   return (
     <>
+      <PageHead
+        title="Edit Event"
+        desc={`Edit the details of your "${event.title}" event.`}
+      />
+
       <PreView
         isPublic={visible}
         dirty={formState.isDirty}

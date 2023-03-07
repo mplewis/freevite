@@ -32,3 +32,13 @@ export function markdownToHTML(markdown: string): string {
   const newWindows = clean.replace(/<a /g, '<a target="_blank" ')
   return newWindows
 }
+
+/**
+ * Convert a Markdown document to plain text, sanitizing the content.
+ * @param markdown The Markdown document
+ * @returns The converted plain text
+ */
+export function markdownToText(markdown: string): string {
+  const html = marked.parse(markdown)
+  return sanitize(html, { allowedTags: [] })
+}

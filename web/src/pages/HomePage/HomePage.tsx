@@ -1,13 +1,17 @@
 import { Link, routes } from '@redwoodjs/router'
 import { MetaTags } from '@redwoodjs/web'
 
-import { SITE_HOST } from 'src/app.config'
+import { SITE_HOST, SITE_URL } from 'src/app.config'
 import Typ from 'src/components/Typ'
 
 const HomePage = () => {
   return (
     <>
-      <MetaTags title="Home" description="Home page" />
+      <MetaTags
+        title="Freevite – the simple event platform"
+        description="Create event invites quickly and easily. Free forever, no signup required."
+        ogContentUrl={`${SITE_URL}/og-logo.png`}
+      />
 
       <div className="has-text-centered">
         <div className="my-6">
