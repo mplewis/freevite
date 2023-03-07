@@ -1,7 +1,15 @@
 import chromium from '@sparticuz/chromium'
-import type { APIGatewayEvent, Context } from 'aws-lambda'
+import type { APIGatewayEvent } from 'aws-lambda'
+import dayjs from 'dayjs'
+import advancedFormat from 'dayjs/plugin/advancedFormat'
+import timezone from 'dayjs/plugin/timezone'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
+
+dayjs.extend(advancedFormat)
+dayjs.extend(timezone)
+
+import { eventBySlug } from 'src/services/events/events'
 
 const ogImageSize = { width: 1200, height: 630 }
 
@@ -180,32 +188,12 @@ const indexHbs = `
 </html>
 `
 
-export const handler = async (_event: APIGatewayEvent, _context: Context) => {
-  const lorem =
-    'This is some sample text. It is very long because I want to see how it wraps. ' +
-    'I hope it looks good, but there is only one way to find out: we have to fill it with content.'
-  const screenshotData = await renderImage({
-    title: "Matt's Xmas Party",
-    details: lorem,
-    month: 'Dec',
-    day: '10',
-    time: '16:00-22:00 MST',
-  })
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'image/png' },
-    body: screenshotData,
-    isBase64Encoded: true,
-  }
-}
-
 function renderTemplate(values: Record<string, string>): string {
   return Handlebars.compile(indexHbs)(values)
 }
 
 async function renderImage(values: Record<string, string>): Promise<string> {
   const indexHtml = renderTemplate(values)
-  console.log(indexHtml)
 
   const executablePath =
     process.env.LOCAL_CHROMIUM || (await chromium.executablePath())
@@ -222,4 +210,35 @@ async function renderImage(values: Record<string, string>): Promise<string> {
   await browser.close()
 
   return screenshot.toString('base64')
+}
+
+export const handler = async (ev: APIGatewayEvent) => {
+  const slug = ev.queryStringParameters?.event
+  if (!slug) return { statusCode: 400, body: 'Missing event slug' }
+  const event = await eventBySlug({ slug })
+  if (!event) return { statusCode: 404, body: 'Event not found' }
+
+  const s = dayjs(event.start)
+  const e = dayjs(event.end)
+  const month = s.format('MMM')
+  const day = s.format('D')
+  // TODO: store event timezone
+  let time = s.format('H:mm z')
+  if (s.isSame(e, 'day')) {
+    time = `${s.format('H:mm')}-${e.format('H:mm z')}`
+  }
+
+  const screenshotData = await renderImage({
+    month,
+    day,
+    time,
+    title: event.title,
+    details: event.description, // TODO: strip markdown
+  })
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'image/png' },
+    body: screenshotData,
+    isBase64Encoded: true,
+  }
 }
