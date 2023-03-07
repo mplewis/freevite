@@ -5,8 +5,6 @@ import type {
 
 import { CellSuccessProps, CellFailureProps, MetaTags } from '@redwoodjs/web'
 
-import { SITE_URL } from 'src/app.config'
-
 import ShowEvent from '../ShowEvent/ShowEvent'
 
 export const QUERY = gql`
@@ -34,5 +32,8 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindViewEventQuery, FindViewEventQueryVariables>) => (
-  <ShowEvent event={event} />
+  <>
+    <MetaTags title={event.title} />
+    <ShowEvent event={event} />
+  </>
 )
