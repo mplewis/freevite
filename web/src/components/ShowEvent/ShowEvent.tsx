@@ -51,6 +51,7 @@ const IconBox = ({ children }) => (
 const ShowEvent = ({ event }: Props) => {
   const { title, description, start, end, slug } = event
   const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
+  const ogPreview = `${global.RWJS_API_URL}/ogImage?event=${slug}`
   const htmlDesc = markdownToHTML(description)
 
   return (

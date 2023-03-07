@@ -1,9 +1,13 @@
+import dayjs from 'dayjs'
 import type {
   FindViewEventQuery,
   FindViewEventQueryVariables,
 } from 'types/graphql'
 
 import { CellSuccessProps, CellFailureProps, MetaTags } from '@redwoodjs/web'
+
+import { markdownToText } from 'src/apiLib/markdown'
+import { SITE_HOST } from 'src/app.config'
 
 import ShowEvent from '../ShowEvent/ShowEvent'
 
@@ -34,7 +38,11 @@ export const Success = ({
 }: CellSuccessProps<FindViewEventQuery, FindViewEventQueryVariables>) => {
   return (
     <>
-      <MetaTags title={event.title} description={event.description} />
+      <MetaTags
+        title={event.title}
+        description="View this event's details and add it to your calendar on Freevite."
+        ogContentUrl={`http://${SITE_HOST}${global.RWJS_API_URL}/ogImage?event=${event.slug}`}
+      />
       <ShowEvent event={event} />
     </>
   )

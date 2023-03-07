@@ -5,6 +5,7 @@ import type {
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import PageHead from '../PageHead/PageHead'
 import ShowEvent from '../ShowEvent/ShowEvent'
 
 export const QUERY = gql`
@@ -37,6 +38,11 @@ export const Success = ({
 }: CellSuccessProps<FindPreviewEventQuery, FindPreviewEventQueryVariables>) => {
   return (
     <>
+      <PageHead
+        title="Preview Event"
+        desc={`Preview your "${event.title}" event before it goes live.`}
+      />
+
       <p className="is-italic mb-3">
         Below is how your event will appear to the public.
         <br />

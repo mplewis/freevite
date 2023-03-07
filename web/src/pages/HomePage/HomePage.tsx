@@ -7,7 +7,11 @@ import Typ from 'src/components/Typ'
 const HomePage = () => {
   return (
     <>
-      <MetaTags title="Home" description="Home page" />
+      <MetaTags
+        title="Freevite – the simple event platform"
+        description="Create event invites quickly and easily. Free forever, no signup required."
+        // TODO: placeholder for the app
+      />
 
       <div className="has-text-centered">
         <div className="my-6">
