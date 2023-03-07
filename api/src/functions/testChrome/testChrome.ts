@@ -48,7 +48,7 @@ body {
 .time {
   line-height: 0px;
   padding-top: 210px;
-  font-size: 50px;
+  font-size: 60px;
   padding-bottom: 590px;
   color: #eeeeee;
 }
@@ -57,13 +57,14 @@ body {
   display: flex;
   justify-content: space-between;
   gap: 32px;
-  max-height: 566px; /* 598px - m-4 (1rem) * 2 */
+  max-height: 598px;
 }
 
 .title {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 100px;
+  font-size: 80px;
   line-height: 0.9;
+  color: #000000;
 }
 
 .desc {
@@ -84,7 +85,7 @@ const body = `
     </div>
   </div>
   <div class="details">
-    <h1 class="title mt-2 mb-0">{{title}}</h1>
+    <h1 class="title mt-3 mb-0">{{title}}</h1>
     <p class="desc">{{details}}</p>
   </div>
 </div>
@@ -182,9 +183,9 @@ const indexHbs = `
 export const handler = async (_event: APIGatewayEvent, _context: Context) => {
   const lorem =
     'This is some sample text. It is very long because I want to see how it wraps. ' +
-    'I hope it looks good. However, I am not sure if it will. I guess we will see.'
+    'I hope it looks good, but there is only one way to find out: we have to fill it with content.'
   const screenshotData = await renderImage({
-    title: 'Very Very Very Long Event Title Here',
+    title: "Matt's Xmas Party",
     details: lorem,
     month: 'Dec',
     day: '10',
