@@ -27,6 +27,7 @@ body {
   text-align: center;
   border-radius: 48px;
   overflow: hidden;
+  color: white;
 }
 
 .month {
@@ -72,7 +73,7 @@ body {
   font-family: "Josefin Sans", sans-serif;
   font-size: 80px;
   line-height: 0.9;
-  color: #000000;
+  color: black;
 }
 
 .desc {
