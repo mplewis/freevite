@@ -32,3 +32,11 @@ export function markdownToHTML(markdown: string): string {
   const newWindows = clean.replace(/<a /g, '<a target="_blank" ')
   return newWindows
 }
+
+/**
+ *
+ */
+export function markdownToText(markdown: string): string {
+  const html = marked.parse(markdown)
+  return sanitize(html, { allowedTags: [] })
+}

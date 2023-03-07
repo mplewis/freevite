@@ -6,6 +6,8 @@ import timezone from 'dayjs/plugin/timezone'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
+import { markdownToText } from 'src/lib/markdown'
+
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
 
@@ -234,8 +236,9 @@ export const handler = async (ev: APIGatewayEvent) => {
     day,
     time,
     title: event.title,
-    details: event.description, // TODO: strip markdown
+    details: markdownToText(event.description),
   })
+
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'image/png' },
