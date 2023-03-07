@@ -7,11 +7,10 @@ import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
 import { markdownToText } from 'src/lib/markdown'
+import { eventBySlug } from 'src/services/events/events'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
-
-import { eventBySlug } from 'src/services/events/events'
 
 const ogImageSize = { width: 1200, height: 630 }
 
