@@ -5,7 +5,6 @@ import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
-import { PublicEvent } from 'types/graphql'
 
 import { markdownToText } from 'src/lib/markdown'
 import { eventBySlug } from 'src/services/events/events'
@@ -216,7 +215,9 @@ async function renderImage(values: Record<string, string>): Promise<Buffer> {
 }
 
 /**
- *
+ * Render a preview image for an event.
+ * @param event The event to render
+ * @returns The bytes for a PNG preview image
  */
 export async function renderEventPreview(event: {
   start: string | Date
