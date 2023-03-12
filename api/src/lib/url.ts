@@ -1,3 +1,5 @@
+import { AWS_DEFAULT_REGION, S3_BUCKET, S3_NAMESPACE } from 'src/app.config'
+
 import { SITE_HOST } from '../app.config'
 
 /**
@@ -7,4 +9,23 @@ import { SITE_HOST } from '../app.config'
  */
 export function fqUrlForPath(path: string) {
   return `https://${SITE_HOST}${path}`
+}
+
+/**
+ * Build the public URL for an event's preview image.
+ * @param event The event in question
+ * @returns The URL to the event's public preview image
+ */
+export function eventPreviewImagePublicURL(eventSlug: string) {
+  const k = keyFor(eventSlug)
+  return `https://s3.${AWS_DEFAULT_REGION}.amazonaws.com/${S3_BUCKET}/${k}`
+}
+
+/**
+ * Build the S3 bucket key for an event's preview image.
+ * @param eventSlug The slug of the event in question
+ * @returns The key for the event's preview image
+ */
+export function keyFor(eventSlug: string) {
+  return `${S3_NAMESPACE}/${eventSlug}.png`
 }

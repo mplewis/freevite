@@ -1,6 +1,6 @@
 import { MetaTags } from '@redwoodjs/web'
 
-import { SITE_URL } from 'src/app.config'
+import { eventPreviewImagePublicURL } from 'src/apiLib/url'
 import ViewEventCell from 'src/components/ViewEventCell'
 
 interface Props {
@@ -16,7 +16,7 @@ const ViewEventPage = ({ slug }: Props) => {
       <MetaTags
         title="You're invited!"
         description={desc}
-        ogContentUrl={`${SITE_URL}${global.RWJS_API_URL}/ogImage?event=${slug}`}
+        ogContentUrl={eventPreviewImagePublicURL(slug)}
       />
       <ViewEventCell slug={slug} />
     </>
