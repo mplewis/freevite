@@ -8,6 +8,8 @@ import { sendEventDetails } from 'src/lib/email/template'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
 
+import { updateEventPreviewImage } from './preview'
+
 const defaultEventParams = (title) => ({
   editToken: generateToken(),
   previewToken: generateToken(),
@@ -65,7 +67,7 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
   return event
 }
 
-export const updateEvent: MutationResolvers['updateEvent'] = ({
+export const updateEvent: MutationResolvers['updateEvent'] = async ({
   editToken,
   input,
 }) => {
@@ -79,7 +81,9 @@ export const updateEvent: MutationResolvers['updateEvent'] = ({
       },
     })
   }
-  return db.event.update({ data: input, where: { editToken } })
+  const event = await db.event.update({ data: input, where: { editToken } })
+  await updateEventPreviewImage(event)
+  return event
 }
 
 export const deleteEvent: MutationResolvers['deleteEvent'] = ({ editToken }) =>

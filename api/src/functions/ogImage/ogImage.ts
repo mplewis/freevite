@@ -5,6 +5,7 @@ import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
+import { PublicEvent } from 'types/graphql'
 
 import { markdownToText } from 'src/lib/markdown'
 import { eventBySlug } from 'src/services/events/events'
@@ -194,7 +195,7 @@ function renderTemplate(values: Record<string, string>): string {
   return Handlebars.compile(indexHbs)(values)
 }
 
-async function renderImage(values: Record<string, string>): Promise<string> {
+async function renderImage(values: Record<string, string>): Promise<Buffer> {
   const indexHtml = renderTemplate(values)
 
   const executablePath =
@@ -211,7 +212,33 @@ async function renderImage(values: Record<string, string>): Promise<string> {
   const screenshot = await page.screenshot()
   await browser.close()
 
-  return screenshot.toString('base64')
+  return screenshot
+}
+
+/**
+ *
+ */
+export async function renderEventPreview(event: {
+  start: string | Date
+  end: string | Date
+  title: string
+  description: string
+}): Promise<Buffer> {
+  const s = dayjs(event.start)
+  const e = dayjs(event.end)
+  const month = s.format('MMM')
+  const day = s.format('D')
+  // TODO: store event timezone
+  let time = s.format('H:mm z')
+  if (s.isSame(e, 'day')) time = `${s.format('H:mm')}-${e.format('H:mm z')}`
+
+  return renderImage({
+    month,
+    day,
+    time,
+    title: event.title,
+    details: markdownToText(event.description),
+  })
 }
 
 export const handler = async (ev: APIGatewayEvent) => {
@@ -220,28 +247,11 @@ export const handler = async (ev: APIGatewayEvent) => {
   const event = await eventBySlug({ slug })
   if (!event) return { statusCode: 404, body: 'Event not found' }
 
-  const s = dayjs(event.start)
-  const e = dayjs(event.end)
-  const month = s.format('MMM')
-  const day = s.format('D')
-  // TODO: store event timezone
-  let time = s.format('H:mm z')
-  if (s.isSame(e, 'day')) {
-    time = `${s.format('H:mm')}-${e.format('H:mm z')}`
-  }
-
-  const screenshotData = await renderImage({
-    month,
-    day,
-    time,
-    title: event.title,
-    details: markdownToText(event.description),
-  })
-
+  const screenshotData = await renderEventPreview(event)
   return {
     statusCode: 200,
     headers: { 'Content-Type': 'image/png' },
-    body: screenshotData,
+    body: screenshotData.toString('base64'),
     isBase64Encoded: true,
   }
 }

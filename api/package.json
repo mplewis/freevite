@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.289.0",
     "@redwoodjs/api": "4.2.2",
     "@redwoodjs/graphql-server": "4.2.2",
     "@sparticuz/chromium": "^111.0.0",

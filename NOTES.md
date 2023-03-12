@@ -2,6 +2,7 @@
 - [ ] Discard changes
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
+- [ ] Render preview images to S3
 - [ ] Job to delete expired events
 - [ ] Location field
 - [ ] Not found cells
