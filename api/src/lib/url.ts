@@ -1,4 +1,4 @@
-import { AWS_DEFAULT_REGION, S3_BUCKET, S3_NAMESPACE } from 'src/app.config'
+import { S3_REGION, S3_BUCKET, S3_NAMESPACE } from 'src/app.config'
 
 import { SITE_HOST } from '../app.config'
 
@@ -18,7 +18,7 @@ export function fqUrlForPath(path: string) {
  */
 export function eventPreviewImagePublicURL(eventSlug: string) {
   const k = keyFor(eventSlug)
-  return `https://s3.${AWS_DEFAULT_REGION}.amazonaws.com/${S3_BUCKET}/${k}`
+  return `https://s3.${S3_REGION}.amazonaws.com/${S3_BUCKET}/${k}`
 }
 
 /**
