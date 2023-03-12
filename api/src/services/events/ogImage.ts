@@ -1,5 +1,4 @@
 import chromium from '@sparticuz/chromium'
-import type { APIGatewayEvent } from 'aws-lambda'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
@@ -7,7 +6,6 @@ import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
 import { markdownToText } from 'src/lib/markdown'
-import { eventBySlug } from 'src/services/events/events'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
@@ -194,7 +192,7 @@ function renderTemplate(values: Record<string, string>): string {
   return Handlebars.compile(indexHbs)(values)
 }
 
-async function renderImage(values: Record<string, string>): Promise<string> {
+async function renderImage(values: Record<string, string>): Promise<Buffer> {
   const indexHtml = renderTemplate(values)
 
   const executablePath =
@@ -211,37 +209,33 @@ async function renderImage(values: Record<string, string>): Promise<string> {
   const screenshot = await page.screenshot()
   await browser.close()
 
-  return screenshot.toString('base64')
+  return screenshot
 }
 
-export const handler = async (ev: APIGatewayEvent) => {
-  const slug = ev.queryStringParameters?.event
-  if (!slug) return { statusCode: 400, body: 'Missing event slug' }
-  const event = await eventBySlug({ slug })
-  if (!event) return { statusCode: 404, body: 'Event not found' }
-
+/**
+ * Render a preview image for an event.
+ * @param event The event to render
+ * @returns The bytes for a PNG preview image
+ */
+export async function renderEventPreview(event: {
+  start: string | Date
+  end: string | Date
+  title: string
+  description: string
+}): Promise<Buffer> {
   const s = dayjs(event.start)
   const e = dayjs(event.end)
   const month = s.format('MMM')
   const day = s.format('D')
   // TODO: store event timezone
   let time = s.format('H:mm z')
-  if (s.isSame(e, 'day')) {
-    time = `${s.format('H:mm')}-${e.format('H:mm z')}`
-  }
+  if (s.isSame(e, 'day')) time = `${s.format('H:mm')}-${e.format('H:mm z')}`
 
-  const screenshotData = await renderImage({
+  return renderImage({
     month,
     day,
     time,
     title: event.title,
     details: markdownToText(event.description),
   })
-
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'image/png' },
-    body: screenshotData,
-    isBase64Encoded: true,
-  }
 }

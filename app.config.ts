@@ -18,3 +18,7 @@ const protocol = SITE_HOST?.startsWith('localhost') ? 'http' : 'https'
 export const SITE_URL = `${protocol}://${SITE_HOST}` as const
 
 export const CI = process.env.NODE_ENV === 'test'
+
+export const S3_REGION = process.env.S3_REGION
+export const S3_BUCKET = process.env.S3_BUCKET
+export const S3_NAMESPACE = process.env.S3_NAMESPACE
