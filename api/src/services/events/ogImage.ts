@@ -1,5 +1,4 @@
 import chromium from '@sparticuz/chromium'
-import type { APIGatewayEvent } from 'aws-lambda'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
@@ -7,7 +6,6 @@ import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
 import { markdownToText } from 'src/lib/markdown'
-import { eventBySlug } from 'src/services/events/events'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
@@ -240,19 +238,4 @@ export async function renderEventPreview(event: {
     title: event.title,
     details: markdownToText(event.description),
   })
-}
-
-export const handler = async (ev: APIGatewayEvent) => {
-  const slug = ev.queryStringParameters?.event
-  if (!slug) return { statusCode: 400, body: 'Missing event slug' }
-  const event = await eventBySlug({ slug })
-  if (!event) return { statusCode: 404, body: 'Event not found' }
-
-  const screenshotData = await renderEventPreview(event)
-  return {
-    statusCode: 200,
-    headers: { 'Content-Type': 'image/png' },
-    body: screenshotData.toString('base64'),
-    isBase64Encoded: true,
-  }
 }
