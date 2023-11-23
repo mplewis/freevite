@@ -2,13 +2,15 @@
 - [ ] Discard changes
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
-- [ ] Render preview images to S3
+- [ ] Fix to/from fields not validating together
 - [ ] Job to delete expired events
-- [ ] Location field
+- [ ] **Location field**
 - [ ] Not found cells
 - [ ] Not found page
 - [ ] Prompt on navigate away before destroying changes
 - [ ] QR code for ICS/GCal links
+- [ ] Render preview images to S3
+- [ ] **RSVP**
 - [ ] Sample event page
 - [ ] Store editor's timezone with each event and use it to generate preview image times
 - [ ] When date is too far away, use year in preview
