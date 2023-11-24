@@ -6,9 +6,9 @@ __metadata:
   cacheKey: 8c0
 
 "@adobe/css-tools@npm:^4.0.1":
-  version: 4.1.0
-  resolution: "@adobe/css-tools@npm:4.1.0"
-  checksum: d73a3da47d81732bb69854bc298e7e72d96acdc7ee1765ae6c365a6a5ad0ec86a4f2aaaa3004334a7438eea5c3142e83d5a6b76234757149f64beb778daae219
+  version: 4.3.1
+  resolution: "@adobe/css-tools@npm:4.3.1"
+  checksum: 05672719b544cc0c21ae3ed0eb6349bf458e9d09457578eeeb07cf0f696469ac6417e9c9be1b129e5d6a18098a061c1db55b2275591760ef30a79822436fcbfa
   languageName: node
   linkType: hard
 
