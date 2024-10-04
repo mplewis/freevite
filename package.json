@@ -25,7 +25,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@redwoodjs/core": "6.6.4",
+    "@redwoodjs/core": "7.7.4",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
     "@types/sanitize-html": "^2.8.0",
