@@ -7,7 +7,7 @@
     ]
   },
   "engines": {
-    "node": ">=16.19 <=18.x",
+    "node": "=18.x",
     "yarn": ">=1.15"
   },
   "prisma": {
@@ -24,6 +24,7 @@
     "type-fest": "^3.6.0"
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@redwoodjs/core": "5.4.3",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
