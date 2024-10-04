@@ -4,8 +4,12 @@
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.289.0",
+    "@react-email/components": "^0.0.25",
     "@redwoodjs/api": "7.7.4",
     "@redwoodjs/graphql-server": "7.7.4",
+    "@redwoodjs/mailer-core": "7.7.4",
+    "@redwoodjs/mailer-handler-nodemailer": "7.7.4",
+    "@redwoodjs/mailer-renderer-react-email": "7.7.4",
     "@sparticuz/chromium": "^111.0.0",
     "handlebars": "^4.7.7",
     "ics": "^3.1.0",
@@ -13,6 +17,8 @@
     "puppeteer-core": "^19.7.2"
   },
   "devDependencies": {
+    "@redwoodjs/mailer-handler-in-memory": "7.7.4",
+    "@redwoodjs/mailer-handler-studio": "7.7.4",
     "@types/nodemailer": "^6.4.7"
   }
 }

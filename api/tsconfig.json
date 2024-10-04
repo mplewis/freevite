@@ -2,6 +2,7 @@
   "compilerOptions": {
     "noEmit": true,
     "allowJs": true,
+    "jsx": "react-jsx",
     "esModuleInterop": true,
     "target": "esnext",
     "module": "esnext",
