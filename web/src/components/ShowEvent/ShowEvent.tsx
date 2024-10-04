@@ -6,8 +6,8 @@ import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 
 import Typ from '../Typ/Typ'
 
-import GCal from './gcal.svg'
-import ICS from './ics.svg'
+import GCal from './GcalSVG'
+import ICS from './IcsSVG'
 
 export interface Props {
   event: Event
@@ -50,7 +50,7 @@ const IconBox = ({ children }) => (
 
 const ShowEvent = ({ event }: Props) => {
   const { title, description, start, end, slug } = event
-  const icsLink = `${global.RWJS_API_URL}/downloadIcs?event=${slug}`
+  const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const htmlDesc = markdownToHTML(description)
 
   return (

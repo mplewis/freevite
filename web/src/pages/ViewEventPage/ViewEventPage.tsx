@@ -1,4 +1,4 @@
-import { MetaTags } from '@redwoodjs/web'
+import { Metadata } from '@redwoodjs/web'
 
 import { eventPreviewImagePublicURL } from 'src/apiLib/url'
 import ViewEventCell from 'src/components/ViewEventCell'
@@ -13,7 +13,7 @@ const desc =
 const ViewEventPage = ({ slug }: Props) => {
   return (
     <>
-      <MetaTags
+      <Metadata
         title="You're invited!"
         description={desc}
         ogContentUrl={eventPreviewImagePublicURL(slug)}

@@ -7,4 +7,12 @@ module.exports = {
     'max-len': ['error', { code: 100, tabWidth: 2 }],
     'jsdoc/require-jsdoc': ['error', { publicOnly: true }],
   },
+  overrides: [
+    {
+      files: ['**/*SVG.tsx'],
+      rules: {
+        'max-len': 'off',
+      },
+    },
+  ],
 }

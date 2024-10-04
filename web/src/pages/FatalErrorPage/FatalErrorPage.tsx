@@ -5,16 +5,12 @@
 // You can modify this page as you wish, but it is important to keep things simple to
 // avoid the possibility that it will cause its own error. If it does, Redwood will
 // still render a generic error page, but your users will prefer something a bit more
-// thoughtful. =)
+// thoughtful :)
 
-// Ensures that production builds do not include the error page
-let RedwoodDevFatalErrorPage = undefined
-if (process.env.NODE_ENV === 'development') {
-  RedwoodDevFatalErrorPage =
-    require('@redwoodjs/web/dist/components/DevFatalErrorPage').DevFatalErrorPage
-}
+// This import will be automatically removed when building for production
+import { DevFatalErrorPage } from '@redwoodjs/web/dist/components/DevFatalErrorPage'
 
-export default RedwoodDevFatalErrorPage ||
+export default DevFatalErrorPage ||
   (() => (
     <main>
       <style
@@ -29,8 +25,8 @@ export default RedwoodDevFatalErrorPage ||
               main {
                 display: flex;
                 align-items: center;
-                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
-                  "Helvetica Neue", Arial, "Noto Sans", sans-serif;
+                font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
+                  Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif;
                 text-align: center;
                 background-color: #E2E8F0;
                 height: 100vh;

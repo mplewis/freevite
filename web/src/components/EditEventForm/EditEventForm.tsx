@@ -143,16 +143,13 @@ const EditEventForm = (props: Props) => {
         title="Edit Event"
         desc={`Edit the details of your "${event.title}" event.`}
       />
-
       <PreView
         isPublic={visible}
         dirty={formState.isDirty}
         slug={event.slug}
         previewToken={previewToken}
       />
-
       <hr />
-
       <Form
         formMethods={formMethods}
         onSubmit={(state: Event) =>

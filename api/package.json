@@ -4,8 +4,8 @@
   "private": true,
   "dependencies": {
     "@aws-sdk/client-s3": "^3.289.0",
-    "@redwoodjs/api": "5.4.3",
-    "@redwoodjs/graphql-server": "5.4.3",
+    "@redwoodjs/api": "6.6.4",
+    "@redwoodjs/graphql-server": "6.6.4",
     "@sparticuz/chromium": "^111.0.0",
     "handlebars": "^4.7.7",
     "ics": "^3.1.0",
