@@ -7,8 +7,7 @@
     ]
   },
   "engines": {
-    "node": "=18.x",
-    "yarn": ">=1.15"
+    "node": "=20.x"
   },
   "prisma": {
     "seed": "yarn rw exec seed"
@@ -28,6 +27,7 @@
     "@redwoodjs/core": "7.7.4",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
+    "@types/react-dom": "^18.3.0",
     "@types/sanitize-html": "^2.8.0",
     "common-tags": "^1.8.2",
     "eslint-plugin-jsdoc": "^40.0.0",

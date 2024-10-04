@@ -7042,7 +7042,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-dom@npm:^18.0.0":
+"@types/react-dom@npm:^18.0.0, @types/react-dom@npm:^18.3.0":
   version: 18.3.0
   resolution: "@types/react-dom@npm:18.3.0"
   dependencies:
@@ -18920,7 +18920,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"prop-types@npm:15.8.1, prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
+"prop-types@npm:^15.7.2, prop-types@npm:^15.8.1":
   version: 15.8.1
   resolution: "prop-types@npm:15.8.1"
   dependencies:
@@ -19921,6 +19921,7 @@ __metadata:
     "@sentry/serverless": ^7.38.0
     "@types/jest": ^29.4.0
     "@types/marked": ^4.0.8
+    "@types/react-dom": ^18.3.0
     "@types/sanitize-html": ^2.8.0
     common-tags: ^1.8.2
     dayjs: ^1.11.7
@@ -22605,7 +22606,6 @@ __metadata:
     dayjs: ^1.11.7
     postcss: ^8.4.21
     postcss-loader: ^7.0.2
-    prop-types: 15.8.1
     react: 18.2.0
     react-dom: 18.2.0
     sass: ^1.58.3
