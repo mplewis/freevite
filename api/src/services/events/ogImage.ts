@@ -192,7 +192,9 @@ function renderTemplate(values: Record<string, string>): string {
   return Handlebars.compile(indexHbs)(values)
 }
 
-async function renderImage(values: Record<string, string>): Promise<Buffer> {
+async function renderImage(
+  values: Record<string, string>
+): Promise<Uint8Array> {
   const indexHtml = renderTemplate(values)
 
   const executablePath =
@@ -222,7 +224,7 @@ export async function renderEventPreview(event: {
   end: string | Date
   title: string
   description: string
-}): Promise<Buffer> {
+}): Promise<Uint8Array> {
   const s = dayjs(event.start)
   const e = dayjs(event.end)
   const month = s.format('MMM')
