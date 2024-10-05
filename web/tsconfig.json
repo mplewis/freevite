@@ -21,13 +21,18 @@
         "../api/src/*",
         "../.redwood/types/mirror/api/src/*"
       ],
-      "$api/*": [ "../api/*" ],
+      "$api/*": ["../api/*"],
       "types/*": ["./types/*", "../types/*"],
       "@redwoodjs/testing": ["../node_modules/@redwoodjs/testing/web"]
     },
-    "typeRoots": ["../node_modules/@types", "./node_modules/@types"],
-    "types": ["jest", "@testing-library/jest-dom"],
-    "jsx": "preserve",
+    "typeRoots": [
+      "../node_modules/@types",
+      "./node_modules/@types",
+      // https://github.com/testing-library/jest-dom/issues/559#issuecomment-1857877035
+      "../node_modules/@testing-library"
+    ],
+    "types": ["jest", "jest-dom"],
+    "jsx": "preserve"
   },
   "include": [
     "src",
