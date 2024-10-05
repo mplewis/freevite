@@ -7,12 +7,12 @@
     ]
   },
   "engines": {
-    "node": "=20.x"
+    "node": "=22.x"
   },
   "prisma": {
     "seed": "yarn rw exec seed"
   },
-  "packageManager": "yarn@3.4.1",
+  "packageManager": "yarn@4.4.0",
   "dependencies": {
     "@sentry/serverless": "^7.38.0",
     "dayjs": "^1.11.7",
@@ -24,8 +24,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@redwoodjs/core": "7.7.4",
-    "@redwoodjs/realtime": "7.7.4",
+    "@redwoodjs/core": "8.3.0",
+    "@redwoodjs/realtime": "8.3.0",
     "@redwoodjs/studio": "11",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
