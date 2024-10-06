@@ -13,14 +13,16 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
+    utcOffsetMins: Int!
   }
 
   type PublicEvent {
+    slug: String!
     title: String!
     description: String!
     start: DateTime!
     end: DateTime!
-    slug: String!
+    utcOffsetMins: Int!
   }
 
   type Query {

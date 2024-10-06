@@ -20,9 +20,10 @@ model Event {
   confirmed  Boolean @default(false)
   visible    Boolean @default(false)
 
-  slug        String   @unique
-  title       String
-  description String
-  start       DateTime
-  end         DateTime
+  slug          String   @unique
+  title         String
+  description   String
+  start         DateTime
+  end           DateTime
+  utcOffsetMins Int      @default(0)
 }

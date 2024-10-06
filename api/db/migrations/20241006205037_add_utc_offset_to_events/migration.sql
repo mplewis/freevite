@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "Event" ADD COLUMN "utcOffsetMins" INTEGER NOT NULL DEFAULT 0;
