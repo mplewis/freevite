@@ -2,12 +2,12 @@
  * Convert a named timezone to its UTC offset in minutes.
  * See: https://stackoverflow.com/a/64262840/254187
  */
-export function tzToOffsetMins(timeZone: string): number {
+export function tzToOffsetMins(timeZone: string, when = new Date()): number {
   const timeZoneName = Intl.DateTimeFormat('ia', {
     timeZoneName: 'short',
     timeZone,
   })
-    .formatToParts()
+    .formatToParts(when)
     .find((i) => i.type === 'timeZoneName').value
   const offset = timeZoneName.slice(3)
   if (!offset) return 0
