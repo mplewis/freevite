@@ -192,9 +192,6 @@ const EditEventForm = (props: Props) => {
               <label className="label" htmlFor="timezone">
                 Time zone
                 <br />
-                <Typ x="labelDetails">
-                  TODO: On view event page, render timezone in this timezone
-                </Typ>
                 <div className="control">
                   <Select
                     id="timezone"

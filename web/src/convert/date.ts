@@ -39,10 +39,10 @@ export function toUTC(d: string | Date, tz: string): string {
  * @param d The date to format
  * @returns A human-readable representation of the date
  */
-export function prettyDate(d: string | Date): string {
+export function prettyDate(d: string | Date, tz: string): string {
   if (dayjs(d).year() === dayjs().year())
-    return dayjs(d).tz(localTZ).format('ddd MMM D, h:mm A z')
-  return dayjs(d).tz(localTZ).format('ddd MMM D, YYYY, h:mm A z')
+    return dayjs(d).tz(tz).format('ddd MMM D, h:mm A z')
+  return dayjs(d).tz(tz).format('ddd MMM D, YYYY, h:mm A z')
 }
 
 /**

@@ -2,6 +2,7 @@ import classNames from 'classnames'
 import { match } from 'ts-pattern'
 
 export interface Props {
+  /** The kind of typographic element this is. */
   x: keyof typeof classes
   className?: string
   children: React.ReactNode
@@ -14,9 +15,10 @@ const classes = {
   subhead: classNames('is-size-4', ...headClasses),
   pageTitle: classNames('is-size-3', ...headClasses),
   p: 'mb-2',
-  labelDetails: 'is-italic has-text-weight-normal',
+  labelDetails: 'is-italic has-text-weight-normal', // Helper text for a form label
 }
 
+/** Typography element. Displays text on screen. */
 const Typ = ({ x, className, children, ...rest }: Props) => {
   const cn = classNames(classes[x], className)
   const attrs = { className: cn, ...rest }
