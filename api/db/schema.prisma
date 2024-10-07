@@ -20,10 +20,16 @@ model Event {
   confirmed  Boolean @default(false)
   visible    Boolean @default(false)
 
-  slug        String   @unique
+  slug        String @unique
   title       String
   description String
-  start       DateTime
-  end         DateTime
-  timezone    String   @default("UTC")
+
+  // Start and end are ALWAYS stored as UTC times! They are not related to timezone!
+  // Do not convert start or end times through timezone before storing. Store them as UTC.
+  start DateTime
+  end   DateTime
+
+  // This timezone is ONLY used for user-facing presentation, e.g. the Open Graph preview images.
+  // Null values are unset and should be treated as UTC.
+  timezone String?
 }

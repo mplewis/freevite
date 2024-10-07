@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import Select from 'react-select'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -24,7 +25,8 @@ import { useMutation } from '@redwoodjs/web'
 import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
-import { toLocal, toUTC } from 'src/convert/date'
+import { localTZ, toLocal, toUTC } from 'src/convert/date'
+import { listTimeZones } from 'src/convert/tz'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
@@ -45,7 +47,7 @@ type Event = {
   description: string
   start: string
   end: string
-  timezone: string
+  timezone?: string
 }
 
 type EventWithTokens = Event & {
@@ -139,6 +141,15 @@ const EditEventForm = (props: Props) => {
   const eventLink = routes.viewEvent({ slug: currSlug })
   const fqEventLink = fqUrlForPath(eventLink)
 
+  const tzs = listTimeZones(new Date(event.start)).sort((a, b) => {
+    if (a.offsetMins === b.offsetMins) return a.name.localeCompare(b.name)
+    return a.offsetMins - b.offsetMins
+  })
+  const tzOptions = tzs.map((tz) => ({
+    value: tz.name,
+    label: `${tz.name} (${tz.offsetHrs})`,
+  }))
+
   return (
     <>
       <PageHead
@@ -170,22 +181,35 @@ const EditEventForm = (props: Props) => {
         <Controller
           control={formMethods.control}
           name="timezone"
-          render={({ field }) => (
-            <label className="label" htmlFor="timezone">
-              Time zone
-              <br />
-              <div className="control">
-                <input
-                  id="timezone"
-                  className="input"
-                  type="datetime-local"
-                  disabled={loading}
-                  {...field}
-                />
-              </div>
-              <FieldError name="timezone" className="error has-text-danger" />
-            </label>
-          )}
+          render={({ field }) => {
+            if (!field.value) {
+              field.value = localTZ
+              field.onChange(localTZ)
+            }
+            return (
+              <label className="label" htmlFor="timezone">
+                Time zone
+                <br />
+                <Typ x="labelDetails">
+                  Used only for the Open Graph preview image. The event page
+                  shows times in the local timezone of the user.
+                </Typ>
+                <div className="control">
+                  <Select
+                    id="timezone"
+                    ref={field.ref}
+                    name={field.name}
+                    options={tzOptions}
+                    value={tzOptions.find((o) => o.value === field.value)}
+                    onChange={({ value }) => field.onChange(value)}
+                    onBlur={field.onBlur}
+                    isDisabled={field.disabled}
+                  />
+                </div>
+                <FieldError name="timezone" className="error has-text-danger" />
+              </label>
+            )
+          }}
         />
 
         <Controller

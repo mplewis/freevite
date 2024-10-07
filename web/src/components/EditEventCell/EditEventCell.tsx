@@ -19,6 +19,7 @@ export const QUERY = gql`
       description
       start
       end
+      timezone
     }
   }
 `

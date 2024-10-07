@@ -24,6 +24,22 @@ export function tzToOffsetMins(timeZone: string, when = new Date()): number {
 }
 
 /** List all supported timezones. */
-export function listTimeZones(): string[] {
-  return Intl.supportedValuesOf('timeZone')
+export function listTimeZones(when = new Date()): {
+  name: string
+  offsetMins: number
+  offsetHrs: string
+}[] {
+  return Intl.supportedValuesOf('timeZone').map((name) => {
+    const offsetMins = tzToOffsetMins(name, when)
+    const offsetHrs = offsetMins / 60
+    const sign = offsetHrs < 0 ? '-' : '+'
+    const absOffsetHrs = Math.abs(offsetHrs)
+    const hours = Math.floor(absOffsetHrs).toString().padStart(2, '0')
+    const minutes = (Math.abs(offsetMins) % 60).toString().padStart(2, '0')
+    return {
+      name,
+      offsetMins,
+      offsetHrs: `${sign}${hours}:${minutes}`,
+    }
+  })
 }

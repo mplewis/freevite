@@ -11,8 +11,8 @@ dayjs.extend(relativeTime)
 dayjs.extend(timezone)
 dayjs.extend(utc)
 
-export const tz = Intl.DateTimeFormat().resolvedOptions().timeZone
-export const tzPretty = tz.replace(/_/g, ' ')
+export const localTZ = Intl.DateTimeFormat().resolvedOptions().timeZone
+export const tzPretty = localTZ.replace(/_/g, ' ')
 
 /**
  * Convert a date to a local representation.
@@ -20,7 +20,7 @@ export const tzPretty = tz.replace(/_/g, ' ')
  * @returns An ISO8601 string in the local timezone
  */
 export function toLocal(d: string | Date): string {
-  return dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
+  return dayjs(d).tz(localTZ).format('YYYY-MM-DDTHH:mm')
 }
 
 /**
@@ -29,7 +29,7 @@ export function toLocal(d: string | Date): string {
  * @returns An ISO8601 string in UTC
  */
 export function toUTC(d: string | Date): string {
-  return dayjs.tz(d, tz).utc().toISOString()
+  return dayjs.tz(d, localTZ).utc().toISOString()
 }
 
 /**
@@ -39,8 +39,8 @@ export function toUTC(d: string | Date): string {
  */
 export function prettyDate(d: string | Date): string {
   if (dayjs(d).year() === dayjs().year())
-    return dayjs(d).tz(tz).format('ddd MMM D, h:mm A z')
-  return dayjs(d).tz(tz).format('ddd MMM D, YYYY, h:mm A z')
+    return dayjs(d).tz(localTZ).format('ddd MMM D, h:mm A z')
+  return dayjs(d).tz(localTZ).format('ddd MMM D, YYYY, h:mm A z')
 }
 
 /**
