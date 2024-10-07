@@ -24,7 +24,7 @@ import { useMutation } from '@redwoodjs/web'
 import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
-import { toLocal, toUTC, tzPretty } from 'src/convert/date'
+import { toLocal, toUTC } from 'src/convert/date'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
@@ -45,6 +45,7 @@ type Event = {
   description: string
   start: string
   end: string
+  timezone: string
 }
 
 type EventWithTokens = Event & {
@@ -61,6 +62,7 @@ const UPDATE_EVENT = gql`
       description
       start
       end
+      timezone
     }
   }
 `
@@ -167,15 +169,32 @@ const EditEventForm = (props: Props) => {
 
         <Controller
           control={formMethods.control}
+          name="timezone"
+          render={({ field }) => (
+            <label className="label" htmlFor="timezone">
+              Time zone
+              <br />
+              <div className="control">
+                <input
+                  id="timezone"
+                  className="input"
+                  type="datetime-local"
+                  disabled={loading}
+                  {...field}
+                />
+              </div>
+              <FieldError name="timezone" className="error has-text-danger" />
+            </label>
+          )}
+        />
+
+        <Controller
+          control={formMethods.control}
           name="start"
           render={({ field }) => (
             <label className="label" htmlFor="start">
               Start
               <br />
-              <Typ x="labelDetails">
-                Start/end times are in your local timezone,{' '}
-                <strong>{tzPretty}</strong>
-              </Typ>
               <div className="control">
                 <input
                   id="start"

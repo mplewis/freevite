@@ -22,3 +22,8 @@ export function tzToOffsetMins(timeZone: string, when = new Date()): number {
 
   return result
 }
+
+/** List all supported timezones. */
+export function listTimeZones(): string[] {
+  return Intl.supportedValuesOf('timeZone')
+}

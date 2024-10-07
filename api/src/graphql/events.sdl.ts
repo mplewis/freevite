@@ -14,6 +14,7 @@ export const schema = gql`
     start: DateTime!
     end: DateTime!
     utcOffsetMins: Int!
+    timezone: String!
   }
 
   type PublicEvent {
@@ -22,7 +23,7 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
-    utcOffsetMins: Int!
+    timezone: String!
   }
 
   type Query {
@@ -43,6 +44,7 @@ export const schema = gql`
     description: String
     start: DateTime
     end: DateTime
+    timezone: String
   }
 
   type Mutation {

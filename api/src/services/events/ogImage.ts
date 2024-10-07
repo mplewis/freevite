@@ -222,14 +222,17 @@ async function renderImage(
 export async function renderEventPreview(event: {
   start: string | Date
   end: string | Date
+  utcOffsetMins: number
   title: string
   description: string
 }): Promise<Uint8Array> {
   const s = dayjs(event.start)
   const e = dayjs(event.end)
+  s.add(event.utcOffsetMins, 'minute')
+  e.add(event.utcOffsetMins, 'minute')
+
   const month = s.format('MMM')
   const day = s.format('D')
-  // TODO: store event timezone
   let time = s.format('H:mm z')
   if (s.isSame(e, 'day')) time = `${s.format('H:mm')}-${e.format('H:mm z')}`
 
