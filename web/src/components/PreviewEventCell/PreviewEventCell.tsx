@@ -36,6 +36,12 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindPreviewEventQuery, FindPreviewEventQueryVariables>) => {
+  /* eslint-disable jsx-a11y/anchor-is-valid */
+  const thisLink = (
+    <a href="" target="_blank">
+      this page URL
+    </a>
+  )
   return (
     <>
       <PageHead
@@ -46,7 +52,7 @@ export const Success = ({
       <p className="is-italic mb-3">
         Below is how your event will appear to the public.
         <br />
-        You can send this link to friends if you want them to review your event
+        You can send {thisLink} to friends if you want them to review your event
         details.
       </p>
 
