@@ -20,7 +20,7 @@ export const tzPretty = localTZ.replace(/_/g, ' ')
  * @param tz The timezone to convert to
  * @returns An ISO8601 string in the local timezone
  */
-export function toLocal(d: string | Date, tz = localTZ): string {
+export function toLocal(d: string | Date, tz: string): string {
   return dayjs(d).tz(tz).format('YYYY-MM-DDTHH:mm')
 }
 
@@ -30,7 +30,7 @@ export function toLocal(d: string | Date, tz = localTZ): string {
  * @param tz The timezone to convert from
  * @returns An ISO8601 string in UTC
  */
-export function toUTC(d: string | Date, tz = localTZ): string {
+export function toUTC(d: string | Date, tz: string): string {
   return dayjs.tz(d, tz).utc().toISOString()
 }
 

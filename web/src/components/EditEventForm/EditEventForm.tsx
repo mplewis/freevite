@@ -78,10 +78,12 @@ const DELETE_EVENT = gql`
 `
 
 function eventToState(e: Event): Event {
-  return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
+  const tz = e.timezone ?? 'UTC'
+  return { ...e, start: toLocal(e.start, tz), end: toLocal(e.end, tz) }
 }
 function stateToEvent(s: Event): Event {
-  s = { ...s, start: toUTC(s.start), end: toUTC(s.end) }
+  const tz = s.timezone ?? 'UTC'
+  s = { ...s, start: toUTC(s.start, tz), end: toUTC(s.end, tz) }
   delete s.confirmed
   return s
 }
@@ -191,8 +193,7 @@ const EditEventForm = (props: Props) => {
                 Time zone
                 <br />
                 <Typ x="labelDetails">
-                  Used only for the Open Graph preview image. The event page
-                  shows times in the local timezone of the user.
+                  TODO: On view event page, render timezone in this timezone
                 </Typ>
                 <div className="control">
                   <Select
