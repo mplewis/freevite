@@ -13,7 +13,6 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
-    utcOffsetMins: Int!
     timezone: String!
   }
 
