@@ -2,6 +2,7 @@ import chromium from '@sparticuz/chromium'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
@@ -9,6 +10,7 @@ import { markdownToText } from 'src/lib/markdown'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
+dayjs.extend(utc)
 
 const ogImageSize = { width: 1200, height: 630 }
 
