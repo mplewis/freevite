@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import Select, { Theme } from 'react-select'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -24,7 +25,8 @@ import { useMutation } from '@redwoodjs/web'
 import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
-import { toLocal, toUTC, tzPretty } from 'src/convert/date'
+import { localTZ, toLocal, toUTC } from 'src/convert/date'
+import { listTimeZones } from 'src/convert/tz'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
@@ -45,6 +47,7 @@ type Event = {
   description: string
   start: string
   end: string
+  timezone?: string
 }
 
 type EventWithTokens = Event & {
@@ -61,6 +64,7 @@ const UPDATE_EVENT = gql`
       description
       start
       end
+      timezone
     }
   }
 `
@@ -74,12 +78,52 @@ const DELETE_EVENT = gql`
 `
 
 function eventToState(e: Event): Event {
-  return { ...e, start: toLocal(e.start), end: toLocal(e.end) }
+  const tz = e.timezone ?? 'UTC'
+  return { ...e, start: toLocal(e.start, tz), end: toLocal(e.end, tz) }
 }
 function stateToEvent(s: Event): Event {
-  s = { ...s, start: toUTC(s.start), end: toUTC(s.end) }
+  const tz = s.timezone ?? 'UTC'
+  s = { ...s, start: toUTC(s.start, tz), end: toUTC(s.end, tz) }
   delete s.confirmed
   return s
+}
+
+function darkMode(): boolean {
+  // https://stackoverflow.com/a/57795495/254187
+  return (
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  )
+}
+
+function updateSelectThemeToMatchDarkMode(theme: Theme): Theme {
+  if (!darkMode()) return theme
+
+  // Invert neutrals
+  const newColors = { ...theme.colors }
+  const neutralKeys = Object.keys(theme.colors)
+    .filter((k) => k.startsWith('neutral'))
+    .sort()
+  const neutralValues = neutralKeys.map((k) => theme.colors[k]).reverse()
+  neutralKeys.forEach((k, i) => {
+    newColors[k] = neutralValues[i]
+  })
+
+  const primary = 'rgba(72, 131, 255, ALPHA)'
+  const primaries = {
+    primary25: primary.replace('ALPHA', '0.25'),
+    primary50: primary.replace('ALPHA', '0.5'),
+    primary75: primary.replace('ALPHA', '0.75'),
+    primary: primary.replace('ALPHA', '1.0'),
+  }
+
+  return {
+    ...theme,
+    colors: {
+      ...newColors,
+      ...primaries,
+    },
+  }
 }
 
 const EditEventForm = (props: Props) => {
@@ -137,6 +181,15 @@ const EditEventForm = (props: Props) => {
   const eventLink = routes.viewEvent({ slug: currSlug })
   const fqEventLink = fqUrlForPath(eventLink)
 
+  const tzs = listTimeZones(new Date(event.start)).sort((a, b) => {
+    if (a.offsetMins === b.offsetMins) return a.name.localeCompare(b.name)
+    return a.offsetMins - b.offsetMins
+  })
+  const tzOptions = tzs.map((tz) => ({
+    value: tz.name,
+    label: `${tz.name.replaceAll('_', ' ')} (${tz.offsetHrs})`,
+  }))
+
   return (
     <>
       <PageHead
@@ -167,15 +220,43 @@ const EditEventForm = (props: Props) => {
 
         <Controller
           control={formMethods.control}
+          name="timezone"
+          render={({ field }) => {
+            if (!field.value) {
+              field.value = localTZ
+              field.onChange(localTZ)
+            }
+            return (
+              <label className="label" htmlFor="timezone">
+                Time zone
+                <br />
+                <div className="control">
+                  <Select
+                    id="timezone"
+                    ref={field.ref}
+                    name={field.name}
+                    options={tzOptions}
+                    value={tzOptions.find((o) => o.value === field.value)}
+                    onChange={({ value }) => field.onChange(value)}
+                    onBlur={field.onBlur}
+                    isDisabled={field.disabled}
+                    className={'has-text-weight-normal'}
+                    theme={updateSelectThemeToMatchDarkMode}
+                  />
+                </div>
+                <FieldError name="timezone" className="error has-text-danger" />
+              </label>
+            )
+          }}
+        />
+
+        <Controller
+          control={formMethods.control}
           name="start"
           render={({ field }) => (
             <label className="label" htmlFor="start">
               Start
               <br />
-              <Typ x="labelDetails">
-                Start/end times are in your local timezone,{' '}
-                <strong>{tzPretty}</strong>
-              </Typ>
               <div className="control">
                 <input
                   id="start"

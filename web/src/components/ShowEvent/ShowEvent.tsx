@@ -19,6 +19,7 @@ interface Event {
   start: string
   end: string
   slug: string
+  timezone?: string
 }
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
@@ -49,7 +50,8 @@ const IconBox = ({ children }) => (
 )
 
 const ShowEvent = ({ event }: Props) => {
-  const { title, description, start, end, slug } = event
+  const { title, description, start, end, slug, timezone: _tz } = event
+  const tz = _tz ?? 'UTC'
   const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const htmlDesc = markdownToHTML(description)
 
@@ -61,10 +63,10 @@ const ShowEvent = ({ event }: Props) => {
       </Typ>
       <h1 className="is-size-3 has-text-weight-bold mb-1">{title}</h1>
       <Typ x="p">
-        <strong>From:</strong> {prettyDate(start)} ({prettyUntil(start)})
+        <strong>From:</strong> {prettyDate(start, tz)} ({prettyUntil(start)})
       </Typ>
       <Typ x="p">
-        <strong>To:</strong> {prettyDate(end)} ({prettyBetween(start, end)}{' '}
+        <strong>To:</strong> {prettyDate(end, tz)} ({prettyBetween(start, end)}{' '}
         long)
       </Typ>
       <div className="mt-4 mb-4">

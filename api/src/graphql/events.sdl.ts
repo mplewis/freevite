@@ -13,14 +13,16 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
+    timezone: String
   }
 
   type PublicEvent {
+    slug: String!
     title: String!
     description: String!
     start: DateTime!
     end: DateTime!
-    slug: String!
+    timezone: String
   }
 
   type Query {
@@ -41,6 +43,7 @@ export const schema = gql`
     description: String
     start: DateTime
     end: DateTime
+    timezone: String
   }
 
   type Mutation {

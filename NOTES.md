@@ -12,10 +12,10 @@
 - [ ] Render preview images to S3
 - [ ] **RSVP**
 - [ ] Sample event page
-- [ ] Store editor's timezone with each event and use it to generate preview image times
 - [ ] When date is too far away, use year in preview
 - [ ] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
 - [ ] Use proper preview domain in emails from staging
+- [x] Store editor's timezone with each event and use it to generate preview image times
 - [x] .ics function + link
 - [x] Add To icons
 - [x] Base layout

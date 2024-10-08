@@ -2,6 +2,7 @@ import chromium from '@sparticuz/chromium'
 import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
+import utc from 'dayjs/plugin/utc'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
@@ -9,6 +10,7 @@ import { markdownToText } from 'src/lib/markdown'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
+dayjs.extend(utc)
 
 const ogImageSize = { width: 1200, height: 630 }
 
@@ -224,12 +226,14 @@ export async function renderEventPreview(event: {
   end: string | Date
   title: string
   description: string
+  timezone?: string
 }): Promise<Uint8Array> {
-  const s = dayjs(event.start)
-  const e = dayjs(event.end)
+  const tz = event.timezone ?? 'UTC'
+  const s = dayjs(event.start).tz(tz)
+  const e = dayjs(event.end).tz(tz)
+
   const month = s.format('MMM')
   const day = s.format('D')
-  // TODO: store event timezone
   let time = s.format('H:mm z')
   if (s.isSame(e, 'day')) time = `${s.format('H:mm')}-${e.format('H:mm z')}`
 

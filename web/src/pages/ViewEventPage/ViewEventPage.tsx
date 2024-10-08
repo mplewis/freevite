@@ -16,7 +16,7 @@ const ViewEventPage = ({ slug }: Props) => {
       <Metadata
         title="You're invited!"
         description={desc}
-        ogContentUrl={eventPreviewImagePublicURL(slug)}
+        og={{ image: eventPreviewImagePublicURL(slug) }}
       />
       <ViewEventCell slug={slug} />
     </>

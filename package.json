@@ -17,6 +17,7 @@
     "@sentry/serverless": "^7.38.0",
     "dayjs": "^1.11.7",
     "marked": "^4.2.12",
+    "react-select": "^5.8.1",
     "remeda": "^1.6.2",
     "sanitize-html": "^2.10.0",
     "ts-pattern": "^4.2.0",
