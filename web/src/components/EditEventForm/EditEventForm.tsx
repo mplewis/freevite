@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-import Select from 'react-select'
+import Select, { Theme } from 'react-select'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -88,6 +88,44 @@ function stateToEvent(s: Event): Event {
   return s
 }
 
+function darkMode(): boolean {
+  // https://stackoverflow.com/a/57795495/254187
+  return (
+    window.matchMedia &&
+    window.matchMedia('(prefers-color-scheme: dark)').matches
+  )
+}
+
+function updateSelectThemeToMatchDarkMode(theme: Theme): Theme {
+  if (!darkMode()) return theme
+
+  // Invert neutrals
+  const newColors = { ...theme.colors }
+  const neutralKeys = Object.keys(theme.colors)
+    .filter((k) => k.startsWith('neutral'))
+    .sort()
+  const neutralValues = neutralKeys.map((k) => theme.colors[k]).reverse()
+  neutralKeys.forEach((k, i) => {
+    newColors[k] = neutralValues[i]
+  })
+
+  const primary = 'rgba(72, 131, 255, ALPHA)'
+  const primaries = {
+    primary25: primary.replace('ALPHA', '0.25'),
+    primary50: primary.replace('ALPHA', '0.5'),
+    primary75: primary.replace('ALPHA', '0.75'),
+    primary: primary.replace('ALPHA', '1.0'),
+  }
+
+  return {
+    ...theme,
+    colors: {
+      ...newColors,
+      ...primaries,
+    },
+  }
+}
+
 const EditEventForm = (props: Props) => {
   const { editToken, previewToken, ...event } = props.event
 
@@ -149,7 +187,7 @@ const EditEventForm = (props: Props) => {
   })
   const tzOptions = tzs.map((tz) => ({
     value: tz.name,
-    label: `${tz.name} (${tz.offsetHrs})`,
+    label: `${tz.name.replaceAll('_', ' ')} (${tz.offsetHrs})`,
   }))
 
   return (
@@ -202,6 +240,8 @@ const EditEventForm = (props: Props) => {
                     onChange={({ value }) => field.onChange(value)}
                     onBlur={field.onBlur}
                     isDisabled={field.disabled}
+                    className={'has-text-weight-normal'}
+                    theme={updateSelectThemeToMatchDarkMode}
                   />
                 </div>
                 <FieldError name="timezone" className="error has-text-danger" />
