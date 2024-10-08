@@ -13,7 +13,7 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
-    timezone: String!
+    timezone: String
   }
 
   type PublicEvent {
@@ -22,7 +22,7 @@ export const schema = gql`
     description: String!
     start: DateTime!
     end: DateTime!
-    timezone: String!
+    timezone: String
   }
 
   type Query {
