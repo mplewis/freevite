@@ -226,9 +226,12 @@ export async function renderEventPreview(event: {
   description: string
   timezone?: string
 }): Promise<Uint8Array> {
+  console.log({ event })
   const tz = event.timezone ?? 'UTC'
+  console.log({ tz })
   const s = dayjs(event.start).tz(tz)
   const e = dayjs(event.end).tz(tz)
+  console.log({ s, e })
 
   const month = s.format('MMM')
   const day = s.format('D')
