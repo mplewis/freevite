@@ -45,8 +45,6 @@ describe('responses', () => {
     expect(result.reminders.length).toEqual(0)
   })
 
-  // TODO: Updating event updates reminders
-
   scenario(
     'creates a response with a reminder',
     async (scenario: StandardScenario) => {

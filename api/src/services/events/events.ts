@@ -89,7 +89,23 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
       },
     })
   }
+  const { start: oldStart } = await db.event.findUnique({
+    where: { editToken },
+    select: { start: true },
+  })
   const event = await db.event.update({ data: input, where: { editToken } })
+
+  if (input.start) {
+    const startDelta = dayjs(oldStart).diff(input.start)
+    const reminders = await db.reminder.findMany({
+      where: { response: { event: { editToken } }, sent: false },
+    })
+    reminders.forEach(async (reminder) => {
+      const sendAt = dayjs(reminder.sendAt).subtract(startDelta).toDate()
+      await db.reminder.update({ where: { id: reminder.id }, data: { sendAt } })
+    })
+  }
+
   await updateEventPreviewImage(event)
   return event
 }
