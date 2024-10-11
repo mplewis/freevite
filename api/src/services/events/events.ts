@@ -5,6 +5,7 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 import { sendEventDetails } from 'src/lib/email/template'
+import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
 
@@ -32,18 +33,25 @@ const defaultEventParams = (title) => ({
 export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
   const event = await db.event.findUnique({ where: { slug } })
   if (!checkVisibility(event).visible) return null
-  return event
+
+  const r = await db.response.findMany({ where: { eventId: event.id } })
+  const { responses, responseSummary } = (() => {
+    switch (event.responseConfig) {
+      case 'SHOW_ALL':
+        return { responses: r, responseSummary: summarize(r) }
+      case 'SHOW_COUNTS_ONLY':
+        return { responses: null, responseSummary: summarize(r) }
+      default:
+        return { responses: null, responseSummary: null }
+    }
+  })()
+
+  return { ...event, responses, responseSummary }
 }
 
 export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   editToken,
-}) => {
-  const event = await db.event.findUnique({ where: { editToken } })
-  if (!event) return null
-  if (!event.confirmed)
-    await db.event.update({ where: { editToken }, data: { confirmed: true } })
-  return event
-}
+}) => db.event.findUnique({ where: { editToken } })
 
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })

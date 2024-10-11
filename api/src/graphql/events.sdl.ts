@@ -14,6 +14,7 @@ export const schema = gql`
     start: DateTime!
     end: DateTime!
     timezone: String
+    responses: [Response!]!
   }
 
   type PublicEvent {
@@ -23,6 +24,10 @@ export const schema = gql`
     start: DateTime!
     end: DateTime!
     timezone: String
+
+    # Each of these are optional; app shows what the event creator makes available
+    responses: [PublicResponse!]
+    responseSummary: ResponseSummary
   }
 
   type Query {

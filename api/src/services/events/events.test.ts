@@ -13,7 +13,11 @@ import type { StandardScenario } from './events.scenarios'
 describe('events', () => {
   scenario('returns an event by slug', async (scenario: StandardScenario) => {
     const result = await eventBySlug({ slug: scenario.event.visible.slug })
-    expect(result).toEqual(scenario.event.visible)
+    expect(result).toEqual({
+      ...scenario.event.visible,
+      responses: null,
+      responseSummary: null,
+    })
   })
 
   scenario(
