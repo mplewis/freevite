@@ -8,6 +8,7 @@ export const schema = gql`
     name: String!
     editToken: String!
     email: String!
+    confirmed: Boolean!
     headCount: Int!
     comment: String!
     reminders: [Reminder!]!

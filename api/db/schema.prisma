@@ -52,11 +52,12 @@ model Response {
   event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
   eventId Int
 
-  name      String @default("")
-  editToken String @unique
+  name      String  @default("")
+  editToken String  @unique
   email     String
-  headCount Int    @default(1)
-  comment   String @default("")
+  confirmed Boolean @default(false)
+  headCount Int     @default(1)
+  comment   String  @default("")
 
   reminders Reminder[]
 }

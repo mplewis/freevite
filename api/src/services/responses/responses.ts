@@ -16,14 +16,17 @@ export const response: QueryResolvers['response'] = ({ id }) => {
   return db.response.findUnique({ where: { id }, include: { reminders: true } })
 }
 
-export const responseByEditToken: QueryResolvers['responseByEditToken'] = ({
-  editToken,
-}) => {
-  return db.response.findUnique({
-    where: { editToken },
-    include: { reminders: true },
-  })
-}
+export const responseByEditToken: QueryResolvers['responseByEditToken'] =
+  async ({ editToken }) => {
+    await db.response.update({
+      where: { editToken },
+      data: { confirmed: true },
+    })
+    return db.response.findUnique({
+      where: { editToken },
+      include: { reminders: true },
+    })
+  }
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
   eventId,
@@ -50,6 +53,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
+  // TODO: Send the confirmation email
 }
 
 export const updateResponse: MutationResolvers['updateResponse'] = ({

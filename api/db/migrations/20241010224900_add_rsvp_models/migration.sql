@@ -13,6 +13,7 @@ CREATE TABLE "Response" (
     "name" TEXT NOT NULL DEFAULT '',
     "editToken" TEXT NOT NULL,
     "email" TEXT NOT NULL,
+    "confirmed" BOOLEAN NOT NULL DEFAULT false,
     "headCount" INTEGER NOT NULL DEFAULT 1,
     "comment" TEXT NOT NULL DEFAULT '',
 

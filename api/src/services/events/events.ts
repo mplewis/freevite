@@ -1,5 +1,9 @@
 import dayjs from 'dayjs'
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  PublicResponse,
+} from 'types/graphql'
 
 import { validate } from '@redwoodjs/api'
 
@@ -34,19 +38,41 @@ export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
   const event = await db.event.findUnique({ where: { slug } })
   if (!checkVisibility(event).visible) return null
 
-  const r = await db.response.findMany({ where: { eventId: event.id } })
+  const rs = await db.response.findMany({
+    where: { eventId: event.id, confirmed: true },
+  })
   const { responses, responseSummary } = (() => {
+    const publicResponses: PublicResponse[] = rs.map((r) => ({
+      name: r.name,
+      comment: r.comment,
+      headCount: r.headCount,
+    }))
+
     switch (event.responseConfig) {
       case 'SHOW_ALL':
-        return { responses: r, responseSummary: summarize(r) }
+        return {
+          responses: publicResponses,
+          responseSummary: summarize(publicResponses),
+        }
       case 'SHOW_COUNTS_ONLY':
-        return { responses: null, responseSummary: summarize(r) }
+        return { responses: null, responseSummary: summarize(publicResponses) }
       default:
         return { responses: null, responseSummary: null }
     }
   })()
 
-  return { ...event, responses, responseSummary }
+  return {
+    id: event.id,
+    title: event.title,
+    slug: event.slug,
+    description: event.description,
+    start: event.start,
+    end: event.end,
+    timezone: event.timezone,
+    responseConfig: event.responseConfig,
+    responses,
+    responseSummary,
+  }
 }
 
 export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({

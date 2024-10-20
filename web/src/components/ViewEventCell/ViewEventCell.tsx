@@ -17,6 +17,16 @@ export const QUERY = gql`
       end
       slug
       timezone
+      responseConfig
+      responseSummary {
+        headCountTotal
+        responseCountTotal
+      }
+      responses {
+        name
+        headCount
+        comment
+      }
     }
   }
 `
