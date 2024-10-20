@@ -27,6 +27,7 @@ export const schema = gql`
   type Query {
     responses: [Response!]! @requireAuth
     response(id: Int!): Response @requireAuth
+    responseByEditToken(editToken: String!): Response @skipAuth
   }
 
   input CreateResponseInput {

@@ -18,6 +18,7 @@ export const schema = gql`
   }
 
   type PublicEvent {
+    id: Int!
     slug: String!
     title: String!
     description: String!

@@ -10,6 +10,7 @@ import ShowEvent from '../ShowEvent/ShowEvent'
 export const QUERY = gql`
   query FindViewEventQuery($slug: String!) {
     event: eventBySlug(slug: $slug) {
+      id
       title
       description
       start

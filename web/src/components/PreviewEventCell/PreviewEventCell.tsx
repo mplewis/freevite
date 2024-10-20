@@ -11,6 +11,7 @@ import ShowEvent from '../ShowEvent/ShowEvent'
 export const QUERY = gql`
   query FindPreviewEventQuery($previewToken: String!) {
     event: eventByPreviewToken(previewToken: $previewToken) {
+      id
       ownerEmail
       visible
       confirmed

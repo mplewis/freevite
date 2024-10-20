@@ -4,6 +4,7 @@ import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 
+import NewResponseForm from '../NewResponseForm/NewResponseForm'
 import Typ from '../Typ/Typ'
 
 import GCal from './GcalSVG'
@@ -14,6 +15,7 @@ export interface Props {
 }
 
 interface Event {
+  id: number
   title: string
   description: string
   start: string
@@ -85,6 +87,8 @@ const ShowEvent = ({ event }: Props) => {
         className="content pb-2"
         dangerouslySetInnerHTML={{ __html: htmlDesc }}
       />
+
+      <NewResponseForm event={event} />
     </div>
   )
 }
