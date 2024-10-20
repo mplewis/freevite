@@ -93,7 +93,10 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
     where: { editToken },
     select: { start: true },
   })
-  const event = await db.event.update({ data: input, where: { editToken } })
+  const event = await db.event.update({
+    data: { ...input, confirmed: true },
+    where: { editToken },
+  })
 
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)
