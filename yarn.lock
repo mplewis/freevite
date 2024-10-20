@@ -11556,9 +11556,9 @@ __metadata:
   linkType: hard
 
 "dset@npm:^3.1.1, dset@npm:^3.1.2":
-  version: 3.1.2
-  resolution: "dset@npm:3.1.2"
-  checksum: a10d5f214ccd53e7d2e79215473256b74cb98fd3f20ad4f4684ab575b19bac71e5dda524d6febcf42854062e3f575a2dbfca4d53d2ffb9ae238eecdcc97a095b
+  version: 3.1.4
+  resolution: "dset@npm:3.1.4"
+  checksum: b67bbd28dd8a539e90c15ffb61100eb64ef995c5270a124d4f99bbb53f4d82f55a051b731ba81f3215dd9dce2b4c8d69927dc20b3be1c5fc88bab159467aa438
   languageName: node
   linkType: hard
 
@@ -19499,7 +19499,7 @@ __metadata:
     prettier-plugin-tailwindcss: ^0.2.3
     react-select: ^5.8.1
     remeda: ^1.6.2
-    sanitize-html: ^2.10.0
+    sanitize-html: ^2.12.1
     ts-pattern: ^4.2.0
     type-fest: ^3.6.0
   languageName: unknown
@@ -19599,9 +19599,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sanitize-html@npm:^2.10.0":
-  version: 2.10.0
-  resolution: "sanitize-html@npm:2.10.0"
+"sanitize-html@npm:^2.12.1":
+  version: 2.13.1
+  resolution: "sanitize-html@npm:2.13.1"
   dependencies:
     deepmerge: ^4.2.2
     escape-string-regexp: ^4.0.0
@@ -19609,7 +19609,7 @@ __metadata:
     is-plain-object: ^5.0.0
     parse-srcset: ^1.0.2
     postcss: ^8.3.11
-  checksum: e84083413e10354097bb444f8533b644739c81d48adf460f1c4702a0acc00e297928ae318e763ddc0c138403d38aa6b41c97d267ca25df24818e8d418a8ccc5a
+  checksum: 306c811a254e48eb45e9c523fb91cced893d77786323a64fb47f4bb3f1237b4d29e3722c0723c329e6cb6ac674ae903e961d446c3636b9db5961c83b2c0995fe
   languageName: node
   linkType: hard
 
