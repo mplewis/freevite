@@ -109,6 +109,7 @@ function updateSelectThemeToMatchDarkMode(theme: Theme): Theme {
     newColors[k] = neutralValues[i]
   })
 
+  // TODO: Fix disabled state dark mode colors
   const primary = 'rgba(72, 131, 255, ALPHA)'
   const primaries = {
     primary25: primary.replace('ALPHA', '0.25'),
@@ -239,7 +240,7 @@ const EditEventForm = (props: Props) => {
                     value={tzOptions.find((o) => o.value === field.value)}
                     onChange={({ value }) => field.onChange(value)}
                     onBlur={field.onBlur}
-                    isDisabled={field.disabled}
+                    isDisabled={field.disabled || loading}
                     className={'has-text-weight-normal'}
                     theme={updateSelectThemeToMatchDarkMode}
                   />
