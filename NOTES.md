@@ -13,10 +13,10 @@
 - [ ] **RSVP**
 - [ ] Sample event page
 - [ ] When date is too far away, use year in preview
-- [ ] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
 - [ ] Use proper preview domain in emails from staging
 - [ ] Delete unconfirmed events
 - [ ] Delete completed events
+- [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
 - [x] Store editor's timezone with each event and use it to generate preview image times
 - [x] .ics function + link
 - [x] Add To icons

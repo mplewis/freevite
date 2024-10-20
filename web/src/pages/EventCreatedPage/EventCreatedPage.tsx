@@ -9,8 +9,8 @@ const EventCreatedPage = () => {
     <>
       <PageHead title="Event Created" desc="Your new event was created." />
       <Typ x="p">
-        Your new event called <strong>{title}</strong> has been created. Hooray!
-        🎉
+        Your new event called <strong>{title.replaceAll('+', ' ')}</strong> has
+        been created. Hooray! 🎉
       </Typ>
       <Typ x="p">
         We&apos;ve sent you an email at <code>{email}</code>. Please check your
