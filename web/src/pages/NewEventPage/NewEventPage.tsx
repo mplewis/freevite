@@ -91,6 +91,8 @@ const NewEventPage = () => {
           />
         </FormField>
 
+        {/* TODO: Event privacy */}
+
         <Submit
           className="button is-success mt-3"
           disabled={loading || redirecting || !formState.isValid}

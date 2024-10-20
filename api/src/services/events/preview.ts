@@ -1,5 +1,4 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import { Event } from 'types/graphql'
 
 import { S3_REGION, S3_BUCKET, CI } from 'src/app.config'
 
@@ -11,7 +10,14 @@ import { renderEventPreview } from './ogImage'
  * Generate and upload a public preview image for the given event.
  * @param event The event for which to update the public preview image
  */
-export async function updateEventPreviewImage(event: Event) {
+export async function updateEventPreviewImage(event: {
+  start: string | Date
+  end: string | Date
+  title: string
+  description: string
+  slug: string
+  timezone?: string
+}) {
   if (CI) return
 
   const screenshot = await renderEventPreview(event)

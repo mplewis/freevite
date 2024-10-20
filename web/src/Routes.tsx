@@ -21,6 +21,7 @@ const Routes = () => {
         <Route path="/edit" page={EditEventPage} name="editEvent" />
         <Route path="/preview" page={PreviewEventPage} name="previewEvent" />
         <Route path="/event/{slug}" page={ViewEventPage} name="viewEvent" />
+        {/* TODO: Confirm/edit response */}
       </Set>
       <Route notfound page={NotFoundPage} prerender />
     </Router>

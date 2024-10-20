@@ -18076,7 +18076,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"pluralize@npm:8.0.0":
+"pluralize@npm:8.0.0, pluralize@npm:^8.0.0":
   version: 8.0.0
   resolution: "pluralize@npm:8.0.0"
   checksum: 2044cfc34b2e8c88b73379ea4a36fc577db04f651c2909041b054c981cd863dd5373ebd030123ab058d194ae615d3a97cfdac653991e499d10caf592e8b3dc33
@@ -19496,6 +19496,7 @@ __metadata:
     escape-html: ^1.0.3
     eslint-plugin-jsdoc: ^40.0.0
     marked: ^4.2.12
+    pluralize: ^8.0.0
     prettier-plugin-tailwindcss: ^0.2.3
     react-select: ^5.8.1
     remeda: ^1.6.2
