@@ -20,7 +20,7 @@
     "pluralize": "^8.0.0",
     "react-select": "^5.8.1",
     "remeda": "^1.6.2",
-    "sanitize-html": "^2.10.0",
+    "sanitize-html": "^2.12.1",
     "ts-pattern": "^4.2.0",
     "type-fest": "^3.6.0"
   },
