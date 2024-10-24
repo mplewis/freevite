@@ -37,7 +37,7 @@ interface FormValues {
   reminder: string
 }
 
-const CREATE_EVENT = gql`
+const CREATE_RESPONSE = gql`
   mutation CreateResponseMutation(
     $eventId: Int!
     $input: CreateResponseInput!
@@ -76,7 +76,7 @@ const NewResponseForm = (props: Props) => {
   const [create, { loading, error }] = useMutation<
     CreateResponseMutation,
     CreateResponseMutationVariables
-  >(CREATE_EVENT, {
+  >(CREATE_RESPONSE, {
     onCompleted: (data) => {
       setSentToEmail(data.createResponse.email)
     },
