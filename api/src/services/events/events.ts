@@ -1,10 +1,15 @@
 import dayjs from 'dayjs'
-import type { QueryResolvers, MutationResolvers } from 'types/graphql'
+import type {
+  QueryResolvers,
+  MutationResolvers,
+  PublicResponse,
+} from 'types/graphql'
 
 import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 import { sendEventDetails } from 'src/lib/email/template'
+import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
 
@@ -32,17 +37,51 @@ const defaultEventParams = (title) => ({
 export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
   const event = await db.event.findUnique({ where: { slug } })
   if (!checkVisibility(event).visible) return null
-  return event
+
+  const rs = await db.response.findMany({
+    where: { eventId: event.id, confirmed: true },
+  })
+  const { responses, responseSummary } = (() => {
+    const publicResponses: PublicResponse[] = rs.map((r) => ({
+      name: r.name,
+      comment: r.comment,
+      headCount: r.headCount,
+    }))
+
+    switch (event.responseConfig) {
+      case 'SHOW_ALL':
+        return {
+          responses: publicResponses,
+          responseSummary: summarize(publicResponses),
+        }
+      case 'SHOW_COUNTS_ONLY':
+        return { responses: null, responseSummary: summarize(publicResponses) }
+      default:
+        return { responses: null, responseSummary: null }
+    }
+  })()
+
+  return {
+    id: event.id,
+    title: event.title,
+    slug: event.slug,
+    description: event.description,
+    start: event.start,
+    end: event.end,
+    timezone: event.timezone,
+    responseConfig: event.responseConfig,
+    responses,
+    responseSummary,
+  }
 }
 
 export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   editToken,
 }) => {
-  const event = await db.event.findUnique({ where: { editToken } })
-  if (!event) return null
-  if (!event.confirmed)
-    await db.event.update({ where: { editToken }, data: { confirmed: true } })
-  return event
+  const existing = await db.event.findUnique({ where: { editToken } })
+  if (!existing) return null
+  await db.event.update({ data: { confirmed: true }, where: { editToken } })
+  return db.event.findUnique({ where: { editToken } })
 }
 
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
@@ -81,7 +120,26 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
       },
     })
   }
-  const event = await db.event.update({ data: input, where: { editToken } })
+  const { start: oldStart } = await db.event.findUnique({
+    where: { editToken },
+    select: { start: true },
+  })
+  const event = await db.event.update({
+    data: { ...input, confirmed: true },
+    where: { editToken },
+  })
+
+  if (input.start) {
+    const startDelta = dayjs(oldStart).diff(input.start)
+    const reminders = await db.reminder.findMany({
+      where: { response: { event: { editToken } }, sent: false },
+    })
+    reminders.forEach(async (reminder) => {
+      const sendAt = dayjs(reminder.sendAt).subtract(startDelta).toDate()
+      await db.reminder.update({ where: { id: reminder.id }, data: { sendAt } })
+    })
+  }
+
   await updateEventPreviewImage(event)
   return event
 }

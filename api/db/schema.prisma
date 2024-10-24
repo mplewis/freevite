@@ -32,4 +32,46 @@ model Event {
   // This timezone is ONLY used for user-facing presentation, e.g. the Open Graph preview images.
   // Null values are unset and should be treated as UTC.
   timezone String?
+
+  responseConfig ResponseConfig @default(DISABLED)
+  responses      Response[]
+}
+
+enum ResponseConfig {
+  SHOW_ALL
+  SHOW_COUNTS_ONLY
+  SHOW_NONE
+  DISABLED
+}
+
+model Response {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  event   Event @relation(fields: [eventId], references: [id], onDelete: Cascade)
+  eventId Int
+
+  name      String  @default("")
+  editToken String  @unique
+  email     String
+  confirmed Boolean @default(false)
+  headCount Int     @default(1)
+  comment   String  @default("")
+
+  reminders Reminder[]
+
+  @@unique([eventId, email])
+}
+
+model Reminder {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  response   Response @relation(fields: [responseId], references: [id], onDelete: Cascade)
+  responseId Int
+
+  sendAt DateTime
+  sent   Boolean  @default(false)
 }

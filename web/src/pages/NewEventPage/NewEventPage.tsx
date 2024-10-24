@@ -3,6 +3,7 @@ import { useState } from 'react'
 import {
   CreateEventMutation,
   CreateEventMutationVariables,
+  ResponseConfig,
 } from 'types/graphql'
 
 import {
@@ -12,6 +13,7 @@ import {
   FormError,
   Submit,
   useForm,
+  SelectField,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
@@ -25,6 +27,7 @@ import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 interface FormValues {
   ownerEmail: string
   title: string
+  responseConfig: ResponseConfig
 }
 
 const CREATE_EVENT = gql`
@@ -32,9 +35,29 @@ const CREATE_EVENT = gql`
     createEvent(input: $input) {
       ownerEmail
       title
+      responseConfig
     }
   }
 `
+
+const responseConfigOptions: { config: ResponseConfig; label: string }[] = [
+  {
+    config: 'SHOW_ALL',
+    label:
+      'Accept responses and display them to other attendees (name, head count, comments)',
+  },
+  {
+    config: 'SHOW_COUNTS_ONLY',
+    label:
+      'Accept responses and display only head counts to other attendees (hide name and comments)',
+  },
+  {
+    config: 'SHOW_NONE',
+    label:
+      'Accept responses and hide details from other attendees (only you can see them)',
+  },
+  { config: 'DISABLED', label: 'Do not accept responses' },
+]
 
 const NewEventPage = () => {
   const formMethods = useForm({
@@ -68,7 +91,7 @@ const NewEventPage = () => {
         formMethods={formMethods}
         onSubmit={(input: FormValues) => create({ variables: { input } })}
       >
-        <FormField name="ownerEmail" text="Email Address">
+        <FormField name="ownerEmail" text="Email Address*">
           <Typ x="labelDetails">
             No passwords needed. We&apos;ll email you a link to manage your
             event. Your email address stays private.
@@ -81,7 +104,7 @@ const NewEventPage = () => {
           />
         </FormField>
 
-        <FormField name="title" text="Title">
+        <FormField name="title" text="Title*">
           <Typ x="labelDetails">You can change this at any time.</Typ>
           <TextField
             name="title"
@@ -89,6 +112,25 @@ const NewEventPage = () => {
             disabled={loading}
             {...fieldAttrs.input}
           />
+        </FormField>
+
+        <FormField name="responseConfig" text="Accept responses?*">
+          <Typ x="labelDetails">
+            Freevite can send you an email when guests RSVP to your event. This
+            can&apos;t be changed later.
+          </Typ>
+          <SelectField
+            name="responseConfig"
+            validation={{ required: true }}
+            disabled={loading}
+            {...fieldAttrs.input}
+          >
+            {responseConfigOptions.map(({ config, label }) => (
+              <option key={config} value={config}>
+                {label}
+              </option>
+            ))}
+          </SelectField>
         </FormField>
 
         <Submit

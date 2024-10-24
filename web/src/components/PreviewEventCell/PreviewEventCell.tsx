@@ -1,6 +1,7 @@
 import type {
   FindPreviewEventQuery,
   FindPreviewEventQueryVariables,
+  PublicEvent,
 } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
@@ -11,14 +12,13 @@ import ShowEvent from '../ShowEvent/ShowEvent'
 export const QUERY = gql`
   query FindPreviewEventQuery($previewToken: String!) {
     event: eventByPreviewToken(previewToken: $previewToken) {
-      ownerEmail
-      visible
-      confirmed
+      id
       slug
       title
       description
       start
       end
+      timezone
     }
   }
 `
@@ -36,6 +36,22 @@ export const Failure = ({
 export const Success = ({
   event,
 }: CellSuccessProps<FindPreviewEventQuery, FindPreviewEventQueryVariables>) => {
+  const e: PublicEvent = {
+    id: event.id,
+    slug: event.slug,
+    title: event.title,
+    description: event.description,
+    start: event.start,
+    end: event.end,
+    timezone: event.timezone,
+    responseConfig: 'DISABLED',
+    responses: [],
+    responseSummary: {
+      headCountTotal: 0,
+      responseCountTotal: 0,
+    },
+  }
+
   /* eslint-disable jsx-a11y/anchor-is-valid */
   const thisLink = (
     <a href="" target="_blank">
@@ -62,7 +78,7 @@ export const Success = ({
         </button>
       </p>
       <hr />
-      <ShowEvent event={event} />
+      <ShowEvent event={e} />
     </>
   )
 }

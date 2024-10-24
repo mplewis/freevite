@@ -4,17 +4,29 @@
 - [ ] Fix disabled tests now that Markdown works
 - [ ] Fix to/from fields not validating together
 - [ ] Job to delete expired events
-- [ ] **Location field**
 - [ ] Not found cells
 - [ ] Not found page
 - [ ] Prompt on navigate away before destroying changes
 - [ ] QR code for ICS/GCal links
 - [ ] Render preview images to S3
-- [ ] **RSVP**
 - [ ] Sample event page
 - [ ] When date is too far away, use year in preview
-- [ ] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
 - [ ] Use proper preview domain in emails from staging
+- [ ] Delete unconfirmed events
+- [ ] Delete completed events
+- [ ] Add * asterisk markers to mandatory fields
+- [ ] Look into new OG image features
+- [ ] Replace MetaTags with Metadata
+- [ ] Edit RSVP from confirmation link
+- [ ] Delete RSVP
+- [ ] "Upgrade" from no RSVP to RSVP
+- [ ] Show all responses to event owner on edit page regardless of response config
+- [ ] **Reminders engine**
+- [ ] Allow host to delete RSVPs
+- [ ] Allow host to email attendees
+- [x] **RSVP**
+- [x] **Location field**
+- [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
 - [x] Store editor's timezone with each event and use it to generate preview image times
 - [x] .ics function + link
 - [x] Add To icons

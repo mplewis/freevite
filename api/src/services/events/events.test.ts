@@ -10,10 +10,29 @@ import {
 } from './events'
 import type { StandardScenario } from './events.scenarios'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function noMutables(event: any) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { createdAt, updatedAt, id, ...rest } = event
+  return rest
+}
+
 describe('events', () => {
   scenario('returns an event by slug', async (scenario: StandardScenario) => {
     const result = await eventBySlug({ slug: scenario.event.visible.slug })
-    expect(result).toEqual(scenario.event.visible)
+    expect(noMutables(result)).toMatchInlineSnapshot(`
+      {
+        "description": "String",
+        "end": 2023-02-12T23:14:37.652Z,
+        "responseConfig": "DISABLED",
+        "responseSummary": null,
+        "responses": null,
+        "slug": "String6210380",
+        "start": 2023-02-12T23:13:37.652Z,
+        "timezone": null,
+        "title": "String",
+      }
+    `)
   })
 
   scenario(
@@ -30,7 +49,22 @@ describe('events', () => {
       const result = await eventByEditToken({
         editToken: scenario.event.visible.editToken,
       })
-      expect(result).toEqual(scenario.event.visible)
+      expect(noMutables(result)).toMatchInlineSnapshot(`
+        {
+          "confirmed": true,
+          "description": "String",
+          "editToken": "String1328327",
+          "end": 2023-02-12T23:14:37.652Z,
+          "ownerEmail": "String",
+          "previewToken": "String571517",
+          "responseConfig": "DISABLED",
+          "slug": "String6210380",
+          "start": 2023-02-12T23:13:37.652Z,
+          "timezone": null,
+          "title": "String",
+          "visible": true,
+        }
+      `)
     }
   )
 
@@ -40,13 +74,32 @@ describe('events', () => {
       const result = await eventByPreviewToken({
         previewToken: scenario.event.visible.previewToken,
       })
-      expect(result).toEqual(scenario.event.visible)
+      expect(noMutables(result)).toMatchInlineSnapshot(`
+        {
+          "confirmed": true,
+          "description": "String",
+          "editToken": "String1328327",
+          "end": 2023-02-12T23:14:37.652Z,
+          "ownerEmail": "String",
+          "previewToken": "String571517",
+          "responseConfig": "DISABLED",
+          "slug": "String6210380",
+          "start": 2023-02-12T23:13:37.652Z,
+          "timezone": null,
+          "title": "String",
+          "visible": true,
+        }
+      `)
     }
   )
 
   scenario('creates a event', async () => {
     const result = await createEvent({
-      input: { ownerEmail: 'user@example.com', title: 'My birthday party' },
+      input: {
+        ownerEmail: 'user@example.com',
+        title: 'My birthday party',
+        responseConfig: 'DISABLED',
+      },
     })
     expect(result.ownerEmail).toEqual('user@example.com')
     expect(result.title).toEqual('My birthday party')

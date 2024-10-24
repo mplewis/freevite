@@ -11,7 +11,12 @@ import { renderEventPreview } from './ogImage'
  * Generate and upload a public preview image for the given event.
  * @param event The event for which to update the public preview image
  */
-export async function updateEventPreviewImage(event: Event) {
+export async function updateEventPreviewImage(
+  event: Pick<
+    Event,
+    'start' | 'end' | 'title' | 'description' | 'slug' | 'timezone'
+  >
+) {
   if (CI) return
 
   const screenshot = await renderEventPreview(event)
