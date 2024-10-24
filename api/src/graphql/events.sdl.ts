@@ -49,6 +49,7 @@ export const schema = gql`
   input CreateEventInput {
     ownerEmail: String!
     title: String!
+    responseConfig: ResponseConfig!
   }
 
   input UpdateEventInput {

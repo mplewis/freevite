@@ -19,6 +19,7 @@
 - [ ] Replace MetaTags with Metadata
 - [ ] Edit RSVP from confirmation link
 - [ ] Delete RSVP
+- [ ] "Upgrade" from no RSVP to RSVP
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message

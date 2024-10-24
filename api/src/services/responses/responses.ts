@@ -19,9 +19,13 @@ export const response: QueryResolvers['response'] = ({ id }) => {
 
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
+    const resp = await db.response.findUnique({ where: { editToken } })
+    if (resp.confirmed) return resp
+
     await db.response.update({
       where: { editToken },
       data: { confirmed: true },
+      include: {event: true},
     })
     return db.response.findUnique({
       where: { editToken },
