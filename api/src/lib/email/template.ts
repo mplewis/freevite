@@ -3,19 +3,14 @@ import { stripIndent } from 'common-tags'
 import { SITE_HOST } from 'src/app.config'
 
 import { sendEmail } from './send'
-
-interface Event {
-  ownerEmail: string
-  title: string
-  editToken: string
-}
+import { Event, Response } from 'types/graphql'
 
 /**
  * Email the admin link for a newly-created event to its owner.
  * @param event The newly-created event
  * @returns The result of the send operation
  */
-export async function sendEventDetails(event: Event) {
+export async function sendEventDetails(event: Pick<Event, 'ownerEmail' | 'title' | 'editToken'>) {
   return sendEmail({
     to: event.ownerEmail,
     subject: `Manage your event: ${event.title}`,
@@ -43,8 +38,8 @@ export async function sendResponseConfirmation({
   event,
   response,
 }: {
-  event: { title: string }
-  response: { email: string; editToken: string }
+  event: Pick<Event, 'title'>
+  response: Pick<Response, 'email' | 'editToken'>
 }) {
   return sendEmail({
     to: response.email,
