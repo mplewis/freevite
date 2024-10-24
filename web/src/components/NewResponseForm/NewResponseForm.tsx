@@ -56,7 +56,6 @@ const reminderDurations = {
 
 function stateToInput(state: FormValues): CreateResponseInput {
   const input: CreateResponseInput = { ...state }
-  console.log({ input })
   delete input['reminder']
   const durationSec = reminderDurations[state.reminder]
   if (durationSec) input.remindPriorSec = durationSec

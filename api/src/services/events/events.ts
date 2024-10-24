@@ -77,7 +77,10 @@ export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
 
 export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   editToken,
-}) => db.event.findUnique({ where: { editToken } })
+}) => {
+  await db.event.update({ data: { confirmed: true }, where: { editToken } })
+  return db.event.findUnique({ where: { editToken } })
+}
 
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })

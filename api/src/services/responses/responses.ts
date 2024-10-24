@@ -6,6 +6,7 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
+import { sendResponseConfirmation } from 'src/lib/email/template'
 import { generateToken } from 'src/lib/token'
 
 export const responses: QueryResolvers['responses'] = () => {
@@ -44,7 +45,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
   }
   delete input.remindPriorSec
 
-  return db.response.create({
+  const response = await db.response.create({
     include: { reminders: true },
     data: {
       event: { connect: { id: event.id } },
@@ -53,7 +54,8 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
-  // TODO: Send the confirmation email
+  await sendResponseConfirmation({ event, response })
+  return response
 }
 
 export const updateResponse: MutationResolvers['updateResponse'] = ({

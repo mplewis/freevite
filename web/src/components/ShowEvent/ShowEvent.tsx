@@ -46,9 +46,6 @@ const IconBox = ({ children }) => (
 const ResponseSummary = (event) => {
   if (!event.responseSummary) return null
 
-  console.log(pluralize('person', 3, true))
-  console.log(event.responseSummary)
-
   const attd = pluralize('person', event.responseSummary.headCountTotal, true)
 
   return (
@@ -115,8 +112,6 @@ const ShowEvent = ({ event }: Props) => {
   const tz = _tz ?? 'UTC'
   const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const htmlDesc = markdownToHTML(description)
-
-  console.log(event)
 
   return (
     <div className="mt-3">

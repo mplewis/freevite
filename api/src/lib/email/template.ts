@@ -33,3 +33,33 @@ export async function sendEventDetails(event: Event) {
 		`,
   })
 }
+
+/**
+ * Send a "confirm RSVP" email to the user who just responded to an event.
+ * @param response The response to confirm
+ * @returns The result of the send operation
+ */
+export async function sendResponseConfirmation({
+  event,
+  response,
+}: {
+  event: { title: string }
+  response: { email: string; editToken: string }
+}) {
+  return sendEmail({
+    to: response.email,
+    subject: `Confirm your RSVP to ${event.title}`,
+    text: stripIndent`
+      Hello from Freevite! Click this link to confirm your attendance of ${event.title}:
+
+      https://${SITE_HOST}/rsvp?token=${response.editToken}
+
+      You must click the above link to confirm your RSVP.
+      Once you do, we'll let the organizer know you are attending.
+
+      If you did not RSVP to this event, you can ignore this email.
+
+      To modify or delete your RSVP, just reply to this email. Thanks for using Freevite!
+    `,
+  })
+}

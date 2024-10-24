@@ -10,6 +10,7 @@
 import { Router, Route, Set } from '@redwoodjs/router'
 
 import BaseLayout from './layouts/BaseLayout/BaseLayout'
+import ConfirmResponsePage from './pages/EditResponsePage/EditResponsePage'
 
 const Routes = () => {
   return (
@@ -18,10 +19,12 @@ const Routes = () => {
         <Route path="/" page={HomePage} name="home" prerender />
         <Route path="/new" page={NewEventPage} name="newEvent" prerender />
         <Route path="/created" page={EventCreatedPage} name="eventCreated" prerender />
-        <Route path="/edit" page={EditEventPage} name="editEvent" />
         <Route path="/preview" page={PreviewEventPage} name="previewEvent" />
         <Route path="/event/{slug}" page={ViewEventPage} name="viewEvent" />
-        {/* TODO: Confirm/edit response */}
+
+        {/* Below routes are used in email templates and cannot be changed */}
+        <Route path="/edit" page={EditEventPage} name="editEvent" />
+        <Route path="/rsvp" page={ConfirmResponsePage} name="confirmResponse" />
       </Set>
       <Route notfound page={NotFoundPage} prerender />
     </Router>
