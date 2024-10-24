@@ -1,10 +1,10 @@
-import { useState } from "react";
+import { useState } from 'react'
 
 import {
   CreateEventMutation,
   CreateEventMutationVariables,
   ResponseConfig,
-} from "types/graphql";
+} from 'types/graphql'
 
 import {
   Form,
@@ -14,20 +14,20 @@ import {
   Submit,
   useForm,
   SelectField,
-} from "@redwoodjs/forms";
-import { navigate, routes } from "@redwoodjs/router";
-import { useMutation } from "@redwoodjs/web";
+} from '@redwoodjs/forms'
+import { navigate, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
 
-import FormField from "src/components/FormField/FormField";
-import PageHead from "src/components/PageHead/PageHead";
-import Typ from "src/components/Typ/Typ";
-import { isEmail } from "src/logic/validation";
-import { fieldAttrs, formErrorAttrs } from "src/styles/classes";
+import FormField from 'src/components/FormField/FormField'
+import PageHead from 'src/components/PageHead/PageHead'
+import Typ from 'src/components/Typ/Typ'
+import { isEmail } from 'src/logic/validation'
+import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 interface FormValues {
-  ownerEmail: string;
-  title: string;
-  responseConfig: ResponseConfig;
+  ownerEmail: string
+  title: string
+  responseConfig: ResponseConfig
 }
 
 const CREATE_EVENT = gql`
@@ -38,43 +38,46 @@ const CREATE_EVENT = gql`
       responseConfig
     }
   }
-`;
+`
 
 const responseConfigOptions: { config: ResponseConfig; label: string }[] = [
   {
-    config: "SHOW_ALL",
-    label: "Accept responses and display them to other attendees (name, head count, comments)",
+    config: 'SHOW_ALL',
+    label:
+      'Accept responses and display them to other attendees (name, head count, comments)',
   },
   {
-    config: "SHOW_COUNTS_ONLY",
-    label: "Accept responses and display only head counts to other attendees (hide name and comments)",
+    config: 'SHOW_COUNTS_ONLY',
+    label:
+      'Accept responses and display only head counts to other attendees (hide name and comments)',
   },
   {
-    config: "SHOW_NONE",
-    label: "Accept responses and hide details from other attendees (only you can see them)",
+    config: 'SHOW_NONE',
+    label:
+      'Accept responses and hide details from other attendees (only you can see them)',
   },
-  { config: "DISABLED", label: "Do not accept responses" },
-];
+  { config: 'DISABLED', label: 'Do not accept responses' },
+]
 
 const NewEventPage = () => {
   const formMethods = useForm({
-    mode: "onTouched",
-    defaultValues: { ownerEmail: "", title: "" },
-  });
-  const { formState } = formMethods;
+    mode: 'onTouched',
+    defaultValues: { ownerEmail: '', title: '' },
+  })
+  const { formState } = formMethods
 
-  const [redirecting, setRedirecting] = useState(false);
+  const [redirecting, setRedirecting] = useState(false)
 
   const [create, { loading, error }] = useMutation<
     CreateEventMutation,
     CreateEventMutationVariables
   >(CREATE_EVENT, {
     onCompleted: (data) => {
-      const { ownerEmail, title } = data.createEvent;
-      setRedirecting(true);
-      navigate(routes.eventCreated({ email: ownerEmail, title }));
+      const { ownerEmail, title } = data.createEvent
+      setRedirecting(true)
+      navigate(routes.eventCreated({ email: ownerEmail, title }))
     },
-  });
+  })
 
   return (
     <>
@@ -114,7 +117,7 @@ const NewEventPage = () => {
         <FormField name="responseConfig" text="Accept responses?*">
           <Typ x="labelDetails">
             Freevite can send you an email when guests RSVP to your event. This
-            can't be changed later.
+            can&apos;t be changed later.
           </Typ>
           <SelectField
             name="responseConfig"
@@ -134,12 +137,12 @@ const NewEventPage = () => {
           className="button is-success mt-3"
           disabled={loading || redirecting || !formState.isValid}
         >
-          {loading || redirecting ? "Creating..." : "Create New Event"}
+          {loading || redirecting ? 'Creating...' : 'Create New Event'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
       </Form>
     </>
-  );
-};
+  )
+}
 
-export default NewEventPage;
+export default NewEventPage

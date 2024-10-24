@@ -1,9 +1,9 @@
-import { stripIndent } from "common-tags"
+import { stripIndent } from 'common-tags'
+import { Event, Response } from 'types/graphql'
 
-import { SITE_HOST } from "src/app.config"
+import { SITE_HOST } from 'src/app.config'
 
-import { sendEmail } from "./send"
-import { Event, Response } from "types/graphql"
+import { sendEmail } from './send'
 
 /**
  * Email the admin link for a newly-created event to its owner.
@@ -11,7 +11,7 @@ import { Event, Response } from "types/graphql"
  * @returns The result of the send operation
  */
 export async function sendEventDetails(
-  event: Pick<Event, "ownerEmail" | "title" | "editToken">
+  event: Pick<Event, 'ownerEmail' | 'title' | 'editToken'>
 ) {
   return sendEmail({
     to: event.ownerEmail,
@@ -41,8 +41,8 @@ export async function sendResponseConfirmation({
   event,
   response,
 }: {
-  event: Pick<Event, "title">;
-  response: Pick<Response, "email" | "editToken">;
+  event: Pick<Event, 'title'>
+  response: Pick<Response, 'email' | 'editToken'>
 }) {
   return sendEmail({
     to: response.email,
@@ -68,13 +68,18 @@ export async function sendResponseConfirmation({
  * @param response The response that was received
  * @returns The result of the send operation
  */
-export async function sendNewResponseReceived({ event, response }: {
-  event: Pick<Event, "title" | "ownerEmail" | "editToken">;
-  response: Pick<Response, "name" | "headCount" | "comment">;
+export async function sendNewResponseReceived({
+  event,
+  response,
+}: {
+  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken'>
+  response: Pick<Response, 'name' | 'headCount' | 'comment'>
 }) {
   return sendEmail({
     to: event.ownerEmail,
-    subject: `New RSVP: ${response.name} (${response.headCount}) ${response.headCount === 1 ? 'is' : 'are'} attending ${event.title}`,
+    subject:
+      `New RSVP: ${response.name} (${response.headCount}) ` +
+      `${response.headCount === 1 ? 'is' : 'are'} attending ${event.title}`,
     text: stripIndent`
       Hello from Freevite! ${response.name} has confirmed they are attending ${event.title}:
 

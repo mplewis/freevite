@@ -6,7 +6,10 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-import { sendNewResponseReceived, sendResponseConfirmation } from 'src/lib/email/template'
+import {
+  sendNewResponseReceived,
+  sendResponseConfirmation,
+} from 'src/lib/email/template'
 import { generateToken } from 'src/lib/token'
 
 export const responses: QueryResolvers['responses'] = () => {

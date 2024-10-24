@@ -1,4 +1,4 @@
-import type { Event } from "@prisma/client";
+import type { Event } from '@prisma/client'
 
 import {
   eventBySlug,
@@ -7,17 +7,19 @@ import {
   createEvent,
   updateEvent,
   deleteEvent,
-} from "./events";
-import type { StandardScenario } from "./events.scenarios";
+} from './events'
+import type { StandardScenario } from './events.scenarios'
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 function noMutables(event: any) {
-  const { createdAt, updatedAt, id, ...rest } = event;
-  return rest;
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { createdAt, updatedAt, id, ...rest } = event
+  return rest
 }
 
-describe("events", () => {
-  scenario("returns an event by slug", async (scenario: StandardScenario) => {
-    const result = await eventBySlug({ slug: scenario.event.visible.slug });
+describe('events', () => {
+  scenario('returns an event by slug', async (scenario: StandardScenario) => {
+    const result = await eventBySlug({ slug: scenario.event.visible.slug })
     expect(noMutables(result)).toMatchInlineSnapshot(`
       {
         "description": "String",
@@ -30,23 +32,23 @@ describe("events", () => {
         "timezone": null,
         "title": "String",
       }
-    `);
-  });
+    `)
+  })
 
   scenario(
-    "does not return an invisible event by slug",
+    'does not return an invisible event by slug',
     async (scenario: StandardScenario) => {
-      const result = await eventBySlug({ slug: scenario.event.invisible.slug });
-      expect(result).toBeNull();
+      const result = await eventBySlug({ slug: scenario.event.invisible.slug })
+      expect(result).toBeNull()
     }
-  );
+  )
 
   scenario(
-    "returns an event by editToken",
+    'returns an event by editToken',
     async (scenario: StandardScenario) => {
       const result = await eventByEditToken({
         editToken: scenario.event.visible.editToken,
-      });
+      })
       expect(noMutables(result)).toMatchInlineSnapshot(`
         {
           "confirmed": true,
@@ -62,16 +64,16 @@ describe("events", () => {
           "title": "String",
           "visible": true,
         }
-      `);
+      `)
     }
-  );
+  )
 
   scenario(
-    "returns an event by previewToken",
+    'returns an event by previewToken',
     async (scenario: StandardScenario) => {
       const result = await eventByPreviewToken({
         previewToken: scenario.event.visible.previewToken,
-      });
+      })
       expect(noMutables(result)).toMatchInlineSnapshot(`
         {
           "confirmed": true,
@@ -87,38 +89,38 @@ describe("events", () => {
           "title": "String",
           "visible": true,
         }
-      `);
+      `)
     }
-  );
+  )
 
-  scenario("creates a event", async () => {
+  scenario('creates a event', async () => {
     const result = await createEvent({
       input: {
-        ownerEmail: "user@example.com",
-        title: "My birthday party",
-        responseConfig: "DISABLED",
+        ownerEmail: 'user@example.com',
+        title: 'My birthday party',
+        responseConfig: 'DISABLED',
       },
-    });
-    expect(result.ownerEmail).toEqual("user@example.com");
-    expect(result.title).toEqual("My birthday party");
-  });
+    })
+    expect(result.ownerEmail).toEqual('user@example.com')
+    expect(result.title).toEqual('My birthday party')
+  })
 
-  scenario("updates a event", async (scenario: StandardScenario) => {
+  scenario('updates a event', async (scenario: StandardScenario) => {
     const original = (await eventByEditToken({
       editToken: scenario.event.visible.editToken,
-    })) as Event;
+    })) as Event
     const result = await updateEvent({
       editToken: original.editToken,
-      input: { title: "My going-away party" },
-    });
-    expect(result.title).toEqual("My going-away party");
-  });
+      input: { title: 'My going-away party' },
+    })
+    expect(result.title).toEqual('My going-away party')
+  })
 
-  scenario("deletes a event", async (scenario: StandardScenario) => {
+  scenario('deletes a event', async (scenario: StandardScenario) => {
     const original = (await deleteEvent({
       editToken: scenario.event.visible.editToken,
-    })) as Event;
-    const result = await eventByEditToken({ editToken: original.editToken });
-    expect(result).toBeNull();
-  });
-});
+    })) as Event
+    const result = await eventByEditToken({ editToken: original.editToken })
+    expect(result).toBeNull()
+  })
+})
