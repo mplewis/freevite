@@ -35,6 +35,9 @@ CREATE TABLE "Reminder" (
 -- CreateIndex
 CREATE UNIQUE INDEX "Response_editToken_key" ON "Response"("editToken");
 
+-- CreateIndex
+CREATE UNIQUE INDEX "Response_eventId_email_key" ON "Response"("eventId", "email");
+
 -- AddForeignKey
 ALTER TABLE "Response" ADD CONSTRAINT "Response_eventId_fkey" FOREIGN KEY ("eventId") REFERENCES "Event"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 

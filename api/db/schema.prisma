@@ -60,6 +60,8 @@ model Response {
   comment   String  @default("")
 
   reminders Reminder[]
+
+  @@unique([eventId, email])
 }
 
 model Reminder {
