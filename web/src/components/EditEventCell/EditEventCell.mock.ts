@@ -12,6 +12,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     visible: true,
     title: 'String',
     description: 'String',
+    location: '',
     start: '2021-04-01T00:00:00Z',
     end: '2021-04-01T00:00:00Z',
     timezone: 'America/Denver',

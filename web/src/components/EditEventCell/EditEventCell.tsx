@@ -17,6 +17,7 @@ export const QUERY = gql`
       slug
       title
       description
+      location
       start
       end
       timezone
