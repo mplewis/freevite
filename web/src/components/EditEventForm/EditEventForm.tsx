@@ -45,6 +45,7 @@ type Event = {
   slug: string
   title: string
   description: string
+  location: string
   start: string
   end: string
   timezone?: string
@@ -62,6 +63,7 @@ const UPDATE_EVENT = gql`
       slug
       title
       description
+      location
       start
       end
       timezone
@@ -210,13 +212,21 @@ const EditEventForm = (props: Props) => {
           save({ variables: { editToken, input: stateToEvent(state) } })
         }
       >
-        <FormField name="title" text="Title">
+        <FormField name="title" text="Title*">
           <TextField
             name="title"
             validation={{ required: true }}
             disabled={loading}
             {...fieldAttrs.input}
           />
+        </FormField>
+
+        <FormField name="location" text="Location">
+          <Typ x="labelDetails">
+            Use a name and street address for best results. For example:
+            Nallen&apos;s Irish Pub, 1429 Market St, Denver, CO 80202
+          </Typ>
+          <TextField name="location" disabled={loading} {...fieldAttrs.input} />
         </FormField>
 
         <Controller
@@ -229,7 +239,7 @@ const EditEventForm = (props: Props) => {
             }
             return (
               <label className="label" htmlFor="timezone">
-                Time zone
+                Time zone*
                 <br />
                 <div className="control">
                   <Select
@@ -256,7 +266,7 @@ const EditEventForm = (props: Props) => {
           name="start"
           render={({ field }) => (
             <label className="label" htmlFor="start">
-              Start
+              Start*
               <br />
               <div className="control">
                 <input
@@ -284,7 +294,7 @@ const EditEventForm = (props: Props) => {
           name="end"
           render={({ field }) => (
             <label className="label" htmlFor="end">
-              End
+              End*
               <div className="control">
                 <input
                   id="end"
@@ -306,7 +316,7 @@ const EditEventForm = (props: Props) => {
           }}
         />
 
-        <FormField name="slug" text="Slug">
+        <FormField name="slug" text="Slug*">
           <Typ x="labelDetails">
             Your event&apos;s public link will be <code>{fqEventLink}</code>
           </Typ>
@@ -327,7 +337,7 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        <FormField name="description" text="Description">
+        <FormField name="description" text="Description*">
           <Typ x="labelDetails">
             You can use{' '}
             <a
@@ -359,7 +369,7 @@ const EditEventForm = (props: Props) => {
         </label>
 
         <Submit className="button is-success" disabled={!savable}>
-          Save Changes
+          {loading ? 'Saving...' : 'Save Changes'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
         <div className="mt-3">

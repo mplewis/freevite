@@ -66,6 +66,7 @@ export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
     title: event.title,
     slug: event.slug,
     description: event.description,
+    location: event.location,
     start: event.start,
     end: event.end,
     timezone: event.timezone,

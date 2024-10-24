@@ -16,6 +16,7 @@ export const QUERY = gql`
       slug
       title
       description
+      location
       start
       end
       timezone
@@ -41,6 +42,7 @@ export const Success = ({
     slug: event.slug,
     title: event.title,
     description: event.description,
+    location: event.location,
     start: event.start,
     end: event.end,
     timezone: event.timezone,

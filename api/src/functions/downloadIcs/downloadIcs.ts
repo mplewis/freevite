@@ -11,6 +11,7 @@ export interface Event {
   description: string
   start: string | Date
   end: string | Date
+  location: string
 }
 
 function buildICSEvent(attrs: EventAttributes): Promise<string> {
@@ -27,7 +28,7 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
   if (typeof event.end === 'string') event.end = new Date(event.end)
 
   const description = await markdownToHTML(event.description)
-  return {
+  const eventAttributes: EventAttributes = {
     description,
     title: event.title,
     start: convertToDateArray(event.start),
@@ -37,6 +38,8 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
     endInputType: 'utc',
     endOutputType: 'utc',
   }
+  if (event.location !== '') eventAttributes.location = event.location
+  return eventAttributes
 }
 
 async function baseHandler(e: APIGatewayEvent) {

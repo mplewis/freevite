@@ -24,6 +24,7 @@ describe('events', () => {
       {
         "description": "String",
         "end": 2023-02-12T23:14:37.652Z,
+        "location": "",
         "responseConfig": "DISABLED",
         "responseSummary": null,
         "responses": null,
@@ -55,6 +56,7 @@ describe('events', () => {
           "description": "String",
           "editToken": "String1328327",
           "end": 2023-02-12T23:14:37.652Z,
+          "location": "",
           "ownerEmail": "String",
           "previewToken": "String571517",
           "responseConfig": "DISABLED",
@@ -80,6 +82,7 @@ describe('events', () => {
           "description": "String",
           "editToken": "String1328327",
           "end": 2023-02-12T23:14:37.652Z,
+          "location": "",
           "ownerEmail": "String",
           "previewToken": "String571517",
           "responseConfig": "DISABLED",
