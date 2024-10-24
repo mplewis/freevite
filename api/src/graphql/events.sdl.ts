@@ -43,7 +43,7 @@ export const schema = gql`
   type Query {
     eventBySlug(slug: String!): PublicEvent @skipAuth
     eventByEditToken(editToken: String!): Event @skipAuth
-    eventByPreviewToken(previewToken: String!): Event @skipAuth
+    eventByPreviewToken(previewToken: String!): PublicEvent @skipAuth
   }
 
   input CreateEventInput {
