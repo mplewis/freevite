@@ -6,7 +6,7 @@ import type {
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
-import { sendResponseConfirmation } from 'src/lib/email/template'
+import { sendNewResponseReceived, sendResponseConfirmation } from 'src/lib/email/template'
 import { generateToken } from 'src/lib/token'
 
 export const responses: QueryResolvers['responses'] = () => {
@@ -22,11 +22,12 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
     const resp = await db.response.findUnique({ where: { editToken } })
     if (resp.confirmed) return resp
 
-    await db.response.update({
+    const updated = await db.response.update({
       where: { editToken },
       data: { confirmed: true },
       include: { event: true },
     })
+    await sendNewResponseReceived({ event: updated.event, response: updated })
     return db.response.findUnique({
       where: { editToken },
       include: { reminders: true },

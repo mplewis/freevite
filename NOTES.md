@@ -20,6 +20,10 @@
 - [ ] Edit RSVP from confirmation link
 - [ ] Delete RSVP
 - [ ] "Upgrade" from no RSVP to RSVP
+- [ ] Show all responses to event owner on edit page regardless of response config
+- [ ] **Reminders engine**
+- [ ] Allow host to delete RSVPs
+- [ ] Allow host to email attendees
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
