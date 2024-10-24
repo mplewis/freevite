@@ -25,7 +25,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
     await db.response.update({
       where: { editToken },
       data: { confirmed: true },
-      include: {event: true},
+      include: { event: true },
     })
     return db.response.findUnique({
       where: { editToken },
