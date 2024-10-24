@@ -24,6 +24,7 @@
 - [ ] **Reminders engine**
 - [ ] Allow host to delete RSVPs
 - [ ] Allow host to email attendees
+- [ ] Fix formatting in ICS file desc (no HTML)
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
