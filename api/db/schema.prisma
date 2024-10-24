@@ -23,6 +23,7 @@ model Event {
   slug        String @unique
   title       String
   description String
+  location    String @default("")
 
   // Start and end are ALWAYS stored as UTC times! They are not related to timezone!
   // Do not convert start or end times through timezone before storing. Store them as UTC.

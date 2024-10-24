@@ -13,6 +13,7 @@ export const QUERY = gql`
       id
       title
       description
+      location
       start
       end
       slug

@@ -30,10 +30,10 @@ function queryString(params: Record<string, string>) {
 }
 
 function gcalLink(event: PublicEvent, descHTML: string) {
-  const { title, start, end } = event
+  const { title, start, end, location } = event
   const dates = `${toGcalDate(start)}/${toGcalDate(end)}`
   const details = descHTML.replaceAll('<p>', '').replaceAll('</p>', '\n')
-  const query = queryString({ dates, details, text: title })
+  const query = queryString({ dates, details, location, text: title })
   return `https://calendar.google.com/calendar/r/eventedit?${query}`
 }
 
@@ -108,10 +108,19 @@ const ResponseSection = (event) => {
 }
 
 const ShowEvent = ({ event }: Props) => {
-  const { title, description, start, end, slug, timezone: _tz } = event
+  const {
+    title,
+    description,
+    location,
+    start,
+    end,
+    slug,
+    timezone: _tz,
+  } = event
   const tz = _tz ?? 'UTC'
   const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const htmlDesc = markdownToHTML(description)
+  const mapHref = `https://www.google.com/maps/search/?api=1&query=${location}`
 
   return (
     <div className="mt-3">
@@ -130,6 +139,14 @@ const ShowEvent = ({ event }: Props) => {
         <strong>To:</strong> {prettyDate(end, tz)} ({prettyBetween(start, end)}{' '}
         long)
       </Typ>
+      {location !== '' && (
+        <Typ x="p">
+          <strong>Location:</strong>{' '}
+          <a href={mapHref} target="_blank" rel="noreferrer">
+            {location}
+          </a>
+        </Typ>
+      )}
       <div className="mt-4 mb-4">
         <IconBox>
           <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">

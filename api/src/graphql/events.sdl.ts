@@ -11,6 +11,7 @@ export const schema = gql`
     slug: String!
     title: String!
     description: String!
+    location: String!
     start: DateTime!
     end: DateTime!
     timezone: String
@@ -23,6 +24,7 @@ export const schema = gql`
     slug: String!
     title: String!
     description: String!
+    location: String!
     start: DateTime!
     end: DateTime!
     timezone: String
@@ -57,6 +59,7 @@ export const schema = gql`
     slug: String
     title: String
     description: String
+    location: String
     start: DateTime
     end: DateTime
     timezone: String
