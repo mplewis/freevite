@@ -8793,7 +8793,7 @@ __metadata:
     "@types/nodemailer": ^6.4.7
     handlebars: ^4.7.7
     ics: ^3.1.0
-    nodemailer: ^6.9.1
+    nodemailer: ^6.9.16
     puppeteer-core: ^23.5.0
   languageName: unknown
   linkType: soft
@@ -11614,8 +11614,8 @@ __metadata:
   linkType: hard
 
 "elliptic@npm:^6.5.3, elliptic@npm:^6.5.5":
-  version: 6.5.7
-  resolution: "elliptic@npm:6.5.7"
+  version: 6.6.0
+  resolution: "elliptic@npm:6.6.0"
   dependencies:
     bn.js: ^4.11.9
     brorand: ^1.1.0
@@ -11624,7 +11624,7 @@ __metadata:
     inherits: ^2.0.4
     minimalistic-assert: ^1.0.1
     minimalistic-crypto-utils: ^1.0.1
-  checksum: 799959b6c54ea3564e8961f35abdf8c77e37617f3051614b05ab1fb6a04ddb65bd1caa75ed1bae375b15dda312a0f79fed26ebe76ecf05c5a7af244152a601b8
+  checksum: 42eb3492e218017bf8923a5d14a86f414952f2f771361805b3ae9f380923b5da53e203d0d92be95cb0a248858a78db7db5934a346e268abb757e6fe561d401c9
   languageName: node
   linkType: hard
 
@@ -17095,7 +17095,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"nodemailer@npm:6.9.15, nodemailer@npm:^6.9.1":
+"nodemailer@npm:6.9.15":
   version: 6.9.15
   resolution: "nodemailer@npm:6.9.15"
   checksum: 92493406310cb1bb0bac575d604b3c75b67e420e8af94711bd55cb012ee02d3bf6fda57c663d66c15bdd89acd5f9cd540922644b089617c6e191596536503b5b
@@ -17113,6 +17113,13 @@ __metadata:
   version: 6.9.4
   resolution: "nodemailer@npm:6.9.4"
   checksum: c50778ae499da089b5cceb4bbe6366900b14a76155c5e379e80996b46a2ba7db094b624e04b839f8c992e86bdad218f26b914467b3047fa8223142a42a4252f5
+  languageName: node
+  linkType: hard
+
+"nodemailer@npm:^6.9.16":
+  version: 6.9.16
+  resolution: "nodemailer@npm:6.9.16"
+  checksum: 9fd73ab4ab5b81544c3c9820afbe386369aba442f997b2f58d171222a898a7aed580fc100bfe6eebc194f18ba6e169d67ee40ca64d32d69022d89e575cef97a4
   languageName: node
   linkType: hard
 
