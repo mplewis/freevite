@@ -30,4 +30,4 @@
     Cache-Control = "max-age=31536000, immutable"
 
 [functions."sendReminders"]
-schedule = '* * * * *'
+schedule = '*/15 * * * *'
