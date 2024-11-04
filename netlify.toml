@@ -28,3 +28,6 @@
   for = "/*.css"
   [headers.values]
     Cache-Control = "max-age=31536000, immutable"
+
+[functions."sendReminders"]
+schedule = '* * * * *'
