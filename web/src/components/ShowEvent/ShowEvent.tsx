@@ -124,7 +124,7 @@ const ShowEvent = ({ event }: Props) => {
 
   return (
     <div className="mt-3">
-      <Typ x="p" className="is-italic pb-5">
+      <Typ x="p" className="is-italic">
         The user-generated content below is not owned by Freevite. Please report
         abuse to <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
       </Typ>
