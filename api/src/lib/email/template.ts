@@ -1,7 +1,9 @@
 import { stripIndent } from 'common-tags'
-import { Event, Response } from 'types/graphql'
+import { Event, PublicEvent, Response } from 'types/graphql'
 
 import { SITE_HOST } from 'src/app.config'
+
+import { prettyBetween, prettyDate, prettyUntil } from '../convert/date'
 
 import { sendEmail } from './send'
 
@@ -41,7 +43,7 @@ export async function sendResponseConfirmation({
   event,
   response,
 }: {
-  event: Pick<Event, 'title'>
+  event: Pick<PublicEvent, 'title'>
   response: Pick<Response, 'email' | 'editToken'>
 }) {
   return sendEmail({
@@ -92,6 +94,42 @@ export async function sendNewResponseReceived({
       https://${SITE_HOST}/edit?token=${event.editToken}
 
       If you need any help, just reply to this email. Thanks for using Freevite!
+    `,
+  })
+}
+
+/**
+ * Remind a user about an upcoming event for which they RSVPed.
+ * @param event The event for which the reminder is being sent
+ * @param response The response to which the reminder belongs
+ * @param now The current date and time
+ * @returns The result of the send operation
+ */
+export async function sendReminder(
+  {
+    event,
+    response,
+  }: {
+    event: Pick<PublicEvent, 'title' | 'start' | 'end' | 'timezone' | 'slug'>
+    response: Pick<Response, 'email'>
+  },
+  now = new Date()
+) {
+  return sendEmail({
+    to: response.email,
+    subject: `Reminder: ${event.title} (${prettyUntil(event.start, now, false)} away)`,
+    text: stripIndent`
+      Hello from Freevite! You asked for a reminder about this event when you RSVPed:
+
+      ${event.title}
+      Starts at: ${prettyDate(event.start, event.timezone)} (${prettyUntil(event.start, now)})
+      Ends at: ${prettyDate(event.end, event.timezone)} (${prettyBetween(event.start, event.end)})
+
+      View the event here:
+      https://${SITE_HOST}/events/${event.slug}
+
+      If you need to modify or delete your RSVP, just reply to this email.
+      Thanks for using Freevite!
     `,
   })
 }
