@@ -243,6 +243,6 @@ export async function renderEventPreview(event: {
     day,
     time,
     title: event.title,
-    details: markdownToText(event.description),
+    details: await markdownToText(event.description),
   })
 }

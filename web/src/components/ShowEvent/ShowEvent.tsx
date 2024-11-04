@@ -1,3 +1,5 @@
+import { useState, useEffect } from 'react'
+
 import pluralize from 'pluralize'
 import { PublicEvent } from 'types/graphql'
 
@@ -139,8 +141,15 @@ const ShowEvent = ({ event }: Props) => {
   } = event
   const tz = _tz ?? 'UTC'
   const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
-  const htmlDesc = markdownToHTML(description)
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${location}`
+
+  const [htmlDesc, setHTMLDesc] = useState('')
+  useEffect(() => {
+    ;(async () => {
+      const htmlDesc = await markdownToHTML(description)
+      setHTMLDesc(htmlDesc)
+    })()
+  }, [description])
 
   return (
     <div className="mt-3">

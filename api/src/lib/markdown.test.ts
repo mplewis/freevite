@@ -15,7 +15,7 @@ Bracket fish: <>< ><>
 
 <img src="shouldnt-render.png">
     `.trim()
-    expect(markdownToHTML(input)).toMatchInlineSnapshot(`
+    expect(await markdownToHTML(input)).toMatchInlineSnapshot(`
       "<h1>Hello, world!</h1>
       <p>This is some prose.</p>
       <p><a target="_blank" href="https://example.com">Link to a website</a></p>

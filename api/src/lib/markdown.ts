@@ -26,8 +26,8 @@ const allowedTags = [
  * @param markdown The Markdown document
  * @returns The converted HTML
  */
-export function markdownToHTML(markdown: string): string {
-  const html = marked.parse(markdown)
+export async function markdownToHTML(markdown: string): Promise<string> {
+  const html = await marked.parse(markdown)
   const clean = sanitize(html, { allowedTags })
   const newWindows = clean.replace(/<a /g, '<a target="_blank" ')
   return newWindows
@@ -38,7 +38,7 @@ export function markdownToHTML(markdown: string): string {
  * @param markdown The Markdown document
  * @returns The converted plain text
  */
-export function markdownToText(markdown: string): string {
-  const html = marked.parse(markdown)
+export async function markdownToText(markdown: string): Promise<string> {
+  const html = await marked.parse(markdown)
   return sanitize(html, { allowedTags: [] })
 }
