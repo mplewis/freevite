@@ -28,8 +28,8 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
-    "@redwoodjs/core": "8.3.0",
-    "@redwoodjs/realtime": "8.3.0",
+    "@redwoodjs/core": "8.4.0",
+    "@redwoodjs/realtime": "8.4.0",
     "@redwoodjs/studio": "11",
     "@types/jest": "^29.4.0",
     "@types/marked": "^4.0.8",
