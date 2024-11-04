@@ -165,7 +165,7 @@ If you need any help, just reply to this email. Thanks for using Freevite!",
         email: 'holmes@example.com',
       }
 
-      await sendReminder({ event, response }, now)
+      await sendReminder({ event, response, now })
       expect(testHandler.inbox).toHaveLength(1)
       expect(testHandler.inbox[0]).toMatchInlineSnapshot(`
 {

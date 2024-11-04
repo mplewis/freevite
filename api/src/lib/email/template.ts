@@ -105,16 +105,15 @@ export async function sendNewResponseReceived({
  * @param now The current date and time
  * @returns The result of the send operation
  */
-export async function sendReminder(
-  {
-    event,
-    response,
-  }: {
-    event: Pick<PublicEvent, 'title' | 'start' | 'end' | 'timezone' | 'slug'>
-    response: Pick<Response, 'email'>
-  },
-  now = new Date()
-) {
+export async function sendReminder({
+  event,
+  response,
+  now,
+}: {
+  event: Pick<PublicEvent, 'title' | 'start' | 'end' | 'timezone' | 'slug'>
+  response: Pick<Response, 'email'>
+  now: Date
+}) {
   return sendEmail({
     to: response.email,
     subject: `Reminder: ${event.title} (${prettyUntil(event.start, now, false)} away)`,
