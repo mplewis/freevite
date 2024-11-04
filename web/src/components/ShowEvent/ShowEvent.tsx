@@ -37,11 +37,29 @@ function gcalLink(event: PublicEvent, descHTML: string) {
   return `https://calendar.google.com/calendar/r/eventedit?${query}`
 }
 
+function scrollTo(anchor: string) {
+  document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' })
+}
+
 const IconBox = ({ children }) => (
   <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
     {children}
   </div>
 )
+
+const RSVPButton = (event) => {
+  if (event.responseConfig === 'DISABLED') return null
+
+  return (
+    <button
+      className="button is-primary has-text-weight-semibold"
+      style={{ height: '47px' }}
+      onClick={() => scrollTo('rsvp-form')}
+    >
+      RSVP Now &raquo;
+    </button>
+  )
+}
 
 const ResponseSummary = (event) => {
   if (!event.responseSummary) return null
@@ -102,7 +120,9 @@ const ResponseSection = (event) => {
     <>
       <hr />
       <ResponseSummary {...event} />
-      <NewResponseForm event={event} />
+      <div id="rsvp-form">
+        <NewResponseForm event={event} />
+      </div>
     </>
   )
 }
@@ -148,6 +168,9 @@ const ShowEvent = ({ event }: Props) => {
         </Typ>
       )}
       <div className="mt-4 mb-4">
+        <div className="mb-4">
+          <RSVPButton event={event} />
+        </div>
         <IconBox>
           <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
             <GCal aria-label="Add to Google Calendar" />
