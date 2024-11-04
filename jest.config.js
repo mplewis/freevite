@@ -7,4 +7,5 @@ module.exports = {
   projects: ['<rootDir>/{*,!(node_modules)/**/}/jest.config.js'],
   setupFiles: ['<rootDir>/jest.setup.js'],
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/_old/'],
+  prettierPath: null,
 }

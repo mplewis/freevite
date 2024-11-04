@@ -29,6 +29,7 @@ class PlainEmailRenderer extends AbstractMailRenderer {
   }
 }
 
+/** The RedwoodJS mailer transport. */
 export const mailer = new Mailer({
   handling: {
     default: 'nodemailer',

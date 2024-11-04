@@ -1,5 +1,4 @@
 import { MAIL_SENDER } from 'src/api.config'
-import { CI } from 'src/app.config'
 import { mailer } from 'src/lib/mailer'
 
 import { logger } from '../logger'
@@ -13,12 +12,11 @@ interface Params {
 }
 
 /**
- * Send an email with the given content and the global transport. Noops in CI.
+ * Send an email with the given content using the global RedwoodJS mailer.
  * @param params The email parameters
  * @returns The result of the send operation
  */
 export async function sendEmail({ subject, text, ...p }: Params) {
-  if (CI) return
   const { name, email } = MAIL_SENDER
   const from = `"${name}" <${email}>`
   const to = Array.isArray(p.to) ? p.to : [p.to]

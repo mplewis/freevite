@@ -4,7 +4,7 @@ import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
 
-import dayjs from '../apiLib/dayjs'
+import dayjs from '../dayjs'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(duration)
@@ -51,8 +51,8 @@ export function prettyDate(d: string | Date, tz: string): string {
  * @param d The future date
  * @returns A verbal representation of the amount of time until the given date
  */
-export function prettyUntil(d: string | Date): string {
-  return dayjs.duration(dayjs(d).diff(new Date())).humanize(true)
+export function prettyUntil(d: string | Date, now = new Date()): string {
+  return dayjs.duration(dayjs(d).diff(now)).humanize(true)
 }
 
 /**
