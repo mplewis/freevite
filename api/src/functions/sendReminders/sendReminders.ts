@@ -1,17 +1,8 @@
 import type { APIGatewayEvent, Context } from 'aws-lambda'
 
-import { logger } from 'src/lib/logger'
+import { sendOutstandingReminders } from 'src/lib/schedule/reminder'
 
-export const handler = async (event: APIGatewayEvent, _context: Context) => {
-  logger.info(`${event.httpMethod} ${event.path}: sendReminders function`)
-
-  return {
-    statusCode: 200,
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({
-      body: event.body,
-    }),
-  }
+export const handler = async (_event: APIGatewayEvent, _context: Context) => {
+  await sendOutstandingReminders()
+  return { statusCode: 200 }
 }

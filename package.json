@@ -13,6 +13,9 @@
     "seed": "yarn rw exec seed"
   },
   "packageManager": "yarn@4.4.0",
+  "scripts": {
+    "preflight": "rw lint && jest --watchAll=false --all && rw type-check"
+  },
   "dependencies": {
     "@netlify/functions": "^2.8.2",
     "@sentry/serverless": "^7.38.0",
