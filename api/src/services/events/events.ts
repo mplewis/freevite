@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import type {
   QueryResolvers,
   MutationResolvers,
@@ -12,6 +11,8 @@ import { sendEventDetails } from 'src/lib/email/template'
 import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
+
+import dayjs from '../../lib/dayjs'
 
 import { updateEventPreviewImage } from './preview'
 

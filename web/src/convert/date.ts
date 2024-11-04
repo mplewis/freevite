@@ -1,9 +1,10 @@
-import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import duration from 'dayjs/plugin/duration'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
+
+import dayjs from '../apiLib/dayjs'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(duration)

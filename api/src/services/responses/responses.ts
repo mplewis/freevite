@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import type {
   QueryResolvers,
   MutationResolvers,
@@ -11,6 +10,8 @@ import {
   sendResponseConfirmation,
 } from 'src/lib/email/template'
 import { generateToken } from 'src/lib/token'
+
+import dayjs from '../../lib/dayjs'
 
 export const responses: QueryResolvers['responses'] = () => {
   return db.response.findMany({ include: { reminders: true } })

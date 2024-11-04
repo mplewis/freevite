@@ -6,6 +6,10 @@ module.exports = {
     // max line length => 100
     'max-len': ['error', { code: 100, tabWidth: 2 }],
     'jsdoc/require-jsdoc': ['error', { publicOnly: true }],
+    'no-restricted-imports': [
+      'error',
+      { name: 'dayjs', message: 'Please import from `dayjs.ts` instead' },
+    ],
   },
   overrides: [
     {

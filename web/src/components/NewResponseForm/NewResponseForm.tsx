@@ -1,6 +1,5 @@
 import { useState } from 'react'
 
-import dayjs from 'dayjs'
 import {
   CreateResponseInput,
   CreateResponseMutation,
@@ -24,6 +23,8 @@ import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
+
+import dayjs from '../../apiLib/dayjs'
 
 interface Props {
   event: Pick<PublicEvent, 'id' | 'title' | 'responseConfig'>

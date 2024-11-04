@@ -1,4 +1,3 @@
-import dayjs from 'dayjs'
 import pluralize from 'pluralize'
 import { PublicEvent } from 'types/graphql'
 
@@ -6,6 +5,7 @@ import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/convert/date'
 
+import dayjs from '../../apiLib/dayjs'
 import NewResponseForm from '../NewResponseForm/NewResponseForm'
 import Typ from '../Typ/Typ'
 

@@ -1,5 +1,4 @@
 import chromium from '@sparticuz/chromium'
-import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 import timezone from 'dayjs/plugin/timezone'
 import utc from 'dayjs/plugin/utc'
@@ -7,6 +6,8 @@ import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
 import { markdownToText } from 'src/lib/markdown'
+
+import dayjs from '../../lib/dayjs'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)
