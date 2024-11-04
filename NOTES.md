@@ -25,6 +25,11 @@
 - [ ] Allow host to delete RSVPs
 - [ ] Allow host to email attendees
 - [ ] Fix formatting in ICS file desc (no HTML)
+- [ ] More prominent RSVP button
+- [ ] **Scheduler engine**
+	- [ ] Send reminders
+	- [ ] Delete stale events
+- [ ] Use background functions for saving event preview image
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message
