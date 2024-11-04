@@ -30,6 +30,8 @@
 	- [ ] Send reminders
 	- [ ] Delete stale events
 - [ ] Use background functions for saving event preview image
+- [ ] Upgrade to Bulma 1.0 (or away)
+- [ ] Fix hamburger menu not working on mobile
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message

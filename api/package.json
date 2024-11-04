@@ -11,10 +11,10 @@
     "@redwoodjs/mailer-handler-nodemailer": "8.4.0",
     "@redwoodjs/mailer-renderer-react-email": "8.4.0",
     "@sparticuz/chromium": "^129.0.0",
-    "handlebars": "^4.7.7",
-    "ics": "^3.1.0",
-    "nodemailer": "^6.9.1",
-    "puppeteer-core": "^23.5.0"
+    "handlebars": "^4.7.8",
+    "ics": "^3.8.1",
+    "nodemailer": "^6.9.16",
+    "puppeteer-core": "^23.6.1"
   },
   "devDependencies": {
     "@redwoodjs/mailer-handler-in-memory": "8.4.0",
