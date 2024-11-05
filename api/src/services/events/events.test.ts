@@ -51,22 +51,23 @@ describe('events', () => {
         editToken: scenario.event.visible.editToken,
       })
       expect(noMutables(result)).toMatchInlineSnapshot(`
-        {
-          "confirmed": true,
-          "description": "String",
-          "editToken": "String1328327",
-          "end": 2023-02-12T23:14:37.652Z,
-          "location": "",
-          "ownerEmail": "String",
-          "previewToken": "String571517",
-          "responseConfig": "DISABLED",
-          "slug": "String6210380",
-          "start": 2023-02-12T23:13:37.652Z,
-          "timezone": null,
-          "title": "String",
-          "visible": true,
-        }
-      `)
+{
+  "confirmed": true,
+  "description": "String",
+  "editToken": "String1328327",
+  "end": 2023-02-12T23:14:37.652Z,
+  "location": "",
+  "ownerEmail": "String",
+  "previewToken": "String571517",
+  "responseConfig": "DISABLED",
+  "responses": [],
+  "slug": "String6210380",
+  "start": 2023-02-12T23:13:37.652Z,
+  "timezone": null,
+  "title": "String",
+  "visible": true,
+}
+`)
     }
   )
 

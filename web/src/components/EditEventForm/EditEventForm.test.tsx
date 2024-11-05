@@ -21,6 +21,8 @@ describe('EditEventForm', () => {
             location: '',
             start: '2021-01-01T00:00:00.000Z',
             end: '2021-01-01T00:00:00.000Z',
+            responseConfig: 'DISABLED',
+            responses: [],
           }}
         />
       )

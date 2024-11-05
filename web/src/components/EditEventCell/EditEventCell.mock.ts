@@ -1,3 +1,5 @@
+import { Event } from 'types/graphql'
+
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({
   event: {
@@ -16,5 +18,7 @@ export const standard = (/* vars, { ctx, req } */) => ({
     start: '2021-04-01T00:00:00Z',
     end: '2021-04-01T00:00:00Z',
     timezone: 'America/Denver',
-  },
+    responseConfig: 'DISABLED',
+    responses: [],
+  } as Event,
 })
