@@ -16,12 +16,14 @@
     "@redwoodjs/forms": "8.4.0",
     "@redwoodjs/router": "8.4.0",
     "@redwoodjs/web": "8.4.0",
+    "@vermaysha/discord-webhook": "^1.4.0",
     "bulma": "<1",
     "bulma-prefers-dark": "^0.1.0-beta.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-select": "^5.8.2"
   },
   "devDependencies": {
     "@redwoodjs/vite": "8.4.0",

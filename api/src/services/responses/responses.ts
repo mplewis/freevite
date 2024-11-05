@@ -9,6 +9,7 @@ import {
   sendNewResponseReceived,
   sendResponseConfirmation,
 } from 'src/lib/email/template'
+import { notifyNewResponse } from 'src/lib/notify'
 import { generateToken } from 'src/lib/token'
 
 import dayjs from '../../lib/dayjs'
@@ -31,7 +32,9 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
       data: { confirmed: true },
       include: { event: true },
     })
-    await sendNewResponseReceived({ event: updated.event, response: updated })
+    const { event } = updated
+    await sendNewResponseReceived({ event: event, response: updated })
+    await notifyNewResponse(event, updated)
     return db.response.findUnique({
       where: { editToken },
       include: { reminders: true },

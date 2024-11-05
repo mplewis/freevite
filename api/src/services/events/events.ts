@@ -8,6 +8,7 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 import { sendEventDetails } from 'src/lib/email/template'
+import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify'
 import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
@@ -82,7 +83,9 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
 }) => {
   const existing = await db.event.findUnique({ where: { editToken } })
   if (!existing) return null
+  const wasConfirmed = existing.confirmed
   await db.event.update({ data: { confirmed: true }, where: { editToken } })
+  if (!wasConfirmed) await notifyEventCreated(existing)
   return db.event.findUnique({
     where: { editToken },
     include: { responses: { where: { confirmed: true } } },
@@ -125,14 +128,23 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
       },
     })
   }
-  const { start: oldStart } = await db.event.findUnique({
+  const oldEvent = await db.event.findUnique({
     where: { editToken },
-    select: { start: true },
   })
+  const oldStart = oldEvent.start
   const event = await db.event.update({
     data: { ...input, confirmed: true },
     where: { editToken },
   })
+
+  const diff: Record<string, string> = Object.entries(input).reduce(
+    (acc, [key, value]) => {
+      if (oldEvent[key] !== value) acc[key.toString()] = value.toString()
+      return acc
+    },
+    {}
+  )
+  await notifyEventUpdated(event, diff)
 
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)

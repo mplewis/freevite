@@ -40,7 +40,8 @@ export function toUTC(d: string | Date, tz: string): string {
  * @param d The date to format
  * @returns A human-readable representation of the date
  */
-export function prettyDate(d: string | Date, tz: string): string {
+export function prettyDate(d: string | Date, tz: string | null): string {
+  if (!tz) tz = 'UTC'
   const date = dayjs(d)
   if (date.year() === dayjs().year())
     return date.tz(tz).format('ddd MMM D, h:mm A z')
@@ -84,7 +85,7 @@ export function prettyBetween(
  */
 export function prettyStartWithUntil(
   start: string | Date,
-  tz: string,
+  tz: string | null,
   now = new Date()
 ): string {
   return `${prettyDate(start, tz)} (${prettyUntil(start, now)})`
@@ -100,7 +101,7 @@ export function prettyStartWithUntil(
 export function prettyEndWithBetween(
   start: string | Date,
   end: string | Date,
-  tz: string
+  tz: string | null
 ): string {
   return `${prettyDate(end, tz)} (${prettyBetween(start, end, 'long')})`
 }
