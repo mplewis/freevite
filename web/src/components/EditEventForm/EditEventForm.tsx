@@ -92,6 +92,8 @@ function stateToEvent(s: Event): Event {
   const tz = s.timezone ?? 'UTC'
   s = { ...s, start: toUTC(s.start, tz), end: toUTC(s.end, tz) }
   delete s.confirmed
+  delete s.responses
+  delete s.responseConfig
   return s
 }
 
