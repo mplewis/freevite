@@ -3,7 +3,12 @@ import { useState, useEffect } from 'react'
 import pluralize from 'pluralize'
 import { PublicEvent } from 'types/graphql'
 
-import { prettyBetween, prettyDate, prettyUntil } from 'src/apiLib/convert/date'
+import {
+  prettyDate,
+  prettyEndWithBetween,
+  prettyStartWithUntil,
+  prettyUntil,
+} from 'src/apiLib/convert/date'
 import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { scrollTo } from 'src/logic/scroll'
@@ -129,11 +134,10 @@ const ShowEvent = ({ event }: Props) => {
 
       <Typ x="head">{title}</Typ>
       <Typ x="p">
-        <strong>From:</strong> {prettyDate(start, tz)} ({prettyUntil(start)})
+        <strong>From:</strong> {prettyStartWithUntil(start, tz)}
       </Typ>
       <Typ x="p">
-        <strong>To:</strong> {prettyDate(end, tz)} ({prettyBetween(start, end)}{' '}
-        long)
+        <strong>To:</strong> {prettyEndWithBetween(start, end, tz)}
       </Typ>
       {location !== '' && (
         <Typ x="p">

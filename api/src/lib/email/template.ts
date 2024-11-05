@@ -3,7 +3,11 @@ import { Event, PublicEvent, Response } from 'types/graphql'
 
 import { SITE_HOST } from 'src/app.config'
 
-import { prettyBetween, prettyDate, prettyUntil } from '../convert/date'
+import {
+  prettyEndWithBetween,
+  prettyStartWithUntil,
+  prettyUntil,
+} from '../convert/date'
 
 import { sendEmail } from './send'
 
@@ -121,8 +125,8 @@ export async function sendReminder({
       Hello from Freevite! You asked for a reminder about this event when you RSVPed:
 
       ${event.title}
-      Starts at: ${prettyDate(event.start, event.timezone)} (${prettyUntil(event.start, now)})
-      Ends at: ${prettyDate(event.end, event.timezone)} (${prettyBetween(event.start, event.end)})
+      Starts at: ${prettyStartWithUntil(event.start, event.timezone, now)})
+      Ends at: ${prettyEndWithBetween(event.start, event.end, event.timezone)}
 
       View the event here:
       https://${SITE_HOST}/events/${event.slug}

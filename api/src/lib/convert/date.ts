@@ -41,9 +41,10 @@ export function toUTC(d: string | Date, tz: string): string {
  * @returns A human-readable representation of the date
  */
 export function prettyDate(d: string | Date, tz: string): string {
-  if (dayjs(d).year() === dayjs().year())
-    return dayjs(d).tz(tz).format('ddd MMM D, h:mm A z')
-  return dayjs(d).tz(tz).format('ddd MMM D, YYYY, h:mm A z')
+  const date = dayjs(d)
+  if (date.year() === dayjs().year())
+    return date.tz(tz).format('ddd MMM D, h:mm A z')
+  return date.tz(tz).format('ddd MMM D, YYYY, h:mm A z')
 }
 
 /**
@@ -65,6 +66,41 @@ export function prettyUntil(
  * @param e The end date
  * @returns A verbal representation of the duration between the two dates
  */
-export function prettyBetween(s: string | Date, e: string | Date): string {
-  return dayjs.duration(dayjs(e).diff(dayjs(s))).humanize(false)
+export function prettyBetween(
+  s: string | Date,
+  e: string | Date,
+  suffix = ''
+): string {
+  const val = dayjs.duration(dayjs(e).diff(dayjs(s))).humanize(false)
+  return [val, suffix].join(' ')
+}
+
+/**
+ * Build a verbal representation of when an event starts.
+ * @param start The start date of the event
+ * @param tz The timezone of the event
+ * @param now The current date and time
+ * @returns A human-readable representation of the start date and the time until it starts
+ */
+export function prettyStartWithUntil(
+  start: string | Date,
+  tz: string,
+  now = new Date()
+): string {
+  return `${prettyDate(start, tz)} (${prettyUntil(start, now)})`
+}
+
+/**
+ * Build a verbal representation of when an event ends.
+ * @param start The start date of the event
+ * @param end The end date of the event
+ * @param tz The timezone of the event
+ * @returns A human-readable representation of the end date and the duration of the event
+ */
+export function prettyEndWithBetween(
+  start: string | Date,
+  end: string | Date,
+  tz: string
+): string {
+  return `${prettyDate(end, tz)} (${prettyBetween(start, end, 'long')})`
 }
