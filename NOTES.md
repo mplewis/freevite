@@ -20,7 +20,6 @@
 - [ ] Edit RSVP from confirmation link
 - [ ] Delete RSVP
 - [ ] "Upgrade" from no RSVP to RSVP
-- [ ] Show all responses to event owner on edit page regardless of response config
 - [ ] Allow host to delete RSVPs
 - [ ] Allow host to email attendees
 - [ ] Fix formatting in ICS file desc (no HTML)
@@ -31,6 +30,7 @@
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
+- [x] Show all responses to event owner on edit page regardless of response config
 - [x] **RSVP**
 - [x] **Location field**
 - [x] Fix `Test Event` appearing as `Test+Event` in the Hooray created confirmation message

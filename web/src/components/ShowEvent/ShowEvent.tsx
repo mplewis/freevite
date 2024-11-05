@@ -65,12 +65,13 @@ const ResponseSummary = (event: PublicEvent) => {
   if (!event.responseSummary) return null
 
   const attd = pluralize('person', event.responseSummary.headCountTotal, true)
+  const poss = event.responseSummary.headCountTotal === 1 ? 'has' : 'have'
 
   return (
     <>
       <Typ x="head">Who&apos;s coming?</Typ>
       <Typ x="p">
-        <strong>{attd}</strong> have confirmed that they are attending.
+        <strong>{attd}</strong> {poss} confirmed that they are attending.
         {event.responseSummary.headCountTotal === 0 &&
           ' Be the first by RSVPing below!'}
       </Typ>

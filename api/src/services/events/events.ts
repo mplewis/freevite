@@ -83,7 +83,10 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   const existing = await db.event.findUnique({ where: { editToken } })
   if (!existing) return null
   await db.event.update({ data: { confirmed: true }, where: { editToken } })
-  return db.event.findUnique({ where: { editToken } })
+  return db.event.findUnique({
+    where: { editToken },
+    include: { responses: { where: { confirmed: true } } },
+  })
 }
 
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =

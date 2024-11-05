@@ -6,21 +6,27 @@ import type {
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import EditEventForm from '../EditEventForm/EditEventForm'
-
 export const QUERY = gql`
   query FindEditEventQuery($editToken: String!) {
     event: eventByEditToken(editToken: $editToken) {
-      editToken
-      previewToken
       confirmed
-      visible
-      slug
-      title
       description
-      location
-      start
+      editToken
       end
+      location
+      previewToken
+      responseConfig
+      slug
+      start
       timezone
+      title
+      visible
+
+      responses {
+        name
+        headCount
+        comment
+      }
     }
   }
 `

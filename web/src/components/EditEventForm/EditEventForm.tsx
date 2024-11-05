@@ -1,6 +1,8 @@
 import { useState } from 'react'
 
+import pluralize from 'pluralize'
 import Select, { Theme } from 'react-select'
+import { Event as _Event, Response } from 'types/graphql'
 import {
   UpdateEventMutation,
   UpdateEventMutationVariables,
@@ -27,33 +29,36 @@ import { listTimeZones } from 'src/apiLib/convert/tz'
 import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
 import FormField from 'src/components/FormField/FormField'
+import { scrollTo } from 'src/logic/scroll'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
 import PageHead from '../PageHead/PageHead'
+import { ResponseDetails } from '../ResponseDetails/ResponseDetails'
 import Typ from '../Typ/Typ'
 
 import { PreView } from './PreView'
 
 export type Props = {
-  event: EventWithTokens
+  event: Event
 }
 
-type Event = {
-  visible: boolean
-  confirmed: boolean
-  slug: string
-  title: string
-  description: string
-  location: string
-  start: string
-  end: string
-  timezone?: string
-}
-
-type EventWithTokens = Event & {
-  editToken: string
-  previewToken: string
+type Event = Pick<
+  _Event,
+  | 'confirmed'
+  | 'description'
+  | 'editToken'
+  | 'end'
+  | 'location'
+  | 'previewToken'
+  | 'responseConfig'
+  | 'slug'
+  | 'start'
+  | 'timezone'
+  | 'title'
+  | 'visible'
+> & {
+  responses: Pick<Response, 'name' | 'headCount' | 'comment'>[]
 }
 
 const UPDATE_EVENT = gql`
@@ -79,7 +84,7 @@ const DELETE_EVENT = gql`
   }
 `
 
-function eventToState(e: Event): Event {
+function eventToState(e: Omit<Event, 'editToken' | 'previewToken'>) {
   const tz = e.timezone ?? 'UTC'
   return { ...e, start: toLocal(e.start, tz), end: toLocal(e.end, tz) }
 }
@@ -193,6 +198,46 @@ const EditEventForm = (props: Props) => {
     label: `${tz.name.replaceAll('_', ' ')} (${tz.offsetHrs})`,
   }))
 
+  let headCount = 0
+  if (event.responses) {
+    headCount = event.responses.reduce((acc, r) => acc + r.headCount, 0)
+  }
+  const attd = pluralize('person', headCount, true)
+  const poss = headCount === 1 ? 'has' : 'have'
+
+  const ResponseSummary = () => {
+    if (event.responseConfig === 'DISABLED') return null
+    return (
+      <>
+        <Typ x="p">
+          <strong>{attd}</strong> {poss} confirmed they are attending.
+        </Typ>
+        {headCount > 0 && (
+          <button className="button" onClick={() => scrollTo('responses')}>
+            View RSVPs &raquo;
+          </button>
+        )}
+      </>
+    )
+  }
+
+  const Responses = () => {
+    if (event.responseConfig === 'DISABLED' || headCount === 0) return null
+    return (
+      <>
+        <hr />
+        <div id="responses">
+          <Typ x="head">RSVPs</Typ>
+          <Typ x="p">
+            <strong>{attd}</strong> {poss} confirmed that they are attending.
+          </Typ>
+
+          <ResponseDetails responses={event.responses} hideHint={true} />
+        </div>
+      </>
+    )
+  }
+
   return (
     <>
       <PageHead
@@ -205,7 +250,10 @@ const EditEventForm = (props: Props) => {
         slug={event.slug}
         previewToken={previewToken}
       />
+      <ResponseSummary />
+
       <hr />
+
       <Form
         formMethods={formMethods}
         onSubmit={(state: Event) =>
@@ -382,6 +430,8 @@ const EditEventForm = (props: Props) => {
           </button>
         </div>
       </Form>
+
+      <Responses />
     </>
   )
 }

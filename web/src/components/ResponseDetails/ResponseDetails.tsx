@@ -7,10 +7,12 @@ type Props = {
     | Pick<Response, 'name' | 'headCount' | 'comment'>[]
     | null
     | undefined
+  hideHint?: boolean
 }
 
-export const ResponseDetails = ({ responses }: Props) => {
+export const ResponseDetails = ({ responses, hideHint }: Props) => {
   if (!responses || responses.length === 0) return null
+  const hint = !hideHint
 
   return (
     <>
@@ -32,10 +34,12 @@ export const ResponseDetails = ({ responses }: Props) => {
           ))}
         </tbody>
       </table>
-      <Typ x="p">
-        If your RSVP isn&apos;t appearing in the table above, double-check that
-        you&apos;ve clicked the confirmation link in your email.
-      </Typ>
+      {hint && (
+        <Typ x="p">
+          If your RSVP isn&apos;t appearing in the table above, double-check
+          that you&apos;ve clicked the confirmation link in your email.
+        </Typ>
+      )}
     </>
   )
 }
