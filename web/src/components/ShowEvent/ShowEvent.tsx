@@ -6,9 +6,11 @@ import { PublicEvent } from 'types/graphql'
 import { prettyBetween, prettyDate, prettyUntil } from 'src/apiLib/convert/date'
 import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
+import { scrollTo } from 'src/logic/scroll'
 
 import dayjs from '../../apiLib/dayjs'
 import NewResponseForm from '../NewResponseForm/NewResponseForm'
+import { ResponseDetails } from '../ResponseDetails/ResponseDetails'
 import Typ from '../Typ/Typ'
 
 import GCal from './GcalSVG'
@@ -39,10 +41,6 @@ function gcalLink(event: PublicEvent, descHTML: string) {
   return `https://calendar.google.com/calendar/r/eventedit?${query}`
 }
 
-function scrollTo(anchor: string) {
-  document.getElementById(anchor)?.scrollIntoView({ behavior: 'smooth' })
-}
-
 const IconBox = ({ children }) => (
   <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
     {children}
@@ -63,7 +61,7 @@ const RSVPButton = (event) => {
   )
 }
 
-const ResponseSummary = (event) => {
+const ResponseSummary = (event: PublicEvent) => {
   if (!event.responseSummary) return null
 
   const attd = pluralize('person', event.responseSummary.headCountTotal, true)
@@ -77,40 +75,8 @@ const ResponseSummary = (event) => {
           ' Be the first by RSVPing below!'}
       </Typ>
 
-      <ResponseDetails {...event} />
+      <ResponseDetails responses={event.responses} />
       <hr />
-    </>
-  )
-}
-
-const ResponseDetails = (event) => {
-  if (!event.responses) return null
-  if (event.responses.length === 0) return null
-
-  return (
-    <>
-      <table className="table is-fullwidth is-hoverable is-bordered is-narrow">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Guests</th>
-            <th>Comment</th>
-          </tr>
-        </thead>
-        <tbody>
-          {event.responses.map((response, index) => (
-            <tr key={index}>
-              <td>{response.name}</td>
-              <td>{response.headCount}</td>
-              <td>{response.comment}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <Typ x="p">
-        If your RSVP isn&apos;t appearing in the table above, double-check that
-        you&apos;ve clicked the confirmation link in your email.
-      </Typ>
     </>
   )
 }
