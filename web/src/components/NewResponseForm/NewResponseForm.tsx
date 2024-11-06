@@ -12,19 +12,13 @@ import { useMutation } from '@redwoodjs/web'
 
 import Typ from 'src/components/Typ/Typ'
 
-import dayjs from '../../apiLib/dayjs'
-import ResponseForm from '../ResponseForm/ResponseForm'
+import ResponseForm, {
+  FormValues,
+  reminderDurations,
+} from '../ResponseForm/ResponseForm'
 
 interface Props {
   event: Pick<PublicEvent, 'id' | 'title' | 'responseConfig'>
-}
-
-interface FormValues {
-  name: string
-  email: string
-  headCount: number
-  comment: string
-  reminder: string
 }
 
 const CREATE_RESPONSE = gql`
@@ -38,16 +32,10 @@ const CREATE_RESPONSE = gql`
   }
 `
 
-const reminderDurations = {
-  '1 day': dayjs.duration(1, 'day').asSeconds(),
-  '1 hour': dayjs.duration(1, 'hour').asSeconds(),
-  never: null,
-}
-
 function stateToInput(state: FormValues): CreateResponseInput {
-  const input: CreateResponseInput = { ...state }
-  delete input['reminder']
-  const durationSec = reminderDurations[state.reminder]
+  const { reminder, ...rest } = state
+  const input: CreateResponseInput = { ...rest }
+  const durationSec = reminderDurations[reminder]
   if (durationSec) input.remindPriorSec = durationSec
   return input
 }
@@ -55,9 +43,15 @@ function stateToInput(state: FormValues): CreateResponseInput {
 const NewResponseForm = (props: Props) => {
   const { event } = props
 
-  const formMethods = useForm({
+  const formMethods = useForm<FormValues>({
     mode: 'onTouched',
-    defaultValues: { name: '', email: '', headCount: 1, comment: '' },
+    defaultValues: {
+      name: '',
+      email: '',
+      headCount: 1,
+      comment: '',
+      reminder: '1 day',
+    },
   })
 
   const [createdForEmail, setCreatedForEmail] = useState<string | null>(null)

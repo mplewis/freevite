@@ -32,9 +32,11 @@ export type Props = {
 export type FormValues = Pick<
   Response,
   'name' | 'email' | 'headCount' | 'comment'
->
+> & {
+  reminder: ReminderDuration
+}
 
-const reminderDurations = {
+export const reminderDurations = {
   '1 day': dayjs.duration(1, 'day').asSeconds(),
   '1 hour': dayjs.duration(1, 'hour').asSeconds(),
   never: null,
