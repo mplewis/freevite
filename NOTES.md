@@ -31,6 +31,11 @@
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
 - [ ] URL builder helpers
+- [ ] Write README
+- [ ] Unify `typ` styles for `pageTitle` and `head`
+- [ ] Form to request resend link(s) for email address
+- [ ] Hold RSVP locally with cookie
+- [ ] Resend confirmation if an RSVP enters an existing email
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config
 - [x] **RSVP**
