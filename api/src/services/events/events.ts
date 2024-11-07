@@ -149,7 +149,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)
     const reminders = await db.reminder.findMany({
-      where: { response: { event: { editToken } }, sent: false },
+      where: { response: { event: { editToken } } },
     })
     reminders.forEach(async (reminder) => {
       const sendAt = dayjs(reminder.sendAt).subtract(startDelta).toDate()

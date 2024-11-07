@@ -84,6 +84,11 @@ export const updateResponse: MutationResolvers['updateResponse'] = ({
     const event = await tx.event.findUnique({ where: { id: response.eventId } })
     if (!event) throw new Error(`Event not found: ${response.eventId}`)
 
+    const alreadySent = await tx.reminder.findFirst({
+      where: { responseId: response.id, sent: true },
+    })
+    if (alreadySent) return
+
     await tx.reminder.deleteMany({ where: { responseId: response.id } })
     if (remindPriorSec) {
       await tx.reminder.create({
