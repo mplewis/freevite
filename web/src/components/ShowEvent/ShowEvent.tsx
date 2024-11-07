@@ -4,10 +4,8 @@ import pluralize from 'pluralize'
 import { PublicEvent } from 'types/graphql'
 
 import {
-  prettyDate,
   prettyEndWithBetween,
   prettyStartWithUntil,
-  prettyUntil,
 } from 'src/apiLib/convert/date'
 import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'

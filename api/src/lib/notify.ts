@@ -3,7 +3,6 @@ import { Event, Response } from 'types/graphql'
 
 import { CI, SITE_HOST } from 'src/app.config'
 
-import { prettyEndWithBetween, prettyStartWithUntil } from './convert/date'
 import { logger } from './logger'
 
 /** Send a notification to the configured Discord channel's webhook. */
