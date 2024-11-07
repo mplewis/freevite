@@ -1,7 +1,7 @@
 import { Embed, Webhook } from '@vermaysha/discord-webhook'
 import { Event, Response } from 'types/graphql'
 
-import { CI, SITE_HOST } from 'src/app.config'
+import { CI, LOCALHOST, SITE_URL } from 'src/app.config'
 
 import { logger } from './logger'
 
@@ -11,7 +11,8 @@ async function notify(
   description: string | null,
   fields: Record<string, string | number>
 ): Promise<void> {
-  if (CI) return
+  if (CI || LOCALHOST) return
+
   const url = process.env.DISCORD_WEBHOOK_URL
   if (!url) {
     logger.warn(
@@ -58,8 +59,8 @@ export async function notifyEventCreated(
   await notify(`New event created`, event.title, {
     email: event.ownerEmail,
     responseConfig: JSON.stringify(event.responseConfig),
-    view: `https://${SITE_HOST}/event/${event.slug}`,
-    edit: `https://${SITE_HOST}/edit?token=${event.editToken}`,
+    view: `${SITE_URL}/event/${event.slug}`,
+    edit: `${SITE_URL}/edit?token=${event.editToken}`,
   })
 }
 
@@ -75,8 +76,8 @@ export async function notifyEventUpdated(
 ) {
   await notify(`Event updated`, event.title, {
     ...diff,
-    view: `https://${SITE_HOST}/event/${event.slug}`,
-    edit: `https://${SITE_HOST}/edit?token=${event.editToken}`,
+    view: `${SITE_URL}/event/${event.slug}`,
+    edit: `${SITE_URL}/edit?token=${event.editToken}`,
   })
 }
 
@@ -93,6 +94,6 @@ export async function notifyNewResponse(
   await notify(`New response to ${event.title}`, response.name, {
     headCount: response.headCount,
     comment: response.comment,
-    view: `https://${SITE_HOST}/event/${event.slug}`,
+    view: `${SITE_URL}/event/${event.slug}`,
   })
 }
