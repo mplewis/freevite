@@ -412,6 +412,7 @@ const EditEventForm = (props: Props) => {
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
         <DeleteButton
+          className="mt-3"
           text="Delete Event"
           disabled={loading}
           onClick={() =>

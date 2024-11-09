@@ -1,12 +1,13 @@
 export type Props = {
+  className?: string
   onClick: () => void
   text: string
   disabled?: boolean
 }
 
-const DeleteButton = ({ disabled, onClick, text }: Props) => {
+const DeleteButton = ({ className, disabled, onClick, text }: Props) => {
   return (
-    <div className="mt-3">
+    <div className={className}>
       <button
         className="button is-danger"
         disabled={disabled}

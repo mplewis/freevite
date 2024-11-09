@@ -5,7 +5,14 @@ import type {
   DeleteResponseMutationVariables,
 } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { navigate, routes } from '@redwoodjs/router'
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  useMutation,
+} from '@redwoodjs/web'
+
+import { promptConfirm } from 'src/logic/prompt'
 
 import DeleteButton from '../DeleteButton/DeleteButton'
 import Typ from '../Typ/Typ'
@@ -13,13 +20,14 @@ import Typ from '../Typ/Typ'
 export const QUERY = gql`
   query FindEditResponseQuery($editToken: String!) {
     response: responseByEditToken(editToken: $editToken) {
+      editToken
+      name
+      headCount
+      comment
       event {
         title
         slug
       }
-      name
-      headCount
-      comment
     }
   }
 `
@@ -46,6 +54,20 @@ export const Success = ({
   response,
 }: CellSuccessProps<FindEditResponseQuery, FindEditResponseQueryVariables>) => {
   const { event } = response
+
+  const [destroy] = useMutation<
+    DeleteResponseMutation,
+    DeleteResponseMutationVariables
+  >(DELETE_RESPONSE, {
+    onCompleted: () => {
+      alert('Your RSVP was canceled successfully.')
+      navigate(routes.viewEvent({ slug: event.slug }))
+    },
+    onError: (error) => {
+      alert(`Sorry, something went wrong:\n${error}`)
+    },
+  })
+
   return (
     <>
       <Typ x="pageTitle">RSVP confirmed!</Typ>
@@ -70,15 +92,23 @@ export const Success = ({
         </tbody>
       </table>
 
-      <Typ x="p">
-        <a
-          className="button is-primary has-text-weight-semibold mb-3"
-          href={`/event/${event.slug}`}
-        >
-          <DeleteButton text="Cancel my RSVP" onClick={promptCancel} />
-          View event details: {event.title}
-        </a>
-      </Typ>
+      <a className="button is-primary mb-3" href={`/event/${event.slug}`}>
+        View event details: {event.title} &raquo;
+      </a>
+
+      <DeleteButton
+        className="mb-3"
+        text="Cancel my RSVP"
+        onClick={() =>
+          promptConfirm({
+            desc: `cancel your RSVP to ${event.title}`,
+            confirmWith: 'CANCEL',
+            action: () =>
+              destroy({ variables: { editToken: response.editToken } }),
+          })
+        }
+      />
+
       <Typ x="p">
         Need to change your RSVP details? Just reply to the email we sent you
         and we&apos;ll update your response.
