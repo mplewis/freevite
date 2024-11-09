@@ -36,6 +36,7 @@
 - [ ] Form to request resend link(s) for email address
 - [ ] Hold RSVP locally with cookie
 - [ ] Resend confirmation if an RSVP enters an existing email
+- [ ] Review all page titles and add contextual data where relevant
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config
 - [x] **RSVP**

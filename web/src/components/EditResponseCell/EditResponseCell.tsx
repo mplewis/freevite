@@ -1,10 +1,13 @@
 import type {
   FindEditResponseQuery,
   FindEditResponseQueryVariables,
+  DeleteResponseMutation,
+  DeleteResponseMutationVariables,
 } from 'types/graphql'
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import DeleteButton from '../DeleteButton/DeleteButton'
 import Typ from '../Typ/Typ'
 
 export const QUERY = gql`
@@ -17,6 +20,14 @@ export const QUERY = gql`
       name
       headCount
       comment
+    }
+  }
+`
+
+const DELETE_RESPONSE = gql`
+  mutation DeleteResponseMutation($editToken: String!) {
+    deleteResponse(editToken: $editToken) {
+      id
     }
   }
 `
@@ -64,6 +75,7 @@ export const Success = ({
           className="button is-primary has-text-weight-semibold mb-3"
           href={`/event/${event.slug}`}
         >
+          <DeleteButton text="Cancel my RSVP" onClick={promptCancel} />
           View event details: {event.title}
         </a>
       </Typ>
