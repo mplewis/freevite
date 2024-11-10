@@ -61,8 +61,39 @@ export async function sendNewResponseReceived({
       Guests: ${response.headCount}
       Comment: ${response.comment || '(No comment submitted)'}
 
-      To view all responses and manage your event, visit:
+      To view all RSVPs and manage your event, click here:
+      https://${SITE_HOST}/edit?token=${event.editToken}
 
+      If you need any help, just reply to this email. Thanks for using Freevite!
+    `,
+  })
+}
+
+/**
+ * Send an email to the event organizer when a response is deleted.
+ * @param event The event to which the response was sent
+ * @param response The response that was deleted
+ * @returns The result of the send operation
+ */
+export async function sendResponseDeleted({
+  event,
+  response,
+}: {
+  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken'>
+  response: Pick<Response, 'name' | 'headCount' | 'comment'>
+}) {
+  return sendEmail({
+    to: event.ownerEmail,
+    subject: `RSVP canceled: ${response.name}`,
+    text: stripIndent`
+      Hello from Freevite! ${response.name} has canceled their RSVP to ${event.title}.
+
+      Here are the details of the RSVP before it was canceled:
+      Name: ${response.name}
+      Guests: ${response.headCount}
+      Comment: ${response.comment || '(No comment submitted)'}
+
+      To view all RSVPs and manage your event, click here:
       https://${SITE_HOST}/edit?token=${event.editToken}
 
       If you need any help, just reply to this email. Thanks for using Freevite!
