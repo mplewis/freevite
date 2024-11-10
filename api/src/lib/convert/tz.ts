@@ -13,7 +13,10 @@ export function tzToOffsetMins(timeZone: string, when = new Date()): number {
   if (!offset) return 0
 
   const matchData = offset.match(/([+-])(\d+)(?::(\d+))?/)
-  if (!matchData) throw `cannot parse timezone name: ${timeZoneName}`
+  if (!matchData) {
+    // Could not parse timezone name
+    return 0
+  }
 
   const [, sign, hour, minute] = matchData
   let result = parseInt(hour) * 60

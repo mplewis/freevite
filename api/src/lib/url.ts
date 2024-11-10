@@ -1,6 +1,4 @@
-import { S3_REGION, S3_BUCKET, S3_NAMESPACE } from 'src/app.config'
-
-import { SITE_HOST } from '../app.config'
+import { S3_REGION, S3_BUCKET, S3_NAMESPACE, SITE_URL } from 'src/app.config'
 
 /**
  * Generate a fully-qualified URL for the given path.
@@ -8,7 +6,7 @@ import { SITE_HOST } from '../app.config'
  * @returns The URL with `https://` and the hostname prefixed
  */
 export function fqUrlForPath(path: string) {
-  return `https://${SITE_HOST}${path}`
+  return `${SITE_URL}${path}`
 }
 
 /**

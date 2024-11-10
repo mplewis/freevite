@@ -84,7 +84,7 @@ To modify or delete your RSVP, just reply to this email. Thanks for using Freevi
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all RSVPs and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -95,7 +95,7 @@ Name: Sherlock Holmes
 Guests: 2
 Comment: Looking forward to it!
 
-To view all RSVPs and manage your event, click here:
+To view all responses and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
 If you need any help, just reply to this email. Thanks for using Freevite!",

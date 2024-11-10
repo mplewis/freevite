@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags'
 import { Event, PublicEvent, Response } from 'types/graphql'
 
-import { SITE_HOST } from 'src/app.config'
+import { SITE_URL } from 'src/app.config'
 
 import { sendEmail } from '../send'
 
@@ -24,7 +24,7 @@ export async function sendResponseConfirmation({
     text: stripIndent`
       Hello from Freevite! Click this link to confirm your attendance of ${event.title}:
 
-      https://${SITE_HOST}/rsvp?token=${response.editToken}
+      ${SITE_URL}/rsvp?token=${response.editToken}
 
       You must click the above link to confirm your RSVP.
       Once you do, we'll let the organizer know you are attending.
@@ -61,8 +61,8 @@ export async function sendNewResponseReceived({
       Guests: ${response.headCount}
       Comment: ${response.comment || '(No comment submitted)'}
 
-      To view all RSVPs and manage your event, click here:
-      https://${SITE_HOST}/edit?token=${event.editToken}
+      To view all responses and manage your event, click here:
+      ${SITE_URL}/edit?token=${event.editToken}
 
       If you need any help, just reply to this email. Thanks for using Freevite!
     `,
@@ -94,7 +94,7 @@ export async function sendResponseDeleted({
       Comment: ${response.comment || '(No comment submitted)'}
 
       To view all RSVPs and manage your event, click here:
-      https://${SITE_HOST}/edit?token=${event.editToken}
+      ${SITE_URL}/edit?token=${event.editToken}
 
       If you need any help, just reply to this email. Thanks for using Freevite!
     `,

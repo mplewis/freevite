@@ -1,6 +1,6 @@
 import { Embed, Webhook } from '@vermaysha/discord-webhook'
 
-import { CI } from 'src/app.config'
+import { CI, LOCALHOST } from 'src/app.config'
 
 import { logger } from './logger'
 
@@ -10,7 +10,8 @@ export async function notify(
   description: string | null,
   fields: Record<string, string | number>
 ): Promise<void> {
-  if (CI) return
+  if (CI || LOCALHOST) return
+
   const url = process.env.DISCORD_WEBHOOK_URL
   if (!url) {
     logger.warn(
