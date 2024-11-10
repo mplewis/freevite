@@ -40,6 +40,8 @@
 - [ ] Review all page titles and add contextual data where relevant
 - [ ] Add Sentry to frontend
 - [ ] Clean up relative imports
+- [ ] Use `navigate` instead of `a href`
+- [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [x] Delete RSVP
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config

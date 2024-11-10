@@ -8,7 +8,7 @@ import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
 import { sendEventDetails } from 'src/lib/email/template/event'
-import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify'
+import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify/event'
 import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'

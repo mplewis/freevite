@@ -8,8 +8,9 @@ import { db } from 'src/lib/db'
 import {
   sendNewResponseReceived,
   sendResponseConfirmation,
+  sendResponseDeleted,
 } from 'src/lib/email/template/response'
-import { notifyNewResponse } from 'src/lib/notify'
+import { notifyNewResponse } from 'src/lib/notify/response'
 import { generateToken } from 'src/lib/token'
 
 import dayjs from '../../lib/dayjs'
