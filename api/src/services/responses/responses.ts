@@ -8,7 +8,7 @@ import { db } from 'src/lib/db'
 import {
   sendNewResponseReceived,
   sendResponseConfirmation,
-} from 'src/lib/email/template'
+} from 'src/lib/email/template/response'
 import { notifyNewResponse } from 'src/lib/notify'
 import { generateToken } from 'src/lib/token'
 

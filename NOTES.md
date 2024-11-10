@@ -39,6 +39,7 @@
 - [ ] Resend confirmation if an RSVP enters an existing email
 - [ ] Review all page titles and add contextual data where relevant
 - [ ] Add Sentry to frontend
+- [ ] Clean up relative imports
 - [x] Delete RSVP
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config
