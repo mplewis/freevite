@@ -28,7 +28,9 @@ import { localTZ, toLocal, toUTC } from 'src/apiLib/convert/date'
 import { listTimeZones } from 'src/apiLib/convert/tz'
 import { fqUrlForPath } from 'src/apiLib/url'
 import { checkVisibility } from 'src/apiLib/visibility'
+import DeleteButton from 'src/components/DeleteButton/DeleteButton'
 import FormField from 'src/components/FormField/FormField'
+import { promptConfirm } from 'src/logic/prompt'
 import { scrollTo } from 'src/logic/scroll'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
@@ -166,19 +168,6 @@ const EditEventForm = (props: Props) => {
       alert(`Sorry, something went wrong:\n${error}`)
     },
   })
-
-  const promptDestroy = () => {
-    const resp = prompt(
-      `Warning! You are about to permanently delete the event "${event.title}". ` +
-        'This action cannot be undone. To confirm, type "DELETE":'
-    )
-    if (resp === null) return
-    if (resp !== 'DELETE') {
-      alert('Confirmation failed. Event was not deleted.')
-      return
-    }
-    destroy({ variables: { editToken } })
-  }
 
   let savable = true
   if (loading) savable = false
@@ -422,15 +411,18 @@ const EditEventForm = (props: Props) => {
           {loading ? 'Saving...' : 'Save Changes'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
-        <div className="mt-3">
-          <button
-            className="button is-danger"
-            disabled={loading}
-            onClick={promptDestroy}
-          >
-            Delete Event
-          </button>
-        </div>
+        <DeleteButton
+          className="mt-3"
+          text="Delete Event"
+          disabled={loading}
+          onClick={() =>
+            promptConfirm({
+              desc: `delete the event ${event.title}`,
+              confirmWith: 'DELETE',
+              action: () => destroy({ variables: { editToken } }),
+            })
+          }
+        />
       </Form>
 
       <Responses />

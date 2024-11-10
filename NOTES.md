@@ -12,25 +12,38 @@
 - [ ] Sample event page
 - [ ] When date is too far away, use year in preview
 - [ ] Use proper preview domain in emails from staging
-- [ ] Delete unconfirmed events
-- [ ] Delete completed events
 - [ ] Add * asterisk markers to mandatory fields
 - [ ] Look into new OG image features
 - [ ] Replace MetaTags with Metadata
 - [ ] Edit RSVP from confirmation link
-- [ ] Delete RSVP
+- [ ] Notify organizer on cancel?
 - [ ] "Upgrade" from no RSVP to RSVP
 - [ ] Allow host to delete RSVPs
 - [ ] Allow host to email attendees
+- [ ] Email attendees on changes
+- [ ] Email attendees on deletion
 - [ ] Fix formatting in ICS file desc (no HTML)
-- [ ] More prominent RSVP button
 - [x] **Scheduler engine**
 	- [x] Send reminders
-	- [ ] Delete stale events
+	- [ ] Delete unconfirmed events
+	- [ ] Delete completed events
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
 - [ ] URL builder helpers
+- [ ] Write README
+- [ ] Unify `typ` styles for `pageTitle` and `head`
+- [ ] Form to request resend link(s) for email address
+- [ ] Hold RSVP locally with cookie
+- [ ] Resend confirmation if an RSVP enters an existing email
+- [ ] Review all page titles and add contextual data where relevant
+- [ ] Add Sentry to frontend
+- [ ] Clean up relative imports
+- [ ] Use `navigate` instead of `a href`
+- [ ] Diff dates in `notify` so that they are omitted when unchanged
+- [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
+- [x] More prominent RSVP button
+- [x] Delete RSVP
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config
 - [x] **RSVP**

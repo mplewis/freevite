@@ -1,5 +1,5 @@
 import { db } from '../db'
-import { sendReminder } from '../email/template'
+import { sendReminder } from '../email/template/reminder'
 import { logger } from '../logger'
 
 /**

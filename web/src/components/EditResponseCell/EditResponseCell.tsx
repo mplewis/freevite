@@ -1,22 +1,43 @@
+import { useState } from 'react'
+
 import type {
   FindEditResponseQuery,
   FindEditResponseQueryVariables,
+  DeleteResponseMutation,
+  DeleteResponseMutationVariables,
 } from 'types/graphql'
 
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import { navigate, routes } from '@redwoodjs/router'
+import {
+  type CellSuccessProps,
+  type CellFailureProps,
+  useMutation,
+} from '@redwoodjs/web'
 
+import { promptConfirm } from 'src/logic/prompt'
+
+import DeleteButton from '../DeleteButton/DeleteButton'
 import Typ from '../Typ/Typ'
 
 export const QUERY = gql`
   query FindEditResponseQuery($editToken: String!) {
     response: responseByEditToken(editToken: $editToken) {
+      editToken
+      name
+      headCount
+      comment
       event {
         title
         slug
       }
-      name
-      headCount
-      comment
+    }
+  }
+`
+
+const DELETE_RESPONSE = gql`
+  mutation DeleteResponseMutation($editToken: String!) {
+    deleteResponse(editToken: $editToken) {
+      id
     }
   }
 `
@@ -35,6 +56,21 @@ export const Success = ({
   response,
 }: CellSuccessProps<FindEditResponseQuery, FindEditResponseQueryVariables>) => {
   const { event } = response
+  const [loading, setLoading] = useState(false)
+
+  const [destroy] = useMutation<
+    DeleteResponseMutation,
+    DeleteResponseMutationVariables
+  >(DELETE_RESPONSE, {
+    onCompleted: () => {
+      alert('Your RSVP was canceled successfully.')
+      navigate(routes.viewEvent({ slug: event.slug }))
+    },
+    onError: (error) => {
+      alert(`Sorry, something went wrong:\n${error}`)
+    },
+  })
+
   return (
     <>
       <Typ x="pageTitle">RSVP confirmed!</Typ>
@@ -59,14 +95,28 @@ export const Success = ({
         </tbody>
       </table>
 
-      <Typ x="p">
-        <a
-          className="button is-primary has-text-weight-semibold mb-3"
-          href={`/event/${event.slug}`}
-        >
-          View event details: {event.title}
-        </a>
-      </Typ>
+      <a className="button is-primary mb-3" href={`/event/${event.slug}`}>
+        View event details: {event.title} &raquo;
+      </a>
+
+      <DeleteButton
+        className="mb-3"
+        text="Cancel my RSVP"
+        disabled={loading}
+        disabledText="Canceling..."
+        onClick={async () =>
+          await promptConfirm({
+            desc: `cancel your RSVP to ${event.title}`,
+            confirmWith: 'CANCEL',
+            action: async () => {
+              setLoading(true)
+              await destroy({ variables: { editToken: response.editToken } })
+              setLoading(false)
+            },
+          })
+        }
+      />
+
       <Typ x="p">
         Need to change your RSVP details? Just reply to the email we sent you
         and we&apos;ll update your response.

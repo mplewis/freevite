@@ -7,8 +7,8 @@ import type {
 import { validate } from '@redwoodjs/api'
 
 import { db } from 'src/lib/db'
-import { sendEventDetails } from 'src/lib/email/template'
-import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify'
+import { sendEventDetails } from 'src/lib/email/template/event'
+import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify/event'
 import { summarize } from 'src/lib/response'
 import { generateToken, alphaLower } from 'src/lib/token'
 import { checkVisibility } from 'src/lib/visibility'
@@ -149,7 +149,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)
     const reminders = await db.reminder.findMany({
-      where: { response: { event: { editToken } }, sent: false },
+      where: { response: { event: { editToken } } },
     })
     reminders.forEach(async (reminder) => {
       const sendAt = dayjs(reminder.sendAt).subtract(startDelta).toDate()

@@ -2,61 +2,18 @@
 
 import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 
-import { mailer } from '../mailer'
+import { mailer } from '../../mailer'
 
 import {
-  sendEventDetails,
   sendNewResponseReceived,
-  sendReminder,
   sendResponseConfirmation,
-} from './template'
+  sendResponseDeleted,
+} from './response'
 
 describe('with test handler', () => {
   const testHandler = mailer.getTestHandler() as InMemoryMailHandler
   beforeEach(() => {
     testHandler.clearInbox()
-  })
-
-  describe('sendEventDetails', () => {
-    it('sends the expected email', async () => {
-      const event = {
-        ownerEmail: 'emma@example.com',
-        title: "Emma's Holiday Party",
-        editToken: 'SOME-EDIT-TOKEN',
-      }
-      await sendEventDetails(event)
-
-      expect(testHandler.inbox).toHaveLength(1)
-      expect(testHandler.inbox[0]).toMatchInlineSnapshot(`
-{
-  "attachments": [],
-  "bcc": [],
-  "cc": [],
-  "from": ""Freevite Test" <test@freevite.app>",
-  "handler": "nodemailer",
-  "handlerOptions": undefined,
-  "headers": {},
-  "htmlContent": "Hello from Freevite! Click this link to manage your event details and make it public:<br><br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>You must click the above link within 24 hours to confirm your email address.<br>Otherwise, we will automatically delete your event. Feel free to recreate it.<br><br>If you did not create this event, you can ignore this email and this event will be deleted.<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
-  "renderer": "plain",
-  "rendererOptions": {},
-  "replyTo": undefined,
-  "subject": "Manage your event: Emma's Holiday Party",
-  "textContent": "Hello from Freevite! Click this link to manage your event details and make it public:
-
-https://example.com/edit?token=SOME-EDIT-TOKEN
-
-You must click the above link within 24 hours to confirm your email address.
-Otherwise, we will automatically delete your event. Feel free to recreate it.
-
-If you did not create this event, you can ignore this email and this event will be deleted.
-
-If you need any help, just reply to this email. Thanks for using Freevite!",
-  "to": [
-    "emma@example.com",
-  ],
-}
-`)
-    })
   })
 
   describe('sendResponseConfirmation', () => {
@@ -127,7 +84,7 @@ To modify or delete your RSVP, just reply to this email. Thanks for using Freevi
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, visit:<br><br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -138,8 +95,7 @@ Name: Sherlock Holmes
 Guests: 2
 Comment: Looking forward to it!
 
-To view all responses and manage your event, visit:
-
+To view all responses and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
 If you need any help, just reply to this email. Thanks for using Freevite!",
@@ -151,21 +107,20 @@ If you need any help, just reply to this email. Thanks for using Freevite!",
     })
   })
 
-  describe('sendNewResponseReceived', () => {
+  describe('sendResponseDeleted', () => {
     it('sends the expected email', async () => {
-      const now = new Date('2022-12-24T12:00:00Z')
       const event = {
         title: "Emma's Holiday Party",
-        start: '2022-12-25T12:00:00Z',
-        end: '2022-12-25T15:00:00Z',
-        timezone: 'America/New_York',
-        slug: 'emmas-holiday-party',
+        ownerEmail: 'emma@example.com',
+        editToken: 'SOME-EDIT-TOKEN',
       }
       const response = {
-        email: 'holmes@example.com',
+        name: 'Sherlock Holmes',
+        headCount: 2,
+        comment: 'Looking forward to it!',
       }
+      await sendResponseDeleted({ event, response })
 
-      await sendReminder({ event, response, now })
       expect(testHandler.inbox).toHaveLength(1)
       expect(testHandler.inbox[0]).toMatchInlineSnapshot(`
 {
@@ -176,24 +131,24 @@ If you need any help, just reply to this email. Thanks for using Freevite!",
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! You asked for a reminder about this event when you RSVPed:<br><br>Emma&#39;s Holiday Party<br>Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))<br>Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)<br><br>View the event here:<br>https://example.com/events/emmas-holiday-party<br><br>If you need to modify or delete your RSVP, just reply to this email.<br>Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! Sherlock Holmes has canceled their RSVP to Emma&#39;s Holiday Party.<br><br>Here are the details of the RSVP before it was canceled:<br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all RSVPs and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
-  "subject": "Reminder: Emma's Holiday Party (a day away)",
-  "textContent": "Hello from Freevite! You asked for a reminder about this event when you RSVPed:
+  "subject": "RSVP canceled: Sherlock Holmes",
+  "textContent": "Hello from Freevite! Sherlock Holmes has canceled their RSVP to Emma's Holiday Party.
 
-Emma's Holiday Party
-Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))
-Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)
+Here are the details of the RSVP before it was canceled:
+Name: Sherlock Holmes
+Guests: 2
+Comment: Looking forward to it!
 
-View the event here:
-https://example.com/events/emmas-holiday-party
+To view all RSVPs and manage your event, click here:
+https://example.com/edit?token=SOME-EDIT-TOKEN
 
-If you need to modify or delete your RSVP, just reply to this email.
-Thanks for using Freevite!",
+If you need any help, just reply to this email. Thanks for using Freevite!",
   "to": [
-    "holmes@example.com",
+    "emma@example.com",
   ],
 }
 `)

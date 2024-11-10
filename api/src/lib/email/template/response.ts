@@ -3,39 +3,7 @@ import { Event, PublicEvent, Response } from 'types/graphql'
 
 import { SITE_URL } from 'src/app.config'
 
-import {
-  prettyEndWithBetween,
-  prettyStartWithUntil,
-  prettyUntil,
-} from '../convert/date'
-
-import { sendEmail } from './send'
-
-/**
- * Email the admin link for a newly-created event to its owner.
- * @param event The newly-created event
- * @returns The result of the send operation
- */
-export async function sendEventDetails(
-  event: Pick<Event, 'ownerEmail' | 'title' | 'editToken'>
-) {
-  return sendEmail({
-    to: event.ownerEmail,
-    subject: `Manage your event: ${event.title}`,
-    text: stripIndent`
-			Hello from Freevite! Click this link to manage your event details and make it public:
-
-			${SITE_URL}/edit?token=${event.editToken}
-
-			You must click the above link within 24 hours to confirm your email address.
-			Otherwise, we will automatically delete your event. Feel free to recreate it.
-
-			If you did not create this event, you can ignore this email and this event will be deleted.
-
-			If you need any help, just reply to this email. Thanks for using Freevite!
-		`,
-  })
-}
+import { sendEmail } from '../send'
 
 /**
  * Send a "confirm RSVP" email to the user who just responded to an event.
@@ -93,8 +61,7 @@ export async function sendNewResponseReceived({
       Guests: ${response.headCount}
       Comment: ${response.comment || '(No comment submitted)'}
 
-      To view all responses and manage your event, visit:
-
+      To view all responses and manage your event, click here:
       ${SITE_URL}/edit?token=${event.editToken}
 
       If you need any help, just reply to this email. Thanks for using Freevite!
@@ -103,36 +70,33 @@ export async function sendNewResponseReceived({
 }
 
 /**
- * Remind a user about an upcoming event for which they RSVPed.
- * @param event The event for which the reminder is being sent
- * @param response The response to which the reminder belongs
- * @param now The current date and time
+ * Send an email to the event organizer when a response is deleted.
+ * @param event The event to which the response was sent
+ * @param response The response that was deleted
  * @returns The result of the send operation
  */
-export async function sendReminder({
+export async function sendResponseDeleted({
   event,
   response,
-  now,
 }: {
-  event: Pick<PublicEvent, 'title' | 'start' | 'end' | 'timezone' | 'slug'>
-  response: Pick<Response, 'email'>
-  now: Date
+  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken'>
+  response: Pick<Response, 'name' | 'headCount' | 'comment'>
 }) {
   return sendEmail({
-    to: response.email,
-    subject: `Reminder: ${event.title} (${prettyUntil(event.start, now, false)} away)`,
+    to: event.ownerEmail,
+    subject: `RSVP canceled: ${response.name}`,
     text: stripIndent`
-      Hello from Freevite! You asked for a reminder about this event when you RSVPed:
+      Hello from Freevite! ${response.name} has canceled their RSVP to ${event.title}.
 
-      ${event.title}
-      Starts at: ${prettyStartWithUntil(event.start, event.timezone, now)})
-      Ends at: ${prettyEndWithBetween(event.start, event.end, event.timezone)}
+      Here are the details of the RSVP before it was canceled:
+      Name: ${response.name}
+      Guests: ${response.headCount}
+      Comment: ${response.comment || '(No comment submitted)'}
 
-      View the event here:
-      ${SITE_URL}/events/${event.slug}
+      To view all RSVPs and manage your event, click here:
+      ${SITE_URL}/edit?token=${event.editToken}
 
-      If you need to modify or delete your RSVP, just reply to this email.
-      Thanks for using Freevite!
+      If you need any help, just reply to this email. Thanks for using Freevite!
     `,
   })
 }
