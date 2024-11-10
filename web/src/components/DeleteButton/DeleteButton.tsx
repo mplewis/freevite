@@ -3,9 +3,16 @@ export type Props = {
   onClick: () => void
   text: string
   disabled?: boolean
+  disabledText?: string
 }
 
-const DeleteButton = ({ className, disabled, onClick, text }: Props) => {
+const DeleteButton = ({
+  className,
+  onClick,
+  text,
+  disabled,
+  disabledText,
+}: Props) => {
   return (
     <div className={className}>
       <button
@@ -16,7 +23,7 @@ const DeleteButton = ({ className, disabled, onClick, text }: Props) => {
           onClick()
         }}
       >
-        {text}
+        {disabled ? disabledText || 'Deleting...' : text}
       </button>
     </div>
   )

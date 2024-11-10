@@ -1,3 +1,5 @@
+import { useState } from 'react'
+
 import type {
   FindEditResponseQuery,
   FindEditResponseQueryVariables,
@@ -54,6 +56,7 @@ export const Success = ({
   response,
 }: CellSuccessProps<FindEditResponseQuery, FindEditResponseQueryVariables>) => {
   const { event } = response
+  const [loading, setLoading] = useState(false)
 
   const [destroy] = useMutation<
     DeleteResponseMutation,
@@ -99,12 +102,17 @@ export const Success = ({
       <DeleteButton
         className="mb-3"
         text="Cancel my RSVP"
-        onClick={() =>
-          promptConfirm({
+        disabled={loading}
+        disabledText="Canceling..."
+        onClick={async () =>
+          await promptConfirm({
             desc: `cancel your RSVP to ${event.title}`,
             confirmWith: 'CANCEL',
-            action: () =>
-              destroy({ variables: { editToken: response.editToken } }),
+            action: async () => {
+              setLoading(true)
+              await destroy({ variables: { editToken: response.editToken } })
+              setLoading(false)
+            },
           })
         }
       />
