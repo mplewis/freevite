@@ -10,7 +10,10 @@ import {
   sendResponseConfirmation,
   sendResponseDeleted,
 } from 'src/lib/email/template/response'
-import { notifyNewResponse } from 'src/lib/notify/response'
+import {
+  notifyNewResponse,
+  notifyResponseDeleted,
+} from 'src/lib/notify/response'
 import { generateToken } from 'src/lib/token'
 
 import dayjs from '../../lib/dayjs'
@@ -109,10 +112,17 @@ export const updateResponse: MutationResolvers['updateResponse'] = ({
   })
 }
 
-export const deleteResponse: MutationResolvers['deleteResponse'] = ({
+export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
   editToken,
 }) => {
-  return db.response.delete({ where: { editToken } })
+  const response = await db.response.delete({
+    where: { editToken },
+    include: { event: true },
+  })
+  const { event } = response
+  await sendResponseDeleted({ response, event })
+  await notifyResponseDeleted(event, response)
+  return response
 }
 
 export const Response: ResponseRelationResolvers = {

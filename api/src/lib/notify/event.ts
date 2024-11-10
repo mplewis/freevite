@@ -1,7 +1,8 @@
 import { Event } from 'types/graphql'
 
 import { SITE_HOST } from 'src/app.config'
-import { notify } from 'src/lib/notify'
+
+import { notify } from '../notify'
 
 /**
  * Notify the configured Discord channel of the creation of a new event.
