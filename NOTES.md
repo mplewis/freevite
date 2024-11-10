@@ -23,7 +23,6 @@
 - [ ] Email attendees on changes
 - [ ] Email attendees on deletion
 - [ ] Fix formatting in ICS file desc (no HTML)
-- [ ] More prominent RSVP button
 - [x] **Scheduler engine**
 	- [x] Send reminders
 	- [ ] Delete unconfirmed events
@@ -42,6 +41,8 @@
 - [ ] Clean up relative imports
 - [ ] Use `navigate` instead of `a href`
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
+- [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
+- [x] More prominent RSVP button
 - [x] Delete RSVP
 - [x] Discord webhook notifications
 - [x] Show all responses to event owner on edit page regardless of response config
