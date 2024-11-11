@@ -120,7 +120,7 @@ export const Success = ({
 
   return (
     <>
-      <Typ x="pageTitle">RSVP confirmed!</Typ>
+      <Typ x="head">RSVP confirmed!</Typ>
       <Typ x="p">
         We have notified the event organizer that you will be attending{' '}
         <strong>{event.title}</strong>. Thanks for using Freevite!

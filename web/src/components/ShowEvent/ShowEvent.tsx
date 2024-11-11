@@ -72,7 +72,7 @@ const ResponseSummary = (event: PublicEvent) => {
 
   return (
     <>
-      <Typ x="head">Who&apos;s coming?</Typ>
+      <Typ x="subhead">Who&apos;s coming?</Typ>
       <Typ x="p">
         <strong>{attd}</strong> {poss} confirmed that they are attending.
         {event.responseSummary.headCountTotal === 0 &&

@@ -22,16 +22,15 @@ export async function sendResponseConfirmation({
     to: response.email,
     subject: `Confirm your RSVP to ${event.title}`,
     text: stripIndent`
-      Hello from Freevite! Click this link to confirm your attendance of ${event.title}:
+      Hello from Freevite!
 
+      Click here to confirm you're attending ${event.title}:
       ${SITE_URL}/rsvp?token=${response.editToken}
+      Once you do, we'll confirm your RSVP and notify the event organizer.
 
-      You must click the above link to confirm your RSVP.
-      Once you do, we'll let the organizer know you are attending.
+      To change your response or delete your RSVP, click the link above.
 
       If you did not RSVP to this event, you can ignore this email.
-
-      To modify or delete your RSVP, just reply to this email. Thanks for using Freevite!
     `,
   })
 }
@@ -64,7 +63,7 @@ export async function sendNewResponseReceived({
       To view all responses and manage your event, click here:
       ${SITE_URL}/edit?token=${event.editToken}
 
-      If you need any help, just reply to this email. Thanks for using Freevite!
+      Thanks for using Freevite!
     `,
   })
 }
@@ -96,7 +95,7 @@ export async function sendResponseDeleted({
       To view all RSVPs and manage your event, click here:
       ${SITE_URL}/edit?token=${event.editToken}
 
-      If you need any help, just reply to this email. Thanks for using Freevite!
+      Thanks for using Freevite!
     `,
   })
 }

@@ -18,7 +18,7 @@ const PageHead = ({ title, desc }: Props) => {
         description={desc}
         ogContentUrl={`${SITE_URL}/og-logo.png`}
       />
-      <Typ x="pageTitle">{title}</Typ>
+      <Typ x="head">{title}</Typ>
     </>
   )
 }

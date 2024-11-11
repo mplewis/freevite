@@ -32,7 +32,6 @@
 	- [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Write README
-- [ ] Unify `typ` styles for `pageTitle` and `head`
 - [ ] Form to request resend link(s) for email address
 - [ ] Hold RSVP locally with cookie
 - [ ] Resend confirmation if an RSVP enters an existing email
@@ -51,6 +50,7 @@
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [x] Unify `typ` styles for `pageTitle` and `head`
 - [x] Edit RSVP from confirmation link
 - [x] More prominent RSVP button
 - [x] Delete RSVP

@@ -49,7 +49,7 @@ const NewResponseForm = (props: Props) => {
 
   if (event.responseConfig === 'DISABLED') return null
 
-  const Title = <Typ x="head">RSVP to {event.title}</Typ>
+  const Title = <Typ x="subhead">RSVP to {event.title}</Typ>
 
   if (createdForEmail) {
     return (

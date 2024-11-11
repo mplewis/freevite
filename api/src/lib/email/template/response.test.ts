@@ -37,21 +37,20 @@ describe('with test handler', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Click this link to confirm your attendance of Emma&#39;s Holiday Party:<br><br>https://example.com/rsvp?token=SOME-EDIT-TOKEN<br><br>You must click the above link to confirm your RSVP.<br>Once you do, we&#39;ll let the organizer know you are attending.<br><br>If you did not RSVP to this event, you can ignore this email.<br><br>To modify or delete your RSVP, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite!<br><br>Click here to confirm you&#39;re attending Emma&#39;s Holiday Party:<br>https://example.com/rsvp?token=SOME-EDIT-TOKEN<br>Once you do, we&#39;ll confirm your RSVP and notify the event organizer.<br><br>To change your response or delete your RSVP, click the link above.<br><br>If you did not RSVP to this event, you can ignore this email.",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
   "subject": "Confirm your RSVP to Emma's Holiday Party",
-  "textContent": "Hello from Freevite! Click this link to confirm your attendance of Emma's Holiday Party:
+  "textContent": "Hello from Freevite!
 
+Click here to confirm you're attending Emma's Holiday Party:
 https://example.com/rsvp?token=SOME-EDIT-TOKEN
+Once you do, we'll confirm your RSVP and notify the event organizer.
 
-You must click the above link to confirm your RSVP.
-Once you do, we'll let the organizer know you are attending.
+To change your response or delete your RSVP, click the link above.
 
-If you did not RSVP to this event, you can ignore this email.
-
-To modify or delete your RSVP, just reply to this email. Thanks for using Freevite!",
+If you did not RSVP to this event, you can ignore this email.",
   "to": [
     "holmes@example.com",
   ],
@@ -84,7 +83,7 @@ To modify or delete your RSVP, just reply to this email. Thanks for using Freevi
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -98,7 +97,7 @@ Comment: Looking forward to it!
 To view all responses and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
-If you need any help, just reply to this email. Thanks for using Freevite!",
+Thanks for using Freevite!",
   "to": [
     "emma@example.com",
   ],
@@ -131,7 +130,7 @@ If you need any help, just reply to this email. Thanks for using Freevite!",
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has canceled their RSVP to Emma&#39;s Holiday Party.<br><br>Here are the details of the RSVP before it was canceled:<br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all RSVPs and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! Sherlock Holmes has canceled their RSVP to Emma&#39;s Holiday Party.<br><br>Here are the details of the RSVP before it was canceled:<br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all RSVPs and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -146,7 +145,7 @@ Comment: Looking forward to it!
 To view all RSVPs and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
-If you need any help, just reply to this email. Thanks for using Freevite!",
+Thanks for using Freevite!",
   "to": [
     "emma@example.com",
   ],
