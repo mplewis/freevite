@@ -1,4 +1,4 @@
-import { PublicEvent } from 'types/graphql'
+import { PublicEvent as _PublicEvent } from 'types/graphql'
 
 import dayjs from '../../apiLib/dayjs'
 
@@ -9,6 +9,11 @@ export type Props = {
   event: PublicEvent
   htmlDesc: string
 }
+
+type PublicEvent = Pick<
+  _PublicEvent,
+  'title' | 'slug' | 'start' | 'end' | 'location'
+>
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
 const ICON_WIDTH = '200px'

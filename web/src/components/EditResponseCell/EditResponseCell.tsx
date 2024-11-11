@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import type {
   Event as _Event,
@@ -20,8 +20,10 @@ import {
   useMutation,
 } from '@redwoodjs/web'
 
+import { markdownToHTML } from 'src/apiLib/markdown'
 import { promptConfirm } from 'src/logic/prompt'
 
+import CalButtons from '../CalButtons/CalButtons'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import PageHead from '../PageHead/PageHead'
 import ResponseForm from '../ResponseForm/ResponseForm'
@@ -36,8 +38,12 @@ export const QUERY = gql`
       comment
       remindPriorSec
       event {
-        title
         slug
+        title
+        description
+        start
+        end
+        location
         responseConfig
       }
     }
@@ -85,6 +91,7 @@ export const Success = ({
   response,
 }: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
   const { editToken, event, ...defaultValues } = response
+  const { description } = event
 
   const formMethods = useForm({
     mode: 'onTouched',
@@ -119,6 +126,14 @@ export const Success = ({
   const [deleting, setDeleting] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
 
+  const [htmlDesc, setHTMLDesc] = useState('')
+  useEffect(() => {
+    ;(async () => {
+      const htmlDesc = await markdownToHTML(description)
+      setHTMLDesc(htmlDesc)
+    })()
+  }, [description])
+
   return (
     <>
       <PageHead
@@ -130,9 +145,12 @@ export const Success = ({
         <strong>{event.title}</strong>. Thanks for using Freevite!
       </Typ>
 
-      <a className="button is-primary mt-3" href={`/event/${event.slug}`}>
-        View details for {event.title} &raquo;
-      </a>
+      <div className="mb-4">
+        <a className="button is-primary mt-3" href={`/event/${event.slug}`}>
+          View details for {event.title} &raquo;
+        </a>
+      </div>
+      <CalButtons event={event} htmlDesc={htmlDesc} />
 
       <hr />
       <Typ x="subhead">Update your RSVP</Typ>

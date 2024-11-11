@@ -43,11 +43,11 @@
 - [ ] Allow sorting of RSVP list with UI
 - [ ] Placeholder values for form fields
 - [ ] Closely investigate form button spacing (update + cancel, etc.)
-- [ ] Add calendar invite links to RSVP page
 - [ ] Notify event owner when RSVP details change
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [x] Add calendar invite links to RSVP page
 - [x] Review all page titles and add contextual data where relevant
 - [x] Replace MetaTags with Metadata
 - [x] Unify `typ` styles for `pageTitle` and `head`
