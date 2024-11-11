@@ -40,40 +40,57 @@ const HomePage = () => {
 
         <hr />
 
+        <Typ x="subhead">Why use Freevite for your next event?</Typ>
+        <Typ x="p">
+          Here is what our <em>totally free</em> service has to offer:
+        </Typ>
+
         <div className="columns has-text-centered">
           <div className="column">
-            <Typ x="subhead">Vanity URLs</Typ>
-            <Typ x="p">
-              Your event gets a URL that&apos;s short enough to send in a text
-              message:
-              <br />
-              <code>{SITE_HOST}/event/my-party</code>
-            </Typ>
+            <div className="mb-5">
+              <Typ x="subhead">Vanity URLs</Typ>
+              <Typ x="p">
+                Your event gets a URL that&apos;s short enough to send in a text
+                message:
+                <br />
+                <code>{SITE_HOST}/event/my-party</code>
+              </Typ>
+            </div>
+            <div>
+              <Typ x="subhead">RSVPs</Typ>
+              <Typ x="p">
+                Collect responses and know how many people will be attending
+                your event. Guests don&apos;t need to sign up for an account -
+                just a name and email.
+              </Typ>
+            </div>
           </div>
           <div className="column">
-            <Typ x="subhead">iCal & GCal support</Typ>
-            <Typ x="p">
-              We support <strong>Google Calendar</strong> and{' '}
-              <strong>Apple iCal</strong> invite formats, so your friends can
-              easily add your event to their phone&apos;s calendar.
-            </Typ>
-          </div>
-          <div className="column">
-            <Typ x="subhead">Markdown support</Typ>
-            <Typ x="p">
-              Add <strong>styles to your text</strong> for <em>emphasis.</em>
-              <br />
-              Include{' '}
-              <a
-                href="https://www.youtube.com/watch?v=ygI-2F8ApUM"
-                target="_blank"
-                rel="noreferrer"
-              >
-                links to external websites.
-              </a>
-              <br />
-              No more writing HTML by hand.
-            </Typ>
+            <div className="mb-5">
+              <Typ x="subhead">Calendar support</Typ>
+              <Typ x="p">
+                We support <strong>Google Calendar</strong> and{' '}
+                <strong>Apple iCal</strong> invite formats, so your friends can
+                easily add your event to their phone&apos;s calendar.
+              </Typ>
+            </div>
+            <div>
+              <Typ x="subhead">Edit in Markdown</Typ>
+              <Typ x="p">
+                Add <strong>styles to your text</strong> for <em>emphasis.</em>
+                <br />
+                Include{' '}
+                <a
+                  href="https://www.youtube.com/watch?v=ygI-2F8ApUM"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  links to external websites.
+                </a>
+                <br />
+                No more writing HTML by hand.
+              </Typ>
+            </div>
           </div>
         </div>
 
@@ -90,6 +107,31 @@ const HomePage = () => {
         The solution I was looking for would let me create an event, enter its
         details, and give me a short link to text to friends. So, I built
         Freevite.
+      </Typ>
+
+      <Typ x="subhead">
+        What do you mean by <em>free forever?</em>
+      </Typ>
+      <Typ x="p">
+        As the internet keeps becoming centralized and privatized, it becomes
+        harder and harder to find simple services that just do the thing you
+        want without trying to drain your wallet or show you dozens of ads. I
+        want Freevite to be the place where you can create an event for your
+        friends, text them a link, and find out who&apos;s attending, without
+        having to pay anyone money just for using a computer.
+      </Typ>
+      <Typ x="p">
+        In my day job, I&apos;m an infrastructure engineer who builds
+        applications that scale in the cloud. Outside of work, I use my skills
+        to keep this service running as frugally as possible. Freevite is only
+        hosting text content and sending email, which makes it exceptionally
+        cheap to run. I&apos;m committed to running Freevite for free for
+        everyone as long as I can.
+      </Typ>
+      <Typ x="p">
+        If I add paid features to Freevite in the future, I will ensure that the
+        core product remains free to use for everyone. You will always be able
+        to create an event and invite your friends here on Freevite.
       </Typ>
 
       <Typ x="subhead">How am I allowed to use Freevite?</Typ>
