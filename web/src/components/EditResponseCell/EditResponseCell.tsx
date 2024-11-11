@@ -117,7 +117,6 @@ export const Success = ({
 
   const [deleting, setDeleting] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
-  const loading = saving || deleting
 
   return (
     <>
@@ -141,7 +140,7 @@ export const Success = ({
       <ResponseForm
         mode="UPDATE"
         event={event}
-        loading={loading}
+        loading={saving || deleting}
         formMethods={formMethods}
         error={error}
         onChange={() => setUpdateSuccess(false)}
@@ -169,7 +168,7 @@ export const Success = ({
       <DeleteButton
         className="my-4"
         text="Cancel my RSVP"
-        disabled={loading}
+        disabled={deleting}
         disabledText="Canceling..."
         onClick={async () =>
           await promptConfirm({
