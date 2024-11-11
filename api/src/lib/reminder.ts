@@ -6,8 +6,4 @@ export const reminderDurations = {
   never: null,
 } as const
 
-const secsToReminderDuration = Object.fromEntries(
-  Object.entries(reminderDurations).map(([label, seconds]) => [seconds, label])
-)
-
 export type ReminderDuration = keyof typeof reminderDurations
