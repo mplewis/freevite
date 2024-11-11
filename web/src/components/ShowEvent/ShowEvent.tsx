@@ -11,46 +11,16 @@ import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
 import { scrollTo } from 'src/logic/scroll'
 
-import dayjs from '../../apiLib/dayjs'
+import CalButtons from '../CalButtons/CalButtons'
 import NewResponseForm from '../NewResponseForm/NewResponseForm'
 import PageHead from '../PageHead/PageHead'
 import { ResponseDetails } from '../ResponseDetails/ResponseDetails'
 import Typ from '../Typ/Typ'
 
-import GCal from './GcalSVG'
-import ICS from './IcsSVG'
-
 export interface Props {
   event: PublicEvent
   preview?: boolean // Don't use real event page title if it's just a preview
 }
-
-const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
-const ICON_WIDTH = '200px'
-
-function toGcalDate(date: string) {
-  return dayjs(date).utc().format(GCAL_DATE_FORMAT)
-}
-
-function queryString(params: Record<string, string>) {
-  return Object.entries(params)
-    .map(([k, v]) => `${k}=${encodeURIComponent(v)}`)
-    .join('&')
-}
-
-function gcalLink(event: PublicEvent, descHTML: string) {
-  const { title, start, end, location } = event
-  const dates = `${toGcalDate(start)}/${toGcalDate(end)}`
-  const details = descHTML.replaceAll('<p>', '').replaceAll('</p>', '\n')
-  const query = queryString({ dates, details, location, text: title })
-  return `https://calendar.google.com/calendar/r/eventedit?${query}`
-}
-
-const IconBox = ({ children }) => (
-  <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
-    {children}
-  </div>
-)
 
 const RSVPButton = ({ event }) => {
   if (event.responseConfig === 'DISABLED') return null
@@ -102,9 +72,8 @@ const ResponseSection = (event) => {
 }
 
 const ShowEvent = ({ event, preview }: Props) => {
-  const { description, location, start, end, slug, timezone: _tz } = event
+  const { description, location, start, end, timezone: _tz } = event
   const tz = _tz ?? 'UTC'
-  const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${location}`
 
   const [htmlDesc, setHTMLDesc] = useState('')
@@ -147,16 +116,7 @@ const ShowEvent = ({ event, preview }: Props) => {
         <div className="mb-4">
           <RSVPButton event={event} />
         </div>
-        <IconBox>
-          <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
-            <GCal aria-label="Add to Google Calendar" />
-          </a>
-        </IconBox>
-        <IconBox>
-          <a href={icsLink} target="_blank" rel="noreferrer">
-            <ICS aria-label="Add to Apple Calendar" />
-          </a>
-        </IconBox>
+        <CalButtons event={event} htmlDesc={htmlDesc} />
       </div>
       <div
         className="content pb-2"
