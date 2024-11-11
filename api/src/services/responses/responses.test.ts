@@ -130,7 +130,7 @@ describe('addRemindPriorSec', () => {
     const reminders = []
     it('builds the expected data', () => {
       const result = pickRemindPriorSec({ reminders, eventStart })
-      expect(result.remindPriorSec).toEqual(null)
+      expect(result).toEqual(null)
     })
   })
 
@@ -147,7 +147,7 @@ describe('addRemindPriorSec', () => {
       it(`builds the expected data for ${sendAt}`, () => {
         const reminders = [{ sendAt: new Date(sendAt) }]
         const result = pickRemindPriorSec({ reminders, eventStart })
-        expect(result.remindPriorSec).toEqual(expected)
+        expect(result).toEqual(expected)
       })
     })
   })
@@ -166,7 +166,7 @@ describe('addRemindPriorSec', () => {
       ]
       for (const reminders of reminderSets) {
         const result = pickRemindPriorSec({ reminders, eventStart })
-        expect(result.remindPriorSec).toEqual(86_400)
+        expect(result).toEqual(86_400)
       }
     })
   })

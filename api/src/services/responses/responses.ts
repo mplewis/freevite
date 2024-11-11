@@ -25,9 +25,9 @@ import { reminderDurations } from '../../lib/reminder'
 export function pickRemindPriorSec(input: {
   eventStart: Date
   reminders: Pick<Reminder, 'sendAt'>[]
-}): { remindPriorSec: ValueOf<typeof reminderDurations> } {
+}): ValueOf<typeof reminderDurations> | null {
   const { eventStart, reminders } = input
-  if (reminders.length === 0) return { remindPriorSec: null }
+  if (reminders.length === 0) return null
 
   // Sort by send-at date, soonest first, for stability
   const reminder = reminders.sort((a, b) => dayjs(a.sendAt).diff(b.sendAt))[0]
@@ -41,7 +41,7 @@ export function pickRemindPriorSec(input: {
     },
     { diff: Infinity, duration: null }
   )
-  return { remindPriorSec: duration }
+  return duration
 }
 
 export const responses: QueryResolvers['responses'] = () => {
