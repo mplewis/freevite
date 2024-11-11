@@ -50,7 +50,7 @@ const IconBox = ({ children }) => (
   </div>
 )
 
-const RSVPButton = (event) => {
+const RSVPButton = ({ event }) => {
   if (event.responseConfig === 'DISABLED') return null
 
   return (
