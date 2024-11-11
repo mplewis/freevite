@@ -78,7 +78,6 @@ const NewResponseForm = (props: Props) => {
         onSubmit={(data: FormValues) => {
           if (!data.email) throw new Error('Email is required')
           const input = { ...data, email: data.email }
-          console.log(input)
           create({ variables: { eventId: event.id, input } })
         }}
       />

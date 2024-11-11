@@ -84,8 +84,6 @@ export const Success = ({
   response,
 }: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
   const { editToken, event, ...defaultValues } = response
-  const [deleting, setDeleting] = useState(false)
-  const [updateSuccess, setUpdateSuccess] = useState(false)
 
   const formMethods = useForm({
     mode: 'onTouched',
@@ -117,8 +115,9 @@ export const Success = ({
     },
   })
 
+  const [deleting, setDeleting] = useState(false)
+  const [updateSuccess, setUpdateSuccess] = useState(false)
   const loading = saving || deleting
-  // if (formState.isDirty) setUpdateSuccess(false)
 
   return (
     <>
