@@ -42,6 +42,8 @@
 - [ ] Use `navigate` instead of `a href`
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
+- [ ] Stably sort RSVP list
+- [ ] Allow sorting of RSVP list with UI
 - [x] More prominent RSVP button
 - [x] Delete RSVP
 - [x] Discord webhook notifications

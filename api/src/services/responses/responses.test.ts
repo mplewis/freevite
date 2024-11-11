@@ -1,5 +1,6 @@
 import type { Response } from '@prisma/client'
 import duration from 'dayjs/plugin/duration'
+import { Reminder } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -11,6 +12,7 @@ import {
   createResponse,
   updateResponse,
   deleteResponse,
+  pickRemindPriorSec,
 } from './responses'
 import type { StandardScenario } from './responses.scenarios'
 
@@ -118,5 +120,54 @@ describe('responses', () => {
     })
 
     expect(result.reminders.length).toEqual(0)
+  })
+})
+
+describe('addRemindPriorSec', () => {
+  const eventStart = new Date('2024-01-07T12:00:00Z')
+
+  describe('with no reminders', () => {
+    const reminders = []
+    it('builds the expected data', () => {
+      const result = pickRemindPriorSec({ reminders, eventStart })
+      expect(result.remindPriorSec).toEqual(null)
+    })
+  })
+
+  describe('with one reminder', () => {
+    const scenarios = [
+      { sendAt: '2024-01-07T11:00:00Z', expected: 3_600 },
+      { sendAt: '2024-01-07T10:45:00Z', expected: 3_600 },
+      { sendAt: '2024-01-07T11:15:00Z', expected: 3_600 },
+      { sendAt: '2024-01-06T12:00:00Z', expected: 86_400 },
+      { sendAt: '2024-01-06T11:59:00Z', expected: 86_400 },
+    ]
+
+    scenarios.forEach(({ sendAt, expected }) => {
+      it(`builds the expected data for ${sendAt}`, () => {
+        const reminders = [{ sendAt: new Date(sendAt) }]
+        const result = pickRemindPriorSec({ reminders, eventStart })
+        expect(result.remindPriorSec).toEqual(expected)
+      })
+    })
+  })
+
+  describe('with more than one reminder', () => {
+    it('determinstically selects the earliest reminder', () => {
+      const reminderSets = [
+        [
+          { sendAt: new Date('2024-01-06T12:00:00Z') },
+          { sendAt: new Date('2024-01-07T11:00:00Z') },
+        ],
+        [
+          { sendAt: new Date('2024-01-07T11:00:00Z') },
+          { sendAt: new Date('2024-01-06T12:00:00Z') },
+        ],
+      ]
+      for (const reminders of reminderSets) {
+        const result = pickRemindPriorSec({ reminders, eventStart })
+        expect(result.remindPriorSec).toEqual(86_400)
+      }
+    })
   })
 })

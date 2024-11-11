@@ -1,7 +1,9 @@
+import { ValueOf } from 'type-fest'
 import type {
   QueryResolvers,
   MutationResolvers,
   ResponseRelationResolvers,
+  Reminder,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -17,6 +19,30 @@ import {
 import { generateToken } from 'src/lib/token'
 
 import dayjs from '../../lib/dayjs'
+import { reminderDurations } from '../../lib/reminder'
+
+/** Select the most appropriate choice for the reminder duration picker given a set of reminders. */
+export function pickRemindPriorSec(input: {
+  eventStart: Date
+  reminders: Pick<Reminder, 'sendAt'>[]
+}): { remindPriorSec: ValueOf<typeof reminderDurations> } {
+  const { eventStart, reminders } = input
+  if (reminders.length === 0) return { remindPriorSec: null }
+
+  // Sort by send-at date, soonest first, for stability
+  const reminder = reminders.sort((a, b) => dayjs(a.sendAt).diff(b.sendAt))[0]
+  const { sendAt } = reminder
+  const dist = Math.abs(dayjs(sendAt).diff(eventStart)) / 1000
+
+  const { duration } = Object.values(reminderDurations).reduce(
+    (prev, currDuration) => {
+      const diff = Math.abs(currDuration - dist)
+      return diff <= prev.diff ? { diff, duration: currDuration } : prev
+    },
+    { diff: Infinity, duration: null }
+  )
+  return { remindPriorSec: duration }
+}
 
 export const responses: QueryResolvers['responses'] = () => {
   return db.response.findMany({ include: { reminders: true } })

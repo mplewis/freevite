@@ -12,12 +12,13 @@ import {
   UseFormReturn,
 } from '@redwoodjs/forms'
 
+import { ReminderDuration } from 'src/apiLib/reminder'
 import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
-import dayjs from '../../apiLib/dayjs'
+import { reminderDurations } from '../../apiLib/reminder'
 
 export type Props = {
   event: Pick<PublicEvent, 'responseConfig'>
@@ -35,14 +36,6 @@ export type FormValues = Pick<
 > & {
   reminder: ReminderDuration
 }
-
-export const reminderDurations = {
-  '1 day': dayjs.duration(1, 'day').asSeconds(),
-  '1 hour': dayjs.duration(1, 'hour').asSeconds(),
-  never: null,
-}
-
-export type ReminderDuration = keyof typeof reminderDurations
 
 const ResponseForm = (props: Props) => {
   const { event, error, loading, formMethods, onSubmit } = props
