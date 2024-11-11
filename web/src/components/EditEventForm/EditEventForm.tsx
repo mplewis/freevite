@@ -31,7 +31,6 @@ import { checkVisibility } from 'src/apiLib/visibility'
 import DeleteButton from 'src/components/DeleteButton/DeleteButton'
 import FormField from 'src/components/FormField/FormField'
 import { promptConfirm } from 'src/logic/prompt'
-import { scrollTo } from 'src/logic/scroll'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
 import { QUERY } from '../EditEventCell'
@@ -196,35 +195,21 @@ const EditEventForm = (props: Props) => {
   const attd = pluralize('person', headCount, true)
   const poss = headCount === 1 ? 'has' : 'have'
 
+  const noResponses = event.responseConfig === 'DISABLED' || headCount === 0
+  const anyResponses = !noResponses
+
   const ResponseSummary = () => {
     if (event.responseConfig === 'DISABLED') return null
     return (
       <>
+        <hr />
+        <Typ x="subhead">Who&apos;s coming?</Typ>
         <Typ x="p">
           <strong>{attd}</strong> {poss} confirmed they are attending.
         </Typ>
-        {headCount > 0 && (
-          <button className="button" onClick={() => scrollTo('responses')}>
-            View RSVPs &raquo;
-          </button>
-        )}
-      </>
-    )
-  }
-
-  const Responses = () => {
-    if (event.responseConfig === 'DISABLED' || headCount === 0) return null
-    return (
-      <>
-        <hr />
-        <div id="responses">
-          <Typ x="head">RSVPs</Typ>
-          <Typ x="p">
-            <strong>{attd}</strong> {poss} confirmed that they are attending.
-          </Typ>
-
+        {anyResponses && (
           <ResponseDetails responses={event.responses} hideHint={true} />
-        </div>
+        )}
       </>
     )
   }
@@ -232,7 +217,7 @@ const EditEventForm = (props: Props) => {
   return (
     <>
       <PageHead
-        title="Edit Event"
+        title={`Edit: ${event.title}`}
         desc={`Edit the details of your "${event.title}" event.`}
       />
       <PreView
@@ -241,10 +226,11 @@ const EditEventForm = (props: Props) => {
         slug={event.slug}
         previewToken={previewToken}
       />
+
       <ResponseSummary />
 
       <hr />
-
+      <Typ x="subhead">Edit Event Details</Typ>
       <Form
         formMethods={formMethods}
         onSubmit={(state: Event) =>
@@ -424,8 +410,6 @@ const EditEventForm = (props: Props) => {
           }
         />
       </Form>
-
-      <Responses />
     </>
   )
 }

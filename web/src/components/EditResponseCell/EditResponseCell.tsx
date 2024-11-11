@@ -23,6 +23,7 @@ import {
 import { promptConfirm } from 'src/logic/prompt'
 
 import DeleteButton from '../DeleteButton/DeleteButton'
+import PageHead from '../PageHead/PageHead'
 import ResponseForm from '../ResponseForm/ResponseForm'
 import Typ from '../Typ/Typ'
 
@@ -120,7 +121,10 @@ export const Success = ({
 
   return (
     <>
-      <Typ x="head">RSVP confirmed!</Typ>
+      <PageHead
+        title={`Confirmed: ${event.title}`}
+        desc="RSVP to events on Freevite, the simple event platform."
+      />
       <Typ x="p">
         We have notified the event organizer that you will be attending{' '}
         <strong>{event.title}</strong>. Thanks for using Freevite!

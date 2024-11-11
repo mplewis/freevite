@@ -3,7 +3,7 @@ import type {
   FindViewEventQueryVariables,
 } from 'types/graphql'
 
-import { CellSuccessProps, CellFailureProps, MetaTags } from '@redwoodjs/web'
+import { CellSuccessProps, CellFailureProps, Metadata } from '@redwoodjs/web'
 
 import ShowEvent from '../ShowEvent/ShowEvent'
 
@@ -46,7 +46,7 @@ export const Success = ({
   event,
 }: CellSuccessProps<FindViewEventQuery, FindViewEventQueryVariables>) => (
   <>
-    <MetaTags title={event.title} />
+    <Metadata title={event.title} />
     <ShowEvent event={event} />
   </>
 )

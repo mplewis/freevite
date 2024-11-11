@@ -13,6 +13,7 @@ import { scrollTo } from 'src/logic/scroll'
 
 import dayjs from '../../apiLib/dayjs'
 import NewResponseForm from '../NewResponseForm/NewResponseForm'
+import PageHead from '../PageHead/PageHead'
 import { ResponseDetails } from '../ResponseDetails/ResponseDetails'
 import Typ from '../Typ/Typ'
 
@@ -21,6 +22,7 @@ import ICS from './IcsSVG'
 
 export interface Props {
   event: PublicEvent
+  preview?: boolean // Don't use real event page title if it's just a preview
 }
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
@@ -99,16 +101,8 @@ const ResponseSection = (event) => {
   )
 }
 
-const ShowEvent = ({ event }: Props) => {
-  const {
-    title,
-    description,
-    location,
-    start,
-    end,
-    slug,
-    timezone: _tz,
-  } = event
+const ShowEvent = ({ event, preview }: Props) => {
+  const { description, location, start, end, slug, timezone: _tz } = event
   const tz = _tz ?? 'UTC'
   const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
   const mapHref = `https://www.google.com/maps/search/?api=1&query=${location}`
@@ -130,7 +124,11 @@ const ShowEvent = ({ event }: Props) => {
 
       <hr />
 
-      <Typ x="head">{title}</Typ>
+      {preview ? (
+        <Typ x="head">{event.title}</Typ>
+      ) : (
+        <PageHead title={event.title} desc={event.description.slice(0, 80)} />
+      )}
       <Typ x="p">
         <strong>From:</strong> {prettyStartWithUntil(start, tz)}
       </Typ>

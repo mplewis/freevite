@@ -63,8 +63,8 @@ export const Success = ({
   return (
     <>
       <PageHead
-        title="Preview Event"
-        desc={`Preview your "${event.title}" event before it goes live.`}
+        title={`Preview: ${event.title}`}
+        desc="Review your event details before you go live."
       />
 
       <p className="is-italic mb-3">
@@ -80,7 +80,7 @@ export const Success = ({
         </button>
       </p>
       <hr />
-      <ShowEvent event={e} />
+      <ShowEvent event={e} preview={true} />
     </>
   )
 }
