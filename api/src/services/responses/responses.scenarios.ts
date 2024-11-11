@@ -40,6 +40,29 @@ export const standard = defineScenario<Prisma.ResponseCreateArgs>({
         },
       },
     },
+    withReminder: {
+      data: {
+        editToken: 'editTokenWithReminder',
+        email: 'String',
+        event: {
+          create: {
+            editToken: 'eventEditTokenWithReminder',
+            previewToken: 'eventPreviewTokenWithReminder',
+            ownerEmail: 'String',
+            slug: 'eventSlugWithReminder',
+            title: 'String',
+            description: 'String',
+            start: '2024-01-07T12:00:00Z',
+            end: '2024-01-07T18:00:00Z',
+          },
+        },
+        reminders: {
+          create: {
+            sendAt: '2024-01-07T11:00:00Z',
+          },
+        },
+      },
+    },
   },
 })
 

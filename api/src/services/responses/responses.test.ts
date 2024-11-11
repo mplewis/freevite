@@ -1,6 +1,5 @@
 import type { Response } from '@prisma/client'
 import duration from 'dayjs/plugin/duration'
-import { Reminder } from 'types/graphql'
 
 import { db } from 'src/lib/db'
 
@@ -13,6 +12,7 @@ import {
   updateResponse,
   deleteResponse,
   pickRemindPriorSec,
+  updatableResponse,
 } from './responses'
 import type { StandardScenario } from './responses.scenarios'
 
@@ -121,6 +121,42 @@ describe('responses', () => {
 
     expect(result.reminders.length).toEqual(0)
   })
+
+  scenario(
+    'returns the expected updatable response when no reminders exist',
+    async (scenario: StandardScenario) => {
+      const result = await updatableResponse({
+        editToken: scenario.response.one.editToken,
+      })
+
+      expect(result).toMatchInlineSnapshot(`
+{
+  "comment": "",
+  "headCount": 1,
+  "name": "",
+  "remindPriorSec": null,
+}
+`)
+    }
+  )
+
+  scenario(
+    'returns the expected updatable response when a reminder exists',
+    async (scenario: StandardScenario) => {
+      const result = await updatableResponse({
+        editToken: scenario.response.withReminder.editToken,
+      })
+
+      expect(result).toMatchInlineSnapshot(`
+{
+  "comment": "",
+  "headCount": 1,
+  "name": "",
+  "remindPriorSec": 3600,
+}
+`)
+    }
+  )
 })
 
 describe('addRemindPriorSec', () => {
@@ -135,7 +171,7 @@ describe('addRemindPriorSec', () => {
   })
 
   describe('with one reminder', () => {
-    const scenarios = [
+    const variants = [
       { sendAt: '2024-01-07T11:00:00Z', expected: 3_600 },
       { sendAt: '2024-01-07T10:45:00Z', expected: 3_600 },
       { sendAt: '2024-01-07T11:15:00Z', expected: 3_600 },
@@ -143,7 +179,7 @@ describe('addRemindPriorSec', () => {
       { sendAt: '2024-01-06T11:59:00Z', expected: 86_400 },
     ]
 
-    scenarios.forEach(({ sendAt, expected }) => {
+    variants.forEach(({ sendAt, expected }) => {
       it(`builds the expected data for ${sendAt}`, () => {
         const reminders = [{ sendAt: new Date(sendAt) }]
         const result = pickRemindPriorSec({ reminders, eventStart })

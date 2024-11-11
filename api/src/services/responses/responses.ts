@@ -1,4 +1,3 @@
-import { ValueOf } from 'type-fest'
 import type {
   QueryResolvers,
   MutationResolvers,
@@ -21,11 +20,18 @@ import { generateToken } from 'src/lib/token'
 import dayjs from '../../lib/dayjs'
 import { reminderDurations } from '../../lib/reminder'
 
+export type UpdatableResponse = {
+  name: string
+  headCount: number
+  comment: string
+  remindPriorSec: number | null
+}
+
 /** Select the most appropriate choice for the reminder duration picker given a set of reminders. */
 export function pickRemindPriorSec(input: {
   eventStart: Date
   reminders: Pick<Reminder, 'sendAt'>[]
-}): ValueOf<typeof reminderDurations> | null {
+}): number | null {
   const { eventStart, reminders } = input
   if (reminders.length === 0) return null
 
@@ -98,6 +104,29 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
   })
   await sendResponseConfirmation({ event, response })
   return response
+}
+
+/** Return response data suitable for an edit response form. */
+export async function updatableResponse({
+  editToken,
+}: {
+  editToken: string
+}): Promise<UpdatableResponse> {
+  const data = await db.response.findUniqueOrThrow({
+    where: { editToken },
+    include: { reminders: true, event: { select: { start: true } } },
+  })
+  const { reminders, event } = data
+  const remindPriorSec = pickRemindPriorSec({
+    reminders,
+    eventStart: event.start,
+  })
+  return {
+    name: data.name,
+    headCount: data.headCount,
+    comment: data.comment,
+    remindPriorSec,
+  }
 }
 
 export const updateResponse: MutationResolvers['updateResponse'] = ({
