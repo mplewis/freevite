@@ -85,7 +85,7 @@ export const Success = ({
 }: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
   const { editToken, event, ...defaultValues } = response
   const [deleting, setDeleting] = useState(false)
-  const [updated, setUpdated] = useState(false)
+  const [updateSuccess, setUpdateSuccess] = useState(false)
 
   const formMethods = useForm({
     mode: 'onTouched',
@@ -118,6 +118,7 @@ export const Success = ({
   })
 
   const loading = saving || deleting
+  // if (formState.isDirty) setUpdateSuccess(false)
 
   return (
     <>
@@ -144,8 +145,9 @@ export const Success = ({
         loading={loading}
         formMethods={formMethods}
         error={error}
+        onChange={() => setUpdateSuccess(false)}
         onSubmit={async (data) => {
-          setUpdated(false)
+          setUpdateSuccess(false)
           const input = {
             name: data.name,
             headCount: data.headCount,
@@ -153,11 +155,11 @@ export const Success = ({
             remindPriorSec: data.remindPriorSec,
           }
           await save({ variables: { editToken, input } })
-          setUpdated(true)
+          setUpdateSuccess(true)
         }}
       />
 
-      {updated && (
+      {updateSuccess && (
         <Typ x="p">
           <strong className="has-text-success">
             Your RSVP was updated successfully.

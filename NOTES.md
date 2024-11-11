@@ -50,6 +50,7 @@
 - [ ] Notify event owner when RSVP details change
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
+- [ ] Spinners on loading pages with fun text
 - [x] Edit RSVP from confirmation link
 - [x] More prominent RSVP button
 - [x] Delete RSVP

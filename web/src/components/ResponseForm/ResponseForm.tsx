@@ -27,6 +27,7 @@ export type Props = {
   loading: boolean
   error?: ApolloError
   formMethods: UseFormReturn<FormValues>
+  onChange?: React.FormEventHandler<HTMLFormElement>
   onSubmit: (data: FormValues) => void
 }
 
@@ -39,7 +40,7 @@ export type FormValues = SetOptional<
 >
 
 const ResponseForm = (props: Props) => {
-  const { mode, event, error, loading, formMethods, onSubmit } = props
+  const { mode, event, error, loading, formMethods, onChange, onSubmit } = props
   const { formState } = formMethods
 
   const privacyNote = (() => {
@@ -60,7 +61,12 @@ const ResponseForm = (props: Props) => {
     <>
       <Typ x="p">{privacyNote}</Typ>
 
-      <Form className="mt-3" formMethods={formMethods} onSubmit={onSubmit}>
+      <Form
+        className="mt-3"
+        formMethods={formMethods}
+        onChange={onChange}
+        onSubmit={onSubmit}
+      >
         {mode === 'CREATE' && (
           <FormField name="email" text="Email Address*">
             <Typ x="labelDetails">
