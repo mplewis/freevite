@@ -167,13 +167,13 @@ export const Success = ({
 
       <DeleteButton
         className="my-4"
-        text="Cancel my RSVP"
+        text="Delete my RSVP"
         disabled={deleting}
-        disabledText="Canceling..."
+        disabledText="Deleting..."
         onClick={async () =>
           await promptConfirm({
-            desc: `cancel your RSVP to ${event.title}`,
-            confirmWith: 'CANCEL',
+            desc: `delete your RSVP to ${event.title}`,
+            confirmWith: 'DELETE',
             action: async () => {
               setDeleting(true)
               await destroy({ variables: { editToken: response.editToken } })
