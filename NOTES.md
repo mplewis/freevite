@@ -30,6 +30,7 @@
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
+	- [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Write README
 - [ ] Unify `typ` styles for `pageTitle` and `head`
@@ -44,6 +45,12 @@
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
 - [ ] Allow sorting of RSVP list with UI
+- [ ] Placeholder values for form fields
+- [ ] Closely investigate form button spacing (update + cancel, etc.)
+- [ ] Add calendar invite links to RSVP page
+- [ ] Notify event owner when RSVP details change
+- [ ] Allow event owner to customize their level of email participation
+- [ ] Automate flow tests
 - [x] More prominent RSVP button
 - [x] Delete RSVP
 - [x] Discord webhook notifications

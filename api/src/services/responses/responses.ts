@@ -60,21 +60,33 @@ export const response: QueryResolvers['response'] = ({ id }) => {
 
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
-    const resp = await db.response.findUnique({ where: { editToken } })
-    if (resp.confirmed) return resp
+    let resp = await db.response.findUnique({
+      where: { editToken },
+      include: { event: true, reminders: true },
+    })
 
-    const updated = await db.response.update({
-      where: { editToken },
-      data: { confirmed: true },
-      include: { event: true },
-    })
-    const { event } = updated
-    await sendNewResponseReceived({ event: event, response: updated })
-    await notifyNewResponse(event, updated)
-    return db.response.findUnique({
-      where: { editToken },
-      include: { reminders: true },
-    })
+    if (!resp.confirmed) {
+      const updated = await db.response.update({
+        where: { editToken },
+        data: { confirmed: true },
+        include: { event: true },
+      })
+      const { event } = updated
+      await sendNewResponseReceived({ event: event, response: updated })
+      await notifyNewResponse(event, updated)
+
+      resp = await db.response.findUnique({
+        where: { editToken },
+        include: { event: true, reminders: true },
+      })
+    }
+
+    const {
+      reminders,
+      event: { start: eventStart },
+    } = resp
+    const remindPriorSec = pickRemindPriorSec({ reminders, eventStart })
+    return { ...resp, remindPriorSec }
   }
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
@@ -104,29 +116,6 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
   })
   await sendResponseConfirmation({ event, response })
   return response
-}
-
-/** Return response data suitable for an edit response form. */
-export async function updatableResponse({
-  editToken,
-}: {
-  editToken: string
-}): Promise<UpdatableResponse> {
-  const data = await db.response.findUniqueOrThrow({
-    where: { editToken },
-    include: { reminders: true, event: { select: { start: true } } },
-  })
-  const { reminders, event } = data
-  const remindPriorSec = pickRemindPriorSec({
-    reminders,
-    eventStart: event.start,
-  })
-  return {
-    name: data.name,
-    headCount: data.headCount,
-    comment: data.comment,
-    remindPriorSec,
-  }
 }
 
 export const updateResponse: MutationResolvers['updateResponse'] = ({

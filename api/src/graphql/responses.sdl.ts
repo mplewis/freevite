@@ -20,6 +20,21 @@ export const schema = gql`
     comment: String!
   }
 
+  type UpdatableResponse {
+    id: Int!
+    event: Event!
+    eventId: Int!
+    createdAt: DateTime!
+    updatedAt: DateTime!
+    name: String!
+    editToken: String!
+    email: String!
+    confirmed: Boolean!
+    headCount: Int!
+    comment: String!
+    remindPriorSec: Int
+  }
+
   type ResponseSummary {
     headCountTotal: Int!
     responseCountTotal: Int!
@@ -28,7 +43,7 @@ export const schema = gql`
   type Query {
     responses: [Response!]! @requireAuth
     response(id: Int!): Response @requireAuth
-    responseByEditToken(editToken: String!): Response @skipAuth
+    responseByEditToken(editToken: String!): UpdatableResponse @skipAuth
   }
 
   input CreateResponseInput {

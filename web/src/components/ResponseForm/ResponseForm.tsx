@@ -1,5 +1,6 @@
 import { ApolloError } from '@apollo/client/errors'
-import { Response, PublicEvent } from 'types/graphql'
+import { SetOptional } from 'type-fest'
+import { PublicEvent, UpdatableResponse } from 'types/graphql'
 
 import {
   Form,
@@ -12,7 +13,6 @@ import {
   UseFormReturn,
 } from '@redwoodjs/forms'
 
-import { ReminderDuration } from 'src/apiLib/reminder'
 import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
@@ -21,8 +21,8 @@ import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 import { reminderDurations } from '../../apiLib/reminder'
 
 export type Props = {
+  mode: 'CREATE' | 'UPDATE'
   event: Pick<PublicEvent, 'responseConfig'>
-  existingData?: FormValues
 
   loading: boolean
   error?: ApolloError
@@ -30,15 +30,16 @@ export type Props = {
   onSubmit: (data: FormValues) => void
 }
 
-export type FormValues = Pick<
-  Response,
-  'name' | 'email' | 'headCount' | 'comment'
-> & {
-  reminder: ReminderDuration
-}
+export type FormValues = SetOptional<
+  Pick<
+    UpdatableResponse,
+    'name' | 'headCount' | 'comment' | 'remindPriorSec' | 'email'
+  >,
+  'email'
+>
 
 const ResponseForm = (props: Props) => {
-  const { event, error, loading, formMethods, onSubmit } = props
+  const { mode, event, error, loading, formMethods, onSubmit } = props
   const { formState } = formMethods
 
   const privacyNote = (() => {
@@ -58,23 +59,22 @@ const ResponseForm = (props: Props) => {
   return (
     <>
       <Typ x="p">{privacyNote}</Typ>
-      <Typ x="p">
-        Want to edit your RSVP? Use the confirmation link in your email.
-      </Typ>
 
       <Form className="mt-3" formMethods={formMethods} onSubmit={onSubmit}>
-        <FormField name="email" text="Email Address*">
-          <Typ x="labelDetails">
-            We will send you a link to confirm. Your email will not be shared
-            with anyone else.
-          </Typ>
-          <EmailField
-            name="email"
-            validation={{ ...isEmail }}
-            disabled={loading}
-            {...fieldAttrs.input}
-          />
-        </FormField>
+        {mode === 'CREATE' && (
+          <FormField name="email" text="Email Address*">
+            <Typ x="labelDetails">
+              We will send you a link to confirm. Your email will not be shared
+              with anyone else.
+            </Typ>
+            <EmailField
+              name="email"
+              validation={{ ...isEmail }}
+              disabled={loading}
+              {...fieldAttrs.input}
+            />
+          </FormField>
+        )}
 
         <FormField name="name" text="Your Name*">
           <TextField
@@ -113,9 +113,14 @@ const ResponseForm = (props: Props) => {
             If you want, we can email you a reminder so you don&apos;t forget
             about this event.
           </Typ>
-          <SelectField name="reminder" disabled={loading} {...fieldAttrs.input}>
+          <SelectField
+            name="remindPriorSec"
+            disabled={loading}
+            validation={{ valueAsNumber: true }}
+            {...fieldAttrs.input}
+          >
             {Object.entries(reminderDurations).map(([label, value]) => (
-              <option key={label} value={label}>
+              <option key={label} value={value}>
                 {value
                   ? `Remind me ${label} before the event starts`
                   : 'Do not send me a reminder'}
@@ -126,9 +131,15 @@ const ResponseForm = (props: Props) => {
 
         <Submit
           className="button is-success mt-3"
-          disabled={loading || !formState.isValid}
+          disabled={loading || !formState.isValid || !formState.isDirty}
         >
-          {loading ? 'Submitting...' : 'Submit RSVP'}
+          {mode === 'CREATE'
+            ? loading
+              ? 'Submitting...'
+              : 'Submit RSVP'
+            : loading
+              ? 'Updating...'
+              : 'Update RSVP'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
       </Form>

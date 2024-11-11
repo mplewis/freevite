@@ -12,7 +12,7 @@ import {
   updateResponse,
   deleteResponse,
   pickRemindPriorSec,
-  updatableResponse,
+  responseByEditToken,
 } from './responses'
 import type { StandardScenario } from './responses.scenarios'
 
@@ -122,39 +122,15 @@ describe('responses', () => {
     expect(result.reminders.length).toEqual(0)
   })
 
+  // TODO: Test that fetching the response with the edit token marks the response as confirmed
   scenario(
-    'returns the expected updatable response when no reminders exist',
+    'returns the expected response when a reminder exists',
     async (scenario: StandardScenario) => {
-      const result = await updatableResponse({
-        editToken: scenario.response.one.editToken,
-      })
-
-      expect(result).toMatchInlineSnapshot(`
-{
-  "comment": "",
-  "headCount": 1,
-  "name": "",
-  "remindPriorSec": null,
-}
-`)
-    }
-  )
-
-  scenario(
-    'returns the expected updatable response when a reminder exists',
-    async (scenario: StandardScenario) => {
-      const result = await updatableResponse({
+      const result = await responseByEditToken({
         editToken: scenario.response.withReminder.editToken,
       })
 
-      expect(result).toMatchInlineSnapshot(`
-{
-  "comment": "",
-  "headCount": 1,
-  "name": "",
-  "remindPriorSec": 3600,
-}
-`)
+      expect(result.remindPriorSec).toEqual(3_600)
     }
   )
 })

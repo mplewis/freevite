@@ -1,7 +1,6 @@
 import { useState } from 'react'
 
 import {
-  CreateResponseInput,
   CreateResponseMutation,
   CreateResponseMutationVariables,
   PublicEvent,
@@ -12,10 +11,7 @@ import { useMutation } from '@redwoodjs/web'
 
 import Typ from 'src/components/Typ/Typ'
 
-import ResponseForm, {
-  FormValues,
-  reminderDurations,
-} from '../ResponseForm/ResponseForm'
+import ResponseForm, { FormValues } from '../ResponseForm/ResponseForm'
 
 interface Props {
   event: Pick<PublicEvent, 'id' | 'title' | 'responseConfig'>
@@ -32,26 +28,12 @@ const CREATE_RESPONSE = gql`
   }
 `
 
-function stateToInput(state: FormValues): CreateResponseInput {
-  const { reminder, ...rest } = state
-  const input: CreateResponseInput = { ...rest }
-  const durationSec = reminderDurations[reminder]
-  if (durationSec) input.remindPriorSec = durationSec
-  return input
-}
-
 const NewResponseForm = (props: Props) => {
   const { event } = props
 
   const formMethods = useForm<FormValues>({
     mode: 'onTouched',
-    defaultValues: {
-      name: '',
-      email: '',
-      headCount: 1,
-      comment: '',
-      reminder: '1 day',
-    },
+    defaultValues: { headCount: 1 },
   })
 
   const [createdForEmail, setCreatedForEmail] = useState<string | null>(null)
@@ -88,15 +70,17 @@ const NewResponseForm = (props: Props) => {
     <>
       {Title}
       <ResponseForm
+        mode="CREATE"
         event={event}
         loading={loading}
         error={error}
         formMethods={formMethods}
-        onSubmit={(state: FormValues) =>
-          create({
-            variables: { eventId: event.id, input: stateToInput(state) },
-          })
-        }
+        onSubmit={(data: FormValues) => {
+          if (!data.email) throw new Error('Email is required')
+          const input = { ...data, email: data.email }
+          console.log(input)
+          create({ variables: { eventId: event.id, input } })
+        }}
       />
     </>
   )

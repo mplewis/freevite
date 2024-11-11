@@ -1,12 +1,18 @@
 import { useState } from 'react'
 
 import type {
-  FindEditResponseQuery,
-  FindEditResponseQueryVariables,
+  Event as _Event,
+  Reminder as _Reminder,
+  Response as _Response,
+  GetResponseQuery,
+  GetResponseQueryVariables,
+  UpdateResponseMutation,
+  UpdateResponseMutationVariables,
   DeleteResponseMutation,
   DeleteResponseMutationVariables,
 } from 'types/graphql'
 
+import { useForm } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import {
   type CellSuccessProps,
@@ -17,11 +23,32 @@ import {
 import { promptConfirm } from 'src/logic/prompt'
 
 import DeleteButton from '../DeleteButton/DeleteButton'
+import ResponseForm from '../ResponseForm/ResponseForm'
 import Typ from '../Typ/Typ'
 
 export const QUERY = gql`
-  query FindEditResponseQuery($editToken: String!) {
+  query GetResponseQuery($editToken: String!) {
     response: responseByEditToken(editToken: $editToken) {
+      editToken
+      name
+      headCount
+      comment
+      remindPriorSec
+      event {
+        title
+        slug
+        responseConfig
+      }
+    }
+  }
+`
+
+const UPDATE_RESPONSE = gql`
+  mutation UpdateResponseMutation(
+    $editToken: String!
+    $input: UpdateResponseInput!
+  ) {
+    updateResponse(editToken: $editToken, input: $input) {
       editToken
       name
       headCount
@@ -29,6 +56,7 @@ export const QUERY = gql`
       event {
         title
         slug
+        responseConfig
       }
     }
   }
@@ -48,15 +76,33 @@ export const Empty = () => <div>Empty</div>
 
 export const Failure = ({
   error,
-}: CellFailureProps<FindEditResponseQueryVariables>) => (
+}: CellFailureProps<GetResponseQueryVariables>) => (
   <div style={{ color: 'red' }}>Error: {error?.message}</div>
 )
 
 export const Success = ({
   response,
-}: CellSuccessProps<FindEditResponseQuery, FindEditResponseQueryVariables>) => {
-  const { event } = response
-  const [loading, setLoading] = useState(false)
+}: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
+  const { editToken, event, ...defaultValues } = response
+  const [deleting, setDeleting] = useState(false)
+  const [updated, setUpdated] = useState(false)
+
+  const formMethods = useForm({
+    mode: 'onTouched',
+    defaultValues,
+  })
+  const { reset } = formMethods
+
+  const [save, { loading: saving, error }] = useMutation<
+    UpdateResponseMutation,
+    UpdateResponseMutationVariables
+  >(UPDATE_RESPONSE, {
+    onCompleted: () => {
+      reset(defaultValues)
+    },
+    refetchQueries: [{ query: QUERY, variables: { editToken } }],
+    awaitRefetchQueries: true,
+  })
 
   const [destroy] = useMutation<
     DeleteResponseMutation,
@@ -71,36 +117,56 @@ export const Success = ({
     },
   })
 
+  const loading = saving || deleting
+
   return (
     <>
       <Typ x="pageTitle">RSVP confirmed!</Typ>
       <Typ x="p">
-        We have notified the event organizer that you will be attending:
+        We have notified the event organizer that you will be attending{' '}
+        <strong>{event.title}</strong>. Thanks for using Freevite!
       </Typ>
 
-      <table className="table is-fullwidth is-hoverable is-bordered is-narrow">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Guests</th>
-            <th>Comment</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>{response.name}</td>
-            <td>{response.headCount}</td>
-            <td>{response.comment || <em>No comment submitted</em>}</td>
-          </tr>
-        </tbody>
-      </table>
-
-      <a className="button is-primary mb-3" href={`/event/${event.slug}`}>
-        View event details: {event.title} &raquo;
+      <a className="button is-primary mt-3" href={`/event/${event.slug}`}>
+        View details for {event.title} &raquo;
       </a>
 
+      <hr />
+      <Typ x="subhead">Update your RSVP</Typ>
+      <Typ x="p">
+        Your current response is shown below. Use this form to update your
+        details or cancel your RSVP.
+      </Typ>
+
+      <ResponseForm
+        mode="UPDATE"
+        event={event}
+        loading={loading}
+        formMethods={formMethods}
+        error={error}
+        onSubmit={async (data) => {
+          setUpdated(false)
+          const input = {
+            name: data.name,
+            headCount: data.headCount,
+            comment: data.comment,
+            remindPriorSec: data.remindPriorSec,
+          }
+          await save({ variables: { editToken, input } })
+          setUpdated(true)
+        }}
+      />
+
+      {updated && (
+        <Typ x="p">
+          <strong className="has-text-success">
+            Your RSVP was updated successfully.
+          </strong>
+        </Typ>
+      )}
+
       <DeleteButton
-        className="mb-3"
+        className="my-4"
         text="Cancel my RSVP"
         disabled={loading}
         disabledText="Canceling..."
@@ -109,19 +175,13 @@ export const Success = ({
             desc: `cancel your RSVP to ${event.title}`,
             confirmWith: 'CANCEL',
             action: async () => {
-              setLoading(true)
+              setDeleting(true)
               await destroy({ variables: { editToken: response.editToken } })
-              setLoading(false)
+              setDeleting(false)
             },
           })
         }
       />
-
-      <Typ x="p">
-        Need to change your RSVP details? Just reply to the email we sent you
-        and we&apos;ll update your response.
-      </Typ>
-      <Typ x="p">Thanks for using Freevite!</Typ>
     </>
   )
 }
