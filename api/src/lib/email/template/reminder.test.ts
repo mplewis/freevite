@@ -37,7 +37,7 @@ describe('with test handler', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! You asked for a reminder about this event when you RSVPed:<br><br>Emma&#39;s Holiday Party<br>Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))<br>Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)<br><br>View the event here:<br>https://example.com/events/emmas-holiday-party<br><br>If you need to modify or delete your RSVP, just reply to this email.<br>Thanks for using Freevite!",
+  "htmlContent": "Hello from Freevite! You asked for a reminder about this event when you RSVPed:<br><br>Emma&#39;s Holiday Party<br>Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))<br>Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)<br><br>View the event here:<br>https://example.com/events/emmas-holiday-party<br><br>Thanks for using Freevite!",
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -51,7 +51,6 @@ Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)
 View the event here:
 https://example.com/events/emmas-holiday-party
 
-If you need to modify or delete your RSVP, just reply to this email.
 Thanks for using Freevite!",
   "to": [
     "holmes@example.com",

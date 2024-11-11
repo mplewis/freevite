@@ -1,5 +1,6 @@
 import { ApolloError } from '@apollo/client/errors'
-import { Response, PublicEvent } from 'types/graphql'
+import { SetOptional } from 'type-fest'
+import { PublicEvent, UpdatableResponse } from 'types/graphql'
 
 import {
   Form,
@@ -17,35 +18,29 @@ import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
 
-import dayjs from '../../apiLib/dayjs'
+import { reminderDurations } from '../../apiLib/reminder'
 
 export type Props = {
+  mode: 'CREATE' | 'UPDATE'
   event: Pick<PublicEvent, 'responseConfig'>
-  existingData?: FormValues
 
   loading: boolean
   error?: ApolloError
   formMethods: UseFormReturn<FormValues>
+  onChange?: React.FormEventHandler<HTMLFormElement>
   onSubmit: (data: FormValues) => void
 }
 
-export type FormValues = Pick<
-  Response,
-  'name' | 'email' | 'headCount' | 'comment'
-> & {
-  reminder: ReminderDuration
-}
-
-export const reminderDurations = {
-  '1 day': dayjs.duration(1, 'day').asSeconds(),
-  '1 hour': dayjs.duration(1, 'hour').asSeconds(),
-  never: null,
-}
-
-export type ReminderDuration = keyof typeof reminderDurations
+export type FormValues = SetOptional<
+  Pick<
+    UpdatableResponse,
+    'name' | 'headCount' | 'comment' | 'remindPriorSec' | 'email'
+  >,
+  'email'
+>
 
 const ResponseForm = (props: Props) => {
-  const { event, error, loading, formMethods, onSubmit } = props
+  const { mode, event, error, loading, formMethods, onChange, onSubmit } = props
   const { formState } = formMethods
 
   const privacyNote = (() => {
@@ -66,22 +61,30 @@ const ResponseForm = (props: Props) => {
     <>
       <Typ x="p">{privacyNote}</Typ>
       <Typ x="p">
-        Want to edit your RSVP? Use the confirmation link in your email.
+        <em>Making changes to your RSVP?</em> Use the link we sent to your email
+        to edit your details or cancel your RSVP.
       </Typ>
 
-      <Form className="mt-3" formMethods={formMethods} onSubmit={onSubmit}>
-        <FormField name="email" text="Email Address*">
-          <Typ x="labelDetails">
-            We will send you a link to confirm. Your email will not be shared
-            with anyone else.
-          </Typ>
-          <EmailField
-            name="email"
-            validation={{ ...isEmail }}
-            disabled={loading}
-            {...fieldAttrs.input}
-          />
-        </FormField>
+      <Form
+        className="mt-3"
+        formMethods={formMethods}
+        onChange={onChange}
+        onSubmit={onSubmit}
+      >
+        {mode === 'CREATE' && (
+          <FormField name="email" text="Email Address*">
+            <Typ x="labelDetails">
+              We will send you a link to confirm. Your email will not be shared
+              with anyone else.
+            </Typ>
+            <EmailField
+              name="email"
+              validation={{ ...isEmail }}
+              disabled={loading}
+              {...fieldAttrs.input}
+            />
+          </FormField>
+        )}
 
         <FormField name="name" text="Your Name*">
           <TextField
@@ -120,9 +123,14 @@ const ResponseForm = (props: Props) => {
             If you want, we can email you a reminder so you don&apos;t forget
             about this event.
           </Typ>
-          <SelectField name="reminder" disabled={loading} {...fieldAttrs.input}>
+          <SelectField
+            name="remindPriorSec"
+            disabled={loading}
+            validation={{ valueAsNumber: true }}
+            {...fieldAttrs.input}
+          >
             {Object.entries(reminderDurations).map(([label, value]) => (
-              <option key={label} value={label}>
+              <option key={label} value={value}>
                 {value
                   ? `Remind me ${label} before the event starts`
                   : 'Do not send me a reminder'}
@@ -133,9 +141,15 @@ const ResponseForm = (props: Props) => {
 
         <Submit
           className="button is-success mt-3"
-          disabled={loading || !formState.isValid}
+          disabled={loading || !formState.isValid || !formState.isDirty}
         >
-          {loading ? 'Submitting...' : 'Submit RSVP'}
+          {mode === 'CREATE'
+            ? loading
+              ? 'Submitting...'
+              : 'Submit RSVP'
+            : loading
+              ? 'Updating...'
+              : 'Update RSVP'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
       </Form>

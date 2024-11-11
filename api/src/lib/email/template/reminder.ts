@@ -39,7 +39,6 @@ export async function sendReminder({
       View the event here:
       https://${SITE_HOST}/events/${event.slug}
 
-      If you need to modify or delete your RSVP, just reply to this email.
       Thanks for using Freevite!
     `,
   })

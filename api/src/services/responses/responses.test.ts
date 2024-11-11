@@ -11,6 +11,8 @@ import {
   createResponse,
   updateResponse,
   deleteResponse,
+  pickRemindPriorSec,
+  responseByEditToken,
 } from './responses'
 import type { StandardScenario } from './responses.scenarios'
 
@@ -118,5 +120,66 @@ describe('responses', () => {
     })
 
     expect(result.reminders.length).toEqual(0)
+  })
+
+  // TODO: Test that fetching the response with the edit token marks the response as confirmed
+  scenario(
+    'returns the expected response when a reminder exists',
+    async (scenario: StandardScenario) => {
+      const result = await responseByEditToken({
+        editToken: scenario.response.withReminder.editToken,
+      })
+
+      expect(result.remindPriorSec).toEqual(3_600)
+    }
+  )
+})
+
+describe('addRemindPriorSec', () => {
+  const eventStart = new Date('2024-01-07T12:00:00Z')
+
+  describe('with no reminders', () => {
+    const reminders = []
+    it('builds the expected data', () => {
+      const result = pickRemindPriorSec({ reminders, eventStart })
+      expect(result).toEqual(null)
+    })
+  })
+
+  describe('with one reminder', () => {
+    const variants = [
+      { sendAt: '2024-01-07T11:00:00Z', expected: 3_600 },
+      { sendAt: '2024-01-07T10:45:00Z', expected: 3_600 },
+      { sendAt: '2024-01-07T11:15:00Z', expected: 3_600 },
+      { sendAt: '2024-01-06T12:00:00Z', expected: 86_400 },
+      { sendAt: '2024-01-06T11:59:00Z', expected: 86_400 },
+    ]
+
+    variants.forEach(({ sendAt, expected }) => {
+      it(`builds the expected data for ${sendAt}`, () => {
+        const reminders = [{ sendAt: new Date(sendAt) }]
+        const result = pickRemindPriorSec({ reminders, eventStart })
+        expect(result).toEqual(expected)
+      })
+    })
+  })
+
+  describe('with more than one reminder', () => {
+    it('determinstically selects the earliest reminder', () => {
+      const reminderSets = [
+        [
+          { sendAt: new Date('2024-01-06T12:00:00Z') },
+          { sendAt: new Date('2024-01-07T11:00:00Z') },
+        ],
+        [
+          { sendAt: new Date('2024-01-07T11:00:00Z') },
+          { sendAt: new Date('2024-01-06T12:00:00Z') },
+        ],
+      ]
+      for (const reminders of reminderSets) {
+        const result = pickRemindPriorSec({ reminders, eventStart })
+        expect(result).toEqual(86_400)
+      }
+    })
   })
 })

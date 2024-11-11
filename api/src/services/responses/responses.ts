@@ -2,6 +2,7 @@ import type {
   QueryResolvers,
   MutationResolvers,
   ResponseRelationResolvers,
+  Reminder,
 } from 'types/graphql'
 
 import { db } from 'src/lib/db'
@@ -17,6 +18,37 @@ import {
 import { generateToken } from 'src/lib/token'
 
 import dayjs from '../../lib/dayjs'
+import { reminderDurations } from '../../lib/reminder'
+
+export type UpdatableResponse = {
+  name: string
+  headCount: number
+  comment: string
+  remindPriorSec: number | null
+}
+
+/** Select the most appropriate choice for the reminder duration picker given a set of reminders. */
+export function pickRemindPriorSec(input: {
+  eventStart: Date
+  reminders: Pick<Reminder, 'sendAt'>[]
+}): number | null {
+  const { eventStart, reminders } = input
+  if (reminders.length === 0) return null
+
+  // Sort by send-at date, soonest first, for stability
+  const reminder = reminders.sort((a, b) => dayjs(a.sendAt).diff(b.sendAt))[0]
+  const { sendAt } = reminder
+  const dist = Math.abs(dayjs(sendAt).diff(eventStart)) / 1000
+
+  const { duration } = Object.values(reminderDurations).reduce(
+    (prev, currDuration) => {
+      const diff = Math.abs(currDuration - dist)
+      return diff <= prev.diff ? { diff, duration: currDuration } : prev
+    },
+    { diff: Infinity, duration: null }
+  )
+  return duration
+}
 
 export const responses: QueryResolvers['responses'] = () => {
   return db.response.findMany({ include: { reminders: true } })
@@ -28,21 +60,33 @@ export const response: QueryResolvers['response'] = ({ id }) => {
 
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
-    const resp = await db.response.findUnique({ where: { editToken } })
-    if (resp.confirmed) return resp
+    let resp = await db.response.findUnique({
+      where: { editToken },
+      include: { event: true, reminders: true },
+    })
 
-    const updated = await db.response.update({
-      where: { editToken },
-      data: { confirmed: true },
-      include: { event: true },
-    })
-    const { event } = updated
-    await sendNewResponseReceived({ event: event, response: updated })
-    await notifyNewResponse(event, updated)
-    return db.response.findUnique({
-      where: { editToken },
-      include: { reminders: true },
-    })
+    if (!resp.confirmed) {
+      const updated = await db.response.update({
+        where: { editToken },
+        data: { confirmed: true },
+        include: { event: true },
+      })
+      const { event } = updated
+      await sendNewResponseReceived({ event: event, response: updated })
+      await notifyNewResponse(event, updated)
+
+      resp = await db.response.findUnique({
+        where: { editToken },
+        include: { event: true, reminders: true },
+      })
+    }
+
+    const {
+      reminders,
+      event: { start: eventStart },
+    } = resp
+    const remindPriorSec = pickRemindPriorSec({ reminders, eventStart })
+    return { ...resp, remindPriorSec }
   }
 
 export const createResponse: MutationResolvers['createResponse'] = async ({

@@ -15,7 +15,6 @@
 - [ ] Add * asterisk markers to mandatory fields
 - [ ] Look into new OG image features
 - [ ] Replace MetaTags with Metadata
-- [ ] Edit RSVP from confirmation link
 - [ ] Notify organizer on cancel?
 - [ ] "Upgrade" from no RSVP to RSVP
 - [ ] Allow host to delete RSVPs
@@ -30,9 +29,9 @@
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
+	- [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Write README
-- [ ] Unify `typ` styles for `pageTitle` and `head`
 - [ ] Form to request resend link(s) for email address
 - [ ] Hold RSVP locally with cookie
 - [ ] Resend confirmation if an RSVP enters an existing email
@@ -42,6 +41,17 @@
 - [ ] Use `navigate` instead of `a href`
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
+- [ ] Stably sort RSVP list
+- [ ] Allow sorting of RSVP list with UI
+- [ ] Placeholder values for form fields
+- [ ] Closely investigate form button spacing (update + cancel, etc.)
+- [ ] Add calendar invite links to RSVP page
+- [ ] Notify event owner when RSVP details change
+- [ ] Allow event owner to customize their level of email participation
+- [ ] Automate flow tests
+- [ ] Spinners on loading pages with fun text
+- [x] Unify `typ` styles for `pageTitle` and `head`
+- [x] Edit RSVP from confirmation link
 - [x] More prominent RSVP button
 - [x] Delete RSVP
 - [x] Discord webhook notifications
