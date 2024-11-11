@@ -15,7 +15,6 @@
 - [ ] Add * asterisk markers to mandatory fields
 - [ ] Look into new OG image features
 - [ ] Replace MetaTags with Metadata
-- [ ] Edit RSVP from confirmation link
 - [ ] Notify organizer on cancel?
 - [ ] "Upgrade" from no RSVP to RSVP
 - [ ] Allow host to delete RSVPs
@@ -51,6 +50,7 @@
 - [ ] Notify event owner when RSVP details change
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
+- [x] Edit RSVP from confirmation link
 - [x] More prominent RSVP button
 - [x] Delete RSVP
 - [x] Discord webhook notifications
