@@ -42,6 +42,7 @@
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [ ] Use consistent pattern for "updated" green text across form submit actions
 - [x] Placeholder values for form fields
 - [x] Add * asterisk markers to mandatory fields
 - [x] Use `navigate` instead of `a href`
