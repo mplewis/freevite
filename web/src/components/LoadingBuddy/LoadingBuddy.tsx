@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react'
 
+import { ThreeDotsFade } from 'react-svg-spinners'
+
 export type Props = {
   className?: string
 }
@@ -40,7 +42,14 @@ const LoadingBuddy = ({ className }: Props) => {
     const msg = `${random(apologies)}, ${random(loadingMessages)}...`
     setMessage(msg)
   }, [])
-  return <span className={className}>{message}</span>
+  return (
+    <div className={`is-flex ${className}`}>
+      <span className="mr-3">
+        <ThreeDotsFade />
+      </span>
+      <span>{message}</span>
+    </div>
+  )
 }
 
 export default LoadingBuddy
