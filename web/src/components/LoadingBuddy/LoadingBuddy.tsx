@@ -4,14 +4,17 @@ import { ThreeDotsFade } from 'react-svg-spinners'
 
 export type Props = {
   className?: string
+  durationMs?: number
+  transitionMs?: number
 }
 
 const apologies = [
   'Just a sec',
   'One moment',
   'Hang on',
+  'Hold on',
+  'Please wait',
   'Hold tight',
-  'Almost there',
   'Just a moment',
 ]
 
@@ -32,22 +35,54 @@ const loadingMessages = [
   'getting the band back together',
 ]
 
-function random<T>(choices: T[]): T {
-  return choices[Math.floor(Math.random() * choices.length)]
+function random<T>(choices: T[], notLast?: T): T {
+  let choice: T
+  do {
+    choice = choices[Math.floor(Math.random() * choices.length)]
+  } while (choice === notLast)
+  return choice
 }
 
-const LoadingBuddy = ({ className }: Props) => {
+const LoadingBuddy = ({ className, durationMs, transitionMs }: Props) => {
+  const dMs = durationMs || 4000
+  const tMs = transitionMs || 500
+  const [preamble, setPreamble] = useState('')
   const [message, setMessage] = useState('')
+  const [opacity, setOpacity] = useState(1)
+
   useEffect(() => {
-    const msg = `${random(apologies)}, ${random(loadingMessages)}...`
-    setMessage(msg)
+    setPreamble(random(apologies))
+    setMessage(random(loadingMessages))
   }, [])
+
+  useEffect(() => {
+    let timeout: NodeJS.Timeout
+    const interval = setInterval(() => {
+      setOpacity(0)
+      timeout = setTimeout(() => {
+        setMessage(random(loadingMessages, message))
+        setOpacity(1)
+      }, tMs)
+    }, dMs)
+
+    return () => {
+      clearInterval(interval)
+      if (timeout) clearTimeout(timeout)
+    }
+  }, [dMs, tMs, message])
+
+  const msgTag = (
+    <span style={{ transition: `opacity ease-in ${tMs / 1000}s`, opacity }}>
+      {message}...
+    </span>
+  )
+
   return (
     <div className={`is-flex ${className}`}>
-      <span className="mr-3">
+      <span className="mr-2">
         <ThreeDotsFade />
       </span>
-      <span>{message}</span>
+      {preamble},&nbsp;{msgTag}
     </div>
   )
 }

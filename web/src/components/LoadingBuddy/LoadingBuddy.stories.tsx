@@ -5,21 +5,17 @@ import LoadingBuddy from './LoadingBuddy'
 const meta: Meta<typeof LoadingBuddy> = {
   component: LoadingBuddy,
   tags: ['autodocs'],
-  argTypes: {
-    variant: {
-      control: { type: 'radio' },
-      options: ['primary', 'secondary', 'tertiary'],
-    },
-  },
 }
 
 export default meta
 
 type Story = StoryObj<typeof LoadingBuddy>
 
-/** Test docs */
+/** LoadingBuddy provides friendly messages to make the loading process less tedious. */
 export const Primary: Story = {
   args: {
     className: 'has-text-black',
+    durationMs: 4000,
+    transitionMs: 500,
   },
 }
