@@ -2,7 +2,7 @@ import type { APIGatewayEvent } from 'aws-lambda'
 import { createEvent, EventAttributes } from 'ics'
 
 import { convertToDateArray } from 'src/lib/date'
-import { markdownToHTML } from 'src/lib/markdown'
+import { markdownToText } from 'src/lib/markdown'
 import { wrap } from 'src/lib/sentry'
 import { eventBySlug } from 'src/services/events/events'
 
@@ -27,7 +27,7 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
   if (typeof event.start === 'string') event.start = new Date(event.start)
   if (typeof event.end === 'string') event.end = new Date(event.end)
 
-  const description = await markdownToHTML(event.description)
+  const description = await markdownToText(event.description)
   const eventAttributes: EventAttributes = {
     description,
     title: event.title,

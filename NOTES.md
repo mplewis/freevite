@@ -20,7 +20,6 @@
 - [ ] Allow host to email attendees
 - [ ] Email attendees on changes
 - [ ] Email attendees on deletion
-- [ ] Fix formatting in ICS file desc (no HTML)
 - [x] **Scheduler engine**
 	- [x] Send reminders
 	- [ ] Delete unconfirmed events
@@ -47,6 +46,7 @@
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [x] Fix formatting in ICS file desc (no HTML)
 - [x] Add calendar invite links to RSVP page
 - [x] Review all page titles and add contextual data where relevant
 - [x] Replace MetaTags with Metadata

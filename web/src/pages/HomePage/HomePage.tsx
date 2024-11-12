@@ -50,8 +50,7 @@ const HomePage = () => {
             <div className="mb-5">
               <Typ x="subhead">Vanity URLs</Typ>
               <Typ x="p">
-                Your event gets a URL that&apos;s short enough to send in a text
-                message:
+                Your event link is short enough to send by text:
                 <br />
                 <code>{SITE_HOST}/event/my-party</code>
               </Typ>
@@ -59,9 +58,9 @@ const HomePage = () => {
             <div>
               <Typ x="subhead">RSVPs</Typ>
               <Typ x="p">
-                Collect responses and know how many people will be attending
-                your event. Guests don&apos;t need to sign up for an account -
-                just a name and email.
+                Collect responses and know how many people plan on attending.
+                Guests don&apos;t need to create an account - all they need is
+                an email address.
               </Typ>
             </div>
           </div>
