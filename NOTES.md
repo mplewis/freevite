@@ -11,8 +11,6 @@
 - [ ] Render preview images to S3
 - [ ] Sample event page
 - [ ] When date is too far away, use year in preview
-- [ ] Use proper preview domain in emails from staging
-- [ ] Add * asterisk markers to mandatory fields
 - [ ] Look into new OG image features
 - [ ] Notify organizer on cancel?
 - [ ] "Upgrade" from no RSVP to RSVP
@@ -39,12 +37,13 @@
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
 - [ ] Allow sorting of RSVP list with UI
-- [ ] Placeholder values for form fields
 - [ ] Closely investigate form button spacing (update + cancel, etc.)
 - [ ] Notify event owner when RSVP details change
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [x] Placeholder values for form fields
+- [x] Add * asterisk markers to mandatory fields
 - [x] Use `navigate` instead of `a href`
 - [x] Fix formatting in ICS file desc (no HTML)
 - [x] Add calendar invite links to RSVP page

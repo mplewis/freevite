@@ -98,6 +98,7 @@ const NewEventPage = () => {
           </Typ>
           <EmailField
             name="ownerEmail"
+            placeholder="yourname@example.com"
             validation={{ ...isEmail }}
             disabled={loading}
             {...fieldAttrs.input}
@@ -108,6 +109,7 @@ const NewEventPage = () => {
           <Typ x="labelDetails">You can change this at any time.</Typ>
           <TextField
             name="title"
+            placeholder="My Awesome Party"
             validation={{ required: true }}
             disabled={loading}
             {...fieldAttrs.input}

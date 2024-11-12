@@ -1,4 +1,7 @@
+import { useEffect, useState } from 'react'
+
 import { ApolloError } from '@apollo/client/errors'
+import { use } from 'marked'
 import { SetOptional } from 'type-fest'
 import { PublicEvent, UpdatableResponse } from 'types/graphql'
 
@@ -39,9 +42,21 @@ export type FormValues = SetOptional<
   'email'
 >
 
+const firstNames = ['Sam', 'Chris', 'Alex', 'Taylor', 'Jordan', 'Casey']
+const lastNames = ['Public', 'Sample', 'Example', "O'Public", 'McSample', 'Doe']
+
+function random<T>(choices: T[]): T {
+  return choices[Math.floor(Math.random() * choices.length)]
+}
+
 const ResponseForm = (props: Props) => {
   const { mode, event, error, loading, formMethods, onChange, onSubmit } = props
   const { formState } = formMethods
+
+  const [exampleName, setExampleName] = useState('')
+  useEffect(() => {
+    setExampleName(`${random(firstNames)} ${random(lastNames)}`)
+  }, [])
 
   const privacyNote = (() => {
     switch (event.responseConfig) {
@@ -79,6 +94,7 @@ const ResponseForm = (props: Props) => {
             </Typ>
             <EmailField
               name="email"
+              placeholder="yourname@example.com"
               validation={{ ...isEmail }}
               disabled={loading}
               {...fieldAttrs.input}
@@ -89,6 +105,7 @@ const ResponseForm = (props: Props) => {
         <FormField name="name" text="Your Name*">
           <TextField
             name="name"
+            placeholder={exampleName}
             validation={{ required: true }}
             disabled={loading}
             {...fieldAttrs.input}
