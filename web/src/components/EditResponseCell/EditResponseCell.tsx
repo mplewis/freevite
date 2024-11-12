@@ -13,7 +13,7 @@ import type {
 } from 'types/graphql'
 
 import { useForm } from '@redwoodjs/forms'
-import { navigate, routes } from '@redwoodjs/router'
+import { Link, navigate, routes } from '@redwoodjs/router'
 import {
   type CellSuccessProps,
   type CellFailureProps,
@@ -146,9 +146,9 @@ export const Success = ({
       </Typ>
 
       <div className="mb-4">
-        <a className="button is-primary mt-3" href={`/event/${event.slug}`}>
+        <Link className="button is-primary mt-3" to={`/event/${event.slug}`}>
           View details for {event.title} &raquo;
-        </a>
+        </Link>
       </div>
       <CalButtons event={event} htmlDesc={htmlDesc} />
 

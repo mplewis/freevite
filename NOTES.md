@@ -35,7 +35,6 @@
 - [ ] Resend confirmation if an RSVP enters an existing email
 - [ ] Add Sentry to frontend
 - [ ] Clean up relative imports
-- [ ] Use `navigate` instead of `a href`
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
@@ -46,6 +45,7 @@
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Spinners on loading pages with fun text
+- [x] Use `navigate` instead of `a href`
 - [x] Fix formatting in ICS file desc (no HTML)
 - [x] Add calendar invite links to RSVP page
 - [x] Review all page titles and add contextual data where relevant
