@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import LoadingBuddy from './LoadingBuddy'
+import LoadingBuddy, { defaultProps } from './LoadingBuddy'
 
 const meta: Meta<typeof LoadingBuddy> = {
   component: LoadingBuddy,
@@ -15,7 +15,6 @@ type Story = StoryObj<typeof LoadingBuddy>
 export const Primary: Story = {
   args: {
     className: 'has-text-black',
-    durationMs: 4000,
-    transitionMs: 500,
+    ...defaultProps,
   },
 }

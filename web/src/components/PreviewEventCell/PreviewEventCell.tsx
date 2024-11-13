@@ -6,6 +6,7 @@ import type {
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 import PageHead from '../PageHead/PageHead'
 import ShowEvent from '../ShowEvent/ShowEvent'
 
@@ -24,7 +25,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div>
+    <LoadingBuddy />
+  </div>
+)
 
 export const Empty = () => <div>Event not found</div>
 

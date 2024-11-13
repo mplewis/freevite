@@ -25,6 +25,7 @@ import { promptConfirm } from 'src/logic/prompt'
 
 import CalButtons from '../CalButtons/CalButtons'
 import DeleteButton from '../DeleteButton/DeleteButton'
+import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 import PageHead from '../PageHead/PageHead'
 import ResponseForm from '../ResponseForm/ResponseForm'
 import Typ from '../Typ/Typ'
@@ -77,7 +78,11 @@ const DELETE_RESPONSE = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div>
+    <LoadingBuddy />
+  </div>
+)
 
 export const Empty = () => <div>Empty</div>
 

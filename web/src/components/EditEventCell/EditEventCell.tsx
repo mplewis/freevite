@@ -6,6 +6,7 @@ import type {
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import EditEventForm from '../EditEventForm/EditEventForm'
+import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 export const QUERY = gql`
   query FindEditEventQuery($editToken: String!) {
     event: eventByEditToken(editToken: $editToken) {
@@ -31,7 +32,11 @@ export const QUERY = gql`
   }
 `
 
-export const Loading = () => <div>Loading...</div>
+export const Loading = () => (
+  <div>
+    <LoadingBuddy />
+  </div>
+)
 
 export const Empty = () => <div>Event not found</div>
 
