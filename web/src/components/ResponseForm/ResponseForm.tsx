@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 
 import { ApolloError } from '@apollo/client/errors'
-import { use } from 'marked'
 import { SetOptional } from 'type-fest'
 import { PublicEvent, UpdatableResponse } from 'types/graphql'
 

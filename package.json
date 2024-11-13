@@ -31,6 +31,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@redwoodjs/cli-storybook-vite": "8.4.0",
     "@redwoodjs/core": "8.4.0",
     "@redwoodjs/realtime": "8.4.0",
     "@redwoodjs/studio": "11",
