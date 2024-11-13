@@ -59,7 +59,8 @@ const LoadingBuddy = ({
   // HACK: Match Bulma colors
   const light = 'rgb(219, 219, 219)'
   const dark = 'rgb(74, 74, 74)'
-  const darkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+  const darkMode =
+    window?.matchMedia?.('(prefers-color-scheme: dark)').matches || false
 
   const dMs = durationMs || defaultProps.durationMs
   const tMs = transitionMs || defaultProps.transitionMs
