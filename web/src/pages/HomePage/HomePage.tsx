@@ -8,8 +8,8 @@ const HomePage = () => {
   return (
     <>
       <Metadata
-        title="Freevite – the simple event platform"
-        description="Create event invites quickly and easily. Free forever, no signup required."
+        title="The simple event platform"
+        description="Create event invites and collect RSVPs. Free forever, no signup required."
         og={{ image: `${SITE_URL}/og-logo.png` }}
       />
 
@@ -17,12 +17,12 @@ const HomePage = () => {
         <div className="my-6">
           <Typ x="head">Create event invitations for free</Typ>
           <Typ x="p">
-            Freevite lets you create a calendar event with a short link to send
-            to your friends.
+            Freevite lets you create an event, invite people with a short link,
+            and collect RSVPs.
           </Typ>
           <Typ x="p">
-            We keep things simple. <strong>No accounts, no passwords</strong> –
-            all you need is an email address.
+            <strong>No accounts, no passwords, no ads</strong> – all you need is
+            an email address.
           </Typ>
 
           <Link
