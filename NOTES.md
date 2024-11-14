@@ -18,10 +18,6 @@
 - [ ] Allow host to email attendees
 - [ ] Email attendees on changes
 - [ ] Email attendees on deletion
-- [x] **Scheduler engine**
-  - [x] Send reminders
-  - [ ] Delete unconfirmed events
-  - [ ] Delete completed events
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
@@ -42,6 +38,12 @@
 - [ ] Use consistent pattern for "updated" green text across form submit actions
 - [ ] Make required env vars required with `mustEnv`, etc. (e.g. `SITE_HOST`)
 - [ ] Make Sentry DSN optional
+- [ ] Consensually gather user emails for mailing list
+- [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
+- [x] **Scheduler engine**
+  - [x] Send reminders
+  - [x] Delete unconfirmed events
+  - [x] Archive completed events
 - [x] Write README
 - [x] Clean up relative imports
 - [x] Spinners on loading pages with fun text
