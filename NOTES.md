@@ -19,20 +19,18 @@
 - [ ] Email attendees on changes
 - [ ] Email attendees on deletion
 - [x] **Scheduler engine**
-	- [x] Send reminders
-	- [ ] Delete unconfirmed events
-	- [ ] Delete completed events
+  - [x] Send reminders
+  - [ ] Delete unconfirmed events
+  - [ ] Delete completed events
 - [ ] Use background functions for saving event preview image
 - [ ] Upgrade to Bulma 1.0 (or away)
 - [ ] Fix hamburger menu not working on mobile
-	- [ ] Why are hamburger items missing on Confirm RSVP page?
+  - [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
-- [ ] Write README
 - [ ] Form to request resend link(s) for email address
 - [ ] Hold RSVP locally with cookie
 - [ ] Resend confirmation if an RSVP enters an existing email
 - [ ] Add Sentry to frontend
-- [ ] Clean up relative imports
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
@@ -42,9 +40,13 @@
 - [ ] Allow event owner to customize their level of email participation
 - [ ] Automate flow tests
 - [ ] Use consistent pattern for "updated" green text across form submit actions
+- [ ] Make required env vars required with `mustEnv`, etc. (e.g. `SITE_HOST`)
+- [ ] Make Sentry DSN optional
+- [x] Write README
+- [x] Clean up relative imports
 - [x] Spinners on loading pages with fun text
 - [x] Placeholder values for form fields
-- [x] Add * asterisk markers to mandatory fields
+- [x] Add \* asterisk markers to mandatory fields
 - [x] Use `navigate` instead of `a href`
 - [x] Fix formatting in ICS file desc (no HTML)
 - [x] Add calendar invite links to RSVP page
