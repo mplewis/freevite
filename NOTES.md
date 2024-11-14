@@ -43,7 +43,8 @@
 - [x] **Scheduler engine**
   - [x] Send reminders
   - [x] Delete unconfirmed events
-  - [x] Archive completed events
+  - [x] Delete unconfirmed responses
+  - [ ] Archive completed events
 - [x] Write README
 - [x] Clean up relative imports
 - [x] Spinners on loading pages with fun text
