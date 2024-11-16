@@ -18317,6 +18317,21 @@ __metadata:
   languageName: node
   linkType: hard
 
+"jotai@npm:^2.10.2":
+  version: 2.10.2
+  resolution: "jotai@npm:2.10.2"
+  peerDependencies:
+    "@types/react": ">=17.0.0"
+    react: ">=17.0.0"
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+    react:
+      optional: true
+  checksum: 4eb13ed91c669fea1df0daef1f50acb5c839772425d913dc3b03a392847a8d49e391934b18e9342743b0da1dcf92cf23c025af1c0860ff92d45f56544021d632
+  languageName: node
+  linkType: hard
+
 "js-beautify@npm:^1.14.11":
   version: 1.15.1
   resolution: "js-beautify@npm:1.15.1"
@@ -25778,6 +25793,7 @@ __metadata:
     bulma-prefers-dark: ^0.1.0-beta.1
     classnames: ^2.5.1
     dayjs: ^1.11.13
+    jotai: ^2.10.2
     postcss: ^8.4.47
     postcss-loader: ^8.1.1
     react: ^18.3.1

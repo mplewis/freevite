@@ -15,6 +15,7 @@
 - [ ] Notify organizer on cancel?
 - [ ] "Upgrade" from no RSVP to RSVP
 - [ ] Allow host to delete RSVPs
+  - [ ] Edge case: what if response edit token is in localstorage, but event owner has deleted the response?
 - [ ] Allow host to email attendees
 - [ ] Email attendees on changes
 - [ ] Email attendees on deletion
@@ -24,7 +25,6 @@
   - [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
-- [ ] Hold RSVP locally with cookie
 - [ ] Resend confirmation if an RSVP enters an existing email
 - [ ] Add Sentry to frontend
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
@@ -40,6 +40,7 @@
 - [ ] Make Sentry DSN optional
 - [ ] Consensually gather user emails for mailing list
 - [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
+- [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
   - [x] Send reminders
   - [x] Delete unconfirmed events
