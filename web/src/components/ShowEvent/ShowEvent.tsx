@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
 
+import { useAtom } from 'jotai/react'
 import pluralize from 'pluralize'
 import { PublicEvent } from 'types/graphql'
 
@@ -9,6 +10,7 @@ import {
 } from 'src/apiLib/convert/date'
 import { markdownToHTML } from 'src/apiLib/markdown'
 import { SITE_HOST } from 'src/app.config'
+import { responseTokenAtom } from 'src/data/atoms'
 import { scrollTo } from 'src/logic/scroll'
 
 import CalButtons from '../CalButtons/CalButtons'
@@ -22,7 +24,14 @@ export interface Props {
   preview?: boolean // Don't use real event page title if it's just a preview
 }
 
-const RSVPButton = ({ event }) => {
+const RSVPButton = ({
+  event,
+  responseToken,
+}: {
+  event: PublicEvent
+  responseToken?: string
+}) => {
+  if (responseToken) return null
   if (event.responseConfig === 'DISABLED') return null
 
   return (
@@ -36,7 +45,7 @@ const RSVPButton = ({ event }) => {
   )
 }
 
-const ResponseSummary = (event: PublicEvent) => {
+const ResponseSummary = ({ event }: { event: PublicEvent }) => {
   if (!event.responseSummary) return null
 
   const attd = pluralize('person', event.responseSummary.headCountTotal, true)
@@ -57,15 +66,21 @@ const ResponseSummary = (event: PublicEvent) => {
   )
 }
 
-const ResponseSection = (event) => {
+const ResponseSection = ({
+  event,
+  responseToken,
+}: {
+  event: PublicEvent
+  responseToken?: string
+}) => {
   if (event.responseConfig === 'DISABLED') return null
 
   return (
     <>
       <hr />
-      <ResponseSummary {...event} />
+      <ResponseSummary event={event} />
       <div id="rsvp-form">
-        <NewResponseForm event={event} />
+        <NewResponseForm event={event} responseToken={responseToken} />
       </div>
     </>
   )
@@ -83,6 +98,10 @@ const ShowEvent = ({ event, preview }: Props) => {
       setHTMLDesc(htmlDesc)
     })()
   }, [description])
+
+  const eventID = event.id.toString()
+  const [tokens] = useAtom(responseTokenAtom)
+  const responseToken = tokens[eventID]
 
   return (
     <div className="mt-3">
@@ -114,7 +133,7 @@ const ShowEvent = ({ event, preview }: Props) => {
       )}
       <div className="mt-4 mb-4">
         <div className="mb-4">
-          <RSVPButton event={event} />
+          <RSVPButton event={event} responseToken={responseToken} />
         </div>
         <CalButtons event={event} htmlDesc={htmlDesc} />
       </div>
@@ -123,7 +142,7 @@ const ShowEvent = ({ event, preview }: Props) => {
         dangerouslySetInnerHTML={{ __html: htmlDesc }}
       />
 
-      <ResponseSection {...event} />
+      <ResponseSection event={event} responseToken={responseToken} />
     </div>
   )
 }

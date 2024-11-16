@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { useAtom } from 'jotai/react'
 import type {
   Event as _Event,
   Reminder as _Reminder,
@@ -21,6 +22,7 @@ import {
 } from '@redwoodjs/web'
 
 import { markdownToHTML } from 'src/apiLib/markdown'
+import { responseTokenAtom } from 'src/data/atoms'
 import { promptConfirm } from 'src/logic/prompt'
 
 import CalButtons from '../CalButtons/CalButtons'
@@ -39,6 +41,7 @@ export const QUERY = gql`
       comment
       remindPriorSec
       event {
+        id
         slug
         title
         description
@@ -97,6 +100,14 @@ export const Success = ({
 }: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
   const { editToken, event, ...defaultValues } = response
   const { description } = event
+
+  const [tokens, setTokens] = useAtom(responseTokenAtom)
+  const eventID = event.id.toString()
+  useEffect(() => {
+    if (!(tokens[eventID] === editToken)) {
+      setTokens({ ...tokens, [eventID]: editToken })
+    }
+  })
 
   const formMethods = useForm({
     mode: 'onTouched',
@@ -204,6 +215,9 @@ export const Success = ({
             action: async () => {
               setDeleting(true)
               await destroy({ variables: { editToken: response.editToken } })
+              const t = { ...tokens }
+              delete t[eventID]
+              await setTokens(t)
               setDeleting(false)
             },
           })

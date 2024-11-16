@@ -74,10 +74,6 @@ const ResponseForm = (props: Props) => {
   return (
     <>
       <Typ x="p">{privacyNote}</Typ>
-      <Typ x="p">
-        <em>Making changes to your RSVP?</em> Use the link we sent to your email
-        to edit your details or cancel your RSVP.
-      </Typ>
 
       <Form
         className="mt-3"

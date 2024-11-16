@@ -7,6 +7,7 @@ import {
 } from 'types/graphql'
 
 import { useForm } from '@redwoodjs/forms'
+import { Link, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
 import Typ from 'src/components/Typ/Typ'
@@ -15,6 +16,7 @@ import ResponseForm, { FormValues } from '../ResponseForm/ResponseForm'
 
 interface Props {
   event: Pick<PublicEvent, 'id' | 'title' | 'responseConfig'>
+  responseToken?: string
 }
 
 const CREATE_RESPONSE = gql`
@@ -28,9 +30,7 @@ const CREATE_RESPONSE = gql`
   }
 `
 
-const NewResponseForm = (props: Props) => {
-  const { event } = props
-
+const NewResponseForm = ({ event, responseToken }: Props) => {
   const formMethods = useForm<FormValues>({
     mode: 'onTouched',
     defaultValues: { headCount: 1 },
@@ -50,6 +50,21 @@ const NewResponseForm = (props: Props) => {
   if (event.responseConfig === 'DISABLED') return null
 
   const Title = <Typ x="subhead">RSVP to {event.title}</Typ>
+
+  if (responseToken) {
+    return (
+      <>
+        {Title}
+        <Typ x="p">You&apos;ve already submitted your RSVP for this event.</Typ>
+        <Link
+          to={routes.confirmResponse({ token: responseToken })}
+          className="button is-primary mt-2"
+        >
+          Edit my RSVP &raquo;
+        </Link>
+      </>
+    )
+  }
 
   if (createdForEmail) {
     return (
