@@ -17,13 +17,9 @@ export async function tidyUnconfirmedEvents(now = new Date()) {
       UNCONFIRMED_EXPIRY.asMilliseconds()
   )
   const ids = expired.map((e) => e.id)
-  logger.info(
-    `DRY RUN: Will tidy ${ids.length} unconfirmed event(s) when enabled`,
-    { ids }
-  )
-  // const { count } = await db.event.deleteMany({ where: { id: { in: ids } } })
-  // logger.info(`Tidied ${count} unconfirmed event(s)`, { ids })
-  // return count
+  const { count } = await db.event.deleteMany({ where: { id: { in: ids } } })
+  logger.info({ ids }, `Tidied ${count} unconfirmed event(s)`)
+  return count
 }
 
 /** Delete all responses that have not been confirmed within the expiry period. */
@@ -38,11 +34,7 @@ export async function tidyUnconfirmedResponses(now = new Date()) {
       UNCONFIRMED_EXPIRY.asMilliseconds()
   )
   const ids = expired.map((r) => r.id)
-  logger.info(
-    `DRY RUN: Will tidy ${ids.length} unconfirmed response(s) when enabled`,
-    { ids }
-  )
-  // const { count } = await db.response.deleteMany({ where: { id: { in: ids } } })
-  // logger.info(`Tidied ${count} unconfirmed response(s)`, { ids })
-  // return count
+  const { count } = await db.response.deleteMany({ where: { id: { in: ids } } })
+  logger.info({ ids }, `Tidied ${count} unconfirmed response(s)`)
+  return count
 }
