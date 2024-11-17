@@ -43,10 +43,11 @@ function buildResponse(
   }
 }
 
+const now = new Date('2021-01-15T12:00:00Z')
+const ago1h = '2021-01-15T11:00:00Z'
+const ago25h = '2021-01-14T11:00:00Z'
+
 describe('tidyUnconfirmedEvents', () => {
-  const now = new Date('2021-01-15T12:00:00Z')
-  const ago1h = new Date('2021-01-15T11:00:00Z')
-  const ago25h = new Date('2021-01-14T11:00:00Z')
   let expectedRemainingIDs: number[]
 
   beforeEach(async () => {
@@ -71,9 +72,6 @@ describe('tidyUnconfirmedEvents', () => {
 })
 
 describe('tidyUnconfirmedResponses', () => {
-  const now = new Date('2021-01-15T12:00:00Z')
-  const ago1h = new Date('2021-01-15T11:00:00Z')
-  const ago25h = new Date('2021-01-14T11:00:00Z')
   let expectedRemainingIDs: number[]
 
   beforeEach(async () => {
