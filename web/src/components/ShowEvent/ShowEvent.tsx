@@ -9,6 +9,7 @@ import {
   prettyStartWithUntil,
 } from 'src/apiLib/convert/date'
 import { markdownToHTML } from 'src/apiLib/markdown'
+import { eventPreviewImagePublicURL } from 'src/apiLib/url'
 import { SITE_HOST } from 'src/app.config'
 import { responseTokenAtom } from 'src/data/atoms'
 import { scrollTo } from 'src/logic/scroll'
@@ -115,7 +116,11 @@ const ShowEvent = ({ event, preview }: Props) => {
       {preview ? (
         <Typ x="head">{event.title}</Typ>
       ) : (
-        <PageHead title={event.title} desc={event.description.slice(0, 80)} />
+        <PageHead
+          title={event.title}
+          desc={event.description.slice(0, 80)}
+          ogImage={eventPreviewImagePublicURL(event.slug)}
+        />
       )}
       <Typ x="p">
         <strong>From:</strong> {prettyStartWithUntil(start, tz)}
