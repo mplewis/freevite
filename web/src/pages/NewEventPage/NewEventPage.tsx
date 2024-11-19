@@ -89,7 +89,10 @@ const NewEventPage = () => {
       <Form
         className="mt-3"
         formMethods={formMethods}
-        onSubmit={(input: FormValues) => create({ variables: { input } })}
+        onSubmit={(input: FormValues) => {
+          throw new Error('Test error, please ignore')
+          return { variables: { input } }
+        }}
       >
         <FormField name="ownerEmail" text="Email Address*">
           <Typ x="labelDetails">

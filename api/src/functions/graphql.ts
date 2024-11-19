@@ -1,3 +1,5 @@
+import { useSentry } from '@envelop/sentry'
+
 import { createGraphQLHandler } from '@redwoodjs/graphql-server'
 
 import directives from 'src/directives/**/*.{js,ts}'
@@ -13,6 +15,7 @@ const baseHandler = createGraphQLHandler({
   directives,
   sdls,
   services,
+  extraPlugins: [useSentry()],
   onException: () => {
     // Disconnect from your database with an unhandled exception.
     db.$disconnect()
