@@ -6,35 +6,35 @@
 # https://redwoodjs.com/docs/app-configuration-redwood-toml
 
 [web]
-  title = "Freevite"
-  port = 8910
-  apiUrl = "${API_URL:/.netlify/functions}"
-  includeEnvironmentVariables = [
-    'SITE_HOST',
+title = "Freevite"
+port = 8910
+apiUrl = "${API_URL:/.netlify/functions}"
+includeEnvironmentVariables = [
+  'SITE_HOST',
 
-    'SENTRY_DSN',
+  'SENTRY_DSN',
 
-    # Netlify: https://docs.netlify.com/configure-builds/environment-variables
-    'CONTEXT',
-    'DEPLOY_PRIME_URL',
+  # Netlify: https://docs.netlify.com/configure-builds/environment-variables
+  'CONTEXT',
+  'DEPLOY_PRIME_URL',
 
-    # Email
-    'FROM_EMAIL',
-    'SMTP_HOST',
-    'SMTP_PORT',
-    'SMTP_USER',
-    'SMTP_PASS',
+  # Email
+  'FROM_EMAIL',
+  'SMTP_HOST',
+  'SMTP_PORT',
+  'SMTP_USER',
+  'SMTP_PASS',
 
-    # S3
-    'S3_REGION',
-    'S3_BUCKET',
-    'S3_NAMESPACE',
-    'S3_USER',
-    'S3_PASS',
-  ]
+  # S3
+  'S3_REGION',
+  'S3_BUCKET',
+  'S3_NAMESPACE',
+  'S3_USER',
+  'S3_PASS',
+]
 [api]
-  port = 8911
+port = 8911
 [browser]
-  open = true
+open = true
 [notifications]
-  versionUpdates = ["latest"]
+versionUpdates = ["latest"]

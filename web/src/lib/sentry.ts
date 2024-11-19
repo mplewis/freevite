@@ -3,6 +3,8 @@ import * as Sentry from '@sentry/react'
 let dsn = ''
 let environment = 'development'
 
+console.log({ env: process.env })
+
 if (typeof process === 'undefined' || !process.env?.SENTRY_DSN) {
   console.error(
     'Missing SENTRY_DSN environment variable. Did you forget to add it to ' +
