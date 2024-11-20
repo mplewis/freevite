@@ -21,6 +21,16 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
     <>
       <div className="is-max-desktop container px-4 pb-4">
         <Navbar />
+        <div>
+          <button
+            onClick={() => {
+              throw new Error('Test error, please ignore')
+            }}
+            className="button is-danger"
+          >
+            Throw error
+          </button>
+        </div>
         <Announcement msg={currentAnnouncement} />
         {children}
         <Footer />
