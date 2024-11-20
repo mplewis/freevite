@@ -50,7 +50,11 @@ function random<T>(choices: T[]): T {
 
 const ResponseForm = (props: Props) => {
   const { mode, event, error, loading, formMethods, onChange, onSubmit } = props
-  const { formState } = formMethods
+  const { formState, getValues } = formMethods
+
+  const { email } = getValues()
+  const forbidResubmit =
+    email === error?.cause?.extensions?.['forbidResubmitForEmail']
 
   const [exampleName, setExampleName] = useState('')
   useEffect(() => {
@@ -153,7 +157,12 @@ const ResponseForm = (props: Props) => {
 
         <Submit
           className="button is-success mt-3"
-          disabled={loading || !formState.isValid || !formState.isDirty}
+          disabled={
+            loading ||
+            !formState.isValid ||
+            !formState.isDirty ||
+            forbidResubmit
+          }
         >
           {mode === 'CREATE'
             ? loading

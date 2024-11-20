@@ -25,7 +25,6 @@
   - [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
-- [ ] Resend confirmation if an RSVP enters an existing email
 - [ ] Add Sentry to frontend
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
@@ -41,6 +40,8 @@
 - [ ] Consensually gather user emails for mailing list
 - [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [ ] Redirect old slugs on slug change
+- [ ] Add sticky bit to "sent you a confirmation email for your RSVP"
+- [x] Resend confirmation if an RSVP enters an existing email
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
   - [x] Send reminders

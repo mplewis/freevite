@@ -5,6 +5,8 @@ import type {
   Reminder,
 } from 'types/graphql'
 
+import { RedwoodError } from '@redwoodjs/api'
+
 import { db } from 'src/lib/db'
 import {
   sendNewResponseReceived,
@@ -95,6 +97,18 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
 }) => {
   const event = await db.event.findUnique({ where: { id: eventId } })
   if (!event) throw new Error(`Event not found: ${eventId}`)
+
+  const existingResponse = await db.response.findFirst({
+    where: { eventId, email: input.email },
+  })
+  if (existingResponse) {
+    await sendResponseConfirmation({ event, response: existingResponse })
+    throw new RedwoodError(
+      `You have already RSVPed to this event. ` +
+        `We've resent your confirmation email to ${input.email}.`,
+      { forbidResubmitForEmail: input.email }
+    )
+  }
 
   const reminders: { sendAt: Date }[] = []
   if (input.remindPriorSec) {
