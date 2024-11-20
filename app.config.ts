@@ -23,3 +23,5 @@ export const LOCALHOST = SITE_HOST.startsWith('localhost:')
 export const S3_REGION = process.env.S3_REGION
 export const S3_BUCKET = process.env.S3_BUCKET
 export const S3_NAMESPACE = process.env.S3_NAMESPACE
+
+export const RECAPTCHA_CLIENT_KEY = process.env.REDWOOD_ENV_RECAPTCHA_CLIENT_KEY

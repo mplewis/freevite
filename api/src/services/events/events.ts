@@ -96,8 +96,9 @@ export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
 
 export const createEvent: MutationResolvers['createEvent'] = async ({
-  input,
+  input: _input,
 }) => {
+  const { captcha, ...input } = _input
   validate(input.ownerEmail, 'email', { email: true })
   validate(input.title, 'title', {
     custom: {
