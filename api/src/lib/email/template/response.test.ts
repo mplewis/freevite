@@ -37,7 +37,7 @@ describe('with test handler', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite!<br><br>Click here to confirm you&#39;re attending Emma&#39;s Holiday Party:<br>https://example.com/rsvp?token=SOME-EDIT-TOKEN<br>Once you do, we&#39;ll confirm your RSVP and notify the event organizer.<br><br>To change your response or delete your RSVP, click the link above.<br><br>If you did not RSVP to this event, you can ignore this email.",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -50,7 +50,10 @@ Once you do, we'll confirm your RSVP and notify the event organizer.
 
 To change your response or delete your RSVP, click the link above.
 
-If you did not RSVP to this event, you can ignore this email.",
+If you did not RSVP to this event, you can ignore this email.
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=holmes%40example.com&token=gDd6UhfXCs8ipE9rs9JuUN5lwNUgSJjs6NXyZXdUgm4",
   "to": [
     "holmes@example.com",
   ],
@@ -83,7 +86,7 @@ If you did not RSVP to this event, you can ignore this email.",
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has confirmed they are attending Emma&#39;s Holiday Party:<br><br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all responses and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>Thanks for using Freevite!",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -97,7 +100,10 @@ Comment: Looking forward to it!
 To view all responses and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
-Thanks for using Freevite!",
+Thanks for using Freevite!
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],
@@ -130,7 +136,7 @@ Thanks for using Freevite!",
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Sherlock Holmes has canceled their RSVP to Emma&#39;s Holiday Party.<br><br>Here are the details of the RSVP before it was canceled:<br>Name: Sherlock Holmes<br>Guests: 2<br>Comment: Looking forward to it!<br><br>To view all RSVPs and manage your event, click here:<br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>Thanks for using Freevite!",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -145,7 +151,10 @@ Comment: Looking forward to it!
 To view all RSVPs and manage your event, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
-Thanks for using Freevite!",
+Thanks for using Freevite!
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],

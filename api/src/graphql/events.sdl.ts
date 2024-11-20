@@ -52,6 +52,7 @@ export const schema = gql`
     ownerEmail: String!
     title: String!
     responseConfig: ResponseConfig!
+    captchaResponse: String!
   }
 
   input UpdateEventInput {

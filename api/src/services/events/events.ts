@@ -4,8 +4,9 @@ import type {
   PublicResponse,
 } from 'types/graphql'
 
-import { validate } from '@redwoodjs/api'
+import { RedwoodError, validate } from '@redwoodjs/api'
 
+import { validateCaptcha } from 'src/lib/captcha'
 import { db } from 'src/lib/db'
 import { sendEventDetails } from 'src/lib/email/template/event'
 import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify/event'
@@ -96,8 +97,16 @@ export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
 
 export const createEvent: MutationResolvers['createEvent'] = async ({
-  input,
+  input: _input,
 }) => {
+  const { captchaResponse, ...input } = _input
+
+  const valid = await validateCaptcha(captchaResponse)
+  if (!valid)
+    throw new RedwoodError(
+      'Could not validate reCAPTCHA. Please refresh the page and try again.'
+    )
+
   validate(input.ownerEmail, 'email', { email: true })
   validate(input.title, 'title', {
     custom: {

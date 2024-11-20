@@ -1,5 +1,4 @@
 import { render as reactEmailRender } from '@react-email/render'
-import escapeHTML from 'escape-html'
 
 import { Mailer } from '@redwoodjs/mailer-core'
 import { AbstractMailRenderer } from '@redwoodjs/mailer-core'
@@ -20,7 +19,7 @@ class PlainEmailRenderer extends AbstractMailRenderer {
     _utilities?: MailUtilities
   ): MailRenderedContent {
     const text = template.props.children
-    const html = escapeHTML(text).replace(/\n/g, '<br>')
+    const html = null
     return { text, html }
   }
 

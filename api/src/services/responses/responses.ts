@@ -7,11 +7,12 @@ import type {
 
 import { RedwoodError } from '@redwoodjs/api'
 
+import { validateCaptcha } from 'src/lib/captcha'
 import { db } from 'src/lib/db'
 import {
-  sendNewResponseReceived,
+  // sendNewResponseReceived,
   sendResponseConfirmation,
-  sendResponseDeleted,
+  // sendResponseDeleted,
 } from 'src/lib/email/template/response'
 import {
   notifyNewResponse,
@@ -52,14 +53,6 @@ export function pickRemindPriorSec(input: {
   return duration
 }
 
-export const responses: QueryResolvers['responses'] = () => {
-  return db.response.findMany({ include: { reminders: true } })
-}
-
-export const response: QueryResolvers['response'] = ({ id }) => {
-  return db.response.findUnique({ where: { id }, include: { reminders: true } })
-}
-
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
     let resp = await db.response.findUnique({
@@ -74,7 +67,8 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
         include: { event: true },
       })
       const { event } = updated
-      await sendNewResponseReceived({ event: event, response: updated })
+      // FIXME: Restore this when we build granular notitfication settings
+      // await sendNewResponseReceived({ event: event, response: updated })
       await notifyNewResponse(event, updated)
 
       resp = await db.response.findUnique({
@@ -93,10 +87,18 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
   eventId,
-  input,
+  input: _input,
 }) => {
   const event = await db.event.findUnique({ where: { id: eventId } })
   if (!event) throw new Error(`Event not found: ${eventId}`)
+
+  const { captchaResponse, ...input } = _input
+  const valid = await validateCaptcha(captchaResponse)
+  if (!valid) {
+    throw new RedwoodError(
+      'Could not validate reCAPTCHA. Please refresh the page and try again.'
+    )
+  }
 
   const existingResponse = await db.response.findFirst({
     where: { eventId, email: input.email },
@@ -178,7 +180,8 @@ export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
     include: { event: true },
   })
   const { event } = response
-  await sendResponseDeleted({ response, event })
+  // FIXME: Restore this when we build granular notitfication settings
+  // await sendResponseDeleted({ response, event })
   await notifyResponseDeleted(event, response)
   return response
 }

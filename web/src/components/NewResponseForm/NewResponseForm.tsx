@@ -36,6 +36,7 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
     defaultValues: { headCount: 1 },
   })
 
+  const [captchaResponse, setCaptchaResponse] = useState<string | null>(null)
   const [createdForEmail, setCreatedForEmail] = useState<string | null>(null)
 
   const [create, { loading, error }] = useMutation<
@@ -90,9 +91,10 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
         loading={loading}
         error={error}
         formMethods={formMethods}
+        onCaptchaResponse={setCaptchaResponse}
         onSubmit={(data: FormValues) => {
           if (!data.email) throw new Error('Email is required')
-          const input = { ...data, email: data.email }
+          const input = { ...data, email: data.email, captchaResponse }
           create({ variables: { eventId: event.id, input } })
         }}
       />

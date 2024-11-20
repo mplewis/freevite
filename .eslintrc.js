@@ -13,7 +13,7 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*SVG.tsx'],
+      files: ['**/*SVG.tsx', '**/*.test.ts', '**/*.test.tsx'],
       rules: {
         'max-len': 'off',
       },
