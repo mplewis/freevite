@@ -52,6 +52,7 @@ export const schema = gql`
     headCount: Int!
     comment: String!
     remindPriorSec: Int
+    captchaResponse: String!
   }
 
   input UpdateResponseInput {

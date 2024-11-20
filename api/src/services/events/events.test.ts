@@ -103,6 +103,7 @@ describe('events', () => {
         ownerEmail: 'user@example.com',
         title: 'My birthday party',
         responseConfig: 'DISABLED',
+        captchaResponse: 'some-captcha-response',
       },
     })
     expect(result.ownerEmail).toEqual('user@example.com')

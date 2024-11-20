@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import ReCAPTCHA from 'react-google-recaptcha'
 import {
   CreateEventMutation,
   CreateEventMutationVariables,
@@ -18,6 +19,7 @@ import {
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
+import { RECAPTCHA_CLIENT_KEY } from 'src/app.config'
 import FormField from 'src/components/FormField/FormField'
 import PageHead from 'src/components/PageHead/PageHead'
 import Typ from 'src/components/Typ/Typ'
@@ -67,6 +69,7 @@ const NewEventPage = () => {
   const { formState } = formMethods
 
   const [redirecting, setRedirecting] = useState(false)
+  const [captchaResponse, setCaptchaResponse] = useState<string | null>(null)
 
   const [create, { loading, error }] = useMutation<
     CreateEventMutation,
@@ -89,7 +92,11 @@ const NewEventPage = () => {
       <Form
         className="mt-3"
         formMethods={formMethods}
-        onSubmit={(input: FormValues) => create({ variables: { input } })}
+        onSubmit={(input: FormValues) =>
+          create({
+            variables: { input: { ...input, captchaResponse } },
+          })
+        }
       >
         <FormField name="ownerEmail" text="Email Address*">
           <Typ x="labelDetails">
@@ -135,9 +142,16 @@ const NewEventPage = () => {
           </SelectField>
         </FormField>
 
+        <ReCAPTCHA
+          sitekey={RECAPTCHA_CLIENT_KEY}
+          onChange={setCaptchaResponse}
+        />
+
         <Submit
           className="button is-success mt-3"
-          disabled={loading || redirecting || !formState.isValid}
+          disabled={
+            loading || redirecting || !formState.isValid || !captchaResponse
+          }
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}
         </Submit>
