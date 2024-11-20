@@ -44,6 +44,7 @@ Example values are provided in [.env.example](.env.example). Make a copy of that
 | FROM_NAME           | string | yes       | The human-readable “from” name on outgoing emails                                                                                          |
 | LOCAL_CHROMIUM      | string |           | Path to the Chromium binary, used to generate Open Graph event preview images                                                              |
 | SENTRY_DSN          | string | yes       | DSN URL for your Sentry project, where errors are reported                                                                                 |
+| SENTRY_ENV          | string | no        | Custom name reported for the environment for frontend Sentry errors. If unset, defaults to `process.env.NODE_ENV`.                         |
 | SITE_HOST           | string | yes       | The hostname of your Freevite instance, used in absolute URLs (e.g. email content)                                                         |
 | SMTP_HOST           | string | yes       | Hostname for your SMTP outgoing mail server                                                                                                |
 | SMTP_PASS           | string | yes       | Password for your SMTP outgoing mail server                                                                                                |

@@ -1,20 +1,15 @@
 import * as Sentry from '@sentry/react'
 
 function main() {
-  const SENTRY_DSN =
-    process.env.SENTRY_DSN ||
-    // HACK: Redwood+Netlify doesn't seem to be obeying our `includeEnvironmentVariables` setting
-    process.env.REDWOOD_ENV_SENTRY_DSN
-
-  if (!SENTRY_DSN) {
+  const environment = process.env.REDWOOD_ENV_SENTRY_ENV || process.env.NODE_ENV
+  // HACK: Redwood+Netlify doesn't seem to be obeying our `includeEnvironmentVariables` setting
+  const dsn = process.env.SENTRY_DSN || process.env.REDWOOD_ENV_SENTRY_DSN
+  if (!dsn) {
     console.error(
-      'Missing SENTRY_DSN environment variable. Sentry is disabled for now.'
+      'Missing SENTRY_DSN environment variable. Sentry is disabled.'
     )
     return
   }
-
-  const dsn = SENTRY_DSN
-  const environment = process.env.NODE_ENV
 
   Sentry.init({
     dsn,
@@ -22,12 +17,7 @@ function main() {
     integrations: [new Sentry.BrowserTracing()],
     tracesSampleRate: 1.0,
   })
-
-  console.log('Sentry initialized', {
-    dsn,
-    environment,
-    processEnv: process.env,
-  })
+  console.log('Sentry initialized', { environment })
 }
 
 main()
