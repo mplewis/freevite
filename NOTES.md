@@ -1,4 +1,3 @@
-- [ ] Captcha
 - [ ] Discard changes
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
@@ -41,6 +40,7 @@
 - [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [ ] Redirect old slugs on slug change
 - [ ] Site-wide announcement feature
+- [x] Captcha
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
   - [x] Send reminders
