@@ -1,6 +1,6 @@
 import querystring from 'querystring'
 
-import { RECAPTCHA_SERVER_KEY } from 'src/app.config'
+import { CI, RECAPTCHA_SERVER_KEY } from 'src/app.config'
 
 import { logger } from './logger'
 
@@ -8,6 +8,7 @@ const RECAPTCHA_ENDPOINT = 'https://www.google.com/recaptcha/api/siteverify'
 
 /** Return true if the given captcha token was valid, false otherwise. */
 export async function validateCaptcha(token: string): Promise<boolean> {
+  if (CI) return true
   try {
     const data = { secret: RECAPTCHA_SERVER_KEY, response: token }
     const res = await fetch(RECAPTCHA_ENDPOINT, {
