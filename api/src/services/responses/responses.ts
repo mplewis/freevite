@@ -5,6 +5,9 @@ import type {
   Reminder,
 } from 'types/graphql'
 
+import { RedwoodError } from '@redwoodjs/api'
+
+import { validateCaptcha } from 'src/lib/captcha'
 import { db } from 'src/lib/db'
 import {
   sendNewResponseReceived,
@@ -91,10 +94,17 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
   eventId,
-  input,
+  input: _input,
 }) => {
   const event = await db.event.findUnique({ where: { id: eventId } })
   if (!event) throw new Error(`Event not found: ${eventId}`)
+
+  const { captchaResponse, ...input } = _input
+  const valid = await validateCaptcha(captchaResponse)
+  if (!valid)
+    throw new RedwoodError(
+      'Could not validate reCAPTCHA. Please refresh the page and try again.'
+    )
 
   const reminders: { sendAt: Date }[] = []
   if (input.remindPriorSec) {
