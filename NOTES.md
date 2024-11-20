@@ -26,7 +26,6 @@
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
 - [ ] Resend confirmation if an RSVP enters an existing email
-- [ ] Add Sentry to frontend
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
@@ -48,6 +47,8 @@
   - [x] Delete unconfirmed events
   - [x] Delete unconfirmed responses
   - [ ] Archive completed events
+- [x] Add Sentry to frontend
+- [x] Add Sentry to Prisma
 - [x] Write README
 - [x] Clean up relative imports
 - [x] Spinners on loading pages with fun text

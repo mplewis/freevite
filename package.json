@@ -18,7 +18,8 @@
   },
   "dependencies": {
     "@netlify/functions": "^2.8.2",
-    "@sentry/serverless": "^7.38.0",
+    "@sentry/serverless": "^7.114.0",
+    "@sentry/vite-plugin": "^2.22.6",
     "common-tags": "^1.8.2",
     "dayjs": "^1.11.13",
     "escape-html": "^1.0.3",
