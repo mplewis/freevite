@@ -3,9 +3,10 @@ import * as Sentry from '@sentry/react'
 let dsn = ''
 let environment = 'development'
 
-console.log({ env: process.env })
+// HACK: I think this helps the build rewrite find the env var
+const SENTRY_DSN = process.env.SENTRY_DSN
 
-if (typeof process === 'undefined' || !process.env?.SENTRY_DSN) {
+if (typeof process === 'undefined' || !SENTRY_DSN) {
   console.error(
     'Missing SENTRY_DSN environment variable. Did you forget to add it to ' +
       'your redwood.toml file in `includeEnvironmentVariables`?'
@@ -19,7 +20,7 @@ if (typeof process === 'undefined' || !process.env?.SENTRY_DSN) {
   `)
   console.error('Sentry is disabled for now')
 } else {
-  dsn = process.env.SENTRY_DSN
+  dsn = SENTRY_DSN
   environment = process.env.NODE_ENV
 }
 
