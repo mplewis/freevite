@@ -17,7 +17,6 @@ function main() {
     integrations: [new Sentry.BrowserTracing()],
     tracesSampleRate: 1.0,
   })
-  console.log('Sentry initialized', { environment })
 }
 
 main()
