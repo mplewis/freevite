@@ -67,6 +67,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
         include: { event: true },
       })
       const { event } = updated
+      // FIXME: Restore this when we build granular notitfication settings
       // await sendNewResponseReceived({ event: event, response: updated })
       await notifyNewResponse(event, updated)
 
@@ -116,7 +117,6 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
-  // FIXME: Restore this when we re-enable notitfication settings
   await sendResponseConfirmation({ event, response })
   return response
 }
@@ -167,7 +167,7 @@ export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
     include: { event: true },
   })
   const { event } = response
-  // FIXME: Restore this when we re-enable notitfication settings
+  // FIXME: Restore this when we build granular notitfication settings
   // await sendResponseDeleted({ response, event })
   await notifyResponseDeleted(event, response)
   return response
