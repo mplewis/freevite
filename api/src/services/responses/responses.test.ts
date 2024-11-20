@@ -1,4 +1,3 @@
-import type { Response } from '@prisma/client'
 import duration from 'dayjs/plugin/duration'
 
 import { db } from 'src/lib/db'
