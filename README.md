@@ -46,6 +46,7 @@ Example values are provided in [.env.example](.env.example). Make a copy of that
 | RECAPTCHA_SERVER_KEY             | string | yes       | [ReCAPTCHA](https://www.google.com/recaptcha) site key for the backend                                                                     |
 | REDWOOD_ENV_RECAPTCHA_CLIENT_KEY | string | yes       | [ReCAPTCHA](https://www.google.com/recaptcha) site key for the frontend                                                                    |
 | REDWOOD_ENV_SENTRY_ENV           | string |           | Custom name reported for the environment for frontend Sentry errors. If unset, defaults to `process.env.NODE_ENV`.                         |
+| SECRET_KEY                       | string | yes       | An opaque value used to sign data stored on a client                                                                                       |
 | SENTRY_DSN                       | string | yes       | DSN URL for your Sentry project, where errors are reported                                                                                 |
 | SITE_HOST                        | string | yes       | The hostname of your Freevite instance, used in absolute URLs (e.g. email content)                                                         |
 | SMTP_HOST                        | string | yes       | Hostname for your SMTP outgoing mail server                                                                                                |
