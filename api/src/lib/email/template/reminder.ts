@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags'
 import { PublicEvent, Response } from 'types/graphql'
 
-import { SITE_HOST } from 'src/app.config'
+import { SITE_URL } from 'src/app.config'
 
 import {
   prettyEndWithBetween,
@@ -37,7 +37,7 @@ export async function sendReminder({
       Ends at: ${prettyEndWithBetween(event.start, event.end, event.timezone)}
 
       View the event here:
-      https://${SITE_HOST}/events/${event.slug}
+      ${SITE_URL}/events/${event.slug}
 
       Thanks for using Freevite!
     `,

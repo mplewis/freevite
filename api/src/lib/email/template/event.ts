@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags'
 import { Event } from 'types/graphql'
 
-import { SITE_HOST } from 'src/app.config'
+import { SITE_URL } from 'src/app.config'
 
 import { sendEmail } from '../send'
 
@@ -19,7 +19,7 @@ export async function sendEventDetails(
     text: stripIndent`
 			Hello from Freevite! Click this link to manage your event details and make it public:
 
-			https://${SITE_HOST}/edit?token=${event.editToken}
+			${SITE_URL}/edit?token=${event.editToken}
 
 			You must click the above link within 24 hours to confirm your email address.
 			Otherwise, we will automatically delete your event. Feel free to recreate it.
