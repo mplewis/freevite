@@ -1,6 +1,8 @@
 import * as crypto from 'crypto'
 
-import { SECRET_KEY } from 'src/app.config'
+import { CI, SECRET_KEY } from 'src/app.config'
+
+const SECRET_KEY_FOR_TESTING = 'secret-key-for-testing'
 
 /** Sign string data with the app's secret key and return a URL-safe signature. */
 export function sign(data: string): string {
@@ -12,11 +14,11 @@ export function sign(data: string): string {
 
 /** Verify the validity of signed data. */
 export function verify(data: string, signature: string): boolean {
-  console.log(`Expected: ${sign(data)}`)
   return sign(data) === signature
 }
 
 function verifySecretKey() {
+  if (CI) return SECRET_KEY_FOR_TESTING
   if (!SECRET_KEY || SECRET_KEY === '') {
     throw new Error('SECRET_KEY is required for signing/validation')
   }

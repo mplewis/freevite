@@ -53,7 +53,7 @@ To change your response or delete your RSVP, click the link above.
 If you did not RSVP to this event, you can ignore this email.
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=holmes%40example.com&token=xZPATAWTt2b9dRKrUFJ9yE982ThnnvUg6APxtN_gr8s",
+https://example.com/unsubscribe?email=holmes%40example.com&token=gDd6UhfXCs8ipE9rs9JuUN5lwNUgSJjs6NXyZXdUgm4",
   "to": [
     "holmes@example.com",
   ],
@@ -103,7 +103,7 @@ https://example.com/edit?token=SOME-EDIT-TOKEN
 Thanks for using Freevite!
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=emma%40example.com&token=oyTyug8SP9wjzqGkAI7AKThdFp4hQs0bBLAPfq1SbRs",
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],
@@ -154,7 +154,7 @@ https://example.com/edit?token=SOME-EDIT-TOKEN
 Thanks for using Freevite!
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=emma%40example.com&token=oyTyug8SP9wjzqGkAI7AKThdFp4hQs0bBLAPfq1SbRs",
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],

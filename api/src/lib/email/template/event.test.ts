@@ -48,7 +48,7 @@ If you did not create this event, you can ignore this email and this event will 
 If you need any help, just reply to this email. Thanks for using Freevite!
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=emma%40example.com&token=oyTyug8SP9wjzqGkAI7AKThdFp4hQs0bBLAPfq1SbRs",
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],

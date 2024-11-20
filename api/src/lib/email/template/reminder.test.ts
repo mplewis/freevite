@@ -54,7 +54,7 @@ https://example.com/events/emmas-holiday-party
 Thanks for using Freevite!
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=holmes%40example.com&token=xZPATAWTt2b9dRKrUFJ9yE982ThnnvUg6APxtN_gr8s",
+https://example.com/unsubscribe?email=holmes%40example.com&token=gDd6UhfXCs8ipE9rs9JuUN5lwNUgSJjs6NXyZXdUgm4",
   "to": [
     "holmes@example.com",
   ],

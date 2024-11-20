@@ -40,7 +40,7 @@ describe('mailer', () => {
   "textContent": "Leave this email here
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=darlene%40fs0ciety.pizza&token=wgPFf2G9H7D9zKIEjop_AeZCED7pLZex619NqYasXwk",
+https://example.com/unsubscribe?email=darlene%40fs0ciety.pizza&token=U4_qTnHZg6tTAKBEdY8C_CxVQsqP12HtTqmhYQ05Ywc",
   "to": [
     "darlene@fs0ciety.pizza",
   ],
