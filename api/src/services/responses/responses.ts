@@ -94,10 +94,23 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
 
   const { captchaResponse, ...input } = _input
   const valid = await validateCaptcha(captchaResponse)
-  if (!valid)
+  if (!valid) {
     throw new RedwoodError(
       'Could not validate reCAPTCHA. Please refresh the page and try again.'
     )
+  }
+
+  const existingResponse = await db.response.findFirst({
+    where: { eventId, email: input.email },
+  })
+  if (existingResponse) {
+    await sendResponseConfirmation({ event, response: existingResponse })
+    throw new RedwoodError(
+      `You have already RSVPed to this event. ` +
+        `We've resent your confirmation email to ${input.email}.`,
+      { forbidResubmitForEmail: input.email }
+    )
+  }
 
   const reminders: { sendAt: Date }[] = []
   if (input.remindPriorSec) {
