@@ -1,5 +1,6 @@
 import dns from 'dns'
 
+import { sentryVitePlugin } from '@sentry/vite-plugin'
 import { defineConfig, UserConfig } from 'vite'
 
 import redwood from '@redwoodjs/vite'
@@ -13,7 +14,15 @@ dns.setDefaultResultOrder('verbatim')
  * @type {import('vite').UserConfig}
  */
 const viteConfig: UserConfig = {
-  plugins: [redwood()],
+  build: { sourcemap: true },
+  plugins: [
+    redwood(),
+    sentryVitePlugin({
+      authToken: process.env.SENTRY_AUTH_TOKEN,
+      org: 'kesdev',
+      project: 'freevite',
+    }),
+  ],
 }
 
 export default defineConfig(viteConfig)
