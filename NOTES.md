@@ -40,6 +40,7 @@
 - [ ] Consensually gather user emails for mailing list
 - [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [ ] Redirect old slugs on slug change
+- [ ] Site-wide announcement feature
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
   - [x] Send reminders
