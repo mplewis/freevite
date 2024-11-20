@@ -69,7 +69,7 @@ const NewEventPage = () => {
   const { formState } = formMethods
 
   const [redirecting, setRedirecting] = useState(false)
-  const [captcha, setCaptcha] = useState<string | null>(null)
+  const [captchaResponse, setCaptchaResponse] = useState<string | null>(null)
 
   const [create, { loading, error }] = useMutation<
     CreateEventMutation,
@@ -93,7 +93,9 @@ const NewEventPage = () => {
         className="mt-3"
         formMethods={formMethods}
         onSubmit={(input: FormValues) =>
-          create({ variables: { input: { ...input, captcha } } })
+          create({
+            variables: { input: { ...input, captchaResponse } },
+          })
         }
       >
         <FormField name="ownerEmail" text="Email Address*">
@@ -140,11 +142,16 @@ const NewEventPage = () => {
           </SelectField>
         </FormField>
 
-        <ReCAPTCHA sitekey={RECAPTCHA_CLIENT_KEY} onChange={setCaptcha} />
+        <ReCAPTCHA
+          sitekey={RECAPTCHA_CLIENT_KEY}
+          onChange={setCaptchaResponse}
+        />
 
         <Submit
           className="button is-success mt-3"
-          disabled={loading || redirecting || !formState.isValid || !captcha}
+          disabled={
+            loading || redirecting || !formState.isValid || !captchaResponse
+          }
         >
           {loading || redirecting ? 'Creating...' : 'Create New Event'}
         </Submit>
