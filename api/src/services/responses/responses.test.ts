@@ -39,6 +39,7 @@ describe('responses', () => {
         email: 'jane@example.com',
         headCount: 1,
         comment: "I'll be there!",
+        captchaResponse: 'some-captcha-response',
       },
     })
 
@@ -59,6 +60,7 @@ describe('responses', () => {
           headCount: 1,
           comment: "I'll be there!",
           remindPriorSec: dayjs.duration(1, 'day').asSeconds(),
+          captchaResponse: 'some-captcha-response',
         },
       })
       const event = await db.event.findUnique({ where: { id: result.eventId } })
