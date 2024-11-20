@@ -31,7 +31,7 @@ describe('with test handler', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! Click this link to manage your event details and make it public:<br><br>https://example.com/edit?token=SOME-EDIT-TOKEN<br><br>You must click the above link within 24 hours to confirm your email address.<br>Otherwise, we will automatically delete your event. Feel free to recreate it.<br><br>If you did not create this event, you can ignore this email and this event will be deleted.<br><br>If you need any help, just reply to this email. Thanks for using Freevite!",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -45,7 +45,10 @@ Otherwise, we will automatically delete your event. Feel free to recreate it.
 
 If you did not create this event, you can ignore this email and this event will be deleted.
 
-If you need any help, just reply to this email. Thanks for using Freevite!",
+If you need any help, just reply to this email. Thanks for using Freevite!
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
   "to": [
     "emma@example.com",
   ],

@@ -1,6 +1,6 @@
 import { Event, Response } from 'types/graphql'
 
-import { SITE_HOST } from 'src/app.config'
+import { SITE_URL } from 'src/app.config'
 
 import { notify } from '../notify'
 
@@ -17,7 +17,7 @@ export async function notifyNewResponse(
   await notify(`New response to ${event.title}`, response.name, {
     headCount: response.headCount,
     comment: response.comment,
-    view: `https://${SITE_HOST}/event/${event.slug}`,
+    view: `${SITE_URL}/event/${event.slug}`,
   })
 }
 
@@ -34,6 +34,6 @@ export async function notifyResponseDeleted(
   await notify(`Response deleted from ${event.title}`, response.name, {
     headCount: response.headCount,
     comment: response.comment,
-    view: `https://${SITE_HOST}/event/${event.slug}`,
+    view: `${SITE_URL}/event/${event.slug}`,
   })
 }
