@@ -27,12 +27,15 @@ describe('mailer', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Leave this email here",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
   "subject": "Don't delete me",
-  "textContent": "Leave this email here",
+  "textContent": "Leave this email here
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=darlene%40fs0ciety.pizza&token=wgPFf2G9H7D9zKIEjop_AeZCED7pLZex619NqYasXwk",
   "to": [
     "darlene@fs0ciety.pizza",
   ],

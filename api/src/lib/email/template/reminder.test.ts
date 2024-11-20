@@ -37,7 +37,7 @@ describe('with test handler', () => {
   "handler": "nodemailer",
   "handlerOptions": undefined,
   "headers": {},
-  "htmlContent": "Hello from Freevite! You asked for a reminder about this event when you RSVPed:<br><br>Emma&#39;s Holiday Party<br>Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))<br>Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)<br><br>View the event here:<br>https://example.com/events/emmas-holiday-party<br><br>Thanks for using Freevite!",
+  "htmlContent": null,
   "renderer": "plain",
   "rendererOptions": {},
   "replyTo": undefined,
@@ -51,7 +51,10 @@ Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)
 View the event here:
 https://example.com/events/emmas-holiday-party
 
-Thanks for using Freevite!",
+Thanks for using Freevite!
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=holmes%40example.com&token=xZPATAWTt2b9dRKrUFJ9yE982ThnnvUg6APxtN_gr8s",
   "to": [
     "holmes@example.com",
   ],
