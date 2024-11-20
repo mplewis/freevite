@@ -6,6 +6,8 @@ let environment = 'development'
 // HACK: I think this helps the build rewrite find the env var
 const SENTRY_DSN = process.env.SENTRY_DSN
 
+console.log({ env: process.env })
+
 if (typeof process === 'undefined' || !SENTRY_DSN) {
   console.error(
     'Missing SENTRY_DSN environment variable. Did you forget to add it to ' +
