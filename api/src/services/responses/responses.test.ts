@@ -6,8 +6,6 @@ import { db } from 'src/lib/db'
 import dayjs from '../../lib/dayjs'
 
 import {
-  responses,
-  response,
   createResponse,
   updateResponse,
   deleteResponse,
@@ -19,18 +17,6 @@ import type { StandardScenario } from './responses.scenarios'
 dayjs.extend(duration)
 
 describe('responses', () => {
-  scenario('returns all responses', async (scenario: StandardScenario) => {
-    const result = await responses()
-
-    expect(result.length).toEqual(Object.keys(scenario.response).length)
-  })
-
-  scenario('returns a single response', async (scenario: StandardScenario) => {
-    const result = await response({ id: scenario.response.one.id })
-
-    expect(result).toEqual({ ...scenario.response.one, reminders: [] })
-  })
-
   scenario('creates a response', async (scenario: StandardScenario) => {
     const result = await createResponse({
       eventId: scenario.response.two.eventId,
@@ -76,9 +62,9 @@ describe('responses', () => {
   )
 
   scenario('updates a response', async (scenario: StandardScenario) => {
-    const original = (await response({
-      id: scenario.response.one.id,
-    })) as Response
+    const original = await db.response.findUniqueOrThrow({
+      where: { id: scenario.response.one.id },
+    })
     const result = await updateResponse({
       editToken: original.editToken,
       input: { headCount: 42 },
@@ -88,18 +74,20 @@ describe('responses', () => {
   })
 
   scenario('deletes a response', async (scenario: StandardScenario) => {
-    const original = (await deleteResponse({
+    const original = await deleteResponse({
       editToken: scenario.response.one.editToken,
-    })) as Response
-    const result = await response({ id: original.id })
+    })
+    const result = await db.response.findUnique({
+      where: { id: original.id },
+    })
 
     expect(result).toEqual(null)
   })
 
   scenario('adds a reminder', async (scenario: StandardScenario) => {
-    const original = (await response({
-      id: scenario.response.one.id,
-    })) as Response
+    const original = await db.response.findUniqueOrThrow({
+      where: { id: scenario.response.one.id },
+    })
     const result = await updateResponse({
       editToken: original.editToken,
       input: { remindPriorSec: dayjs.duration(1, 'day').asSeconds() },
@@ -113,9 +101,9 @@ describe('responses', () => {
   })
 
   scenario('deletes a reminder', async (scenario: StandardScenario) => {
-    const original = (await response({
-      id: scenario.response.one.id,
-    })) as Response
+    const original = await db.response.findUniqueOrThrow({
+      where: { id: scenario.response.one.id },
+    })
     const result = await updateResponse({
       editToken: original.editToken,
       input: { remindPriorSec: null },

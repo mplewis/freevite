@@ -53,14 +53,6 @@ export function pickRemindPriorSec(input: {
   return duration
 }
 
-export const responses: QueryResolvers['responses'] = () => {
-  return db.response.findMany({ include: { reminders: true } })
-}
-
-export const response: QueryResolvers['response'] = ({ id }) => {
-  return db.response.findUnique({ where: { id }, include: { reminders: true } })
-}
-
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
     let resp = await db.response.findUnique({
