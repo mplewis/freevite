@@ -10,9 +10,9 @@ import { RedwoodError } from '@redwoodjs/api'
 import { validateCaptcha } from 'src/lib/captcha'
 import { db } from 'src/lib/db'
 import {
-  sendNewResponseReceived,
+  // sendNewResponseReceived,
   sendResponseConfirmation,
-  sendResponseDeleted,
+  // sendResponseDeleted,
 } from 'src/lib/email/template/response'
 import {
   notifyNewResponse,
@@ -67,7 +67,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
         include: { event: true },
       })
       const { event } = updated
-      await sendNewResponseReceived({ event: event, response: updated })
+      // await sendNewResponseReceived({ event: event, response: updated })
       await notifyNewResponse(event, updated)
 
       resp = await db.response.findUnique({
@@ -116,6 +116,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
+  // FIXME: Restore this when we re-enable notitfication settings
   await sendResponseConfirmation({ event, response })
   return response
 }
@@ -166,7 +167,8 @@ export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
     include: { event: true },
   })
   const { event } = response
-  await sendResponseDeleted({ response, event })
+  // FIXME: Restore this when we re-enable notitfication settings
+  // await sendResponseDeleted({ response, event })
   await notifyResponseDeleted(event, response)
   return response
 }
