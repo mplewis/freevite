@@ -12,6 +12,7 @@ export function sign(data: string): string {
 
 /** Verify the validity of signed data. */
 export function verify(data: string, signature: string): boolean {
+  console.log(`Expected: ${sign(data)}`)
   return sign(data) === signature
 }
 

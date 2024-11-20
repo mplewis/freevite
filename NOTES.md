@@ -42,6 +42,8 @@
 - [ ] Site-wide announcement feature
 - [ ] Unify email templates (header, unsub footer, etc.)
 - [ ] Unify email and Discord notifications
+- [ ] "Serious mode" for LoadingBuddy for e.g. unsubscribe requests
+- [ ] Notification when target email is denylisted on record creation
 - [x] Captcha
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
