@@ -4,9 +4,9 @@ let dsn = ''
 let environment = 'development'
 
 // HACK: I think this helps the build rewrite find the env var
-const SENTRY_DSN = process.env.SENTRY_DSN
+const SENTRY_DSN = process.env.SENTRY_DSN || process.env.REDWOOD_ENV_SENTRY_DSN
 
-console.log({ env: process.env })
+console.log({ SENTRY_DSN, env: process.env })
 
 if (typeof process === 'undefined' || !SENTRY_DSN) {
   console.error(

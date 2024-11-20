@@ -12,7 +12,7 @@ apiUrl = "${API_URL:/.netlify/functions}"
 includeEnvironmentVariables = [
   'SITE_HOST',
 
-  'SENTRY_DSN',
+  'SENTRY_DSN', # Why doesn't this work?
 
   # Netlify: https://docs.netlify.com/configure-builds/environment-variables
   'CONTEXT',
