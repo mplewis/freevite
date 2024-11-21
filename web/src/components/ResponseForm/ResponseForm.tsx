@@ -64,8 +64,11 @@ const ResponseForm = (props: Props) => {
   const { formState, getValues } = formMethods
 
   const { email } = getValues()
-  const forbidResubmit =
-    email === error?.cause?.extensions?.['forbidResubmitForEmail']
+  const forbidResubmit = (() => {
+    if (!email) return false
+    return email === error?.cause?.extensions?.['forbidResubmitForEmail']
+  })()
+  console.log({ email, error, forbidResubmit })
 
   const [exampleName, setExampleName] = useState('')
   useEffect(() => {

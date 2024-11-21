@@ -7,7 +7,6 @@ import type {
 import { RedwoodError, validate } from '@redwoodjs/api'
 
 import { validateCaptcha } from 'src/lib/backend/captcha'
-import { db } from 'src/lib/backend/db'
 import { sendEventDetails } from 'src/lib/backend/email/template/event'
 import {
   notifyEventCreated,
@@ -15,6 +14,7 @@ import {
 } from 'src/lib/backend/notify/event'
 import { summarize } from 'src/lib/backend/response'
 import { generateToken, alphaLower } from 'src/lib/backend/token'
+import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
 import { checkVisibility } from 'src/lib/shared/visibility'
 

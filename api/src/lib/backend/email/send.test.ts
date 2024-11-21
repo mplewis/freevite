@@ -1,6 +1,6 @@
 import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 
-import { db } from '../db'
+import { db } from '../../db'
 import { mailer } from '../mailer'
 
 import { sendEmail } from './send'

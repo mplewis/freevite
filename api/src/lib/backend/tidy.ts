@@ -1,6 +1,7 @@
 import dayjs from 'src/lib/shared/dayjs'
 
-import { db } from './db'
+import { db } from '../db'
+
 import { logger } from './logger'
 
 const UNCONFIRMED_EXPIRY = dayjs.duration(24, 'hours')

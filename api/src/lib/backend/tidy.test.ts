@@ -1,7 +1,8 @@
 import { randomString, randomInteger } from 'remeda'
 import { Event, Response } from 'types/graphql'
 
-import { db } from './db'
+import { db } from '../db'
+
 import { tidyUnconfirmedEvents, tidyUnconfirmedResponses } from './tidy'
 
 function buildEvent(overrides: Partial<Event> = {}): Omit<Event, 'responses'> {

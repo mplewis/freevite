@@ -1,6 +1,6 @@
 import duration from 'dayjs/plugin/duration'
 
-import { db } from 'src/lib/backend/db'
+import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
 
 import {
