@@ -2,8 +2,8 @@ import type { QueryResolvers, MutationResolvers } from 'types/graphql'
 
 import { RedwoodError } from '@redwoodjs/api'
 
-import { db } from 'src/lib/db'
-import { verify } from 'src/lib/sign'
+import { db } from 'src/lib/backend/db'
+import { verify } from 'src/lib/backend/sign'
 
 const ERROR_MSG = 'Could not validate your request'
 

@@ -1,5 +1,5 @@
 import { MAIL_SENDER } from 'src/api.config'
-import { mailer } from 'src/lib/mailer'
+import { mailer } from 'src/lib/backend/mailer'
 
 import { db } from '../db'
 import { logger } from '../logger'

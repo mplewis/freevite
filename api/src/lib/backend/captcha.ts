@@ -1,6 +1,7 @@
 import querystring from 'querystring'
 
-import { CI, RECAPTCHA_SERVER_KEY } from 'src/api.config'
+import { RECAPTCHA_SERVER_KEY } from 'src/api.config'
+import { CI } from 'src/lib/shared/shared.config'
 
 import { logger } from './logger'
 

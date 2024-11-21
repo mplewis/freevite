@@ -6,9 +6,9 @@ import directives from 'src/directives/**/*.{js,ts}'
 import sdls from 'src/graphql/**/*.sdl.{js,ts}'
 import services from 'src/services/**/*.{js,ts}'
 
-import { db } from 'src/lib/db'
-import { logger } from 'src/lib/logger'
-import { wrap } from 'src/lib/sentry'
+import { db } from 'src/lib/backend/db'
+import { logger } from 'src/lib/backend/logger'
+import { wrap } from 'src/lib/backend/sentry'
 
 const baseHandler = createGraphQLHandler({
   loggerConfig: { logger, options: {} },
