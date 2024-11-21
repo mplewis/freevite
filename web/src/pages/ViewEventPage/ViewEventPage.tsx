@@ -1,6 +1,6 @@
 import { Metadata } from '@redwoodjs/web'
 
-import { eventPreviewImagePublicURL } from 'src/apiLib/url'
+import { eventPreviewImagePublicURL } from 'src/apiLibShared/url'
 import ViewEventCell from 'src/components/ViewEventCell'
 
 interface Props {

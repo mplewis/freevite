@@ -1,7 +1,7 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Event } from 'types/graphql'
 
-import { S3_REGION, S3_BUCKET, CI } from 'src/app.config'
+import { S3_REGION, S3_BUCKET, CI } from 'src/api.config'
 
 import { keyFor } from '../../lib/url'
 

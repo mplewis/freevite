@@ -1,7 +1,7 @@
 import { stripIndent } from 'common-tags'
 import { Event, PublicEvent, Response } from 'types/graphql'
 
-import { SITE_URL } from 'src/app.config'
+import { SITE_URL } from 'src/api.config'
 
 import { sendEmail } from '../send'
 

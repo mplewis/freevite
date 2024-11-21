@@ -7,10 +7,10 @@ import { PublicEvent } from 'types/graphql'
 import {
   prettyEndWithBetween,
   prettyStartWithUntil,
-} from 'src/apiLib/convert/date'
-import { markdownToHTML } from 'src/apiLib/markdown'
-import { eventPreviewImagePublicURL } from 'src/apiLib/url'
-import { SITE_HOST } from 'src/app.config'
+} from 'src/apiLibShared/convert/date'
+import { markdownToHTML } from 'src/apiLibShared/markdown'
+import { SITE_HOST } from 'src/apiLibShared/shared.config'
+import { eventPreviewImagePublicURL } from 'src/apiLibShared/url'
 import { responseTokenAtom } from 'src/data/atoms'
 import { scrollTo } from 'src/logic/scroll'
 

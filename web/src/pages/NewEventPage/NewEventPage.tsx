@@ -19,7 +19,7 @@ import {
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
 
-import { RECAPTCHA_CLIENT_KEY } from 'src/app.config'
+import { RECAPTCHA_CLIENT_KEY } from 'src/apiLibShared/shared.config'
 import FormField from 'src/components/FormField/FormField'
 import PageHead from 'src/components/PageHead/PageHead'
 import Typ from 'src/components/Typ/Typ'

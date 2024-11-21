@@ -1,6 +1,6 @@
 import { Metadata } from '@redwoodjs/web'
 
-import { SITE_URL } from 'src/app.config'
+import { SITE_URL } from 'src/lib/shared/shared.config'
 
 import Typ from '../Typ/Typ'
 

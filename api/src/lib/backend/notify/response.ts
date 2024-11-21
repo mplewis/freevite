@@ -1,6 +1,6 @@
 import { Event, Response } from 'types/graphql'
 
-import { SITE_URL } from 'src/app.config'
+import { SITE_URL } from 'src/api.config'
 
 import { notify } from '../notify'
 
