@@ -5,9 +5,8 @@ import utc from 'dayjs/plugin/utc'
 import Handlebars from 'handlebars'
 import puppeteer from 'puppeteer-core'
 
-import { markdownToText } from 'src/lib/backend/markdown'
-
-import dayjs from '../../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
+import { markdownToText } from 'src/lib/shared/markdown'
 
 dayjs.extend(advancedFormat)
 dayjs.extend(timezone)

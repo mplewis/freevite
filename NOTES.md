@@ -45,6 +45,7 @@
 - [ ] Unify email and Discord notifications
 - [ ] "Serious mode" for LoadingBuddy for e.g. unsubscribe requests
 - [ ] Notification when target email is denylisted on record creation
+- [ ] Replace shared API lib dir with Yarn "shared package" workspace
 - [x] Resend confirmation if an RSVP enters an existing email
 - [x] Captcha
 - [x] Hold RSVP locally with cookie

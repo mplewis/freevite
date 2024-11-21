@@ -1,4 +1,4 @@
-import dayjs from '../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
 
 import { db } from './db'
 import { logger } from './logger'

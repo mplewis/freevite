@@ -19,9 +19,8 @@ import {
   notifyResponseDeleted,
 } from 'src/lib/backend/notify/response'
 import { generateToken } from 'src/lib/backend/token'
-
-import dayjs from '../../lib/dayjs'
-import { reminderDurations } from '../../lib/reminder'
+import dayjs from 'src/lib/shared/dayjs'
+import { reminderDurations } from 'src/lib/shared/reminder'
 
 export type UpdatableResponse = {
   name: string

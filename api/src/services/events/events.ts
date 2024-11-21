@@ -15,9 +15,8 @@ import {
 } from 'src/lib/backend/notify/event'
 import { summarize } from 'src/lib/backend/response'
 import { generateToken, alphaLower } from 'src/lib/backend/token'
-import { checkVisibility } from 'src/lib/backend/visibility'
-
-import dayjs from '../../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
+import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
 
