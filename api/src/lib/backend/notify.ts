@@ -1,6 +1,6 @@
 import { Embed, Webhook } from '@vermaysha/discord-webhook'
 
-import { CI, LOCALHOST } from 'src/app.config'
+import { CI, LOCALHOST } from 'src/lib/shared/shared.config'
 
 import { logger } from './logger'
 

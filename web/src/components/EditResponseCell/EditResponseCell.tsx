@@ -21,7 +21,7 @@ import {
   useMutation,
 } from '@redwoodjs/web'
 
-import { markdownToHTML } from 'src/apiLib/markdown'
+import { markdownToHTML } from 'src/apiLibShared/markdown'
 import { responseTokenAtom } from 'src/data/atoms'
 import { promptConfirm } from 'src/logic/prompt'
 

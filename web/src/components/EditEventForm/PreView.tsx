@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { Link, routes } from '@redwoodjs/router'
 
-import { fqUrlForPath } from 'src/apiLib/url'
+import { fqUrlForPath } from 'src/apiLibShared/url'
 
 import Typ from '../Typ/Typ'
 

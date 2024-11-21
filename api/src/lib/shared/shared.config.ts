@@ -1,4 +1,7 @@
+export const CI = process.env.NODE_ENV === 'test'
+
 type NetlifyContext = 'production' | 'deploy-preview' | 'branch-deploy' | 'dev'
+const context: NetlifyContext = process.env.CONTEXT as NetlifyContext
 
 const extractAfterHTTPSMatcher = /^https:\/\/(.*)/
 
@@ -9,22 +12,23 @@ function extractAfterHTTPS(url?: string) {
   return url
 }
 
-const context: NetlifyContext = process.env.CONTEXT as NetlifyContext
+// Site host and URL
+
 export let SITE_HOST = process.env.SITE_HOST
 if (context === 'deploy-preview' || context === 'branch-deploy')
   SITE_HOST = extractAfterHTTPS(process.env.DEPLOY_PRIME_URL)
 
-export const SECRET_KEY = process.env.SECRET_KEY
-
 const protocol = SITE_HOST?.startsWith('localhost') ? 'http' : 'https'
+if (!SITE_HOST) throw new Error('SITE_HOST is required')
 export const SITE_URL = `${protocol}://${SITE_HOST}` as const
-
-export const CI = process.env.NODE_ENV === 'test'
 export const LOCALHOST = SITE_HOST.startsWith('localhost:')
+
+// S3
 
 export const S3_REGION = process.env.S3_REGION
 export const S3_BUCKET = process.env.S3_BUCKET
 export const S3_NAMESPACE = process.env.S3_NAMESPACE
 
-export const RECAPTCHA_SERVER_KEY = process.env.RECAPTCHA_SERVER_KEY
+// Recaptcha
+
 export const RECAPTCHA_CLIENT_KEY = process.env.REDWOOD_ENV_RECAPTCHA_CLIENT_KEY

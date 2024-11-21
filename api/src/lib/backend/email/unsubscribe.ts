@@ -1,4 +1,4 @@
-import { SITE_URL } from 'src/app.config'
+import { SITE_URL } from 'src/lib/shared/shared.config'
 
 import { sign } from '../sign'
 

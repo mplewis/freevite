@@ -1,9 +1,9 @@
 import type { APIGatewayEvent } from 'aws-lambda'
 import { createEvent, EventAttributes } from 'ics'
 
-import { convertToDateArray } from 'src/lib/date'
-import { markdownToText } from 'src/lib/markdown'
-import { wrap } from 'src/lib/sentry'
+import { convertToDateArray } from 'src/lib/backend/date'
+import { wrap } from 'src/lib/backend/sentry'
+import { markdownToText } from 'src/lib/shared/markdown'
 import { eventBySlug } from 'src/services/events/events'
 
 export interface Event {

@@ -1,5 +1,5 @@
+import { sign } from 'src/lib/backend/sign'
 import { db } from 'src/lib/db'
-import { sign } from 'src/lib/sign'
 
 import {
   createIgnoredEmail,

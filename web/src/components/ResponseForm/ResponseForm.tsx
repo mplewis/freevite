@@ -16,13 +16,12 @@ import {
   UseFormReturn,
 } from '@redwoodjs/forms'
 
-import { RECAPTCHA_CLIENT_KEY } from 'src/app.config'
+import { reminderDurations } from 'src/apiLibShared/reminder'
+import { RECAPTCHA_CLIENT_KEY } from 'src/apiLibShared/shared.config'
 import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
-
-import { reminderDurations } from '../../apiLib/reminder'
 
 export type Props = {
   mode: 'CREATE' | 'UPDATE'
@@ -65,8 +64,10 @@ const ResponseForm = (props: Props) => {
   const { formState, getValues } = formMethods
 
   const { email } = getValues()
-  const forbidResubmit =
-    email === error?.cause?.extensions?.['forbidResubmitForEmail']
+  const forbidResubmit = (() => {
+    if (!email) return false
+    return email === error?.cause?.extensions?.['forbidResubmitForEmail']
+  })()
 
   const [exampleName, setExampleName] = useState('')
   useEffect(() => {

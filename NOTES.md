@@ -24,10 +24,7 @@
   - [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
-      <<<<<<< HEAD
 - [ ] # Add Sentry to frontend
-- [ ] Resend confirmation if an RSVP enters an existing email
-  > > > > > > > origin/main
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
@@ -48,7 +45,10 @@
 - [ ] Unify email and Discord notifications
 - [ ] "Serious mode" for LoadingBuddy for e.g. unsubscribe requests
 - [ ] Notification when target email is denylisted on record creation
-- [x] Resend confirmation if an RSVP enters an existing email
+- [ ] Replace shared API lib dir with Yarn "shared package" workspace
+- [ ] Add advanced crash logging
+- [ ] Linter for secrets in build
+- [x] Resend confirmation if an RSVP enters an existing email
 - [x] Captcha
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**

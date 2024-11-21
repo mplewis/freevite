@@ -7,21 +7,20 @@ import type {
 
 import { RedwoodError } from '@redwoodjs/api'
 
-import { validateCaptcha } from 'src/lib/captcha'
-import { db } from 'src/lib/db'
+import { validateCaptcha } from 'src/lib/backend/captcha'
 import {
   // sendNewResponseReceived,
   sendResponseConfirmation,
   // sendResponseDeleted,
-} from 'src/lib/email/template/response'
+} from 'src/lib/backend/email/template/response'
 import {
   notifyNewResponse,
   notifyResponseDeleted,
-} from 'src/lib/notify/response'
-import { generateToken } from 'src/lib/token'
-
-import dayjs from '../../lib/dayjs'
-import { reminderDurations } from '../../lib/reminder'
+} from 'src/lib/backend/notify/response'
+import { generateToken } from 'src/lib/backend/token'
+import { db } from 'src/lib/db'
+import dayjs from 'src/lib/shared/dayjs'
+import { reminderDurations } from 'src/lib/shared/reminder'
 
 export type UpdatableResponse = {
   name: string
@@ -59,6 +58,8 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
       where: { editToken },
       include: { event: true, reminders: true },
     })
+
+    if (!resp) throw new RedwoodError("Sorry, we couldn't find that RSVP.")
 
     if (!resp.confirmed) {
       const updated = await db.response.update({

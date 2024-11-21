@@ -7,7 +7,7 @@ import { NodemailerMailHandler } from '@redwoodjs/mailer-handler-nodemailer'
 import { RendererOptions } from '@redwoodjs/mailer-renderer-react-email'
 
 import { MAIL_CONFIG } from 'src/api.config'
-import { logger } from 'src/lib/logger'
+import { logger } from 'src/lib/backend/logger'
 
 const { port, host, secure, auth } = MAIL_CONFIG
 

@@ -1,8 +1,7 @@
 import duration from 'dayjs/plugin/duration'
 
 import { db } from 'src/lib/db'
-
-import dayjs from '../../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
 
 import {
   createResponse,

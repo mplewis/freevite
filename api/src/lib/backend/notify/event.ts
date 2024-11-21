@@ -1,6 +1,6 @@
 import { Event } from 'types/graphql'
 
-import { SITE_URL } from 'src/app.config'
+import { SITE_URL } from 'src/lib/shared/shared.config'
 
 import { notify } from '../notify'
 

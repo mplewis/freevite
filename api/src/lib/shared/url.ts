@@ -1,4 +1,4 @@
-import { S3_REGION, S3_BUCKET, S3_NAMESPACE, SITE_URL } from 'src/app.config'
+import { S3_REGION, S3_BUCKET, S3_NAMESPACE, SITE_URL } from './shared.config'
 
 /**
  * Generate a fully-qualified URL for the given path.

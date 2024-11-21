@@ -6,15 +6,17 @@ import type {
 
 import { RedwoodError, validate } from '@redwoodjs/api'
 
-import { validateCaptcha } from 'src/lib/captcha'
+import { validateCaptcha } from 'src/lib/backend/captcha'
+import { sendEventDetails } from 'src/lib/backend/email/template/event'
+import {
+  notifyEventCreated,
+  notifyEventUpdated,
+} from 'src/lib/backend/notify/event'
+import { summarize } from 'src/lib/backend/response'
+import { generateToken, alphaLower } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
-import { sendEventDetails } from 'src/lib/email/template/event'
-import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify/event'
-import { summarize } from 'src/lib/response'
-import { generateToken, alphaLower } from 'src/lib/token'
-import { checkVisibility } from 'src/lib/visibility'
-
-import dayjs from '../../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
+import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
 

@@ -1,7 +1,7 @@
 import { Link, routes } from '@redwoodjs/router'
 import { Metadata } from '@redwoodjs/web'
 
-import { SITE_HOST, SITE_URL } from 'src/app.config'
+import { SITE_HOST, SITE_URL } from 'src/apiLibShared/shared.config'
 import Typ from 'src/components/Typ'
 
 const HomePage = () => {
