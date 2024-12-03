@@ -103,9 +103,20 @@ export const Empty = () => (
 
 export const Failure = ({
   error,
-}: CellFailureProps<GetResponseQueryVariables>) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
-)
+}: CellFailureProps<GetResponseQueryVariables>) => {
+  console.error({ error })
+  return (
+    <DeadEnd
+      title="Something went wrong"
+      desc={[
+        "Sorry, we weren't able to load your RSVP.",
+        "We've notified the engineering team who will work to resolve this issue. " +
+          'Please try again later.',
+      ]}
+      c2a={{ text: 'Go home', to: '/' }}
+    />
+  )
+}
 
 export const Success = ({
   response,

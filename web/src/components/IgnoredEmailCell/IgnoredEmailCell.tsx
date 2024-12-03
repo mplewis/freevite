@@ -1,5 +1,5 @@
 import type {
-  IgnoredEmailQuery,
+  IgnoredEmailQueryVariables,
   ResubscribeMutation,
   ResubscribeMutationVariables,
   UnsubscribeMutation,
@@ -10,6 +10,7 @@ import { type CellFailureProps, useMutation } from '@redwoodjs/web'
 
 import { queryValue } from 'src/logic/path'
 
+import DeadEnd from '../DeadEnd/DeadEnd'
 import Typ from '../Typ/Typ'
 
 export const QUERY = gql`
@@ -140,9 +141,21 @@ const ResubscribeForm = ({
 
 export const Loading = () => <div>Loading...</div>
 
-export const Failure = ({ error }: CellFailureProps<IgnoredEmailQuery>) => (
-  <ShowError error={error} />
-)
+export const Failure = ({
+  error,
+}: CellFailureProps<IgnoredEmailQueryVariables>) => {
+  console.error({ error })
+  return (
+    <DeadEnd
+      title="Something went wrong"
+      desc={[
+        "Sorry, we weren't able to process your request due to a technical issue.",
+        'Please contact us at support@freevite.com for assistance.',
+      ]}
+      c2a={{ text: 'Go home', to: '/' }}
+    />
+  )
+}
 
 export const Empty = () => (
   <UnsubscribeForm email={queryValue('email')} token={queryValue('token')} />

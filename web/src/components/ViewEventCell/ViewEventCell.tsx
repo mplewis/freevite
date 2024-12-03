@@ -52,11 +52,23 @@ export const Empty = () => (
     c2a={{ text: 'Go home', to: '/' }}
   />
 )
+
 export const Failure = ({
   error,
-}: CellFailureProps<FindViewEventQueryVariables>) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
-)
+}: CellFailureProps<FindViewEventQueryVariables>) => {
+  console.error({ error })
+  return (
+    <DeadEnd
+      title="Something went wrong"
+      desc={[
+        "Sorry, we weren't able to load your RSVP.",
+        "We've notified the engineering team who will work to resolve this issue. " +
+          'Please try again later.',
+      ]}
+      c2a={{ text: 'Go home', to: '/' }}
+    />
+  )
+}
 
 export const Success = ({
   event,
