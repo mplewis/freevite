@@ -26,6 +26,7 @@ import { responseTokenAtom } from 'src/data/atoms'
 import { promptConfirm } from 'src/logic/prompt'
 
 import CalButtons from '../CalButtons/CalButtons'
+import DeadEnd from '../DeadEnd/DeadEnd'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 import PageHead from '../PageHead/PageHead'
@@ -87,13 +88,35 @@ export const Loading = () => (
   </div>
 )
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => (
+  <DeadEnd
+    title="RSVP not found"
+    desc={[
+      "Sorry, we couldn't find your RSVP.",
+      'Please double-check that you have the correct link.',
+      'Our system automatically cleans up completed events. ' +
+        "If you're using an old link, the event may have expired.",
+    ]}
+    c2a={{ text: 'Go home', to: '/' }}
+  />
+)
 
 export const Failure = ({
   error,
-}: CellFailureProps<GetResponseQueryVariables>) => (
-  <div style={{ color: 'red' }}>Error: {error?.message}</div>
-)
+}: CellFailureProps<GetResponseQueryVariables>) => {
+  console.error({ error })
+  return (
+    <DeadEnd
+      title="Something went wrong"
+      desc={[
+        "Sorry, we weren't able to load your RSVP.",
+        "We've notified the engineering team who will work to resolve this issue. " +
+          'Please try again later.',
+      ]}
+      c2a={{ text: 'Go home', to: '/' }}
+    />
+  )
+}
 
 export const Success = ({
   response,
