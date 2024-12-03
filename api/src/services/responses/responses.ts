@@ -59,7 +59,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
       include: { event: true, reminders: true },
     })
 
-    if (!resp) throw new RedwoodError("Sorry, we couldn't find that RSVP.")
+    if (!resp) return null
 
     if (!resp.confirmed) {
       const updated = await db.response.update({

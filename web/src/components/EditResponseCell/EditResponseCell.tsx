@@ -26,6 +26,7 @@ import { responseTokenAtom } from 'src/data/atoms'
 import { promptConfirm } from 'src/logic/prompt'
 
 import CalButtons from '../CalButtons/CalButtons'
+import DeadEnd from '../DeadEnd/DeadEnd'
 import DeleteButton from '../DeleteButton/DeleteButton'
 import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 import PageHead from '../PageHead/PageHead'
@@ -87,7 +88,18 @@ export const Loading = () => (
   </div>
 )
 
-export const Empty = () => <div>Empty</div>
+export const Empty = () => (
+  <DeadEnd
+    title="RSVP not found"
+    desc={[
+      "Sorry, we couldn't find your RSVP.",
+      'Please double-check that you have the correct link.',
+      'Our system automatically cleans up completed events. ' +
+        "If you're using an old link, the event may have expired.",
+    ]}
+    c2a={{ text: 'Go home', to: '/' }}
+  />
+)
 
 export const Failure = ({
   error,

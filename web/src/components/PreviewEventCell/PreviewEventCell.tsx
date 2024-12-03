@@ -6,6 +6,7 @@ import type {
 
 import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
+import DeadEnd from '../DeadEnd/DeadEnd'
 import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
 import PageHead from '../PageHead/PageHead'
 import ShowEvent from '../ShowEvent/ShowEvent'
@@ -31,7 +32,18 @@ export const Loading = () => (
   </div>
 )
 
-export const Empty = () => <div>Event not found</div>
+export const Empty = () => (
+  <DeadEnd
+    title="Event not found"
+    desc={[
+      "Sorry, we couldn't find the event you were looking for.",
+      'Please double-check that you have the correct link.',
+      'Our system automatically cleans up unconfirmed and completed events. ' +
+        "If you're using an old link, your event may have expired.",
+    ]}
+    c2a={{ text: 'Go home', to: '/' }}
+  />
+)
 
 export const Failure = ({
   error,
