@@ -3,7 +3,7 @@ import { Event } from 'types/graphql'
 
 import { SITE_URL } from 'src/lib/shared/shared.config'
 
-import { sendEmail } from '../send'
+import { sendEmail } from '../../notification/email'
 
 /**
  * Email the admin link for a newly-created event to its owner.

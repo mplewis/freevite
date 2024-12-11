@@ -2,14 +2,18 @@ import { Embed, Webhook } from '@vermaysha/discord-webhook'
 
 import { CI, LOCALHOST } from 'src/lib/shared/shared.config'
 
-import { logger } from './logger'
+import { logger } from '../logger'
 
 /** Send a notification to the configured Discord channel's webhook. */
-export async function notify(
-  title: string,
-  description: string | null,
-  fields: Record<string, string | number>
-): Promise<void> {
+export async function sendDiscord({
+  title,
+  description,
+  fields,
+}: {
+  title: string
+  description?: string
+  fields?: Record<string, string | number>
+}): Promise<void> {
   if (CI || LOCALHOST) return
 
   const url = process.env.DISCORD_WEBHOOK_URL

@@ -3,7 +3,7 @@ import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
 import { db } from '../../db'
 import { mailer } from '../mailer'
 
-import { sendEmail } from './send'
+import { sendEmail } from './email'
 
 describe('mailer', () => {
   const testHandler = mailer.getTestHandler() as InMemoryMailHandler

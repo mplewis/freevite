@@ -3,7 +3,7 @@ import { Event, PublicEvent, Response } from 'types/graphql'
 
 import { SITE_URL } from 'src/lib/shared/shared.config'
 
-import { sendEmail } from '../send'
+import { sendEmail } from '../../notification/email'
 
 /**
  * Send a "confirm RSVP" email to the user who just responded to an event.

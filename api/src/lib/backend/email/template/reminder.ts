@@ -8,7 +8,7 @@ import {
 } from 'src/lib/shared/convert/date'
 import { SITE_URL } from 'src/lib/shared/shared.config'
 
-import { sendEmail } from '../send'
+import { sendEmail } from '../../notification/email'
 
 /**
  * Remind a user about an upcoming event for which they RSVPed.
