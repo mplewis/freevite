@@ -14,30 +14,38 @@ export async function sendDiscord({
   description?: string
   fields?: Record<string, string | number>
 }): Promise<void> {
-  if (CI || LOCALHOST) return
-
-  const url = process.env.DISCORD_WEBHOOK_URL
-  if (!url) {
-    logger.warn(
-      { title, description, fields },
-      'No Discord webhook configured, cannot send notification'
-    )
-    return
+  let embed = new Embed().setTitle(title)
+  if (description) embed = embed.setDescription(description)
+  if (fields) {
+    const f = Object.entries(fields).map(([name, value]) => ({
+      name,
+      value: value.toString(),
+      inline: true,
+    }))
+    embed = embed.setFields(f)
   }
 
-  const f = Object.entries(fields).map(([name, value]) => ({
-    name,
-    value: value.toString(),
-    inline: true,
-  }))
-
-  let embed = new Embed().setTitle(title).setFields(f)
-  if (description) embed = embed.setDescription(description)
-
-  const hook = new Webhook(url)
   try {
-    await hook.addEmbed(embed).send()
+    sendImpl(embed)
   } catch (error) {
     logger.error({ error }, 'Error sending notification')
   }
+}
+
+let sendImpl: (embed: Embed) => Promise<void> = sendToDiscord
+/** Set the Discord send implementation. Used for testing. */
+export function setDiscordSendImpl(impl: (embed: Embed) => Promise<void>) {
+  sendImpl = impl
+}
+
+async function sendToDiscord(embed: Embed): Promise<void> {
+  if (CI || LOCALHOST) return
+  const url = process.env.DISCORD_WEBHOOK_URL
+  if (!url)
+    throw new Error(
+      `Missing DISCORD_WEBHOOK_URL, cannot send notification: ${embed}`
+    )
+
+  const hook = new Webhook(url)
+  await hook.addEmbed(embed).send()
 }
