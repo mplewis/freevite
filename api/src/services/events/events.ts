@@ -4,16 +4,20 @@ import type {
   PublicResponse,
 } from 'types/graphql'
 
-import { validate } from '@redwoodjs/api'
+import { RedwoodError, validate } from '@redwoodjs/api'
 
+import { validateCaptcha } from 'src/lib/backend/captcha'
+import { send } from 'src/lib/backend/notification'
+import {
+  notiEventConfirmed,
+  notiEventCreated,
+  notiEventUpdated,
+} from 'src/lib/backend/notification/template/event'
+import { summarize } from 'src/lib/backend/response'
+import { generateToken, alphaLower } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
-import { sendEventDetails } from 'src/lib/email/template/event'
-import { notifyEventCreated, notifyEventUpdated } from 'src/lib/notify/event'
-import { summarize } from 'src/lib/response'
-import { generateToken, alphaLower } from 'src/lib/token'
-import { checkVisibility } from 'src/lib/visibility'
-
-import dayjs from '../../lib/dayjs'
+import dayjs from 'src/lib/shared/dayjs'
+import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
 
@@ -85,7 +89,7 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   if (!existing) return null
   const wasConfirmed = existing.confirmed
   await db.event.update({ data: { confirmed: true }, where: { editToken } })
-  if (!wasConfirmed) await notifyEventCreated(existing)
+  if (!wasConfirmed) await send(notiEventConfirmed(existing))
   return db.event.findUnique({
     where: { editToken },
     include: { responses: { where: { confirmed: true } } },
@@ -96,8 +100,16 @@ export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
   async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
 
 export const createEvent: MutationResolvers['createEvent'] = async ({
-  input,
+  input: _input,
 }) => {
+  const { captchaResponse, ...input } = _input
+
+  const valid = await validateCaptcha(captchaResponse)
+  if (!valid)
+    throw new RedwoodError(
+      'Could not validate reCAPTCHA. Please refresh the page and try again.'
+    )
+
   validate(input.ownerEmail, 'email', { email: true })
   validate(input.title, 'title', {
     custom: {
@@ -110,7 +122,7 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
   const event = await db.event.create({
     data: { ...defaultEventParams(input.title), ...input },
   })
-  await sendEventDetails(event)
+  await send(notiEventCreated(event))
   return event
 }
 
@@ -144,7 +156,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
     },
     {}
   )
-  await notifyEventUpdated(event, diff)
+  await send(notiEventUpdated(event, diff))
 
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)

@@ -39,6 +39,7 @@
     "../.redwood/types/includes/all-*",
     "../.redwood/types/includes/web-*",
     "../types",
-    "./types"
+    "./types",
+    "../api/src/lib/shared/shared.config.ts"
   ]
 }

@@ -1,6 +1,6 @@
 import { PublicEvent as _PublicEvent } from 'types/graphql'
 
-import dayjs from '../../apiLib/dayjs'
+import dayjs from 'src/apiLibShared/dayjs'
 
 import GCal from './GcalSVG'
 import ICS from './IcsSVG'

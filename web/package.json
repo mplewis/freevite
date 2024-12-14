@@ -26,11 +26,13 @@
     "jotai": "^2.10.2",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-google-recaptcha": "^3.1.0",
     "react-select": "^5.8.2",
     "react-svg-spinners": "^0.3.1"
   },
   "devDependencies": {
     "@redwoodjs/vite": "8.4.0",
+    "@types/react-google-recaptcha": "^2.1.9",
     "autoprefixer": "^10.4.20",
     "postcss": "^8.4.47",
     "postcss-loader": "^8.1.1",

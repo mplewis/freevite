@@ -35,21 +35,24 @@ Alias `rw` to make it easier to run commands: `alias rw='yarn redwood'`
 
 Example values are provided in [.env.example](.env.example). Make a copy of that file named `.env`, then edit those values to set up your local development environment.
 
-| Name                | Type   | Required? | Description                                                                                                                                |
-| ------------------- | ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
-| API_URL             | string |           | URL to the API server. When running locally, this should be `/.redwood/functions`. `redwood.toml` sets this to the Netlify value if unset. |
-| DATABASE_URL        | string | yes       | The DB connection string which includes protocol, username, password, port, DB name, and options                                           |
-| DISCORD_WEBHOOK_URL | string |           | If provided, send notifications for server events to this Discord channel via webhook                                                      |
-| FROM_EMAIL          | string | yes       | The “from” address on outgoing emails                                                                                                      |
-| FROM_NAME           | string | yes       | The human-readable “from” name on outgoing emails                                                                                          |
-| LOCAL_CHROMIUM      | string |           | Path to the Chromium binary, used to generate Open Graph event preview images                                                              |
-| SENTRY_DSN          | string | yes       | DSN URL for your Sentry project, where errors are reported                                                                                 |
-| SENTRY_ENV          | string | no        | Custom name reported for the environment for frontend Sentry errors. If unset, defaults to `process.env.NODE_ENV`.                         |
-| SITE_HOST           | string | yes       | The hostname of your Freevite instance, used in absolute URLs (e.g. email content)                                                         |
-| SMTP_HOST           | string | yes       | Hostname for your SMTP outgoing mail server                                                                                                |
-| SMTP_PASS           | string | yes       | Password for your SMTP outgoing mail server                                                                                                |
-| SMTP_USER           | string | yes       | Username for your SMTP outgoing mail server                                                                                                |
-| TEST_DATABASE_URL   | string |           | The connection string for the DB instance used when running tests. If not provided, defaults to `./.redwood/test.db`.                      |
+| Name                             | Type   | Required? | Description                                                                                                                                |
+| -------------------------------- | ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
+| API_URL                          | string |           | URL to the API server. When running locally, this should be `/.redwood/functions`. `redwood.toml` sets this to the Netlify value if unset. |
+| DATABASE_URL                     | string | yes       | The DB connection string which includes protocol, username, password, port, DB name, and options                                           |
+| DISCORD_WEBHOOK_URL              | string |           | If provided, send notifications for server events to this Discord channel via webhook                                                      |
+| FROM_EMAIL                       | string | yes       | The “from” address on outgoing emails                                                                                                      |
+| FROM_NAME                        | string | yes       | The human-readable “from” name on outgoing emails                                                                                          |
+| LOCAL_CHROMIUM                   | string |           | Path to the Chromium binary, used to generate Open Graph event preview images                                                              |
+| RECAPTCHA_SERVER_KEY             | string | yes       | [ReCAPTCHA](https://www.google.com/recaptcha) site key for the backend                                                                     |
+| REDWOOD_ENV_RECAPTCHA_CLIENT_KEY | string | yes       | [ReCAPTCHA](https://www.google.com/recaptcha) site key for the frontend                                                                    |
+| REDWOOD_ENV_SENTRY_ENV           | string |           | Custom name reported for the environment for frontend Sentry errors. If unset, defaults to `process.env.NODE_ENV`.                         |
+| SECRET_KEY                       | string | yes       | An opaque value used to sign data stored on a client                                                                                       |
+| SENTRY_DSN                       | string | yes       | DSN URL for your Sentry project, where errors are reported                                                                                 |
+| SITE_HOST                        | string | yes       | The hostname of your Freevite instance, used in absolute URLs (e.g. email content)                                                         |
+| SMTP_HOST                        | string | yes       | Hostname for your SMTP outgoing mail server                                                                                                |
+| SMTP_PASS                        | string | yes       | Password for your SMTP outgoing mail server                                                                                                |
+| SMTP_USER                        | string | yes       | Username for your SMTP outgoing mail server                                                                                                |
+| TEST_DATABASE_URL                | string |           | The connection string for the DB instance used when running tests. If not provided, defaults to `./.redwood/test.db`.                      |
 
 # Contributions
 

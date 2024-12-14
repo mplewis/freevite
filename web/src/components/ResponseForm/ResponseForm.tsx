@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { ApolloError } from '@apollo/client/errors'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { SetOptional } from 'type-fest'
 import { PublicEvent, UpdatableResponse } from 'types/graphql'
 
@@ -15,12 +16,12 @@ import {
   UseFormReturn,
 } from '@redwoodjs/forms'
 
+import { reminderDurations } from 'src/apiLibShared/reminder'
+import { RECAPTCHA_CLIENT_KEY } from 'src/apiLibShared/shared.config'
 import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
-
-import { reminderDurations } from '../../apiLib/reminder'
 
 export type Props = {
   mode: 'CREATE' | 'UPDATE'
@@ -30,6 +31,7 @@ export type Props = {
   error?: ApolloError
   formMethods: UseFormReturn<FormValues>
   onChange?: React.FormEventHandler<HTMLFormElement>
+  onCaptchaResponse?: (response: string | null) => void
   onSubmit: (data: FormValues) => void
 }
 
@@ -49,8 +51,23 @@ function random<T>(choices: T[]): T {
 }
 
 const ResponseForm = (props: Props) => {
-  const { mode, event, error, loading, formMethods, onChange, onSubmit } = props
-  const { formState } = formMethods
+  const {
+    mode,
+    event,
+    error,
+    loading,
+    formMethods,
+    onChange,
+    onCaptchaResponse,
+    onSubmit,
+  } = props
+  const { formState, getValues } = formMethods
+
+  const { email } = getValues()
+  const forbidResubmit = (() => {
+    if (!email) return false
+    return email === error?.cause?.extensions?.['forbidResubmitForEmail']
+  })()
 
   const [exampleName, setExampleName] = useState('')
   useEffect(() => {
@@ -151,9 +168,21 @@ const ResponseForm = (props: Props) => {
           </SelectField>
         </FormField>
 
+        {mode === 'CREATE' && (
+          <ReCAPTCHA
+            sitekey={RECAPTCHA_CLIENT_KEY}
+            onChange={onCaptchaResponse}
+          />
+        )}
+
         <Submit
           className="button is-success mt-3"
-          disabled={loading || !formState.isValid || !formState.isDirty}
+          disabled={
+            loading ||
+            !formState.isValid ||
+            !formState.isDirty ||
+            forbidResubmit
+          }
         >
           {mode === 'CREATE'
             ? loading

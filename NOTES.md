@@ -1,4 +1,3 @@
-- [ ] Captcha
 - [ ] Discard changes
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
@@ -25,7 +24,7 @@
   - [ ] Why are hamburger items missing on Confirm RSVP page?
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
-- [ ] Resend confirmation if an RSVP enters an existing email
+- [ ] # Add Sentry to frontend
 - [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
@@ -38,9 +37,20 @@
 - [ ] Make required env vars required with `mustEnv`, etc. (e.g. `SITE_HOST`)
 - [ ] Make Sentry DSN optional
 - [ ] Consensually gather user emails for mailing list
-- [ ] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [ ] Redirect old slugs on slug change
+- [ ] Add sticky bit to "sent you a confirmation email for your RSVP"
 - [ ] Site-wide announcement feature
+- [ ] Unify email templates (header, unsub footer, etc.)
+- [ ] "Serious mode" for LoadingBuddy for e.g. unsubscribe requests
+- [ ] Notification when target email is denylisted on record creation
+- [ ] Replace shared API lib dir with Yarn "shared package" workspace
+- [ ] Add advanced crash logging
+- [ ] Linter for secrets in build
+- [ ] Hide captcha in non-prod Netlify contexts
+- [x] Unify email and Discord notifications
+- [x] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
+- [x] Resend confirmation if an RSVP enters an existing email
+- [x] Captcha
 - [x] Hold RSVP locally with cookie
 - [x] **Scheduler engine**
   - [x] Send reminders

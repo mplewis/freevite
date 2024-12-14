@@ -5,20 +5,19 @@ import type {
   Reminder,
 } from 'types/graphql'
 
-import { db } from 'src/lib/db'
-import {
-  sendNewResponseReceived,
-  sendResponseConfirmation,
-  sendResponseDeleted,
-} from 'src/lib/email/template/response'
-import {
-  notifyNewResponse,
-  notifyResponseDeleted,
-} from 'src/lib/notify/response'
-import { generateToken } from 'src/lib/token'
+import { RedwoodError } from '@redwoodjs/api'
 
-import dayjs from '../../lib/dayjs'
-import { reminderDurations } from '../../lib/reminder'
+import { validateCaptcha } from 'src/lib/backend/captcha'
+import { send } from 'src/lib/backend/notification'
+import {
+  notiResponseConfirmed,
+  notiResponseCreated,
+  notiResponseDeleted,
+} from 'src/lib/backend/notification/template/response'
+import { generateToken } from 'src/lib/backend/token'
+import { db } from 'src/lib/db'
+import dayjs from 'src/lib/shared/dayjs'
+import { reminderDurations } from 'src/lib/shared/reminder'
 
 export type UpdatableResponse = {
   name: string
@@ -50,20 +49,14 @@ export function pickRemindPriorSec(input: {
   return duration
 }
 
-export const responses: QueryResolvers['responses'] = () => {
-  return db.response.findMany({ include: { reminders: true } })
-}
-
-export const response: QueryResolvers['response'] = ({ id }) => {
-  return db.response.findUnique({ where: { id }, include: { reminders: true } })
-}
-
 export const responseByEditToken: QueryResolvers['responseByEditToken'] =
   async ({ editToken }) => {
     let resp = await db.response.findUnique({
       where: { editToken },
       include: { event: true, reminders: true },
     })
+
+    if (!resp) return null
 
     if (!resp.confirmed) {
       const updated = await db.response.update({
@@ -72,8 +65,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
         include: { event: true },
       })
       const { event } = updated
-      await sendNewResponseReceived({ event: event, response: updated })
-      await notifyNewResponse(event, updated)
+      await send(notiResponseConfirmed(event, updated))
 
       resp = await db.response.findUnique({
         where: { editToken },
@@ -91,10 +83,30 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
   eventId,
-  input,
+  input: _input,
 }) => {
   const event = await db.event.findUnique({ where: { id: eventId } })
   if (!event) throw new Error(`Event not found: ${eventId}`)
+
+  const { captchaResponse, ...input } = _input
+  const valid = await validateCaptcha(captchaResponse)
+  if (!valid) {
+    throw new RedwoodError(
+      'Could not validate reCAPTCHA. Please refresh the page and try again.'
+    )
+  }
+
+  const existingResponse = await db.response.findFirst({
+    where: { eventId, email: input.email },
+  })
+  if (existingResponse) {
+    await send(notiResponseCreated(event, existingResponse))
+    throw new RedwoodError(
+      `You have already RSVPed to this event. ` +
+        `We've resent your confirmation email to ${input.email}.`,
+      { forbidResubmitForEmail: input.email }
+    )
+  }
 
   const reminders: { sendAt: Date }[] = []
   if (input.remindPriorSec) {
@@ -114,7 +126,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
-  await sendResponseConfirmation({ event, response })
+  await send(notiResponseCreated(event, response))
   return response
 }
 
@@ -164,8 +176,7 @@ export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
     include: { event: true },
   })
   const { event } = response
-  await sendResponseDeleted({ response, event })
-  await notifyResponseDeleted(event, response)
+  await send(notiResponseDeleted(event, response))
   return response
 }
 

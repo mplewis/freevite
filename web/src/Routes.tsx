@@ -25,6 +25,7 @@ const Routes = () => {
         {/* Below routes are used in email templates and cannot be changed */}
         <Route path="/edit" page={EditEventPage} name="editEvent" />
         <Route path="/rsvp" page={ConfirmResponsePage} name="confirmResponse" />
+        <Route path="/unsubscribe" page={UnsubscribePage} name="unsubscribe" />
       </Set>
       <Route notfound page={NotFoundPage} prerender />
     </Router>

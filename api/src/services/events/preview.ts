@@ -1,9 +1,8 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Event } from 'types/graphql'
 
-import { S3_REGION, S3_BUCKET, CI } from 'src/app.config'
-
-import { keyFor } from '../../lib/url'
+import { S3_REGION, S3_BUCKET, CI } from 'src/lib/shared/shared.config'
+import { keyFor } from 'src/lib/shared/url'
 
 import { renderEventPreview } from './ogImage'
 

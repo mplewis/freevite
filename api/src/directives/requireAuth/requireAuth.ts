@@ -5,7 +5,7 @@ import {
   ValidatorDirectiveFunc,
 } from '@redwoodjs/graphql-server'
 
-import { requireAuth as applicationRequireAuth } from 'src/lib/auth'
+import { requireAuth as applicationRequireAuth } from 'src/lib/backend/auth'
 
 export const schema = gql`
   """

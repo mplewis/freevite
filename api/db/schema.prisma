@@ -76,3 +76,11 @@ model Reminder {
   sendAt DateTime
   sent   Boolean  @default(false)
 }
+
+model IgnoredEmail {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now()) @updatedAt
+
+  email String @unique
+}

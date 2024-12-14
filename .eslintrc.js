@@ -13,9 +13,26 @@ module.exports = {
   },
   overrides: [
     {
-      files: ['**/*SVG.tsx'],
+      files: ['**/*SVG.tsx', '**/*.test.ts', '**/*.test.tsx'],
       rules: {
         'max-len': 'off',
+      },
+    },
+    {
+      files: ['api/src/lib/shared/**/*'],
+      rules: {
+        'no-restricted-imports': [
+          'error',
+          {
+            patterns: [
+              {
+                group: ['*api.config*'],
+                message:
+                  'API config values are forbidden in library code shared with the web side',
+              },
+            ],
+          },
+        ],
       },
     },
   ],
