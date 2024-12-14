@@ -14,7 +14,7 @@ function main() {
   Sentry.init({
     dsn,
     environment,
-    integrations: [new Sentry.BrowserTracing()],
+    integrations: [Sentry.browserTracingIntegration()],
     tracesSampleRate: 1.0,
   })
 }
