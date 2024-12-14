@@ -14,6 +14,7 @@ import {
   NumberField,
   SelectField,
   UseFormReturn,
+  CheckboxField,
 } from '@redwoodjs/forms'
 
 import { reminderDurations } from 'src/apiLibShared/reminder'
@@ -38,7 +39,13 @@ export type Props = {
 export type FormValues = SetOptional<
   Pick<
     UpdatableResponse,
-    'name' | 'headCount' | 'comment' | 'remindPriorSec' | 'email'
+    | 'name'
+    | 'headCount'
+    | 'comment'
+    | 'remindPriorSec'
+    | 'email'
+    | 'notiEventUpdated'
+    | 'notiEventDeleted'
   >,
   'email'
 >
@@ -168,10 +175,33 @@ const ResponseForm = (props: Props) => {
           </SelectField>
         </FormField>
 
+        <h3 className="is-size-4 mt-3 mb-1 has-text-weight-semibold">
+          Notifications
+        </h3>
+
+        <label htmlFor="notiEventUpdated" className="checkbox is-block py-1">
+          <CheckboxField
+            id="notiEventUpdated"
+            name="notiEventUpdated"
+            disabled={loading}
+          />
+          <span className="ml-2">Email me if this event is updated</span>
+        </label>
+
+        <label htmlFor="notiEventDeleted" className="checkbox is-block py-1">
+          <CheckboxField
+            id="notiEventDeleted"
+            name="notiEventDeleted"
+            disabled={loading}
+          />
+          <span className="ml-2">Email me if this event is canceled</span>
+        </label>
+
         {mode === 'CREATE' && (
           <ReCAPTCHA
             sitekey={RECAPTCHA_CLIENT_KEY}
             onChange={onCaptchaResponse}
+            className="mt-4"
           />
         )}
 

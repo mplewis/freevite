@@ -55,6 +55,8 @@ export const schema = gql`
     comment: String!
     remindPriorSec: Int
     captchaResponse: String!
+    notiEventUpdated: Boolean!
+    notiEventDeleted: Boolean!
   }
 
   input UpdateResponseInput {

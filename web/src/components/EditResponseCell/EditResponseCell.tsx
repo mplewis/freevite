@@ -41,6 +41,8 @@ export const QUERY = gql`
       headCount
       comment
       remindPriorSec
+      notiEventUpdated
+      notiEventDeleted
       event {
         id
         slug
@@ -65,6 +67,8 @@ const UPDATE_RESPONSE = gql`
       name
       headCount
       comment
+      notiEventUpdated
+      notiEventDeleted
       event {
         title
         slug
@@ -121,7 +125,7 @@ export const Failure = ({
 export const Success = ({
   response,
 }: CellSuccessProps<GetResponseQuery, GetResponseQueryVariables>) => {
-  const { editToken, event, ...defaultValues } = response
+  const { editToken, event, __typename, ...defaultValues } = response
   const { description } = event
 
   const [tokens, setTokens] = useAtom(responseTokenAtom)
@@ -212,6 +216,8 @@ export const Success = ({
             headCount: data.headCount,
             comment: data.comment,
             remindPriorSec: data.remindPriorSec,
+            notiEventUpdated: data.notiEventUpdated,
+            notiEventDeleted: data.notiEventDeleted,
           }
           await save({ variables: { editToken, input } })
           setUpdateSuccess(true)
