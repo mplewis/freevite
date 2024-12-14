@@ -38,6 +38,7 @@ Example values are provided in [.env.example](.env.example). Make a copy of that
 | Name                             | Type   | Required? | Description                                                                                                                                |
 | -------------------------------- | ------ | --------- | ------------------------------------------------------------------------------------------------------------------------------------------ |
 | API_URL                          | string |           | URL to the API server. When running locally, this should be `/.redwood/functions`. `redwood.toml` sets this to the Netlify value if unset. |
+| CONTEXT                          | string | yes       | [Netlify deploy context](https://docs.netlify.com/configure-builds/environment-variables/#build-metadata). Set to `dev` locally.           |
 | DATABASE_URL                     | string | yes       | The DB connection string which includes protocol, username, password, port, DB name, and options                                           |
 | DISCORD_WEBHOOK_URL              | string |           | If provided, send notifications for server events to this Discord channel via webhook                                                      |
 | FROM_EMAIL                       | string | yes       | The “from” address on outgoing emails                                                                                                      |

@@ -1,18 +1,37 @@
 export const CI = process.env.NODE_ENV === 'test'
 
-type NetlifyContext = 'production' | 'deploy-preview' | 'branch-deploy' | 'dev'
-const context: NetlifyContext = process.env.CONTEXT as NetlifyContext
+// Netlify runtime context
+
+const NETLIFY_DEPLOYED_CONTEXTS = [
+  'production',
+  'deploy-preview',
+  'branch-deploy',
+] as const
+const NETLIFY_CONTEXTS = [...NETLIFY_DEPLOYED_CONTEXTS, 'dev'] as const
+
+function validateContext(context: string | undefined): NetlifyContext {
+  if (!context) throw new Error('Missing Netlify context')
+  if (!NETLIFY_CONTEXTS.includes(context as NetlifyContext))
+    throw new Error(`Invalid Netlify context: ${context}`)
+  return context as NetlifyContext
+}
+
+type NetlifyContext = (typeof NETLIFY_CONTEXTS)[number]
+const context = validateContext(process.env.CONTEXT)
+export const IS_PRODUCTION = context === 'production'
+export const IS_DEPLOYED = (
+  [...NETLIFY_DEPLOYED_CONTEXTS] as string[]
+).includes(context)
+
+// Site host and URL
 
 const extractAfterHTTPSMatcher = /^https:\/\/(.*)/
-
 function extractAfterHTTPS(url?: string) {
   if (!url) return url
   const match = url.match(extractAfterHTTPSMatcher)
   if (match) return match[1]
   return url
 }
-
-// Site host and URL
 
 export let SITE_HOST = process.env.SITE_HOST
 if (context === 'deploy-preview' || context === 'branch-deploy')

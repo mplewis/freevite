@@ -1,7 +1,12 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
 import { Event } from 'types/graphql'
 
-import { S3_REGION, S3_BUCKET, CI } from 'src/lib/shared/shared.config'
+import {
+  S3_REGION,
+  S3_BUCKET,
+  CI,
+  IS_DEPLOYED,
+} from 'src/lib/shared/shared.config'
 import { keyFor } from 'src/lib/shared/url'
 
 import { renderEventPreview } from './ogImage'
@@ -17,6 +22,7 @@ export async function updateEventPreviewImage(
   >
 ) {
   if (CI) return
+  if (!IS_DEPLOYED) return
 
   const screenshot = await renderEventPreview(event)
   const client = new S3Client({
