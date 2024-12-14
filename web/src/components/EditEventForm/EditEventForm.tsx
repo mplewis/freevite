@@ -58,6 +58,9 @@ type Event = Pick<
   | 'timezone'
   | 'title'
   | 'visible'
+  | 'notiResponseCreated'
+  | 'notiResponseUpdated'
+  | 'notiResponseDeleted'
 > & {
   responses: Pick<Response, 'name' | 'headCount' | 'comment'>[]
 }
@@ -73,6 +76,9 @@ const UPDATE_EVENT = gql`
       start
       end
       timezone
+      notiResponseCreated
+      notiResponseUpdated
+      notiResponseDeleted
     }
   }
 `
@@ -383,7 +389,45 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        <label htmlFor="visible" className="checkbox is-block mb-5 py-3">
+        <h3 className="is-size-4 mt-3 mb-1 has-text-weight-semibold">
+          Notifications
+        </h3>
+
+        <label htmlFor="notiResponseCreated" className="checkbox is-block py-1">
+          <CheckboxField
+            id="notiResponseCreated"
+            name="notiResponseCreated"
+            defaultChecked={event.notiResponseCreated}
+            disabled={loading}
+          />
+          <span className="ml-2">Email me when someone RSVPs</span>
+        </label>
+
+        <label htmlFor="notiResponseUpdated" className="checkbox is-block py-1">
+          <CheckboxField
+            id="notiResponseUpdated"
+            name="notiResponseUpdated"
+            defaultChecked={event.notiResponseUpdated}
+            disabled={loading}
+          />
+          <span className="ml-2">Email me when someone updates their RSVP</span>
+        </label>
+
+        <label htmlFor="notiResponseDeleted" className="checkbox is-block py-1">
+          <CheckboxField
+            id="notiResponseDeleted"
+            name="notiResponseDeleted"
+            defaultChecked={event.notiResponseDeleted}
+            disabled={loading}
+          />
+          <span className="ml-2">Email me when someone cancels their RSVP</span>
+        </label>
+
+        <h3 className="is-size-4 mt-3 mb-1 has-text-weight-semibold">
+          Visibility
+        </h3>
+
+        <label htmlFor="visible" className="checkbox is-block py-1">
           <CheckboxField
             id="visible"
             name="visible"
@@ -393,7 +437,7 @@ const EditEventForm = (props: Props) => {
           <span className="ml-2">Make this event visible to the public</span>
         </label>
 
-        <Submit className="button is-success" disabled={!savable}>
+        <Submit className="button is-success mt-4" disabled={!savable}>
           {loading ? 'Saving...' : 'Save Changes'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />

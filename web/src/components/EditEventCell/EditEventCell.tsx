@@ -23,6 +23,9 @@ export const QUERY = gql`
       timezone
       title
       visible
+      notiResponseCreated
+      notiResponseUpdated
+      notiResponseDeleted
 
       responses {
         name

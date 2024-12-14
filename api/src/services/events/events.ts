@@ -86,15 +86,21 @@ export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
 export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   editToken,
 }) => {
-  const existing = await db.event.findUnique({ where: { editToken } })
-  if (!existing) return null
-  const wasConfirmed = existing.confirmed
-  await db.event.update({ data: { confirmed: true }, where: { editToken } })
-  if (!wasConfirmed) await send(notiEventConfirmed(existing))
-  return db.event.findUnique({
+  const existing = await db.event.findUnique({
     where: { editToken },
     include: { responses: { where: { confirmed: true } } },
   })
+  if (!existing) return null
+
+  if (!existing.confirmed) {
+    await db.event.update({
+      data: { confirmed: true },
+      where: { editToken },
+    })
+    await send(notiEventConfirmed(existing))
+  }
+
+  return existing
 }
 
 export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
