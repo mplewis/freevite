@@ -41,12 +41,13 @@
 - [ ] Add sticky bit to "sent you a confirmation email for your RSVP"
 - [ ] Site-wide announcement feature
 - [ ] Unify email templates (header, unsub footer, etc.)
-- [ ] Unify email and Discord notifications
 - [ ] "Serious mode" for LoadingBuddy for e.g. unsubscribe requests
 - [ ] Notification when target email is denylisted on record creation
 - [ ] Replace shared API lib dir with Yarn "shared package" workspace
 - [ ] Add advanced crash logging
 - [ ] Linter for secrets in build
+- [ ] Hide captcha in non-prod Netlify contexts
+- [x] Unify email and Discord notifications
 - [x] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [x] Resend confirmation if an RSVP enters an existing email
 - [x] Captcha
