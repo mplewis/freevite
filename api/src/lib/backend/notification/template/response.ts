@@ -27,7 +27,10 @@ export function notiResponseCreated(
 
 /** Notification for a newly-confirmed response. */
 export function notiResponseConfirmed(
-  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken' | 'slug'>,
+  event: Pick<
+    Event,
+    'title' | 'ownerEmail' | 'editToken' | 'slug' | 'notiResponseCreated'
+  >,
   response: Pick<Response, 'name' | 'headCount' | 'comment'>
 ) {
   return {
@@ -41,6 +44,7 @@ export function notiResponseConfirmed(
       },
     },
     user: {
+      if: event.notiResponseCreated,
       to: event.ownerEmail,
       subject:
         `New RSVP: ${response.name} (${response.headCount}) ` +
@@ -52,7 +56,47 @@ export function notiResponseConfirmed(
 				Guests: ${response.headCount}
 				Comment: ${response.comment || '(No comment submitted)'}
 
-				To view all responses and manage your event, click here:
+				To view all responses, manage your event, or turn off these emails, click here:
+				${SITE_URL}/edit?token=${event.editToken}
+
+				Thanks for using Freevite!
+			`,
+    },
+  }
+}
+
+/** Notification for a newly-confirmed response. */
+export function notiResponseUpdated(
+  event: Pick<
+    Event,
+    'title' | 'ownerEmail' | 'editToken' | 'slug' | 'notiResponseUpdated'
+  >,
+  response: Pick<Response, 'name' | 'headCount' | 'comment'>
+) {
+  return {
+    admin: {
+      title: `New response to ${event.title}`,
+      description: response.name,
+      fields: {
+        headCount: response.headCount,
+        comment: response.comment,
+        view: `${SITE_URL}/event/${event.slug}`,
+      },
+    },
+    user: {
+      if: event.notiResponseUpdated,
+      to: event.ownerEmail,
+      subject:
+        `Updated RSVP: ${response.name} (${response.headCount}) ` +
+        `${response.headCount === 1 ? 'is' : 'are'} attending ${event.title}`,
+      text: stripIndent`
+				Hello from Freevite! ${response.name} has upated their RSVP for ${event.title}:
+
+				Name: ${response.name}
+				Guests: ${response.headCount}
+				Comment: ${response.comment || '(No comment submitted)'}
+
+				To view all responses, manage your event, or turn off these emails, click here:
 				${SITE_URL}/edit?token=${event.editToken}
 
 				Thanks for using Freevite!
@@ -63,7 +107,10 @@ export function notiResponseConfirmed(
 
 /** Notification for a response that was deleted. */
 export function notiResponseDeleted(
-  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken' | 'slug'>,
+  event: Pick<
+    Event,
+    'title' | 'ownerEmail' | 'editToken' | 'slug' | 'notiResponseDeleted'
+  >,
   response: Pick<Response, 'name' | 'headCount' | 'comment'>
 ) {
   return {
@@ -77,6 +124,7 @@ export function notiResponseDeleted(
       },
     },
     user: {
+      if: event.notiResponseDeleted,
       to: event.ownerEmail,
       subject: `RSVP canceled: ${response.name}`,
       text: stripIndent`
@@ -87,7 +135,7 @@ export function notiResponseDeleted(
 				Guests: ${response.headCount}
 				Comment: ${response.comment || '(No comment submitted)'}
 
-				To view all RSVPs and manage your event, click here:
+				To view all responses, manage your event, or turn off these emails, click here:
 				${SITE_URL}/edit?token=${event.editToken}
 
 				Thanks for using Freevite!

@@ -26,7 +26,7 @@ export type Notification = {
 /** Send a notification to a user via email and admins via Discord. */
 export async function send(n: Notification): Promise<void> {
   const promises: Promise<unknown>[] = []
-  if (n.user) promises.push(sendEmail(n.user))
-  if (n.admin) promises.push(sendDiscord(n.admin))
+  if (n.user && n.user.if !== false) promises.push(sendEmail(n.user))
+  if (n.admin && n.admin.if !== false) promises.push(sendDiscord(n.admin))
   await Promise.all(promises)
 }

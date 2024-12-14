@@ -47,6 +47,13 @@
 - [ ] Add advanced crash logging
 - [ ] Linter for secrets in build
 - [ ] Hide captcha in non-prod Netlify contexts
+- [ ] Background functions for notifications
+- [ ] Implement selective notifications
+  - [x] Response created
+  - [x] Response updated
+  - [x] Response deleted
+  - [ ] Event updated
+  - [ ] Event deleted
 - [x] Unify email and Discord notifications
 - [x] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [x] Resend confirmation if an RSVP enters an existing email

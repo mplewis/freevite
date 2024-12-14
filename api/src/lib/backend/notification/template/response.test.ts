@@ -5,6 +5,7 @@ import {
   notiResponseConfirmed,
   notiResponseCreated,
   notiResponseDeleted,
+  notiResponseUpdated,
 } from './response'
 
 const mockNotification = new MockNotification()
@@ -14,6 +15,9 @@ const event = {
   slug: 'emmas-holiday-party',
   ownerEmail: 'emma@example.com',
   editToken: 'SOME-EDIT-TOKEN',
+  notiResponseCreated: true,
+  notiResponseUpdated: true,
+  notiResponseDeleted: true,
 }
 const response = {
   name: 'Sherlock Holmes',
@@ -22,10 +26,6 @@ const response = {
   headCount: 2,
   comment: 'Looking forward to it!',
 }
-
-// notiResponseCreated
-// notiResponseConfirmed
-// notiResponseDeleted
 
 describe('with mocked notifications', () => {
   afterEach(() => {
@@ -116,7 +116,69 @@ Name: Sherlock Holmes
 Guests: 2
 Comment: Looking forward to it!
 
-To view all responses and manage your event, click here:
+To view all responses, manage your event, or turn off these emails, click here:
+https://example.com/edit?token=SOME-EDIT-TOKEN
+
+Thanks for using Freevite!
+
+To unsubscribe from all Freevite emails forever, click here:
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
+    "to": [
+      "emma@example.com",
+    ],
+  },
+}
+`)
+    })
+  })
+
+  describe('notiResponseUpdated', () => {
+    it('sends the expected notifications', async () => {
+      await send(notiResponseUpdated(event, response))
+      expect(mockNotification.last()).toMatchInlineSnapshot(`
+{
+  "discord": Embed {
+    "description": "Sherlock Holmes",
+    "fields": [
+      {
+        "inline": true,
+        "name": "headCount",
+        "value": "2",
+      },
+      {
+        "inline": true,
+        "name": "comment",
+        "value": "Looking forward to it!",
+      },
+      {
+        "inline": true,
+        "name": "view",
+        "value": "https://example.com/event/emmas-holiday-party",
+      },
+    ],
+    "title": "New response to Emma's Holiday Party",
+    "type": "rich",
+  },
+  "email": {
+    "attachments": [],
+    "bcc": [],
+    "cc": [],
+    "from": ""Freevite Test" <test@freevite.app>",
+    "handler": "nodemailer",
+    "handlerOptions": undefined,
+    "headers": {},
+    "htmlContent": null,
+    "renderer": "plain",
+    "rendererOptions": {},
+    "replyTo": undefined,
+    "subject": "Updated RSVP: Sherlock Holmes (2) are attending Emma's Holiday Party",
+    "textContent": "Hello from Freevite! Sherlock Holmes has upated their RSVP for Emma's Holiday Party:
+
+Name: Sherlock Holmes
+Guests: 2
+Comment: Looking forward to it!
+
+To view all responses, manage your event, or turn off these emails, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
 Thanks for using Freevite!
@@ -179,7 +241,7 @@ Name: Sherlock Holmes
 Guests: 2
 Comment: Looking forward to it!
 
-To view all RSVPs and manage your event, click here:
+To view all responses, manage your event, or turn off these emails, click here:
 https://example.com/edit?token=SOME-EDIT-TOKEN
 
 Thanks for using Freevite!

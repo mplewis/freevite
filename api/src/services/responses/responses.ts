@@ -13,6 +13,7 @@ import {
   notiResponseConfirmed,
   notiResponseCreated,
   notiResponseDeleted,
+  notiResponseUpdated,
 } from 'src/lib/backend/notification/template/response'
 import { generateToken } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
@@ -161,10 +162,12 @@ export const updateResponse: MutationResolvers['updateResponse'] = ({
       })
     }
 
-    return tx.response.findUnique({
+    const resp = await tx.response.findUnique({
       where: { editToken },
       include: { reminders: true },
     })
+    await send(notiResponseUpdated(event, resp))
+    return resp
   })
 }
 
