@@ -7,22 +7,9 @@ import { Notification } from '..'
 
 /** Notification for a newly created event. */
 export function notiEventCreated(
-  event: Pick<
-    Event,
-    'ownerEmail' | 'title' | 'editToken' | 'responseConfig' | 'slug'
-  >
+  event: Pick<Event, 'ownerEmail' | 'title' | 'editToken'>
 ): Notification {
   return {
-    admin: {
-      title: 'Event created',
-      description: event.title,
-      fields: {
-        email: event.ownerEmail,
-        responseConfig: JSON.stringify(event.responseConfig),
-        view: `${SITE_URL}/event/${event.slug}`,
-        edit: `${SITE_URL}/edit?token=${event.editToken}`,
-      },
-    },
     user: {
       to: event.ownerEmail,
       subject: `Manage your event: ${event.title}`,
@@ -42,6 +29,23 @@ export function notiEventCreated(
   }
 }
 
+/** Notification for a newly confirmed event. */
+export function notiEventConfirmed(
+  event: Pick<Event, 'ownerEmail' | 'title' | 'slug' | 'editToken'>
+): Notification {
+  return {
+    admin: {
+      title: 'Event created',
+      description: event.title,
+      fields: {
+        email: event.ownerEmail,
+        view: `${SITE_URL}/event/${event.slug}`,
+        edit: `${SITE_URL}/edit?token=${event.editToken}`,
+      },
+    },
+  }
+}
+
 /** Notification for a deleted event. */
 export function notiEventDeleted(
   event: Pick<Event, 'ownerEmail' | 'title'>
@@ -51,6 +55,24 @@ export function notiEventDeleted(
       title: `Event deleted`,
       description: event.title,
       fields: { email: event.ownerEmail },
+    },
+  }
+}
+
+/** Notification to a change for an event. */
+export function notiEventUpdated(
+  event: Pick<Event, 'title' | 'slug' | 'editToken'>,
+  diff: Record<string | number, unknown>
+) {
+  return {
+    admin: {
+      title: 'Event updated',
+      description: event.title,
+      fields: {
+        ...diff,
+        view: `${SITE_URL}/event/${event.slug}`,
+        edit: `${SITE_URL}/edit?token=${event.editToken}`,
+      },
     },
   }
 }

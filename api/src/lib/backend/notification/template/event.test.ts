@@ -1,14 +1,12 @@
 import { send } from '..'
-import { mockNotification } from '../../../test/notification'
+import { MockNotification } from '../../../test/notification'
 
-import { notiEventCreated } from './event'
+import { notiEventConfirmed, notiEventCreated, notiEventDeleted } from './event'
+
+const mockNotification = new MockNotification()
 
 describe('with mocked notifications', () => {
-  beforeAll(() => {
-    mockNotification.setup()
-  })
-
-  beforeEach(() => {
+  afterEach(() => {
     mockNotification.clear()
   })
 
@@ -16,30 +14,30 @@ describe('with mocked notifications', () => {
     it('sends the expected notifications', async () => {
       await send(
         notiEventCreated({
-          ownerEmail: 'owner@example.com',
-          slug: 'my-event',
-          title: 'My Event',
-          editToken: 'some-edit-token',
-          responseConfig: 'SHOW_ALL',
+          ownerEmail: 'emma@example.com',
+          title: "Emma's Holiday Party",
+          editToken: 'SOME-EDIT-TOKEN',
         })
       )
-      expect(mockNotification.lastEmail()).toMatchInlineSnapshot(`
+      expect(mockNotification.last()).toMatchInlineSnapshot(`
 {
-  "attachments": [],
-  "bcc": [],
-  "cc": [],
-  "from": ""Freevite Test" <test@freevite.app>",
-  "handler": "nodemailer",
-  "handlerOptions": undefined,
-  "headers": {},
-  "htmlContent": null,
-  "renderer": "plain",
-  "rendererOptions": {},
-  "replyTo": undefined,
-  "subject": "Manage your event: My Event",
-  "textContent": "Hello from Freevite! Click this link to manage your event details and make it public:
+  "discord": null,
+  "email": {
+    "attachments": [],
+    "bcc": [],
+    "cc": [],
+    "from": ""Freevite Test" <test@freevite.app>",
+    "handler": "nodemailer",
+    "handlerOptions": undefined,
+    "headers": {},
+    "htmlContent": null,
+    "renderer": "plain",
+    "rendererOptions": {},
+    "replyTo": undefined,
+    "subject": "Manage your event: Emma's Holiday Party",
+    "textContent": "Hello from Freevite! Click this link to manage your event details and make it public:
 
-https://example.com/edit?token=some-edit-token
+https://example.com/edit?token=SOME-EDIT-TOKEN
 
 You must click the above link within 24 hours to confirm your email address.
 Otherwise, we will automatically delete your event. Feel free to recreate it.
@@ -49,39 +47,79 @@ If you did not create this event, you can ignore this email and this event will 
 If you need any help, just reply to this email. Thanks for using Freevite!
 
 To unsubscribe from all Freevite emails forever, click here:
-https://example.com/unsubscribe?email=owner%40example.com&token=0_gYiqCh-1ljWPRY-gFrWSZunBu8ImFO_j1ZWBp6J1g",
-  "to": [
-    "owner@example.com",
-  ],
+https://example.com/unsubscribe?email=emma%40example.com&token=8RHP9HXHbkVfnYJ_6H5xSWGL6_5o6Er7aeoYW5SBGNg",
+    "to": [
+      "emma@example.com",
+    ],
+  },
 }
 `)
-      expect(mockNotification.lastDiscord()).toMatchInlineSnapshot(`
-Embed {
-  "description": "My Event",
-  "fields": [
-    {
-      "inline": true,
-      "name": "email",
-      "value": "owner@example.com",
-    },
-    {
-      "inline": true,
-      "name": "responseConfig",
-      "value": ""SHOW_ALL"",
-    },
-    {
-      "inline": true,
-      "name": "view",
-      "value": "https://example.com/event/my-event",
-    },
-    {
-      "inline": true,
-      "name": "edit",
-      "value": "https://example.com/edit?token=some-edit-token",
-    },
-  ],
-  "title": "Event created",
-  "type": "rich",
+    })
+  })
+
+  describe('notiEventConfirmed', () => {
+    it('sends the expected notifications', async () => {
+      await send(
+        notiEventConfirmed({
+          ownerEmail: 'emma@example.com',
+          title: "Emma's Holiday Party",
+          slug: 'emmas-holiday-party',
+          editToken: 'SOME-EDIT-TOKEN',
+        })
+      )
+      expect(mockNotification.last()).toMatchInlineSnapshot(`
+{
+  "discord": Embed {
+    "description": "Emma's Holiday Party",
+    "fields": [
+      {
+        "inline": true,
+        "name": "email",
+        "value": "emma@example.com",
+      },
+      {
+        "inline": true,
+        "name": "view",
+        "value": "https://example.com/event/emmas-holiday-party",
+      },
+      {
+        "inline": true,
+        "name": "edit",
+        "value": "https://example.com/edit?token=SOME-EDIT-TOKEN",
+      },
+    ],
+    "title": "Event created",
+    "type": "rich",
+  },
+  "email": null,
+}
+`)
+    })
+  })
+
+  describe('notiEventDeleted', () => {
+    it('sends the expected notifications', async () => {
+      await send(
+        notiEventDeleted({
+          ownerEmail: 'emma@example.com',
+          title: "Emma's Holiday Party",
+        })
+      )
+      expect(mockNotification.last()).toMatchInlineSnapshot(`
+{
+  "discord": Embed {
+    "description": "Emma's Holiday Party",
+    "fields": [
+      {
+        "inline": true,
+        "name": "email",
+        "value": "emma@example.com",
+      },
+    ],
+    "title": "Event deleted",
+    "type": "rich",
+  },
+  "email": null,
 }
 `)
     })

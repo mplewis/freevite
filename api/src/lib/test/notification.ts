@@ -7,9 +7,9 @@ import { setDiscordSendImpl } from '../backend/notification/discord'
 
 const testHandler = mailer.getTestHandler() as InMemoryMailHandler
 
-export const mockEmail = {
-  clear: testHandler.clearInbox,
-  lastMessage() {
+const mockEmail = {
+  clear: testHandler.clearInbox.bind(testHandler),
+  last() {
     const { inbox } = testHandler
     if (inbox.length > 1)
       throw new Error(`Expected 0 or 1 emails, got ${inbox.length}`)
@@ -17,36 +17,41 @@ export const mockEmail = {
   },
 }
 
-let discordInbox: Embed[] = []
+class DiscordInbox {
+  private inbox: Embed[] = []
 
-export const mockDiscord = {
-  setup() {
-    setDiscordSendImpl(async (embed) => {
-      discordInbox.push(embed)
-    })
-  },
+  async send(embed: Embed) {
+    this.inbox.push(embed)
+  }
+
   clear() {
-    discordInbox = []
-  },
-  lastMessage() {
-    if (discordInbox.length > 1)
-      throw new Error(`Expected 0 or 1 messages, got ${discordInbox.length}`)
-    return discordInbox[0] ?? null
-  },
+    this.inbox = []
+  }
+
+  last() {
+    if (this.inbox.length > 1)
+      throw new Error(`Expected 0 or 1 messages, got ${this.inbox.length}`)
+    return this.inbox[0] ?? null
+  }
 }
 
-export const mockNotification = {
-  setup() {
-    mockDiscord.setup()
-  },
+export class MockNotification {
+  private discordInbox = new DiscordInbox()
+
+  constructor() {
+    setDiscordSendImpl(this.discordInbox.send.bind(this.discordInbox))
+    this.clear()
+  }
+
   clear() {
     mockEmail.clear()
-    mockDiscord.clear()
-  },
-  lastEmail() {
-    return mockEmail.lastMessage()
-  },
-  lastDiscord() {
-    return mockDiscord.lastMessage()
-  },
+    this.discordInbox.clear.bind(this.discordInbox)()
+  }
+
+  last() {
+    return {
+      email: mockEmail.last(),
+      discord: this.discordInbox.last.bind(this.discordInbox)(),
+    }
+  }
 }

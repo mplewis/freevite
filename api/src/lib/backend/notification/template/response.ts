@@ -5,23 +5,10 @@ import { SITE_URL } from 'src/lib/shared/shared.config'
 
 /** Notification for a newly-created response that requires confirmation. */
 export function notiResponseCreated(
-  event: Pick<
-    Event,
-    'title' | 'slug' | 'ownerEmail' | 'responseConfig' | 'editToken'
-  >,
+  event: Pick<Event, 'title' | 'slug' | 'ownerEmail' | 'editToken'>,
   response: Pick<Response, 'email' | 'editToken'>
 ) {
   return {
-    admin: {
-      title: 'Response created',
-      description: `${response.email} to ${event.title}`,
-      fields: {
-        email: event.ownerEmail,
-        responseConfig: JSON.stringify(event.responseConfig),
-        view: `${SITE_URL}/event/${event.slug}`,
-        edit: `${SITE_URL}/edit?token=${event.editToken}`,
-      },
-    },
     user: {
       to: response.email,
       subject: `Confirm your RSVP to ${event.title}`,
@@ -76,10 +63,19 @@ export function notiResponseConfirmed(
 
 /** Notification for a response that was deleted. */
 export function notiResponseDeleted(
-  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken'>,
+  event: Pick<Event, 'title' | 'ownerEmail' | 'editToken' | 'slug'>,
   response: Pick<Response, 'name' | 'headCount' | 'comment'>
 ) {
   return {
+    admin: {
+      title: `Response to ${event.title} canceled`,
+      description: response.name,
+      fields: {
+        headCount: response.headCount,
+        comment: response.comment,
+        view: `${SITE_URL}/event/${event.slug}`,
+      },
+    },
     user: {
       to: event.ownerEmail,
       subject: `RSVP canceled: ${response.name}`,

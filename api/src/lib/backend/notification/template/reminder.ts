@@ -11,10 +11,10 @@ import { SITE_URL } from 'src/lib/shared/shared.config'
 import { Notification } from '..'
 
 /** Notification about an upcoming event for which a user RSVPed. */
-export function notiReminder(
+export function notiReminderDue(
   event: Pick<PublicEvent, 'title' | 'start' | 'end' | 'timezone' | 'slug'>,
   response: Pick<Response, 'email'>,
-  now: Date
+  now = new Date()
 ): Notification {
   return {
     user: {
