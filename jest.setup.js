@@ -1,3 +1,4 @@
+process.env.CONTEXT = 'production'
 process.env.SITE_HOST = 'example.com'
 process.env.SMTP_HOST = 'smtp.example.com'
 process.env.SMTP_USER = 'username'

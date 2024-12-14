@@ -23,6 +23,9 @@ describe('EditEventForm', () => {
             end: '2021-01-01T00:00:00.000Z',
             responseConfig: 'DISABLED',
             responses: [],
+            notiResponseCreated: true,
+            notiResponseUpdated: true,
+            notiResponseDeleted: true,
           }}
         />
       )
