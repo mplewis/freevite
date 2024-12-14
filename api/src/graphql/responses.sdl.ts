@@ -11,6 +11,8 @@ export const schema = gql`
     confirmed: Boolean!
     headCount: Int!
     comment: String!
+    notiEventUpdated: Boolean!
+    notiEventDeleted: Boolean!
     reminders: [Reminder!]!
   }
 
@@ -32,6 +34,8 @@ export const schema = gql`
     confirmed: Boolean!
     headCount: Int!
     comment: String!
+    notiEventUpdated: Boolean!
+    notiEventDeleted: Boolean!
     remindPriorSec: Int
   }
 
@@ -58,6 +62,8 @@ export const schema = gql`
     headCount: Int
     comment: String
     remindPriorSec: Int
+    notiEventUpdated: Boolean!
+    notiEventDeleted: Boolean!
   }
 
   type Mutation {

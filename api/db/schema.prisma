@@ -38,6 +38,7 @@ model Event {
   responses      Response[]
 
   notiResponseCreated Boolean @default(true)
+  notiResponseUpdated Boolean @default(true)
   notiResponseDeleted Boolean @default(true)
 }
 

@@ -17,6 +17,9 @@ export const schema = gql`
     timezone: String
     responseConfig: ResponseConfig!
     responses: [Response!]!
+    notiResponseCreated: Boolean!
+    notiResponseUpdated: Boolean!
+    notiResponseDeleted: Boolean!
   }
 
   type PublicEvent {
@@ -64,6 +67,9 @@ export const schema = gql`
     start: DateTime
     end: DateTime
     timezone: String
+    notiResponseCreated: Boolean
+    notiResponseUpdated: Boolean
+    notiResponseDeleted: Boolean
   }
 
   type Mutation {
