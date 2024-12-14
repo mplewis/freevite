@@ -1,6 +1,7 @@
 import { db } from '../../db'
-import { sendReminder } from '../email/template/reminder'
 import { logger } from '../logger'
+import { send } from '../notification'
+import { notiReminderDue } from '../notification/template/reminder'
 
 /**
  * Send all outstanding reminder emails and mark them as sent.
@@ -21,15 +22,18 @@ export async function sendOutstandingReminders(now = new Date()) {
 
   await Promise.all(
     reminders.map(async (reminder) => {
-      await sendReminder({
-        event: {
-          ...reminder.response.event,
+      const noti = notiReminderDue(
+        {
+          title: reminder.response.event.title,
+          timezone: reminder.response.event.timezone,
+          slug: reminder.response.event.slug,
           start: reminder.response.event.end.toISOString(),
           end: reminder.response.event.end.toISOString(),
         },
-        response: reminder.response,
-        now,
-      })
+        reminder.response,
+        now
+      )
+      await send(noti)
       logger.info({ id: reminder.id }, 'Sent reminder')
       await db.reminder.update({
         where: { id: reminder.id },

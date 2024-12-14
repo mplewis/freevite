@@ -8,15 +8,12 @@ import type {
 import { RedwoodError } from '@redwoodjs/api'
 
 import { validateCaptcha } from 'src/lib/backend/captcha'
+import { send } from 'src/lib/backend/notification'
 import {
-  // sendNewResponseReceived,
-  sendResponseConfirmation,
-  // sendResponseDeleted,
-} from 'src/lib/backend/email/template/response'
-import {
-  notifyNewResponse,
-  notifyResponseDeleted,
-} from 'src/lib/backend/notify/response'
+  notiResponseConfirmed,
+  notiResponseCreated,
+  notiResponseDeleted,
+} from 'src/lib/backend/notification/template/response'
 import { generateToken } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
@@ -68,9 +65,7 @@ export const responseByEditToken: QueryResolvers['responseByEditToken'] =
         include: { event: true },
       })
       const { event } = updated
-      // FIXME: Restore this when we build granular notitfication settings
-      // await sendNewResponseReceived({ event: event, response: updated })
-      await notifyNewResponse(event, updated)
+      await send(notiResponseConfirmed(event, updated))
 
       resp = await db.response.findUnique({
         where: { editToken },
@@ -105,7 +100,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
     where: { eventId, email: input.email },
   })
   if (existingResponse) {
-    await sendResponseConfirmation({ event, response: existingResponse })
+    await send(notiResponseCreated(event, existingResponse))
     throw new RedwoodError(
       `You have already RSVPed to this event. ` +
         `We've resent your confirmation email to ${input.email}.`,
@@ -131,7 +126,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
       reminders: { create: reminders },
     },
   })
-  await sendResponseConfirmation({ event, response })
+  await send(notiResponseCreated(event, response))
   return response
 }
 
@@ -181,9 +176,7 @@ export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
     include: { event: true },
   })
   const { event } = response
-  // FIXME: Restore this when we build granular notitfication settings
-  // await sendResponseDeleted({ response, event })
-  await notifyResponseDeleted(event, response)
+  await send(notiResponseDeleted(event, response))
   return response
 }
 

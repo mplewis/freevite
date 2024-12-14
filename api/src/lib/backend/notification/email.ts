@@ -2,10 +2,9 @@ import { MAIL_SENDER } from 'src/api.config'
 import { mailer } from 'src/lib/backend/mailer'
 
 import { db } from '../../db'
+import { Plain } from '../email/plain'
+import { unsubscribeFooter } from '../email/unsubscribe'
 import { logger } from '../logger'
-
-import { Plain } from './plain'
-import { unsubscribeFooter } from './unsubscribe'
 
 interface Params {
   to: string | string[]
