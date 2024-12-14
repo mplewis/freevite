@@ -46,19 +46,6 @@ export function notiEventConfirmed(
   }
 }
 
-/** Notification for a deleted event. */
-export function notiEventDeleted(
-  event: Pick<Event, 'ownerEmail' | 'title'>
-): Notification {
-  return {
-    admin: {
-      title: `Event deleted`,
-      description: event.title,
-      fields: { email: event.ownerEmail },
-    },
-  }
-}
-
 /** Notification to a change for an event. */
 export function notiEventUpdated(
   event: Pick<Event, 'title' | 'slug' | 'editToken'>,
@@ -73,6 +60,19 @@ export function notiEventUpdated(
         view: `${SITE_URL}/event/${event.slug}`,
         edit: `${SITE_URL}/edit?token=${event.editToken}`,
       },
+    },
+  }
+}
+
+/** Notification for a deleted event. */
+export function notiEventDeleted(
+  event: Pick<Event, 'ownerEmail' | 'title'>
+): Notification {
+  return {
+    admin: {
+      title: `Event deleted`,
+      description: event.title,
+      fields: { email: event.ownerEmail },
     },
   }
 }

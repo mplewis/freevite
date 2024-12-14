@@ -11,6 +11,7 @@ import { send } from 'src/lib/backend/notification'
 import {
   notiEventConfirmed,
   notiEventCreated,
+  notiEventDeleted,
   notiEventUpdated,
 } from 'src/lib/backend/notification/template/event'
 import { summarize } from 'src/lib/backend/response'
@@ -173,5 +174,10 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
   return event
 }
 
-export const deleteEvent: MutationResolvers['deleteEvent'] = ({ editToken }) =>
-  db.event.delete({ where: { editToken } })
+export const deleteEvent: MutationResolvers['deleteEvent'] = async ({
+  editToken,
+}) => {
+  const event = await db.event.delete({ where: { editToken } })
+  await send(notiEventDeleted(event))
+  return event
+}
