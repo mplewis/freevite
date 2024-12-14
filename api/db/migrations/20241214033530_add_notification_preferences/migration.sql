@@ -1,0 +1,15 @@
+-- AlterTable
+ALTER TABLE
+	"Event"
+ADD
+	COLUMN "notiResponseCreated" BOOLEAN NOT NULL DEFAULT TRUE,
+ADD
+	COLUMN "notiResponseDeleted" BOOLEAN NOT NULL DEFAULT TRUE;
+
+-- AlterTable
+ALTER TABLE
+	"Response"
+ADD
+	COLUMN "notiEventDeleted" BOOLEAN NOT NULL DEFAULT TRUE,
+ADD
+	COLUMN "notiEventUpdated" BOOLEAN NOT NULL DEFAULT TRUE;

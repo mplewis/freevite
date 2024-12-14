@@ -36,6 +36,9 @@ model Event {
 
   responseConfig ResponseConfig @default(DISABLED)
   responses      Response[]
+
+  notiResponseCreated Boolean @default(true)
+  notiResponseDeleted Boolean @default(true)
 }
 
 enum ResponseConfig {
@@ -61,6 +64,9 @@ model Response {
   comment   String  @default("")
 
   reminders Reminder[]
+
+  notiEventUpdated Boolean @default(true)
+  notiEventDeleted Boolean @default(true)
 
   @@unique([eventId, email])
 }
