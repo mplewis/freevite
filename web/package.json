@@ -16,7 +16,7 @@
     "@redwoodjs/forms": "8.4.0",
     "@redwoodjs/router": "8.4.0",
     "@redwoodjs/web": "8.4.0",
-    "@sentry/browser": "8",
+    "@sentry/browser": "9",
     "@sentry/react": "7",
     "@vermaysha/discord-webhook": "^1.4.0",
     "bulma": "<1",
