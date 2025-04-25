@@ -15,8 +15,8 @@
     "@sparticuz/chromium": "^129.0.0",
     "handlebars": "^4.7.8",
     "ics": "^3.8.1",
-    "nodemailer": "^6.9.16",
-    "puppeteer-core": "^23.6.1"
+    "nodemailer": "^6.10.1",
+    "puppeteer-core": "^24.7.2"
   },
   "devDependencies": {
     "@redwoodjs/mailer-handler-in-memory": "8.4.0",
