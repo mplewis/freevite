@@ -12424,10 +12424,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"bulma@npm:^1.0.4":
-  version: 1.0.4
-  resolution: "bulma@npm:1.0.4"
-  checksum: 5a9bf48c6681181fce6fe06d1744272938cc81d4356314d9c4eee3ddbd1fac6ac678cb640b2fe58aec47f907ff273231b246b9cd66d1894b40c3a89a68fb3a68
+"bulma@npm:<1":
+  version: 0.9.4
+  resolution: "bulma@npm:0.9.4"
+  checksum: ee4db3427f8ba24fa83d112dca87b99ba009ded9b159f72c4c35e04d1d25c636c3275db1268315427226cdd6c27c00e4147d4696b89cf1c4d57945f80dd16331
   languageName: node
   linkType: hard
 
@@ -26343,7 +26343,7 @@ __metadata:
     "@types/react-google-recaptcha": ^2.1.9
     "@vermaysha/discord-webhook": ^1.4.0
     autoprefixer: ^10.4.21
-    bulma: ^1.0.4
+    bulma: <1
     bulma-prefers-dark: ^0.1.0-beta.1
     classnames: ^2.5.1
     dayjs: ^1.11.13

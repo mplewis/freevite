@@ -19,7 +19,7 @@
     "@sentry/browser": "8",
     "@sentry/react": "7",
     "@vermaysha/discord-webhook": "^1.4.0",
-    "bulma": "^1.0.4",
+    "bulma": "<1",
     "bulma-prefers-dark": "^0.1.0-beta.1",
     "classnames": "^2.5.1",
     "dayjs": "^1.11.13",
