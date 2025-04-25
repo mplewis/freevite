@@ -27,7 +27,7 @@ export async function sendOutstandingReminders(now = new Date()) {
           title: reminder.response.event.title,
           timezone: reminder.response.event.timezone,
           slug: reminder.response.event.slug,
-          start: reminder.response.event.end.toISOString(),
+          start: reminder.response.event.start.toISOString(),
           end: reminder.response.event.end.toISOString(),
         },
         reminder.response,
