@@ -186,7 +186,7 @@ export const Success = ({
 
       <div className="mb-4">
         <Link className="button is-primary mt-3" to={`/event/${event.slug}`}>
-          View details for {event.title} &raquo;
+          View event details &raquo;
         </Link>
       </div>
       <CalButtons event={event} htmlDesc={htmlDesc} />
