@@ -54,28 +54,33 @@ export function notisEventUpdated(
       'email' | 'confirmed' | 'notiEventUpdated' | 'editToken'
     >[]
   },
-  diff: Record<string | number, unknown>
+  diff: Record<string, [string, string]>
 ): Notification[] {
+  const diffForAdmin = Object.entries(diff).reduce(
+    (acc, [key, [before, after]]) => {
+      acc[key] = `${before} → ${after}`
+      return acc
+    },
+    {}
+  ) as Record<string, string>
+
   return [
     {
       admin: {
         title: 'Event updated',
         description: event.title,
         fields: {
-          ...diff,
           view: `${SITE_URL}/event/${event.slug}`,
           edit: `${SITE_URL}/edit?token=${event.editToken}`,
+          ...diffForAdmin,
         },
       },
     },
+
     event.responses.map((r) => {
       const details = Object.entries(diff)
-        .reduce((acc, [key, value]) => {
-          const v =
-            key === 'start' || key === 'end'
-              ? new Date(value as string).toLocaleString('en-US')
-              : value
-          acc.push(`• ${key}: ${v}`)
+        .reduce((acc, [key, [before, after]]) => {
+          acc.push(`• ${key}: ${before} → ${after}`)
           return acc
         }, [] as string[])
         .join('\n')

@@ -163,6 +163,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
 
   const diff = diffObject(oldEvent, input, event.timezone)
   const notis = notisEventUpdated(event, diff)
+  // TODO: Update test to verify user notis are sent here
   await Promise.all(notis.map((n) => send(n)))
 
   if (input.start) {
