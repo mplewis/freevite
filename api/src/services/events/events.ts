@@ -21,7 +21,6 @@ import dayjs from 'src/lib/shared/dayjs'
 import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
-import { flat } from 'remeda'
 import { diffObject } from 'src/lib/backend/diff'
 
 const defaultEventParams = (title) => ({
