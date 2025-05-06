@@ -54,6 +54,10 @@
   - [x] Response deleted
   - [ ] Event updated
   - [ ] Event deleted
+- [ ] Separate critical from mktg noti
+- [ ] Remind people to confirm email if it's sitting around unconfirmed for 24h
+- [x] Make please confirm email box more prominent
+- [x] `View details for My Big Fat Very Long Event Title` button text is too long for mobile
 - [x] Unify email and Discord notifications
 - [x] Add pretty error messages for 404s (e.g. clicked an expired/tidied link)
 - [x] Resend confirmation if an RSVP enters an existing email

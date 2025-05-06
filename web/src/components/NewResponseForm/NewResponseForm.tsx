@@ -71,6 +71,47 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
     return (
       <>
         {Title}
+        <Typ
+          x="p"
+          className="notification is-primary has-text-centered annoying-noti"
+        >
+          <div className="has-text-weight-semibold">
+            <span className="annoying-noti-hands">👉 👉</span> Check your email!{' '}
+            <span className="annoying-noti-hands">👈 👈</span>
+          </div>
+          We'll confirm your RSVP when you click the link in the email.
+        </Typ>
+        <style>
+          {`
+            @keyframes blink-border {
+              0%, 20% {
+                border-color: white;
+              }
+              10% {
+                border-color: transparent;
+              }
+            }
+
+            @keyframes animate-padding {
+              0%, 100% {
+                padding: 0 8px;
+              }
+              50% {
+                padding: 0 16px;
+              }
+            }
+
+            .annoying-noti {
+              border: 4px dashed white;
+              border-radius: 12px;
+              animation: blink-border 3s infinite;
+            }
+
+            .annoying-noti-hands {
+              animation: animate-padding 0.5s infinite;
+            }
+          `}
+        </style>
         <Typ x="p">
           A confirmation email has been sent to you at{' '}
           <strong>{createdForEmail}</strong>. Once you click the confirmation
