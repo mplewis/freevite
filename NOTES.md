@@ -25,7 +25,6 @@
 - [ ] URL builder helpers
 - [ ] Form to request resend link(s) for email address
 - [ ] # Add Sentry to frontend
-- [ ] Diff dates in `notify` so that they are omitted when unchanged
 - [ ] Investigate why some emailed URLs use incorrect hosts for Netlify Deploy Preview
 - [ ] Stably sort RSVP list
 - [ ] Allow sorting of RSVP list with UI
@@ -56,6 +55,7 @@
   - [ ] Event deleted
 - [ ] Separate critical from mktg noti
 - [ ] Remind people to confirm email if it's sitting around unconfirmed for 24h
+- [x] Diff dates in `notify` so that they are omitted when unchanged
 - [x] Make please confirm email box more prominent
 - [x] `View details for My Big Fat Very Long Event Title` button text is too long for mobile
 - [x] Unify email and Discord notifications

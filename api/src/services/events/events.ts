@@ -22,6 +22,7 @@ import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
 import { flat } from 'remeda'
+import { diffObject } from 'src/lib/backend/diff'
 
 const defaultEventParams = (title) => ({
   editToken: generateToken(),
@@ -160,14 +161,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
     },
   })
 
-  // TODO: Fix date diffing. DONT SHIP until this is fixed
-  const diff: Record<string, string> = Object.entries(input).reduce(
-    (acc, [key, value]) => {
-      if (oldEvent[key] !== value) acc[key.toString()] = value.toString()
-      return acc
-    },
-    {}
-  )
+  const diff = diffObject(oldEvent, input, event.timezone)
   const notis = notisEventUpdated(event, diff)
   await Promise.all(notis.map((n) => send(n)))
 

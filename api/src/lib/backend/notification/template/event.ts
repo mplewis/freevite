@@ -48,7 +48,7 @@ export function notiEventConfirmed(
 
 /** Notification to a change for an event. */
 export function notisEventUpdated(
-  event: Pick<Event, 'title' | 'slug' | 'editToken'> & {
+  event: Pick<Event, 'title' | 'slug' | 'editToken' | 'timezone'> & {
     responses: Pick<
       Response,
       'email' | 'confirmed' | 'notiEventUpdated' | 'editToken'
