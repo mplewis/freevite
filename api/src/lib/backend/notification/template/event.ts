@@ -1,9 +1,9 @@
 import { stripIndent } from 'common-tags'
-import { Event } from 'types/graphql'
+import { Event, Response } from 'types/graphql'
 
 import { SITE_URL } from 'src/lib/shared/shared.config'
 
-import { Notification } from '..'
+import { EmailNotification, Notification } from '..'
 
 /** Notification for a newly created event. */
 export function notiEventCreated(
@@ -47,21 +47,56 @@ export function notiEventConfirmed(
 }
 
 /** Notification to a change for an event. */
-export function notiEventUpdated(
-  event: Pick<Event, 'title' | 'slug' | 'editToken'>,
+export function notisEventUpdated(
+  event: Pick<Event, 'title' | 'slug' | 'editToken'> & {
+    responses: Pick<
+      Response,
+      'email' | 'confirmed' | 'notiEventUpdated' | 'editToken'
+    >[]
+  },
   diff: Record<string | number, unknown>
-) {
-  return {
-    admin: {
-      title: 'Event updated',
-      description: event.title,
-      fields: {
-        ...diff,
-        view: `${SITE_URL}/event/${event.slug}`,
-        edit: `${SITE_URL}/edit?token=${event.editToken}`,
+): Notification[] {
+  return [
+    {
+      admin: {
+        title: 'Event updated',
+        description: event.title,
+        fields: {
+          ...diff,
+          view: `${SITE_URL}/event/${event.slug}`,
+          edit: `${SITE_URL}/edit?token=${event.editToken}`,
+        },
       },
     },
-  }
+    event.responses.map((r) => {
+      const details = Object.entries(diff)
+        .reduce((acc, [key, value]) => {
+          const v =
+            key === 'start' || key === 'end'
+              ? new Date(value as string).toLocaleString('en-US')
+              : value
+          acc.push(`• ${key}: ${v}`)
+          return acc
+        }, [] as string[])
+        .join('\n')
+      return {
+        user: {
+          if: r.confirmed && r.notiEventUpdated,
+          to: r.email,
+          subject: `Event updated: ${event.title}`,
+          text: stripIndent`
+            Hello from Freevite! An event you're attending, ${event.title}, has been updated.
+
+            Here are the details that have changed:
+            ${details}
+
+            To view event details, update your RSVP, or change your email preferences, click here:
+            ${SITE_URL}/rsvp?token=${r.editToken}
+          `,
+        },
+      }
+    }),
+  ].flat()
 }
 
 /** Notification for a deleted event. */

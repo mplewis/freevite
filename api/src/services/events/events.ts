@@ -12,7 +12,7 @@ import {
   notiEventConfirmed,
   notiEventCreated,
   notiEventDeleted,
-  notiEventUpdated,
+  notisEventUpdated,
 } from 'src/lib/backend/notification/template/event'
 import { summarize } from 'src/lib/backend/response'
 import { generateToken, alphaLower } from 'src/lib/backend/token'
@@ -21,6 +21,7 @@ import dayjs from 'src/lib/shared/dayjs'
 import { checkVisibility } from 'src/lib/shared/visibility'
 
 import { updateEventPreviewImage } from './preview'
+import { flat } from 'remeda'
 
 const defaultEventParams = (title) => ({
   editToken: generateToken(),
@@ -154,8 +155,12 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
   const event = await db.event.update({
     data: { ...input, confirmed: true },
     where: { editToken },
+    include: {
+      responses: { where: { confirmed: true, notiEventUpdated: true } },
+    },
   })
 
+  // TODO: Fix date diffing. DONT SHIP until this is fixed
   const diff: Record<string, string> = Object.entries(input).reduce(
     (acc, [key, value]) => {
       if (oldEvent[key] !== value) acc[key.toString()] = value.toString()
@@ -163,7 +168,8 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
     },
     {}
   )
-  await send(notiEventUpdated(event, diff))
+  const notis = notisEventUpdated(event, diff)
+  await Promise.all(notis.map((n) => send(n)))
 
   if (input.start) {
     const startDelta = dayjs(oldStart).diff(input.start)
