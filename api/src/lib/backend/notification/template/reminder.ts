@@ -28,7 +28,7 @@ export function notiReminderDue(
 				Ends at: ${prettyEndWithBetween(event.start, event.end, event.timezone)}
 
 				View the event here:
-				${SITE_URL}/events/${event.slug}
+				${SITE_URL}/event/${event.slug}
 
 				Thanks for using Freevite!
 			`,
