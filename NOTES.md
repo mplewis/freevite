@@ -1,3 +1,4 @@
+- [ ] Fix "saving..." and "deleting..." simultaneous button state on save event
 - [ ] Discard changes
 - [ ] Field length enforcement
 - [ ] Fix disabled tests now that Markdown works
