@@ -19,16 +19,10 @@ function setupMockUseMutation({ loading = false, deleting = false } = {}) {
     callCount++
     // First call is UPDATE_EVENT, second call is DELETE_EVENT
     if (callCount === 1) {
-      return [
-        mockSave,
-        { loading, error: null },
-      ]
+      return [mockSave, { loading, error: null }]
     }
     if (callCount === 2) {
-      return [
-        mockDestroy,
-        { loading: deleting, error: null },
-      ]
+      return [mockDestroy, { loading: deleting, error: null }]
     }
     return [jest.fn(), { loading: false, error: null }]
   })

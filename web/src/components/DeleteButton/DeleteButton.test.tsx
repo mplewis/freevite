@@ -16,7 +16,9 @@ describe('DeleteButton', () => {
   })
 
   it('shows "Deleting..." when deleting is true', () => {
-    render(<DeleteButton text="Delete Item" onClick={() => {}} deleting={true} />)
+    render(
+      <DeleteButton text="Delete Item" onClick={() => {}} deleting={true} />
+    )
 
     expect(screen.getByText('Deleting...')).toBeInTheDocument()
   })
@@ -36,21 +38,27 @@ describe('DeleteButton', () => {
   })
 
   it('shows original text when disabled but not deleting', () => {
-    render(<DeleteButton text="Delete Item" onClick={() => {}} disabled={true} />)
+    render(
+      <DeleteButton text="Delete Item" onClick={() => {}} disabled={true} />
+    )
 
     expect(screen.getByText('Delete Item')).toBeInTheDocument()
     expect(screen.queryByText('Deleting...')).not.toBeInTheDocument()
   })
 
   it('is disabled when disabled prop is true', () => {
-    render(<DeleteButton text="Delete Item" onClick={() => {}} disabled={true} />)
+    render(
+      <DeleteButton text="Delete Item" onClick={() => {}} disabled={true} />
+    )
 
     const button = screen.getByRole('button')
     expect(button).toBeDisabled()
   })
 
   it('is disabled when deleting prop is true', () => {
-    render(<DeleteButton text="Delete Item" onClick={() => {}} deleting={true} />)
+    render(
+      <DeleteButton text="Delete Item" onClick={() => {}} deleting={true} />
+    )
 
     const button = screen.getByRole('button')
     expect(button).toBeDisabled()
