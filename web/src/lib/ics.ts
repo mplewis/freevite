@@ -16,7 +16,7 @@ export type Event = {
 /**
  * Convert a Date to the DateArray format expected by the ics library.
  */
-function convertToDateArray(d: Date): number[] {
+function convertToDateArray(d: Date): [number, number, number, number, number] {
   return [
     d.getUTCFullYear(),
     d.getUTCMonth() + 1,

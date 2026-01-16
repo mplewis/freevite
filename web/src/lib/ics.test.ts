@@ -99,21 +99,16 @@ describe('downloadICS', () => {
         removeChild: vi.fn(),
       },
     })
-    vi.stubGlobal(
-      'Blob',
-      class {
-        constructor(parts: unknown[], options: BlobPropertyBag) {
-          return { parts, options }
-        }
-      }
-    )
+    vi.stubGlobal('Blob', vi.fn(() => ({ size: 0 })))
   })
 
   it('creates a blob with correct MIME type', () => {
     downloadICS('BEGIN:VCALENDAR...', 'Test Event')
 
-    const blob = new Blob(['BEGIN:VCALENDAR...'], { type: 'text/calendar' })
-    expect(blob.options).toEqual({ type: 'text/calendar' })
+    expect(Blob).toHaveBeenCalledWith(
+      ['BEGIN:VCALENDAR...'],
+      { type: 'text/calendar' }
+    )
   })
 
   it('creates object URL for the blob', () => {
