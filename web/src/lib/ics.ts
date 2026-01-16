@@ -1,7 +1,3 @@
-import { createEvent, type EventAttributes } from 'ics'
-import { marked } from 'marked'
-import sanitize from 'sanitize-html'
-
 /**
  * Event data structure for ICS generation.
  */
@@ -16,7 +12,9 @@ export type Event = {
 /**
  * Convert a Date to the DateArray format expected by the ics library.
  */
-function convertToDateArray(d: Date): [number, number, number, number, number] {
+function convertToDateArray(
+  d: Date
+): [number, number, number, number, number] {
   return [
     d.getUTCFullYear(),
     d.getUTCMonth() + 1,
@@ -30,21 +28,23 @@ function convertToDateArray(d: Date): [number, number, number, number, number] {
  * Convert a Markdown string to plain text by parsing to HTML and sanitizing.
  */
 async function markdownToText(markdown: string): Promise<string> {
+  const { marked } = await import('marked')
+  const sanitize = await import('sanitize-html')
   const html = await marked.parse(markdown)
-  return sanitize(html, { allowedTags: [] })
+  return sanitize.default(html, { allowedTags: [] })
 }
 
 /**
  * Convert an Event to the EventAttributes format required by the ics library.
  */
-async function convertEvent(event: Event): Promise<EventAttributes> {
+async function convertEvent(event: Event): Promise<any> {
   const startDate =
     typeof event.start === 'string' ? new Date(event.start) : event.start
   const endDate =
     typeof event.end === 'string' ? new Date(event.end) : event.end
 
   const description = await markdownToText(event.description)
-  const eventAttributes: EventAttributes = {
+  const eventAttributes: any = {
     description,
     title: event.title,
     start: convertToDateArray(startDate),
@@ -61,9 +61,10 @@ async function convertEvent(event: Event): Promise<EventAttributes> {
 /**
  * Build ICS content from EventAttributes using the ics library.
  */
-function buildICSEvent(attrs: EventAttributes): Promise<string> {
-  return new Promise((resolve, reject) => {
-    createEvent(attrs, (error, value) => {
+function buildICSEvent(attrs: any): Promise<string> {
+  return new Promise(async (resolve, reject) => {
+    const { createEvent } = await import('ics')
+    createEvent(attrs, (error: Error | null, value: string) => {
       if (error) reject(error)
       else resolve(value)
     })

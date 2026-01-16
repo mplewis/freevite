@@ -7,16 +7,18 @@ process.env.FROM_EMAIL = 'test@freevite.app'
 process.env.SECRET_KEY = 'secret-key-for-testing'
 
 // Mock routes for tests that use them
-jest.mock('@redwoodjs/router', () => {
-  const actualRouter = jest.requireActual('@redwoodjs/router')
-  return {
-    ...actualRouter,
-    routes: {
-      home: () => '/',
-      newEvent: () => '/new',
-      viewEvent: ({ slug }) => `/event/${slug}`,
-      editEvent: ({ editToken }) => `/edit/${editToken}`,
-      previewEvent: ({ previewToken }) => `/preview/${previewToken}`,
-    },
-  }
-})
+if (typeof jest !== 'undefined') {
+  jest.mock('@redwoodjs/router', () => {
+    const actualRouter = jest.requireActual('@redwoodjs/router')
+    return {
+      ...actualRouter,
+      routes: {
+        home: () => '/',
+        newEvent: () => '/new',
+        viewEvent: ({ slug }) => `/event/${slug}`,
+        editEvent: ({ editToken }) => `/edit/${editToken}`,
+        previewEvent: ({ previewToken }) => `/preview/${previewToken}`,
+      },
+    }
+  })
+}
