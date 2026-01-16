@@ -1,6 +1,7 @@
 import { PublicEvent as _PublicEvent } from 'types/graphql'
 
 import dayjs from 'src/apiLibShared/dayjs'
+import { downloadICS, generateICS } from 'src/lib/ics'
 
 import GCal from './GcalSVG'
 import ICS from './IcsSVG'
@@ -12,7 +13,7 @@ export type Props = {
 
 type PublicEvent = Pick<
   _PublicEvent,
-  'title' | 'slug' | 'start' | 'end' | 'location'
+  'title' | 'slug' | 'start' | 'end' | 'location' | 'description'
 >
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
@@ -43,8 +44,11 @@ const IconBox = ({ children }) => (
 )
 
 const CalButtons = ({ event, htmlDesc }: Props) => {
-  const { slug } = event
-  const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
+  const handleIcsClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    const icsContent = await generateICS(event)
+    downloadICS(icsContent, event.title)
+  }
 
   return (
     <>
@@ -54,7 +58,7 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
         </a>
       </IconBox>
       <IconBox>
-        <a href={icsLink} target="_blank" rel="noreferrer">
+        <a href="#" onClick={handleIcsClick}>
           <ICS aria-label="Add to Apple Calendar" />
         </a>
       </IconBox>
