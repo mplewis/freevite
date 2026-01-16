@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from '@redwoodjs/testing/web'
+import { render, screen } from '@redwoodjs/testing/web'
 
 import EditEventForm from './EditEventForm'
 
@@ -32,12 +32,14 @@ describe('EditEventForm', () => {
     const titleInput = container.querySelector('input[name="title"]')
     const locationInput = container.querySelector('input[name="location"]')
     const slugInput = container.querySelector('input[name="slug"]')
-    const descriptionTextarea = container.querySelector('textarea[name="description"]')
+    const descriptionTextarea = container.querySelector(
+      'textarea[name="description"]'
+    )
 
-    expect(titleInput).not.toBeDisabled()
-    expect(locationInput).not.toBeDisabled()
-    expect(slugInput).not.toBeDisabled()
-    expect(descriptionTextarea).not.toBeDisabled()
+    expect(titleInput).toBeEnabled()
+    expect(locationInput).toBeEnabled()
+    expect(slugInput).toBeEnabled()
+    expect(descriptionTextarea).toBeEnabled()
   })
 
   it('shows "Save Changes" text when not loading', () => {
