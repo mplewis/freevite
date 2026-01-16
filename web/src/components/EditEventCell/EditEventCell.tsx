@@ -1,9 +1,5 @@
-import type {
-  FindEditEventQuery,
-  FindEditEventQueryVariables,
-} from 'types/graphql'
-
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
+import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
+import type { FindEditEventQuery, FindEditEventQueryVariables } from 'types/graphql'
 
 import DeadEnd from '../DeadEnd/DeadEnd'
 import EditEventForm from '../EditEventForm/EditEventForm'
@@ -41,7 +37,7 @@ export const Loading = () => (
 
 export const Empty = () => (
   <DeadEnd
-    title="Event not found"
+    title='Event not found'
     desc={[
       "Sorry, we couldn't find the event you were looking for.",
       'Please double-check that you have the correct link.',
@@ -52,13 +48,11 @@ export const Empty = () => (
   />
 )
 
-export const Failure = ({
-  error,
-}: CellFailureProps<FindEditEventQueryVariables>) => {
+export const Failure = ({ error }: CellFailureProps<FindEditEventQueryVariables>) => {
   console.error({ error })
   return (
     <DeadEnd
-      title="Something went wrong"
+      title='Something went wrong'
       desc={[
         "Sorry, we weren't able to load your event.",
         "We've notified the engineering team who will work to resolve this issue. " +

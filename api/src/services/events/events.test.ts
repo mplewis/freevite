@@ -1,13 +1,6 @@
 import type { Event } from '@prisma/client'
 
-import {
-  eventBySlug,
-  eventByEditToken,
-  eventByPreviewToken,
-  createEvent,
-  updateEvent,
-  deleteEvent,
-} from './events'
+import { createEvent, deleteEvent, eventByEditToken, eventByPreviewToken, eventBySlug, updateEvent } from './events'
 import type { StandardScenario } from './events.scenarios'
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -36,21 +29,16 @@ describe('events', () => {
     `)
   })
 
-  scenario(
-    'does not return an invisible event by slug',
-    async (scenario: StandardScenario) => {
-      const result = await eventBySlug({ slug: scenario.event.invisible.slug })
-      expect(result).toBeNull()
-    }
-  )
+  scenario('does not return an invisible event by slug', async (scenario: StandardScenario) => {
+    const result = await eventBySlug({ slug: scenario.event.invisible.slug })
+    expect(result).toBeNull()
+  })
 
-  scenario(
-    'returns an event by editToken',
-    async (scenario: StandardScenario) => {
-      const result = await eventByEditToken({
-        editToken: scenario.event.visible.editToken,
-      })
-      expect(noMutables(result)).toMatchInlineSnapshot(`
+  scenario('returns an event by editToken', async (scenario: StandardScenario) => {
+    const result = await eventByEditToken({
+      editToken: scenario.event.visible.editToken,
+    })
+    expect(noMutables(result)).toMatchInlineSnapshot(`
 {
   "confirmed": true,
   "description": "String",
@@ -68,16 +56,13 @@ describe('events', () => {
   "visible": true,
 }
 `)
-    }
-  )
+  })
 
-  scenario(
-    'returns an event by previewToken',
-    async (scenario: StandardScenario) => {
-      const result = await eventByPreviewToken({
-        previewToken: scenario.event.visible.previewToken,
-      })
-      expect(noMutables(result)).toMatchInlineSnapshot(`
+  scenario('returns an event by previewToken', async (scenario: StandardScenario) => {
+    const result = await eventByPreviewToken({
+      previewToken: scenario.event.visible.previewToken,
+    })
+    expect(noMutables(result)).toMatchInlineSnapshot(`
         {
           "confirmed": true,
           "description": "String",
@@ -94,8 +79,7 @@ describe('events', () => {
           "visible": true,
         }
       `)
-    }
-  )
+  })
 
   scenario('creates a event', async () => {
     const result = await createEvent({

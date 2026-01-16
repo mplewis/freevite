@@ -6,13 +6,11 @@ const UnsubscribePage = () => {
   return (
     <>
       <PageHead
-        title="Manage Email Preferences"
-        desc="Configure how Freevite communicates with you."
+        title='Manage Email Preferences'
+        desc='Configure how Freevite communicates with you.'
       />
 
-      <IgnoredEmailCell
-        input={{ email: queryValue('email'), token: queryValue('token') }}
-      />
+      <IgnoredEmailCell input={{ email: queryValue('email'), token: queryValue('token') }} />
     </>
   )
 }

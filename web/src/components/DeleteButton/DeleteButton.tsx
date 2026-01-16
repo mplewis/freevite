@@ -7,20 +7,13 @@ export type Props = {
   deletingText?: string
 }
 
-const DeleteButton = ({
-  className,
-  onClick,
-  text,
-  disabled,
-  deleting,
-  deletingText,
-}: Props) => {
+const DeleteButton = ({ className, onClick, text, disabled, deleting, deletingText }: Props) => {
   const isDisabled = disabled || deleting
 
   return (
     <div className={className}>
       <button
-        className="button is-danger"
+        className='button is-danger'
         disabled={isDisabled}
         onClick={(ev) => {
           ev.preventDefault()

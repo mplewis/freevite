@@ -11,8 +11,8 @@ describe('FormLabel', () => {
     expect(() => {
       render(
         <Form>
-          <FormField name="name" text="text">
-            <input name="some-input" />
+          <FormField name='name' text='text'>
+            <input name='some-input' />
           </FormField>
         </Form>
       )

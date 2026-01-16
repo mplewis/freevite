@@ -1,4 +1,4 @@
-import { Options } from 'nodemailer/lib/smtp-transport'
+import type { Options } from 'nodemailer/lib/smtp-transport'
 
 function assert(name: string, value: string | undefined) {
   if (!value) throw new Error(`Missing required environment variable ${name}`)

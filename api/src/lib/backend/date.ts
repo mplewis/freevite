@@ -1,4 +1,4 @@
-import { DateArray } from 'ics'
+import type { DateArray } from 'ics'
 
 /**
  * Convert a `Date` to a `DateArray` for use in an ICS file.

@@ -11,7 +11,6 @@ export function unsubscribeLink(email: string): string {
 /** Build the unsubscribe footer for an email address. */
 export function unsubscribeFooter(email: string): string {
   return (
-    `To unsubscribe from all Freevite emails forever, click here:\n` +
-    `${unsubscribeLink(email)}`
+    `To unsubscribe from all Freevite emails forever, click here:\n` + `${unsubscribeLink(email)}`
   )
 }

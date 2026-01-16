@@ -1,6 +1,5 @@
-import { useState } from 'react'
-
 import { Link, routes } from '@redwoodjs/router'
+import { useState } from 'react'
 
 import { fqUrlForPath } from 'src/apiLibShared/url'
 
@@ -25,53 +24,41 @@ export const PreView = ({ isPublic, dirty, slug, previewToken }: Props) => {
 
   return (
     <>
-      <Typ x="p">
-        Your event is currently{' '}
-        <strong>{isPublic ? 'visible' : 'NOT visible'}</strong> to the public
+      <Typ x='p'>
+        Your event is currently <strong>{isPublic ? 'visible' : 'NOT visible'}</strong> to the
+        public
         {isPublic && (
           <>
             {' '}
             at
-            <a href={eventLink} target="_blank" rel="noreferrer">
+            <a href={eventLink} target='_blank' rel='noreferrer'>
               <code>{fqEventLink}</code>
             </a>
           </>
         )}
         .
       </Typ>
-      <Typ x="p">
+      <Typ x='p'>
         {isPublic && (
           <>
-            <a
-              href={eventLink}
-              className="button is-primary"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href={eventLink} className='button is-primary' target='_blank' rel='noreferrer'>
               Go to the event page &raquo;
             </a>
-            <button
-              className="button ml-2"
-              onClick={copyLink}
-              disabled={copied}
-            >
+            <button className='button ml-2' onClick={copyLink} disabled={copied}>
               {copied ? 'Event link copied!' : 'Copy link to event'}
             </button>
           </>
         )}
       </Typ>
 
-      <Typ x="p">See how your event looks before making it public:</Typ>
-      <Typ x="p">
+      <Typ x='p'>See how your event looks before making it public:</Typ>
+      <Typ x='p'>
         {dirty ? (
-          <button className="button" disabled>
+          <button className='button' disabled>
             To preview, save your changes &raquo;
           </button>
         ) : (
-          <Link
-            to={routes.previewEvent({ token: previewToken })}
-            className="button"
-          >
+          <Link to={routes.previewEvent({ token: previewToken })} className='button'>
             Preview this event &raquo;{' '}
           </Link>
         )}

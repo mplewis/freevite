@@ -1,6 +1,5 @@
-import { Embed } from '@vermaysha/discord-webhook'
-
-import { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
+import type { InMemoryMailHandler } from '@redwoodjs/mailer-handler-in-memory'
+import type { Embed } from '@vermaysha/discord-webhook'
 
 import { mailer } from '../backend/mailer'
 import { setDiscordSendImpl } from '../backend/notification/discord'
@@ -11,8 +10,7 @@ const mockEmail = {
   clear: testHandler.clearInbox.bind(testHandler),
   last() {
     const { inbox } = testHandler
-    if (inbox.length > 1)
-      throw new Error(`Expected 0 or 1 emails, got ${inbox.length}`)
+    if (inbox.length > 1) throw new Error(`Expected 0 or 1 emails, got ${inbox.length}`)
     return inbox[0] ?? null
   },
 }
@@ -29,8 +27,7 @@ class DiscordInbox {
   }
 
   last() {
-    if (this.inbox.length > 1)
-      throw new Error(`Expected 0 or 1 messages, got ${this.inbox.length}`)
+    if (this.inbox.length > 1) throw new Error(`Expected 0 or 1 messages, got ${this.inbox.length}`)
     return this.inbox[0] ?? null
   }
 }

@@ -1,6 +1,5 @@
-import { PublicEvent as _PublicEvent } from 'types/graphql'
-
 import dayjs from 'src/apiLibShared/dayjs'
+import type { PublicEvent as _PublicEvent } from 'types/graphql'
 
 import GCal from './GcalSVG'
 import ICS from './IcsSVG'
@@ -10,10 +9,7 @@ export type Props = {
   htmlDesc: string
 }
 
-type PublicEvent = Pick<
-  _PublicEvent,
-  'title' | 'slug' | 'start' | 'end' | 'location'
->
+type PublicEvent = Pick<_PublicEvent, 'title' | 'slug' | 'start' | 'end' | 'location'>
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
 const ICON_WIDTH = '200px'
@@ -37,7 +33,7 @@ function gcalLink(event: PublicEvent, descHTML: string) {
 }
 
 const IconBox = ({ children }) => (
-  <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
+  <div className='mr-3' style={{ width: ICON_WIDTH, display: 'inline-block' }}>
     {children}
   </div>
 )
@@ -49,13 +45,13 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
   return (
     <>
       <IconBox>
-        <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
-          <GCal aria-label="Add to Google Calendar" />
+        <a href={gcalLink(event, htmlDesc)} target='_blank' rel='noreferrer'>
+          <GCal aria-label='Add to Google Calendar' />
         </a>
       </IconBox>
       <IconBox>
-        <a href={icsLink} target="_blank" rel="noreferrer">
-          <ICS aria-label="Add to Apple Calendar" />
+        <a href={icsLink} target='_blank' rel='noreferrer'>
+          <ICS aria-label='Add to Apple Calendar' />
         </a>
       </IconBox>
     </>

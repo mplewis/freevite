@@ -1,29 +1,19 @@
-import { useState } from 'react'
-
-import pluralize from 'pluralize'
-import Select, { Theme } from 'react-select'
-import { Event as _Event, Response } from 'types/graphql'
 import {
-  UpdateEventMutation,
-  UpdateEventMutationVariables,
-  DeleteEventMutation,
-  DeleteEventMutationVariables,
-} from 'types/graphql'
-
-import {
+  CheckboxField,
+  Controller,
+  FieldError,
   Form,
   FormError,
   Submit,
   TextAreaField,
   TextField,
   useForm,
-  Controller,
-  FieldError,
-  CheckboxField,
 } from '@redwoodjs/forms'
 import { navigate, routes } from '@redwoodjs/router'
 import { useMutation } from '@redwoodjs/web'
-
+import pluralize from 'pluralize'
+import { useState } from 'react'
+import Select, { type Theme } from 'react-select'
 import { localTZ, toLocal, toUTC } from 'src/apiLibShared/convert/date'
 import { listTimeZones } from 'src/apiLibShared/convert/tz'
 import { fqUrlForPath } from 'src/apiLibShared/url'
@@ -32,6 +22,14 @@ import DeleteButton from 'src/components/DeleteButton/DeleteButton'
 import FormField from 'src/components/FormField/FormField'
 import { promptConfirm } from 'src/logic/prompt'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
+import type {
+  Event as _Event,
+  DeleteEventMutation,
+  DeleteEventMutationVariables,
+  Response,
+  UpdateEventMutation,
+  UpdateEventMutationVariables,
+} from 'types/graphql'
 
 import { QUERY } from '../EditEventCell'
 import PageHead from '../PageHead/PageHead'
@@ -100,10 +98,7 @@ function stateToEvent(s: Event): Event {
 
 function darkMode(): boolean {
   // https://stackoverflow.com/a/57795495/254187
-  return (
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches
-  )
+  return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
 }
 
 function updateSelectThemeToMatchDarkMode(theme: Theme): Theme {
@@ -144,23 +139,20 @@ const EditEventForm = (props: Props) => {
   const formMethods = useForm({ mode: 'all', defaultValues })
   const { formState, reset, getValues } = formMethods
 
-  const [save, { loading, error }] = useMutation<
-    UpdateEventMutation,
-    UpdateEventMutationVariables
-  >(UPDATE_EVENT, {
-    onCompleted: () => {
-      reset(getValues())
-    },
-    refetchQueries: [{ query: QUERY, variables: { editToken } }],
-    awaitRefetchQueries: true,
-  })
+  const [save, { loading, error }] = useMutation<UpdateEventMutation, UpdateEventMutationVariables>(
+    UPDATE_EVENT,
+    {
+      onCompleted: () => {
+        reset(getValues())
+      },
+      refetchQueries: [{ query: QUERY, variables: { editToken } }],
+      awaitRefetchQueries: true,
+    }
+  )
 
   const [deleting, setDeleting] = useState(false)
 
-  const [destroy] = useMutation<
-    DeleteEventMutation,
-    DeleteEventMutationVariables
-  >(DELETE_EVENT, {
+  const [destroy] = useMutation<DeleteEventMutation, DeleteEventMutationVariables>(DELETE_EVENT, {
     onCompleted: () => {
       alert('Event deleted.')
       navigate(routes.home())
@@ -208,13 +200,11 @@ const EditEventForm = (props: Props) => {
     return (
       <>
         <hr />
-        <Typ x="subhead">Who&apos;s coming?</Typ>
-        <Typ x="p">
+        <Typ x='subhead'>Who&apos;s coming?</Typ>
+        <Typ x='p'>
           <strong>{attd}</strong> {poss} confirmed they are attending.
         </Typ>
-        {anyResponses && (
-          <ResponseDetails responses={event.responses} hideHint={true} />
-        )}
+        {anyResponses && <ResponseDetails responses={event.responses} hideHint={true} />}
       </>
     )
   }
@@ -235,45 +225,43 @@ const EditEventForm = (props: Props) => {
       <ResponseSummary />
 
       <hr />
-      <Typ x="subhead">Edit Event Details</Typ>
+      <Typ x='subhead'>Edit Event Details</Typ>
       <Form
         formMethods={formMethods}
-        onSubmit={(state: Event) =>
-          save({ variables: { editToken, input: stateToEvent(state) } })
-        }
+        onSubmit={(state: Event) => save({ variables: { editToken, input: stateToEvent(state) } })}
       >
-        <FormField name="title" text="Title*">
+        <FormField name='title' text='Title*'>
           <TextField
-            name="title"
+            name='title'
             validation={{ required: true }}
             disabled={busy}
             {...fieldAttrs.input}
           />
         </FormField>
 
-        <FormField name="location" text="Location">
-          <Typ x="labelDetails">
-            Use a name and street address for best results. For example:
-            Nallen&apos;s Irish Pub, 1429 Market St, Denver, CO 80202
+        <FormField name='location' text='Location'>
+          <Typ x='labelDetails'>
+            Use a name and street address for best results. For example: Nallen&apos;s Irish Pub,
+            1429 Market St, Denver, CO 80202
           </Typ>
-          <TextField name="location" disabled={busy} {...fieldAttrs.input} />
+          <TextField name='location' disabled={busy} {...fieldAttrs.input} />
         </FormField>
 
         <Controller
           control={formMethods.control}
-          name="timezone"
+          name='timezone'
           render={({ field }) => {
             if (!field.value) {
               field.value = localTZ
               field.onChange(localTZ)
             }
             return (
-              <label className="label" htmlFor="timezone">
+              <label className='label' htmlFor='timezone'>
                 Time zone*
                 <br />
-                <div className="control">
+                <div className='control'>
                   <Select
-                    id="timezone"
+                    id='timezone'
                     ref={field.ref}
                     name={field.name}
                     options={tzOptions}
@@ -285,7 +273,7 @@ const EditEventForm = (props: Props) => {
                     theme={updateSelectThemeToMatchDarkMode}
                   />
                 </div>
-                <FieldError name="timezone" className="error has-text-danger" />
+                <FieldError name='timezone' className='error has-text-danger' />
               </label>
             )
           }}
@@ -293,65 +281,61 @@ const EditEventForm = (props: Props) => {
 
         <Controller
           control={formMethods.control}
-          name="start"
+          name='start'
           render={({ field }) => (
-            <label className="label" htmlFor="start">
+            <label className='label' htmlFor='start'>
               Start*
               <br />
-              <div className="control">
+              <div className='control'>
                 <input
-                  id="start"
-                  className="input"
-                  type="datetime-local"
+                  id='start'
+                  className='input'
+                  type='datetime-local'
                   disabled={busy}
                   {...field}
                 />
               </div>
-              <FieldError name="start" className="error has-text-danger" />
+              <FieldError name='start' className='error has-text-danger' />
             </label>
           )}
           rules={{
             required: true,
             validate: () =>
-              getValues().end <= getValues().start
-                ? 'End date must be after the start date'
-                : true,
+              getValues().end <= getValues().start ? 'End date must be after the start date' : true,
           }}
         />
 
         <Controller
           control={formMethods.control}
-          name="end"
+          name='end'
           render={({ field }) => (
-            <label className="label" htmlFor="end">
+            <label className='label' htmlFor='end'>
               End*
-              <div className="control">
+              <div className='control'>
                 <input
-                  id="end"
-                  className="input"
-                  type="datetime-local"
+                  id='end'
+                  className='input'
+                  type='datetime-local'
                   disabled={busy}
                   {...field}
                 />
               </div>
-              <FieldError name="end" className="error has-text-danger" />
+              <FieldError name='end' className='error has-text-danger' />
             </label>
           )}
           rules={{
             required: true,
             validate: () =>
-              getValues().end <= getValues().start
-                ? 'End date must be after the start date'
-                : true,
+              getValues().end <= getValues().start ? 'End date must be after the start date' : true,
           }}
         />
 
-        <FormField name="slug" text="Slug*">
-          <Typ x="labelDetails">
+        <FormField name='slug' text='Slug*'>
+          <Typ x='labelDetails'>
             Your event&apos;s public link will be <code>{fqEventLink}</code>
           </Typ>
           <TextField
-            name="slug"
+            name='slug'
             disabled={busy}
             validation={{
               required: true,
@@ -367,20 +351,16 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        <FormField name="description" text="Description*">
-          <Typ x="labelDetails">
+        <FormField name='description' text='Description*'>
+          <Typ x='labelDetails'>
             You can use{' '}
-            <a
-              href="https://www.markdownguide.org"
-              target="_blank"
-              rel="noreferrer"
-            >
+            <a href='https://www.markdownguide.org' target='_blank' rel='noreferrer'>
               Markdown
             </a>{' '}
             to style this section.
           </Typ>
           <TextAreaField
-            name="description"
+            name='description'
             validation={{ required: true }}
             rows={8}
             disabled={busy}
@@ -388,23 +368,23 @@ const EditEventForm = (props: Props) => {
           />
         </FormField>
 
-        <label htmlFor="visible" className="checkbox is-block mb-5 py-3">
+        <label htmlFor='visible' className='checkbox is-block mb-5 py-3'>
           <CheckboxField
-            id="visible"
-            name="visible"
+            id='visible'
+            name='visible'
             defaultChecked={event.visible}
             disabled={busy}
           />
-          <span className="ml-2">Make this event visible to the public</span>
+          <span className='ml-2'>Make this event visible to the public</span>
         </label>
 
-        <Submit className="button is-success" disabled={!savable}>
+        <Submit className='button is-success' disabled={!savable}>
           {loading ? 'Saving...' : 'Save Changes'}
         </Submit>
         <FormError error={error} {...formErrorAttrs} />
         <DeleteButton
-          className="mt-3"
-          text="Delete Event"
+          className='mt-3'
+          text='Delete Event'
           deleting={deleting}
           disabled={loading}
           onClick={() =>

@@ -1,5 +1,5 @@
-import { send } from '..'
 import { MockNotification } from '../../../test/notification'
+import { send } from '..'
 
 import { notiReminderDue } from './reminder'
 

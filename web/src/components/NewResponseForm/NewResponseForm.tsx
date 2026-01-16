@@ -1,18 +1,15 @@
+import { useForm } from '@redwoodjs/forms'
+import { Link, routes } from '@redwoodjs/router'
+import { useMutation } from '@redwoodjs/web'
 import { useState } from 'react'
-
-import {
+import Typ from 'src/components/Typ/Typ'
+import type {
   CreateResponseMutation,
   CreateResponseMutationVariables,
   PublicEvent,
 } from 'types/graphql'
 
-import { useForm } from '@redwoodjs/forms'
-import { Link, routes } from '@redwoodjs/router'
-import { useMutation } from '@redwoodjs/web'
-
-import Typ from 'src/components/Typ/Typ'
-
-import ResponseForm, { FormValues } from '../ResponseForm/ResponseForm'
+import ResponseForm, { type FormValues } from '../ResponseForm/ResponseForm'
 
 interface Props {
   event: Pick<PublicEvent, 'id' | 'title' | 'responseConfig'>
@@ -50,16 +47,16 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
 
   if (event.responseConfig === 'DISABLED') return null
 
-  const Title = <Typ x="subhead">RSVP to {event.title}</Typ>
+  const Title = <Typ x='subhead'>RSVP to {event.title}</Typ>
 
   if (responseToken) {
     return (
       <>
         {Title}
-        <Typ x="p">You&apos;ve already submitted your RSVP for this event.</Typ>
+        <Typ x='p'>You&apos;ve already submitted your RSVP for this event.</Typ>
         <Link
           to={routes.confirmResponse({ token: responseToken })}
-          className="button is-primary mt-2"
+          className='button is-primary mt-2'
         >
           Edit my RSVP &raquo;
         </Link>
@@ -71,18 +68,10 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
     return (
       <>
         {Title}
-        <Typ
-          x="p"
-          className="notification is-primary has-text-centered annoying-noti"
-        >
-          <div className="has-text-weight-semibold">
-            <span className="annoying-noti-hands annoying-noti-hands-left">
-              👉 👉
-            </span>{' '}
-            Check your email!{' '}
-            <span className="annoying-noti-hands annoying-noti-hands-right">
-              👈 👈
-            </span>
+        <Typ x='p' className='notification is-primary has-text-centered annoying-noti'>
+          <div className='has-text-weight-semibold'>
+            <span className='annoying-noti-hands annoying-noti-hands-left'>👉 👉</span> Check your
+            email! <span className='annoying-noti-hands annoying-noti-hands-right'>👈 👈</span>
           </div>
           We&apos;ll confirm your RSVP when you click the link in the email.
         </Typ>
@@ -135,13 +124,12 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
             }
           `}
         </style>
-        <Typ x="p">
-          A confirmation email has been sent to you at{' '}
-          <strong>{createdForEmail}</strong>. Once you click the confirmation
-          link in your email, we will confirm your attendance and notify the
+        <Typ x='p'>
+          A confirmation email has been sent to you at <strong>{createdForEmail}</strong>. Once you
+          click the confirmation link in your email, we will confirm your attendance and notify the
           organizer.
         </Typ>
-        <Typ x="p">Thanks for using Freevite!</Typ>
+        <Typ x='p'>Thanks for using Freevite!</Typ>
       </>
     )
   }
@@ -150,7 +138,7 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
     <>
       {Title}
       <ResponseForm
-        mode="CREATE"
+        mode='CREATE'
         event={event}
         loading={loading}
         error={error}

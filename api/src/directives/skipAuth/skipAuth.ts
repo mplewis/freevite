@@ -1,6 +1,5 @@
-import gql from 'graphql-tag'
-
 import { createValidatorDirective } from '@redwoodjs/graphql-server'
+import gql from 'graphql-tag'
 
 export const schema = gql`
   """

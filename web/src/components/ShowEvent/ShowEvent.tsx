@@ -1,18 +1,13 @@
-import { useState, useEffect } from 'react'
-
 import { useAtom } from 'jotai/react'
 import pluralize from 'pluralize'
-import { PublicEvent } from 'types/graphql'
-
-import {
-  prettyEndWithBetween,
-  prettyStartWithUntil,
-} from 'src/apiLibShared/convert/date'
+import { useEffect, useState } from 'react'
+import { prettyEndWithBetween, prettyStartWithUntil } from 'src/apiLibShared/convert/date'
 import { markdownToHTML } from 'src/apiLibShared/markdown'
 import { SITE_HOST } from 'src/apiLibShared/shared.config'
 import { eventPreviewImagePublicURL } from 'src/apiLibShared/url'
 import { responseTokenAtom } from 'src/data/atoms'
 import { scrollTo } from 'src/logic/scroll'
+import type { PublicEvent } from 'types/graphql'
 
 import CalButtons from '../CalButtons/CalButtons'
 import NewResponseForm from '../NewResponseForm/NewResponseForm'
@@ -25,19 +20,13 @@ export interface Props {
   preview?: boolean // Don't use real event page title if it's just a preview
 }
 
-const RSVPButton = ({
-  event,
-  responseToken,
-}: {
-  event: PublicEvent
-  responseToken?: string
-}) => {
+const RSVPButton = ({ event, responseToken }: { event: PublicEvent; responseToken?: string }) => {
   if (responseToken) return null
   if (event.responseConfig === 'DISABLED') return null
 
   return (
     <button
-      className="button is-primary has-text-weight-semibold"
+      className='button is-primary has-text-weight-semibold'
       style={{ height: '47px' }}
       onClick={() => scrollTo('rsvp-form')}
     >
@@ -54,11 +43,10 @@ const ResponseSummary = ({ event }: { event: PublicEvent }) => {
 
   return (
     <>
-      <Typ x="subhead">Who&apos;s coming?</Typ>
-      <Typ x="p">
+      <Typ x='subhead'>Who&apos;s coming?</Typ>
+      <Typ x='p'>
         <strong>{attd}</strong> {poss} confirmed that they are attending.
-        {event.responseSummary.headCountTotal === 0 &&
-          ' Be the first by RSVPing below!'}
+        {event.responseSummary.headCountTotal === 0 && ' Be the first by RSVPing below!'}
       </Typ>
 
       <ResponseDetails responses={event.responses} />
@@ -80,7 +68,7 @@ const ResponseSection = ({
     <>
       <hr />
       <ResponseSummary event={event} />
-      <div id="rsvp-form">
+      <div id='rsvp-form'>
         <NewResponseForm event={event} responseToken={responseToken} />
       </div>
     </>
@@ -105,16 +93,16 @@ const ShowEvent = ({ event, preview }: Props) => {
   const responseToken = tokens[eventID]
 
   return (
-    <div className="mt-3">
-      <Typ x="p" className="is-italic">
-        The user-generated content below is not owned by Freevite. Please report
-        abuse to <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
+    <div className='mt-3'>
+      <Typ x='p' className='is-italic'>
+        The user-generated content below is not owned by Freevite. Please report abuse to{' '}
+        <a href={`mailto:abuse@${SITE_HOST}`}>abuse@{SITE_HOST}</a>.
       </Typ>
 
       <hr />
 
       {preview ? (
-        <Typ x="head">{event.title}</Typ>
+        <Typ x='head'>{event.title}</Typ>
       ) : (
         <PageHead
           title={event.title}
@@ -122,30 +110,27 @@ const ShowEvent = ({ event, preview }: Props) => {
           ogImage={eventPreviewImagePublicURL(event.slug)}
         />
       )}
-      <Typ x="p">
+      <Typ x='p'>
         <strong>From:</strong> {prettyStartWithUntil(start, tz)}
       </Typ>
-      <Typ x="p">
+      <Typ x='p'>
         <strong>To:</strong> {prettyEndWithBetween(start, end, tz)}
       </Typ>
       {location !== '' && (
-        <Typ x="p">
+        <Typ x='p'>
           <strong>Location:</strong>{' '}
-          <a href={mapHref} target="_blank" rel="noreferrer">
+          <a href={mapHref} target='_blank' rel='noreferrer'>
             {location}
           </a>
         </Typ>
       )}
-      <div className="mt-4 mb-4">
-        <div className="mb-4">
+      <div className='mt-4 mb-4'>
+        <div className='mb-4'>
           <RSVPButton event={event} responseToken={responseToken} />
         </div>
         <CalButtons event={event} htmlDesc={htmlDesc} />
       </div>
-      <div
-        className="content pb-2"
-        dangerouslySetInnerHTML={{ __html: htmlDesc }}
-      />
+      <div className='content pb-2' dangerouslySetInnerHTML={{ __html: htmlDesc }} />
 
       <ResponseSection event={event} responseToken={responseToken} />
     </div>

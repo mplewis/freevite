@@ -39,10 +39,7 @@ async function minusIgnored(to: string[]): Promise<string[]> {
   const ignored = result.map((x) => x.email).filter(Boolean) as string[]
 
   if (ignored.length > 0) {
-    logger.info(
-      { emailsOnIgnoreList: ignored },
-      'Refusing to email user(s) on ignore list'
-    )
+    logger.info({ emailsOnIgnoreList: ignored }, 'Refusing to email user(s) on ignore list')
   }
 
   const allowed = to.filter((email) => !ignored.includes(email))

@@ -10,7 +10,7 @@ import './index.scss'
 const App = () => (
   // @ts-expect-error FIXME: The error boundary type is incompatible
   <Sentry.ErrorBoundary fallback={FatalErrorPage}>
-    <RedwoodProvider titleTemplate="%PageTitle | %AppTitle">
+    <RedwoodProvider titleTemplate='%PageTitle | %AppTitle'>
       <RedwoodApolloProvider>
         <Routes />
       </RedwoodApolloProvider>

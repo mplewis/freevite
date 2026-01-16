@@ -1,9 +1,8 @@
 import { stripIndent } from 'common-tags'
-import { Event } from 'types/graphql'
-
 import { SITE_URL } from 'src/lib/shared/shared.config'
+import type { Event } from 'types/graphql'
 
-import { Notification } from '..'
+import type { Notification } from '..'
 
 /** Notification for a newly created event. */
 export function notiEventCreated(
@@ -65,9 +64,7 @@ export function notiEventUpdated(
 }
 
 /** Notification for a deleted event. */
-export function notiEventDeleted(
-  event: Pick<Event, 'ownerEmail' | 'title'>
-): Notification {
+export function notiEventDeleted(event: Pick<Event, 'ownerEmail' | 'title'>): Notification {
   return {
     admin: {
       title: `Event deleted`,

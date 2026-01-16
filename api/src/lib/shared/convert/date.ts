@@ -47,8 +47,7 @@ export function prettyDate(
 ): string {
   if (!tz) tz = 'UTC'
   const date = dayjs(d)
-  if (date.year() === currentYear)
-    return date.tz(tz).format('ddd MMM D, h:mm A z')
+  if (date.year() === currentYear) return date.tz(tz).format('ddd MMM D, h:mm A z')
   return date.tz(tz).format('ddd MMM D, YYYY, h:mm A z')
 }
 
@@ -57,11 +56,7 @@ export function prettyDate(
  * @param d The future date
  * @returns A verbal representation of the amount of time until the given date
  */
-export function prettyUntil(
-  d: string | Date,
-  now = new Date(),
-  withSuffix = true
-): string {
+export function prettyUntil(d: string | Date, now = new Date(), withSuffix = true): string {
   return dayjs.duration(dayjs(d).diff(now)).humanize(withSuffix)
 }
 
@@ -71,11 +66,7 @@ export function prettyUntil(
  * @param e The end date
  * @returns A verbal representation of the duration between the two dates
  */
-export function prettyBetween(
-  s: string | Date,
-  e: string | Date,
-  suffix = ''
-): string {
+export function prettyBetween(s: string | Date, e: string | Date, suffix = ''): string {
   const val = dayjs.duration(dayjs(e).diff(dayjs(s))).humanize(false)
   return [val, suffix].join(' ')
 }

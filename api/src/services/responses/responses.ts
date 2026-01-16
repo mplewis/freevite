@@ -1,12 +1,4 @@
-import type {
-  QueryResolvers,
-  MutationResolvers,
-  ResponseRelationResolvers,
-  Reminder,
-} from 'types/graphql'
-
 import { RedwoodError } from '@redwoodjs/api'
-
 import { validateCaptcha } from 'src/lib/backend/captcha'
 import { send } from 'src/lib/backend/notification'
 import {
@@ -18,6 +10,12 @@ import { generateToken } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
 import { reminderDurations } from 'src/lib/shared/reminder'
+import type {
+  MutationResolvers,
+  QueryResolvers,
+  Reminder,
+  ResponseRelationResolvers,
+} from 'types/graphql'
 
 export type UpdatableResponse = {
   name: string
@@ -49,37 +47,36 @@ export function pickRemindPriorSec(input: {
   return duration
 }
 
-export const responseByEditToken: QueryResolvers['responseByEditToken'] =
-  async ({ editToken }) => {
-    let resp = await db.response.findUnique({
+export const responseByEditToken: QueryResolvers['responseByEditToken'] = async ({ editToken }) => {
+  let resp = await db.response.findUnique({
+    where: { editToken },
+    include: { event: true, reminders: true },
+  })
+
+  if (!resp) return null
+
+  if (!resp.confirmed) {
+    const updated = await db.response.update({
+      where: { editToken },
+      data: { confirmed: true },
+      include: { event: true },
+    })
+    const { event } = updated
+    await send(notiResponseConfirmed(event, updated))
+
+    resp = await db.response.findUnique({
       where: { editToken },
       include: { event: true, reminders: true },
     })
-
-    if (!resp) return null
-
-    if (!resp.confirmed) {
-      const updated = await db.response.update({
-        where: { editToken },
-        data: { confirmed: true },
-        include: { event: true },
-      })
-      const { event } = updated
-      await send(notiResponseConfirmed(event, updated))
-
-      resp = await db.response.findUnique({
-        where: { editToken },
-        include: { event: true, reminders: true },
-      })
-    }
-
-    const {
-      reminders,
-      event: { start: eventStart },
-    } = resp
-    const remindPriorSec = pickRemindPriorSec({ reminders, eventStart })
-    return { ...resp, remindPriorSec }
   }
+
+  const {
+    reminders,
+    event: { start: eventStart },
+  } = resp
+  const remindPriorSec = pickRemindPriorSec({ reminders, eventStart })
+  return { ...resp, remindPriorSec }
+}
 
 export const createResponse: MutationResolvers['createResponse'] = async ({
   eventId,
@@ -91,9 +88,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
   const { captchaResponse, ...input } = _input
   const valid = await validateCaptcha(captchaResponse)
   if (!valid) {
-    throw new RedwoodError(
-      'Could not validate reCAPTCHA. Please refresh the page and try again.'
-    )
+    throw new RedwoodError('Could not validate reCAPTCHA. Please refresh the page and try again.')
   }
 
   const existingResponse = await db.response.findFirst({
@@ -110,9 +105,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
 
   const reminders: { sendAt: Date }[] = []
   if (input.remindPriorSec) {
-    const sendAt = dayjs(event.start)
-      .subtract(input.remindPriorSec, 'second')
-      .toDate()
+    const sendAt = dayjs(event.start).subtract(input.remindPriorSec, 'second').toDate()
     reminders.push({ sendAt })
   }
   delete input.remindPriorSec
@@ -130,10 +123,7 @@ export const createResponse: MutationResolvers['createResponse'] = async ({
   return response
 }
 
-export const updateResponse: MutationResolvers['updateResponse'] = ({
-  editToken,
-  input,
-}) => {
+export const updateResponse: MutationResolvers['updateResponse'] = ({ editToken, input }) => {
   const { remindPriorSec, ...rest } = input
 
   return db.$transaction(async (tx) => {
@@ -154,9 +144,7 @@ export const updateResponse: MutationResolvers['updateResponse'] = ({
       await tx.reminder.create({
         data: {
           response: { connect: { id: response.id } },
-          sendAt: dayjs(event.start)
-            .subtract(input.remindPriorSec, 'second')
-            .toDate(),
+          sendAt: dayjs(event.start).subtract(input.remindPriorSec, 'second').toDate(),
         },
       })
     }
@@ -168,9 +156,7 @@ export const updateResponse: MutationResolvers['updateResponse'] = ({
   })
 }
 
-export const deleteResponse: MutationResolvers['deleteResponse'] = async ({
-  editToken,
-}) => {
+export const deleteResponse: MutationResolvers['deleteResponse'] = async ({ editToken }) => {
   const response = await db.response.delete({
     where: { editToken },
     include: { event: true },

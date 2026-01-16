@@ -1,5 +1,5 @@
 import type { APIGatewayEvent } from 'aws-lambda'
-import { createEvent, EventAttributes } from 'ics'
+import { createEvent, type EventAttributes } from 'ics'
 
 import { convertToDateArray } from 'src/lib/backend/date'
 import { wrap } from 'src/lib/backend/sentry'

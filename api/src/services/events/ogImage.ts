@@ -194,13 +194,10 @@ function renderTemplate(values: Record<string, string>): string {
   return Handlebars.compile(indexHbs)(values)
 }
 
-async function renderImage(
-  values: Record<string, string>
-): Promise<Uint8Array> {
+async function renderImage(values: Record<string, string>): Promise<Uint8Array> {
   const indexHtml = renderTemplate(values)
 
-  const executablePath =
-    process.env.LOCAL_CHROMIUM || (await chromium.executablePath())
+  const executablePath = process.env.LOCAL_CHROMIUM || (await chromium.executablePath())
   const browser = await puppeteer.launch({
     executablePath,
     args: chromium.args,

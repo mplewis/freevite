@@ -13,7 +13,6 @@ export function checkVisibility(
 ): { visible: true } | { visible: false; reason: string } {
   if (!e) return { visible: false, reason: 'Event is not present' }
   if (!e.confirmed) return { visible: false, reason: 'Event is not confirmed' }
-  if (!e.visible)
-    return { visible: false, reason: 'Event is not set to visible' }
+  if (!e.visible) return { visible: false, reason: 'Event is not set to visible' }
   return { visible: true }
 }

@@ -1,12 +1,9 @@
-import { Response } from 'types/graphql'
+import type { Response } from 'types/graphql'
 
 import Typ from '../Typ/Typ'
 
 type Props = {
-  responses:
-    | Pick<Response, 'name' | 'headCount' | 'comment'>[]
-    | null
-    | undefined
+  responses: Pick<Response, 'name' | 'headCount' | 'comment'>[] | null | undefined
   hideHint?: boolean
 }
 
@@ -16,7 +13,7 @@ export const ResponseDetails = ({ responses, hideHint }: Props) => {
 
   return (
     <>
-      <table className="table is-fullwidth is-hoverable is-bordered is-narrow">
+      <table className='table is-fullwidth is-hoverable is-bordered is-narrow'>
         <thead>
           <tr>
             <th>Name</th>
@@ -35,9 +32,9 @@ export const ResponseDetails = ({ responses, hideHint }: Props) => {
         </tbody>
       </table>
       {hint && (
-        <Typ x="p">
-          If your RSVP isn&apos;t appearing in the table above, double-check
-          that you&apos;ve clicked the confirmation link in your email.
+        <Typ x='p'>
+          If your RSVP isn&apos;t appearing in the table above, double-check that you&apos;ve
+          clicked the confirmation link in your email.
         </Typ>
       )}
     </>

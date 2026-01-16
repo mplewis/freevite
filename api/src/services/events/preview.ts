@@ -1,8 +1,7 @@
 import { PutObjectCommand, S3Client } from '@aws-sdk/client-s3'
-import { Event } from 'types/graphql'
-
-import { S3_REGION, S3_BUCKET, CI } from 'src/lib/shared/shared.config'
+import { CI, S3_BUCKET, S3_REGION } from 'src/lib/shared/shared.config'
 import { keyFor } from 'src/lib/shared/url'
+import type { Event } from 'types/graphql'
 
 import { renderEventPreview } from './ogImage'
 
@@ -11,10 +10,7 @@ import { renderEventPreview } from './ogImage'
  * @param event The event for which to update the public preview image
  */
 export async function updateEventPreviewImage(
-  event: Pick<
-    Event,
-    'start' | 'end' | 'title' | 'description' | 'slug' | 'timezone'
-  >
+  event: Pick<Event, 'start' | 'end' | 'title' | 'description' | 'slug' | 'timezone'>
 ) {
   if (CI) return
 

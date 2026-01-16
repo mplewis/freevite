@@ -13,9 +13,7 @@ export async function tidyUnconfirmedEvents(now = new Date()) {
     select: { id: true, createdAt: true },
   })
   const expired = unconfirmed.filter(
-    (event) =>
-      dayjs(now).diff(dayjs(event.createdAt)) >
-      UNCONFIRMED_EXPIRY.asMilliseconds()
+    (event) => dayjs(now).diff(dayjs(event.createdAt)) > UNCONFIRMED_EXPIRY.asMilliseconds()
   )
   const ids = expired.map((e) => e.id)
   const { count } = await db.event.deleteMany({ where: { id: { in: ids } } })
@@ -30,9 +28,7 @@ export async function tidyUnconfirmedResponses(now = new Date()) {
     select: { id: true, createdAt: true },
   })
   const expired = unconfirmed.filter(
-    (response) =>
-      dayjs(now).diff(dayjs(response.createdAt)) >
-      UNCONFIRMED_EXPIRY.asMilliseconds()
+    (response) => dayjs(now).diff(dayjs(response.createdAt)) > UNCONFIRMED_EXPIRY.asMilliseconds()
   )
   const ids = expired.map((r) => r.id)
   const { count } = await db.response.deleteMany({ where: { id: { in: ids } } })

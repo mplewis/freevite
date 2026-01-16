@@ -1,7 +1,6 @@
 import { stripIndent } from 'common-tags'
-import { Event, Response } from 'types/graphql'
-
 import { SITE_URL } from 'src/lib/shared/shared.config'
+import type { Event, Response } from 'types/graphql'
 
 /** Notification for a newly-created response that requires confirmation. */
 export function notiResponseCreated(

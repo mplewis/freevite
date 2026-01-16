@@ -12,11 +12,7 @@ export type Args<T> = {
  * @returns The result of the action if the user confirms,
  *          or `null` if they cancel the operation or enter the wrong confirmation text
  */
-export async function promptConfirm<T>({
-  action,
-  desc,
-  confirmWith,
-}: Args<T>): Promise<T | null> {
+export async function promptConfirm<T>({ action, desc, confirmWith }: Args<T>): Promise<T | null> {
   const resp = prompt(
     `Warning! You are about to permanently ${desc}. ` +
       `This action cannot be undone.\n\nTo confirm, type ${confirmWith}:`
@@ -24,9 +20,7 @@ export async function promptConfirm<T>({
 
   if (resp === null) return null
   if (resp !== confirmWith) {
-    alert(
-      "Sorry, you didn't enter the correct confirmation text. Please try again."
-    )
+    alert("Sorry, you didn't enter the correct confirmation text. Please try again.")
     return null
   }
 

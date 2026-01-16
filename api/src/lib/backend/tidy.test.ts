@@ -1,5 +1,5 @@
-import { randomString, randomInteger } from 'remeda'
-import { Event, Response } from 'types/graphql'
+import { randomInteger, randomString } from 'remeda'
+import type { Event, Response } from 'types/graphql'
 
 import { db } from '../db'
 
@@ -26,9 +26,7 @@ function buildEvent(overrides: Partial<Event> = {}): Omit<Event, 'responses'> {
   }
 }
 
-function buildResponse(
-  overrides: Partial<Response> = {}
-): Omit<Response, 'event' | 'reminders'> {
+function buildResponse(overrides: Partial<Response> = {}): Omit<Response, 'event' | 'reminders'> {
   return {
     comment: randomString(32),
     confirmed: false,
