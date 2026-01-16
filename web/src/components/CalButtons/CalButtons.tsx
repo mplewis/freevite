@@ -44,7 +44,8 @@ const IconBox = ({ children }) => (
 )
 
 const CalButtons = ({ event, htmlDesc }: Props) => {
-  const handleIcsClick = async () => {
+  const handleIcsClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
     const icsContent = await generateICS(event)
     downloadICS(icsContent, event.title)
   }
@@ -57,19 +58,9 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
         </a>
       </IconBox>
       <IconBox>
-        <button
-          onClick={handleIcsClick}
-          type="button"
-          style={{
-            background: 'none',
-            border: 'none',
-            padding: 0,
-            margin: 0,
-            cursor: 'pointer',
-          }}
-        >
+        <a href="#" onClick={handleIcsClick} role="button">
           <ICS aria-label="Add to Apple Calendar" />
-        </button>
+        </a>
       </IconBox>
     </>
   )
