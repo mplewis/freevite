@@ -406,6 +406,7 @@ const EditEventForm = (props: Props) => {
           className="mt-3"
           text="Delete Event"
           deleting={deleting}
+          disabled={loading}
           onClick={() =>
             promptConfirm({
               desc: `delete the event ${event.title}`,

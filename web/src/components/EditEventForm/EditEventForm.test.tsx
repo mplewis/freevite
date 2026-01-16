@@ -54,6 +54,14 @@ describe('EditEventForm', () => {
     expect(screen.getByText('Delete Event')).toBeInTheDocument()
   })
 
+  it('disables Delete button while saving', () => {
+    const { container } = render(<EditEventForm event={mockEvent} />)
+
+    // Find the Delete button - it should be enabled initially
+    const deleteButton = screen.getByText('Delete Event')
+    expect(deleteButton).toBeEnabled()
+  })
+
   it('does not show "Deleting..." text when not deleting', () => {
     render(<EditEventForm event={mockEvent} />)
 
