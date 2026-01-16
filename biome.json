@@ -1,0 +1,126 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "useIgnoreFile": true
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "maxSize": 1048576
+  },
+  "formatter": {
+    "enabled": true,
+    "formatWithErrors": false,
+    "indentStyle": "space",
+    "indentWidth": 2,
+    "lineEnding": "lf",
+    "lineWidth": 100
+  },
+  "javascript": {
+    "formatter": {
+      "quoteStyle": "single",
+      "jsxQuoteStyle": "single",
+      "quoteProperties": "asNeeded",
+      "trailingCommas": "es5",
+      "semicolons": "asNeeded",
+      "arrowParentheses": "always",
+      "bracketSpacing": true
+    },
+    "globals": [
+      "React",
+      "gql",
+      "process",
+      "require",
+      "context",
+      "Promise",
+      "mockGraphQLQuery",
+      "mockGraphQLMutation",
+      "mockCurrentUser",
+      "scenario",
+      "defineScenario"
+    ]
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "correctness": {
+        "noUnusedVariables": "error",
+        "noUnusedFunctionParameters": "off",
+        "useJsxKeyInIterable": "off"
+      },
+      "complexity": {
+        "useLiteralKeys": "off"
+      },
+      "style": {
+        "noNonNullAssertion": "off",
+        "noRestrictedImports": {
+          "level": "error",
+          "options": {
+            "paths": {
+              "dayjs": "Please import from `dayjs.ts` instead"
+            }
+          }
+        }
+      },
+      "suspicious": {
+        "noExplicitAny": "warn",
+        "noArrayIndexKey": "off",
+        "noShadowRestrictedNames": "off"
+      },
+      "a11y": {
+        "noSvgWithoutTitle": "off",
+        "useButtonType": "off",
+        "useValidAnchor": "off",
+        "useAnchorContent": "off",
+        "useSemanticElements": "off"
+      },
+      "security": {
+        "noDangerouslySetInnerHtml": "off"
+      }
+    }
+  },
+  "overrides": [
+    {
+      "includes": ["**/*SVG.tsx", "**/*.test.ts", "**/*.test.tsx"],
+      "formatter": {
+        "lineWidth": 320
+      }
+    },
+    {
+      "includes": ["Routes.*"],
+      "formatter": {
+        "lineWidth": 320
+      }
+    },
+    {
+      "includes": [".vscode/**"],
+      "json": {
+        "parser": {
+          "allowTrailingCommas": true
+        }
+      }
+    },
+    {
+      "includes": ["api/src/lib/shared/**/*"],
+      "linter": {
+        "rules": {
+          "style": {
+            "noRestrictedImports": {
+              "level": "error",
+              "options": {
+                "patterns": [
+                  {
+                    "group": ["*api.config*"],
+                    "message": "API config values are forbidden in library code shared with the web side"
+                  }
+                ]
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}
