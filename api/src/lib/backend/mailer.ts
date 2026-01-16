@@ -16,8 +16,7 @@ class PlainEmailRenderer extends AbstractMailRenderer {
     _options: RendererOptions,
     _utilities?: MailUtilities
   ): MailRenderedContent {
-    const text =
-      (template as { props?: { children?: string } }).props?.children ?? ''
+    const text = (template as { props?: { children?: string } }).props?.children ?? ''
     const html = null
     return { text, html }
   }
