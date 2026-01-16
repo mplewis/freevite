@@ -5,3 +5,20 @@ process.env.SMTP_PASS = 'password'
 process.env.FROM_NAME = 'Freevite Test'
 process.env.FROM_EMAIL = 'test@freevite.app'
 process.env.SECRET_KEY = 'secret-key-for-testing'
+
+// Mock routes for tests that use them
+if (typeof jest !== 'undefined') {
+  jest.mock('@redwoodjs/router', () => {
+    const actualRouter = jest.requireActual('@redwoodjs/router')
+    return {
+      ...actualRouter,
+      routes: {
+        home: () => '/',
+        newEvent: () => '/new',
+        viewEvent: ({ slug }) => `/event/${slug}`,
+        editEvent: ({ editToken }) => `/edit/${editToken}`,
+        previewEvent: ({ previewToken }) => `/preview/${previewToken}`,
+      },
+    }
+  })
+}
