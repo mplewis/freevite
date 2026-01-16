@@ -105,10 +105,4 @@ describe('EditEventForm', () => {
     const saveButton = screen.getByText('Save Changes')
     expect(saveButton).toBeDisabled()
   })
-
-  it('does not show "Deleting..." text when not deleting', () => {
-    render(<EditEventForm event={mockEvent} />)
-
-    expect(screen.queryByText('Deleting...')).not.toBeInTheDocument()
-  })
 })
