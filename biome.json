@@ -71,7 +71,7 @@
         }
       },
       "suspicious": {
-        "noExplicitAny": "warn",
+        "noExplicitAny": "error",
         "noArrayIndexKey": "off",
         "noShadowRestrictedNames": "off"
       },
