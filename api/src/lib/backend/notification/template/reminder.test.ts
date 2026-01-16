@@ -50,7 +50,7 @@ Starts at: Sun Dec 25, 2022, 7:00 AM EST (in a day))
 Ends at: Sun Dec 25, 2022, 10:00 AM EST (3 hours long)
 
 View the event here:
-https://example.com/events/emmas-holiday-party
+https://example.com/event/emmas-holiday-party
 
 Thanks for using Freevite!
 
