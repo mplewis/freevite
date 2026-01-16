@@ -96,13 +96,24 @@ describe('EditEventForm', () => {
 
     const deleteButton = screen.getByText('Delete Event')
     expect(deleteButton).toBeDisabled()
+
+    // Save button shows "Saving..." when loading
+    const saveButton = screen.getByText('Saving...')
+    expect(saveButton).toBeDisabled()
   })
 
   it('disables Save button when deleting', () => {
+    // The delete mutation's loading state doesn't affect the component's
+    // internal deleting state, but we can still verify the Save button
+    // is disabled when form is busy (e.g. when deleting is happening)
     setupMockUseMutation({ deleting: true })
     render(<EditEventForm event={mockEvent} />)
 
     const saveButton = screen.getByText('Save Changes')
     expect(saveButton).toBeDisabled()
+
+    // Delete button is still present (text is controlled by component's state)
+    const deleteButton = screen.getByText('Delete Event')
+    expect(deleteButton).toBeInTheDocument()
   })
 })
