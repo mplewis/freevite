@@ -155,6 +155,8 @@ const EditEventForm = (props: Props) => {
     awaitRefetchQueries: true,
   })
 
+  const [deleting, setDeleting] = useState(false)
+
   const [destroy] = useMutation<
     DeleteEventMutation,
     DeleteEventMutationVariables
@@ -164,12 +166,15 @@ const EditEventForm = (props: Props) => {
       navigate(routes.home())
     },
     onError: (error) => {
+      setDeleting(false)
       alert(`Sorry, something went wrong:\n${error}`)
     },
   })
 
+  const busy = loading || deleting
+
   let savable = true
-  if (loading) savable = false
+  if (busy) savable = false
   if (!formState.isDirty) savable = false
   if (!formState.isValid) savable = false
 
@@ -241,7 +246,7 @@ const EditEventForm = (props: Props) => {
           <TextField
             name="title"
             validation={{ required: true }}
-            disabled={loading}
+            disabled={busy}
             {...fieldAttrs.input}
           />
         </FormField>
@@ -251,7 +256,7 @@ const EditEventForm = (props: Props) => {
             Use a name and street address for best results. For example:
             Nallen&apos;s Irish Pub, 1429 Market St, Denver, CO 80202
           </Typ>
-          <TextField name="location" disabled={loading} {...fieldAttrs.input} />
+          <TextField name="location" disabled={busy} {...fieldAttrs.input} />
         </FormField>
 
         <Controller
@@ -275,7 +280,7 @@ const EditEventForm = (props: Props) => {
                     value={tzOptions.find((o) => o.value === field.value)}
                     onChange={({ value }) => field.onChange(value)}
                     onBlur={field.onBlur}
-                    isDisabled={field.disabled || loading}
+                    isDisabled={field.disabled || busy}
                     className={'has-text-weight-normal'}
                     theme={updateSelectThemeToMatchDarkMode}
                   />
@@ -298,7 +303,7 @@ const EditEventForm = (props: Props) => {
                   id="start"
                   className="input"
                   type="datetime-local"
-                  disabled={loading}
+                  disabled={busy}
                   {...field}
                 />
               </div>
@@ -325,7 +330,7 @@ const EditEventForm = (props: Props) => {
                   id="end"
                   className="input"
                   type="datetime-local"
-                  disabled={loading}
+                  disabled={busy}
                   {...field}
                 />
               </div>
@@ -347,7 +352,7 @@ const EditEventForm = (props: Props) => {
           </Typ>
           <TextField
             name="slug"
-            disabled={loading}
+            disabled={busy}
             validation={{
               required: true,
               validate: {
@@ -378,7 +383,7 @@ const EditEventForm = (props: Props) => {
             name="description"
             validation={{ required: true }}
             rows={8}
-            disabled={loading}
+            disabled={busy}
             {...fieldAttrs.textarea}
           />
         </FormField>
@@ -388,7 +393,7 @@ const EditEventForm = (props: Props) => {
             id="visible"
             name="visible"
             defaultChecked={event.visible}
-            disabled={loading}
+            disabled={busy}
           />
           <span className="ml-2">Make this event visible to the public</span>
         </label>
@@ -400,12 +405,16 @@ const EditEventForm = (props: Props) => {
         <DeleteButton
           className="mt-3"
           text="Delete Event"
+          deleting={deleting}
           disabled={loading}
           onClick={() =>
             promptConfirm({
               desc: `delete the event ${event.title}`,
               confirmWith: 'DELETE',
-              action: () => destroy({ variables: { editToken } }),
+              action: () => {
+                setDeleting(true)
+                return destroy({ variables: { editToken } })
+              },
             })
           }
         />

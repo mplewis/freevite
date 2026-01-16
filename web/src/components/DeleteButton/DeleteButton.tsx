@@ -3,7 +3,8 @@ export type Props = {
   onClick: () => void
   text: string
   disabled?: boolean
-  disabledText?: string
+  deleting?: boolean
+  deletingText?: string
 }
 
 const DeleteButton = ({
@@ -11,19 +12,22 @@ const DeleteButton = ({
   onClick,
   text,
   disabled,
-  disabledText,
+  deleting,
+  deletingText,
 }: Props) => {
+  const isDisabled = disabled || deleting
+
   return (
     <div className={className}>
       <button
         className="button is-danger"
-        disabled={disabled}
+        disabled={isDisabled}
         onClick={(ev) => {
           ev.preventDefault()
           onClick()
         }}
       >
-        {disabled ? disabledText || 'Deleting...' : text}
+        {deleting ? deletingText || 'Deleting...' : text}
       </button>
     </div>
   )
