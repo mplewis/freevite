@@ -412,7 +412,7 @@ const EditEventForm = (props: Props) => {
               confirmWith: 'DELETE',
               action: () => {
                 setDeleting(true)
-                destroy({ variables: { editToken } })
+                return destroy({ variables: { editToken } })
               },
             })
           }

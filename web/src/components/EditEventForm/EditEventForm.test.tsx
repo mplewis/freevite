@@ -14,7 +14,7 @@ const mockEvent = {
   start: '2025-01-01T10:00:00.000Z',
   end: '2025-01-01T12:00:00.000Z',
   timezone: 'America/New_York',
-  responseConfig: 'ENABLED' as const,
+  responseConfig: 'SHOW_ALL' as const,
   responses: [],
 }
 
