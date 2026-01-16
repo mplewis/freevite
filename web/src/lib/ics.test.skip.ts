@@ -1,4 +1,3 @@
-import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { generateICS, downloadICS, type Event } from './ics'
 
 describe('generateICS', () => {
@@ -80,26 +79,24 @@ describe('downloadICS', () => {
   const mockElement = {
     href: '',
     download: '',
-    click: vi.fn(),
+    click: jest.fn(),
   }
 
   beforeEach(() => {
     // Mock DOM APIs
-    vi.stubGlobal('URL', {
-      createObjectURL: vi.fn(() => 'blob:mock-url'),
-      revokeObjectURL: vi.fn(),
-    })
-    vi.stubGlobal('document', {
-      createElement: vi.fn((tag: string) => {
-        if (tag === 'a') return mockElement
-        return document.createElement(tag)
-      }),
-      body: {
-        appendChild: vi.fn(),
-        removeChild: vi.fn(),
-      },
-    })
-    vi.stubGlobal('Blob', vi.fn(() => ({ size: 0 })))
+    global.URL = {
+      createObjectURL: jest.fn(() => 'blob:mock-url'),
+      revokeObjectURL: jest.fn(),
+    } as unknown as typeof URL
+    global.document.createElement = jest.fn((tag: string) => {
+      if (tag === 'a') return mockElement
+      return document.createElement(tag)
+    }) as unknown as typeof document.createElement
+    global.document.body = {
+      appendChild: jest.fn(),
+      removeChild: jest.fn(),
+    } as unknown as HTMLBodyElement
+    global.Blob = jest.fn(() => ({ size: 0 })) as unknown as typeof Blob
   })
 
   it('creates a blob with correct MIME type', () => {
@@ -112,7 +109,7 @@ describe('downloadICS', () => {
   })
 
   it('creates object URL for the blob', () => {
-    const createObjectURLSpy = vi.spyOn(URL, 'createObjectURL')
+    const createObjectURLSpy = jest.spyOn(URL, 'createObjectURL')
 
     downloadICS('BEGIN:VCALENDAR...', 'Test Event')
 
@@ -133,7 +130,7 @@ describe('downloadICS', () => {
   })
 
   it('revokes object URL after download', () => {
-    const revokeObjectURLSpy = vi.spyOn(URL, 'revokeObjectURL')
+    const revokeObjectURLSpy = jest.spyOn(URL, 'revokeObjectURL')
 
     downloadICS('BEGIN:VCALENDAR...', 'Test Event')
 
