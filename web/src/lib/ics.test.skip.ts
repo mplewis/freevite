@@ -102,10 +102,9 @@ describe('downloadICS', () => {
   it('creates a blob with correct MIME type', () => {
     downloadICS('BEGIN:VCALENDAR...', 'Test Event')
 
-    expect(Blob).toHaveBeenCalledWith(
-      ['BEGIN:VCALENDAR...'],
-      { type: 'text/calendar' }
-    )
+    expect(Blob).toHaveBeenCalledWith(['BEGIN:VCALENDAR...'], {
+      type: 'text/calendar',
+    })
   })
 
   it('creates object URL for the blob', () => {
