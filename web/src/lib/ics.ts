@@ -9,12 +9,22 @@ export type Event = {
   location: string
 }
 
+type EventAttributes = {
+  description: string
+  title: string
+  start: [number, number, number, number, number]
+  end: [number, number, number, number, number]
+  startInputType: string
+  startOutputType: string
+  endInputType: string
+  endOutputType: string
+  location?: string
+}
+
 /**
  * Convert a Date to the DateArray format expected by the ics library.
  */
-function convertToDateArray(
-  d: Date
-): [number, number, number, number, number] {
+function convertToDateArray(d: Date): [number, number, number, number, number] {
   return [
     d.getUTCFullYear(),
     d.getUTCMonth() + 1,
@@ -37,14 +47,14 @@ async function markdownToText(markdown: string): Promise<string> {
 /**
  * Convert an Event to the EventAttributes format required by the ics library.
  */
-async function convertEvent(event: Event): Promise<any> {
+async function convertEvent(event: Event): Promise<EventAttributes> {
   const startDate =
     typeof event.start === 'string' ? new Date(event.start) : event.start
   const endDate =
     typeof event.end === 'string' ? new Date(event.end) : event.end
 
   const description = await markdownToText(event.description)
-  const eventAttributes: any = {
+  const eventAttributes: EventAttributes = {
     description,
     title: event.title,
     start: convertToDateArray(startDate),
@@ -61,9 +71,9 @@ async function convertEvent(event: Event): Promise<any> {
 /**
  * Build ICS content from EventAttributes using the ics library.
  */
-function buildICSEvent(attrs: any): Promise<string> {
-  return new Promise(async (resolve, reject) => {
-    const { createEvent } = await import('ics')
+async function buildICSEvent(attrs: EventAttributes): Promise<string> {
+  const { createEvent } = await import('ics')
+  return new Promise((resolve, reject) => {
     createEvent(attrs, (error: Error | null, value: string) => {
       if (error) reject(error)
       else resolve(value)
