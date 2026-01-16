@@ -48,19 +48,13 @@
       "correctness": {
         "noUnusedVariables": "error",
         "noUnusedFunctionParameters": "off",
-        "noUnusedImports": "off",
-        "useJsxKeyInIterable": "off",
-        "useParseIntRadix": "off"
+        "useJsxKeyInIterable": "off"
       },
       "complexity": {
-        "useLiteralKeys": "off",
-        "useOptionalChain": "off",
-        "noUselessFragments": "off"
+        "useLiteralKeys": "off"
       },
       "style": {
         "noNonNullAssertion": "off",
-        "useNodejsImportProtocol": "off",
-        "useTemplate": "off",
         "noRestrictedImports": {
           "level": "error",
           "options": {
@@ -80,8 +74,7 @@
         "useButtonType": "off",
         "useValidAnchor": "off",
         "useAnchorContent": "off",
-        "useSemanticElements": "off",
-        "noRedundantRoles": "off"
+        "useSemanticElements": "off"
       },
       "security": {
         "noDangerouslySetInnerHtml": "off"
