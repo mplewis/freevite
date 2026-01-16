@@ -76,8 +76,13 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
           className="notification is-primary has-text-centered annoying-noti"
         >
           <div className="has-text-weight-semibold">
-            <span className="annoying-noti-hands">👉 👉</span> Check your email!{' '}
-            <span className="annoying-noti-hands">👈 👈</span>
+            <span className="annoying-noti-hands annoying-noti-hands-left">
+              👉 👉
+            </span>{' '}
+            Check your email!{' '}
+            <span className="annoying-noti-hands annoying-noti-hands-right">
+              👈 👈
+            </span>
           </div>
           We&apos;ll confirm your RSVP when you click the link in the email.
         </Typ>
@@ -92,12 +97,21 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
               }
             }
 
-            @keyframes animate-padding {
+            @keyframes animate-hands-left {
               0%, 100% {
-                padding: 0 8px;
+                transform: translateX(0);
               }
               50% {
-                padding: 0 16px;
+                transform: translateX(4px);
+              }
+            }
+
+            @keyframes animate-hands-right {
+              0%, 100% {
+                transform: translateX(0);
+              }
+              50% {
+                transform: translateX(-4px);
               }
             }
 
@@ -108,7 +122,16 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
             }
 
             .annoying-noti-hands {
-              animation: animate-padding 0.5s infinite;
+              display: inline-block;
+              width: 4em;
+            }
+
+            .annoying-noti-hands-left {
+              animation: animate-hands-left 0.5s infinite;
+            }
+
+            .annoying-noti-hands-right {
+              animation: animate-hands-right 0.5s infinite;
             }
           `}
         </style>
