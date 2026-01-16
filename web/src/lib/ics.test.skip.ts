@@ -1,4 +1,4 @@
-import { generateICS, downloadICS, type Event } from './ics'
+import { downloadICS, type Event, generateICS } from './ics'
 
 describe('generateICS', () => {
   const mockEvent: Event = {

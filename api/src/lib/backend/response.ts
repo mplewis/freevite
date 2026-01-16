@@ -1,4 +1,4 @@
-import { ResponseSummary } from 'types/graphql'
+import type { ResponseSummary } from 'types/graphql'
 
 /** Build a response summary for a set of responses. */
 export function summarize(responses: { headCount: number }[]): ResponseSummary {

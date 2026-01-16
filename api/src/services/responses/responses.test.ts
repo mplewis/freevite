@@ -3,13 +3,7 @@ import duration from 'dayjs/plugin/duration'
 import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
 
-import {
-  createResponse,
-  updateResponse,
-  deleteResponse,
-  pickRemindPriorSec,
-  responseByEditToken,
-} from './responses'
+import { createResponse, deleteResponse, pickRemindPriorSec, responseByEditToken, updateResponse } from './responses'
 import type { StandardScenario } from './responses.scenarios'
 
 dayjs.extend(duration)
@@ -33,31 +27,26 @@ describe('responses', () => {
     expect(result.reminders.length).toEqual(0)
   })
 
-  scenario(
-    'creates a response with a reminder',
-    async (scenario: StandardScenario) => {
-      const result = await createResponse({
-        eventId: scenario.response.two.eventId,
-        input: {
-          name: 'Jane Doe',
-          email: 'jane@example.com',
-          headCount: 1,
-          comment: "I'll be there!",
-          remindPriorSec: dayjs.duration(1, 'day').asSeconds(),
-          captchaResponse: 'some-captcha-response',
-        },
-      })
-      const event = await db.event.findUnique({ where: { id: result.eventId } })
+  scenario('creates a response with a reminder', async (scenario: StandardScenario) => {
+    const result = await createResponse({
+      eventId: scenario.response.two.eventId,
+      input: {
+        name: 'Jane Doe',
+        email: 'jane@example.com',
+        headCount: 1,
+        comment: "I'll be there!",
+        remindPriorSec: dayjs.duration(1, 'day').asSeconds(),
+        captchaResponse: 'some-captcha-response',
+      },
+    })
+    const event = await db.event.findUnique({ where: { id: result.eventId } })
 
-      expect(result.eventId).toEqual(scenario.response.two.eventId)
-      expect(result.email).toEqual('jane@example.com')
-      expect(result.headCount).toEqual(1)
-      expect(result.reminders.length).toEqual(1)
-      expect(dayjs(event.start).diff(result.reminders[0].sendAt)).toEqual(
-        dayjs.duration(1, 'day').asMilliseconds()
-      )
-    }
-  )
+    expect(result.eventId).toEqual(scenario.response.two.eventId)
+    expect(result.email).toEqual('jane@example.com')
+    expect(result.headCount).toEqual(1)
+    expect(result.reminders.length).toEqual(1)
+    expect(dayjs(event.start).diff(result.reminders[0].sendAt)).toEqual(dayjs.duration(1, 'day').asMilliseconds())
+  })
 
   scenario('updates a response', async (scenario: StandardScenario) => {
     const original = await db.response.findUniqueOrThrow({
@@ -93,9 +82,7 @@ describe('responses', () => {
     const event = await db.event.findUnique({ where: { id: original.eventId } })
 
     expect(result.reminders.length).toEqual(1)
-    expect(dayjs(event.start).diff(result.reminders[0].sendAt)).toEqual(
-      dayjs.duration(1, 'day').asMilliseconds()
-    )
+    expect(dayjs(event.start).diff(result.reminders[0].sendAt)).toEqual(dayjs.duration(1, 'day').asMilliseconds())
   })
 
   scenario('deletes a reminder', async (scenario: StandardScenario) => {
@@ -111,16 +98,13 @@ describe('responses', () => {
   })
 
   // TODO: Test that fetching the response with the edit token marks the response as confirmed
-  scenario(
-    'returns the expected response when a reminder exists',
-    async (scenario: StandardScenario) => {
-      const result = await responseByEditToken({
-        editToken: scenario.response.withReminder.editToken,
-      })
+  scenario('returns the expected response when a reminder exists', async (scenario: StandardScenario) => {
+    const result = await responseByEditToken({
+      editToken: scenario.response.withReminder.editToken,
+    })
 
-      expect(result.remindPriorSec).toEqual(3_600)
-    }
-  )
+    expect(result.remindPriorSec).toEqual(3_600)
+  })
 })
 
 describe('addRemindPriorSec', () => {
@@ -155,14 +139,8 @@ describe('addRemindPriorSec', () => {
   describe('with more than one reminder', () => {
     it('determinstically selects the earliest reminder', () => {
       const reminderSets = [
-        [
-          { sendAt: new Date('2024-01-06T12:00:00Z') },
-          { sendAt: new Date('2024-01-07T11:00:00Z') },
-        ],
-        [
-          { sendAt: new Date('2024-01-07T11:00:00Z') },
-          { sendAt: new Date('2024-01-06T12:00:00Z') },
-        ],
+        [{ sendAt: new Date('2024-01-06T12:00:00Z') }, { sendAt: new Date('2024-01-07T11:00:00Z') }],
+        [{ sendAt: new Date('2024-01-07T11:00:00Z') }, { sendAt: new Date('2024-01-06T12:00:00Z') }],
       ]
       for (const reminders of reminderSets) {
         const result = pickRemindPriorSec({ reminders, eventStart })

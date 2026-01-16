@@ -14,7 +14,9 @@
   },
   "packageManager": "yarn@4.4.0",
   "scripts": {
-    "preflight": "rw lint && jest --watchAll=false --all && rw type-check"
+    "lint": "biome check .",
+    "lint:fix": "biome check --write .",
+    "preflight": "biome check . && jest --watchAll=false --all && rw type-check"
   },
   "dependencies": {
     "@netlify/functions": "^2.8.2",
@@ -32,6 +34,7 @@
   },
   "devDependencies": {
     "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
+    "@biomejs/biome": "^2.3.11",
     "@redwoodjs/cli-storybook-vite": "8.4.0",
     "@redwoodjs/core": "8.4.0",
     "@redwoodjs/realtime": "8.4.0",
@@ -40,11 +43,7 @@
     "@types/marked": "^4.0.8",
     "@types/react-dom": "^18.3.0",
     "@types/sanitize-html": "^2.8.0",
-    "eslint": "^8.57.1",
-    "eslint-plugin-jsdoc": "^50.6.11",
-    "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.5.3",
-    "prettier-plugin-tailwindcss": "^0.6.11",
+    "jest-watch-typeahead": "^3.0.1",
     "tsx": "^4.19.3"
   }
 }

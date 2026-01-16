@@ -1,10 +1,8 @@
-import { render as reactEmailRender } from '@react-email/render'
-
-import { Mailer } from '@redwoodjs/mailer-core'
-import { AbstractMailRenderer } from '@redwoodjs/mailer-core'
+import type { render as reactEmailRender } from '@react-email/render'
 import type { MailRenderedContent, MailUtilities } from '@redwoodjs/mailer-core'
+import { AbstractMailRenderer, Mailer } from '@redwoodjs/mailer-core'
 import { NodemailerMailHandler } from '@redwoodjs/mailer-handler-nodemailer'
-import { RendererOptions } from '@redwoodjs/mailer-renderer-react-email'
+import type { RendererOptions } from '@redwoodjs/mailer-renderer-react-email'
 
 import { MAIL_CONFIG } from 'src/api.config'
 import { logger } from 'src/lib/backend/logger'
@@ -18,8 +16,7 @@ class PlainEmailRenderer extends AbstractMailRenderer {
     _options: RendererOptions,
     _utilities?: MailUtilities
   ): MailRenderedContent {
-    const text =
-      (template as { props?: { children?: string } }).props?.children ?? ''
+    const text = (template as { props?: { children?: string } }).props?.children ?? ''
     const html = null
     return { text, html }
   }

@@ -50,17 +50,11 @@ function random<T>(choices: T[], notLast?: T): T {
   return choice
 }
 
-const LoadingBuddy = ({
-  className,
-  durationMs,
-  transitionMs,
-  spinnerPeriodMs,
-}: Props) => {
+const LoadingBuddy = ({ className, durationMs, transitionMs, spinnerPeriodMs }: Props) => {
   // HACK: Match Bulma colors
   const light = 'rgb(219, 219, 219)'
   const dark = 'rgb(74, 74, 74)'
-  const darkMode =
-    window?.matchMedia?.('(prefers-color-scheme: dark)').matches || false
+  const darkMode = window?.matchMedia?.('(prefers-color-scheme: dark)').matches || false
 
   const dMs = durationMs || defaultProps.durationMs
   const tMs = transitionMs || defaultProps.transitionMs
@@ -91,14 +85,12 @@ const LoadingBuddy = ({
   }, [dMs, tMs, message])
 
   const msgTag = (
-    <span style={{ transition: `opacity ease-in ${tMs / 1000}s`, opacity }}>
-      {message}...
-    </span>
+    <span style={{ transition: `opacity ease-in ${tMs / 1000}s`, opacity }}>{message}...</span>
   )
 
   return (
     <div className={`is-flex ${className}`}>
-      <span className="mr-2">
+      <span className='mr-2'>
         <ThreeDotsFade color={darkMode ? light : dark} dur={sSec} />
       </span>
       {preamble},&nbsp;{msgTag}

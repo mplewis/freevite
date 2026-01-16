@@ -8,7 +8,7 @@ import PageHead from './PageHead'
 describe('PageHead', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<PageHead title="View Event" desc="View an event." />)
+      render(<PageHead title='View Event' desc='View an event.' />)
     }).not.toThrow()
   })
 })

@@ -3,7 +3,7 @@ export type Props = {
 }
 
 const Announcement = ({ msg }: Props) => {
-  return <div className="notification is-info">{msg}</div>
+  return <div className='notification is-info'>{msg}</div>
 }
 
 export default Announcement

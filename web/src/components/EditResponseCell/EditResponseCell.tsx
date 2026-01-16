@@ -1,29 +1,22 @@
-import { useEffect, useState } from 'react'
-
+import { useForm } from '@redwoodjs/forms'
+import { Link, navigate, routes } from '@redwoodjs/router'
+import { type CellFailureProps, type CellSuccessProps, useMutation } from '@redwoodjs/web'
 import { useAtom } from 'jotai/react'
+import { useEffect, useState } from 'react'
+import { markdownToHTML } from 'src/apiLibShared/markdown'
+import { responseTokenAtom } from 'src/data/atoms'
+import { promptConfirm } from 'src/logic/prompt'
 import type {
   Event as _Event,
   Reminder as _Reminder,
   Response as _Response,
+  DeleteResponseMutation,
+  DeleteResponseMutationVariables,
   GetResponseQuery,
   GetResponseQueryVariables,
   UpdateResponseMutation,
   UpdateResponseMutationVariables,
-  DeleteResponseMutation,
-  DeleteResponseMutationVariables,
 } from 'types/graphql'
-
-import { useForm } from '@redwoodjs/forms'
-import { Link, navigate, routes } from '@redwoodjs/router'
-import {
-  type CellSuccessProps,
-  type CellFailureProps,
-  useMutation,
-} from '@redwoodjs/web'
-
-import { markdownToHTML } from 'src/apiLibShared/markdown'
-import { responseTokenAtom } from 'src/data/atoms'
-import { promptConfirm } from 'src/logic/prompt'
 
 import CalButtons from '../CalButtons/CalButtons'
 import DeadEnd from '../DeadEnd/DeadEnd'
@@ -90,7 +83,7 @@ export const Loading = () => (
 
 export const Empty = () => (
   <DeadEnd
-    title="RSVP not found"
+    title='RSVP not found'
     desc={[
       "Sorry, we couldn't find your RSVP.",
       'Please double-check that you have the correct link.',
@@ -101,13 +94,11 @@ export const Empty = () => (
   />
 )
 
-export const Failure = ({
-  error,
-}: CellFailureProps<GetResponseQueryVariables>) => {
+export const Failure = ({ error }: CellFailureProps<GetResponseQueryVariables>) => {
   console.error({ error })
   return (
     <DeadEnd
-      title="Something went wrong"
+      title='Something went wrong'
       desc={[
         "Sorry, we weren't able to load your RSVP.",
         "We've notified the engineering team who will work to resolve this issue. " +
@@ -149,18 +140,18 @@ export const Success = ({
     awaitRefetchQueries: true,
   })
 
-  const [destroy] = useMutation<
-    DeleteResponseMutation,
-    DeleteResponseMutationVariables
-  >(DELETE_RESPONSE, {
-    onCompleted: () => {
-      alert('Your RSVP was canceled successfully.')
-      navigate(routes.viewEvent({ slug: event.slug }))
-    },
-    onError: (error) => {
-      alert(`Sorry, something went wrong:\n${error}`)
-    },
-  })
+  const [destroy] = useMutation<DeleteResponseMutation, DeleteResponseMutationVariables>(
+    DELETE_RESPONSE,
+    {
+      onCompleted: () => {
+        alert('Your RSVP was canceled successfully.')
+        navigate(routes.viewEvent({ slug: event.slug }))
+      },
+      onError: (error) => {
+        alert(`Sorry, something went wrong:\n${error}`)
+      },
+    }
+  )
 
   const [deleting, setDeleting] = useState(false)
   const [updateSuccess, setUpdateSuccess] = useState(false)
@@ -177,29 +168,29 @@ export const Success = ({
     <>
       <PageHead
         title={`Confirmed: ${event.title}`}
-        desc="RSVP to events on Freevite, the simple event platform."
+        desc='RSVP to events on Freevite, the simple event platform.'
       />
-      <Typ x="p">
+      <Typ x='p'>
         We have notified the event organizer that you will be attending{' '}
         <strong>{event.title}</strong>. Thanks for using Freevite!
       </Typ>
 
-      <div className="mb-4">
-        <Link className="button is-primary mt-3" to={`/event/${event.slug}`}>
+      <div className='mb-4'>
+        <Link className='button is-primary mt-3' to={`/event/${event.slug}`}>
           View event details &raquo;
         </Link>
       </div>
       <CalButtons event={event} htmlDesc={htmlDesc} />
 
       <hr />
-      <Typ x="subhead">Update your RSVP</Typ>
-      <Typ x="p">
-        Your current response is shown below. Use this form to update your
-        details or cancel your RSVP.
+      <Typ x='subhead'>Update your RSVP</Typ>
+      <Typ x='p'>
+        Your current response is shown below. Use this form to update your details or cancel your
+        RSVP.
       </Typ>
 
       <ResponseForm
-        mode="UPDATE"
+        mode='UPDATE'
         event={event}
         loading={saving || deleting}
         formMethods={formMethods}
@@ -219,16 +210,14 @@ export const Success = ({
       />
 
       {updateSuccess && (
-        <Typ x="p">
-          <strong className="has-text-success">
-            Your RSVP was updated successfully.
-          </strong>
+        <Typ x='p'>
+          <strong className='has-text-success'>Your RSVP was updated successfully.</strong>
         </Typ>
       )}
 
       <DeleteButton
-        className="my-4"
-        text="Delete my RSVP"
+        className='my-4'
+        text='Delete my RSVP'
         deleting={deleting}
         onClick={async () =>
           await promptConfirm({

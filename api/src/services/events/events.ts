@@ -1,11 +1,4 @@
-import type {
-  QueryResolvers,
-  MutationResolvers,
-  PublicResponse,
-} from 'types/graphql'
-
 import { RedwoodError, validate } from '@redwoodjs/api'
-
 import { validateCaptcha } from 'src/lib/backend/captcha'
 import { send } from 'src/lib/backend/notification'
 import {
@@ -15,10 +8,11 @@ import {
   notiEventUpdated,
 } from 'src/lib/backend/notification/template/event'
 import { summarize } from 'src/lib/backend/response'
-import { generateToken, alphaLower } from 'src/lib/backend/token'
+import { alphaLower, generateToken } from 'src/lib/backend/token'
 import { db } from 'src/lib/db'
 import dayjs from 'src/lib/shared/dayjs'
 import { checkVisibility } from 'src/lib/shared/visibility'
+import type { MutationResolvers, PublicResponse, QueryResolvers } from 'types/graphql'
 
 import { updateEventPreviewImage } from './preview'
 
@@ -83,9 +77,7 @@ export const eventBySlug: QueryResolvers['eventBySlug'] = async ({ slug }) => {
   }
 }
 
-export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
-  editToken,
-}) => {
+export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({ editToken }) => {
   const existing = await db.event.findUnique({ where: { editToken } })
   if (!existing) return null
   const wasConfirmed = existing.confirmed
@@ -97,26 +89,22 @@ export const eventByEditToken: QueryResolvers['eventByEditToken'] = async ({
   })
 }
 
-export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] =
-  async ({ previewToken }) => db.event.findUnique({ where: { previewToken } })
+export const eventByPreviewToken: QueryResolvers['eventByPreviewToken'] = async ({
+  previewToken,
+}) => db.event.findUnique({ where: { previewToken } })
 
-export const createEvent: MutationResolvers['createEvent'] = async ({
-  input: _input,
-}) => {
+export const createEvent: MutationResolvers['createEvent'] = async ({ input: _input }) => {
   const { captchaResponse, ...input } = _input
 
   const valid = await validateCaptcha(captchaResponse)
   if (!valid)
-    throw new RedwoodError(
-      'Could not validate reCAPTCHA. Please refresh the page and try again.'
-    )
+    throw new RedwoodError('Could not validate reCAPTCHA. Please refresh the page and try again.')
 
   validate(input.ownerEmail, 'email', { email: true })
   validate(input.title, 'title', {
     custom: {
       with: () => {
-        if (input.title.trim().length === 0)
-          throw new Error('Title must not be blank')
+        if (input.title.trim().length === 0) throw new Error('Title must not be blank')
       },
     },
   })
@@ -127,10 +115,7 @@ export const createEvent: MutationResolvers['createEvent'] = async ({
   return event
 }
 
-export const updateEvent: MutationResolvers['updateEvent'] = async ({
-  editToken,
-  input,
-}) => {
+export const updateEvent: MutationResolvers['updateEvent'] = async ({ editToken, input }) => {
   if (input.end) {
     validate(input.end, 'end', {
       custom: {
@@ -150,13 +135,10 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
     where: { editToken },
   })
 
-  const diff: Record<string, string> = Object.entries(input).reduce(
-    (acc, [key, value]) => {
-      if (oldEvent[key] !== value) acc[key.toString()] = value.toString()
-      return acc
-    },
-    {}
-  )
+  const diff: Record<string, string> = Object.entries(input).reduce((acc, [key, value]) => {
+    if (oldEvent[key] !== value) acc[key.toString()] = value.toString()
+    return acc
+  }, {})
   await send(notiEventUpdated(event, diff))
 
   if (input.start) {
@@ -174,9 +156,7 @@ export const updateEvent: MutationResolvers['updateEvent'] = async ({
   return event
 }
 
-export const deleteEvent: MutationResolvers['deleteEvent'] = async ({
-  editToken,
-}) => {
+export const deleteEvent: MutationResolvers['deleteEvent'] = async ({ editToken }) => {
   const event = await db.event.delete({ where: { editToken } })
   await send(notiEventDeleted(event))
   return event

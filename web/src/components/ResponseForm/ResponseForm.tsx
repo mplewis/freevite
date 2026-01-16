@@ -1,27 +1,24 @@
-import { useEffect, useState } from 'react'
-
-import { ApolloError } from '@apollo/client/errors'
-import ReCAPTCHA from 'react-google-recaptcha'
-import { SetOptional } from 'type-fest'
-import { PublicEvent, UpdatableResponse } from 'types/graphql'
-
+import type { ApolloError } from '@apollo/client/errors'
 import {
-  Form,
-  TextField,
   EmailField,
+  Form,
   FormError,
-  Submit,
   NumberField,
   SelectField,
-  UseFormReturn,
+  Submit,
+  TextField,
+  type UseFormReturn,
 } from '@redwoodjs/forms'
-
+import { useEffect, useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { reminderDurations } from 'src/apiLibShared/reminder'
 import { RECAPTCHA_CLIENT_KEY } from 'src/apiLibShared/shared.config'
 import FormField from 'src/components/FormField/FormField'
 import Typ from 'src/components/Typ/Typ'
 import { isEmail } from 'src/logic/validation'
 import { fieldAttrs, formErrorAttrs } from 'src/styles/classes'
+import type { SetOptional } from 'type-fest'
+import type { PublicEvent, UpdatableResponse } from 'types/graphql'
 
 export type Props = {
   mode: 'CREATE' | 'UPDATE'
@@ -36,10 +33,7 @@ export type Props = {
 }
 
 export type FormValues = SetOptional<
-  Pick<
-    UpdatableResponse,
-    'name' | 'headCount' | 'comment' | 'remindPriorSec' | 'email'
-  >,
+  Pick<UpdatableResponse, 'name' | 'headCount' | 'comment' | 'remindPriorSec' | 'email'>,
   'email'
 >
 
@@ -51,22 +45,16 @@ function random<T>(choices: T[]): T {
 }
 
 const ResponseForm = (props: Props) => {
-  const {
-    mode,
-    event,
-    error,
-    loading,
-    formMethods,
-    onChange,
-    onCaptchaResponse,
-    onSubmit,
-  } = props
+  const { mode, event, error, loading, formMethods, onChange, onCaptchaResponse, onSubmit } = props
   const { formState, getValues } = formMethods
 
   const { email } = getValues()
   const forbidResubmit = (() => {
     if (!email) return false
-    return email === error?.cause?.extensions?.['forbidResubmitForEmail']
+    return (
+      email ===
+      (error?.cause?.extensions as Record<string, string> | undefined)?.['forbidResubmitForEmail']
+    )
   })()
 
   const [exampleName, setExampleName] = useState('')
@@ -90,23 +78,17 @@ const ResponseForm = (props: Props) => {
 
   return (
     <>
-      <Typ x="p">{privacyNote}</Typ>
+      <Typ x='p'>{privacyNote}</Typ>
 
-      <Form
-        className="mt-3"
-        formMethods={formMethods}
-        onChange={onChange}
-        onSubmit={onSubmit}
-      >
+      <Form className='mt-3' formMethods={formMethods} onChange={onChange} onSubmit={onSubmit}>
         {mode === 'CREATE' && (
-          <FormField name="email" text="Email Address*">
-            <Typ x="labelDetails">
-              We will send you a link to confirm. Your email will not be shared
-              with anyone else.
+          <FormField name='email' text='Email Address*'>
+            <Typ x='labelDetails'>
+              We will send you a link to confirm. Your email will not be shared with anyone else.
             </Typ>
             <EmailField
-              name="email"
-              placeholder="yourname@example.com"
+              name='email'
+              placeholder='yourname@example.com'
               validation={{ ...isEmail }}
               disabled={loading}
               {...fieldAttrs.input}
@@ -114,9 +96,9 @@ const ResponseForm = (props: Props) => {
           </FormField>
         )}
 
-        <FormField name="name" text="Your Name*">
+        <FormField name='name' text='Your Name*'>
           <TextField
-            name="name"
+            name='name'
             placeholder={exampleName}
             validation={{ required: true }}
             disabled={loading}
@@ -124,12 +106,10 @@ const ResponseForm = (props: Props) => {
           />
         </FormField>
 
-        <FormField name="headCount" text="Head Count*">
-          <Typ x="labelDetails">
-            How many people are you bringing, including yourself?
-          </Typ>
+        <FormField name='headCount' text='Head Count*'>
+          <Typ x='labelDetails'>How many people are you bringing, including yourself?</Typ>
           <NumberField
-            name="headCount"
+            name='headCount'
             disabled={loading}
             validation={{
               required: true,
@@ -139,50 +119,39 @@ const ResponseForm = (props: Props) => {
           />
         </FormField>
 
-        <FormField name="comment" text="Additional Comments">
-          <Typ x="labelDetails">
+        <FormField name='comment' text='Additional Comments'>
+          <Typ x='labelDetails'>
             Is there anything you want the organizer{' '}
             {event.responseConfig === 'SHOW_ALL' && 'and other guests '}to know?
           </Typ>
-          <TextField name="comment" disabled={loading} {...fieldAttrs.input} />
+          <TextField name='comment' disabled={loading} {...fieldAttrs.input} />
         </FormField>
 
-        <FormField name="reminder" text="Send Me a Reminder">
-          <Typ x="labelDetails">
-            If you want, we can email you a reminder so you don&apos;t forget
-            about this event.
+        <FormField name='reminder' text='Send Me a Reminder'>
+          <Typ x='labelDetails'>
+            If you want, we can email you a reminder so you don&apos;t forget about this event.
           </Typ>
           <SelectField
-            name="remindPriorSec"
+            name='remindPriorSec'
             disabled={loading}
             validation={{ valueAsNumber: true }}
             {...fieldAttrs.input}
           >
             {Object.entries(reminderDurations).map(([label, value]) => (
               <option key={label} value={value}>
-                {value
-                  ? `Remind me ${label} before the event starts`
-                  : 'Do not send me a reminder'}
+                {value ? `Remind me ${label} before the event starts` : 'Do not send me a reminder'}
               </option>
             ))}
           </SelectField>
         </FormField>
 
         {mode === 'CREATE' && (
-          <ReCAPTCHA
-            sitekey={RECAPTCHA_CLIENT_KEY}
-            onChange={onCaptchaResponse}
-          />
+          <ReCAPTCHA sitekey={RECAPTCHA_CLIENT_KEY} onChange={onCaptchaResponse} />
         )}
 
         <Submit
-          className="button is-success mt-3"
-          disabled={
-            loading ||
-            !formState.isValid ||
-            !formState.isDirty ||
-            forbidResubmit
-          }
+          className='button is-success mt-3'
+          disabled={loading || !formState.isValid || !formState.isDirty || forbidResubmit}
         >
           {mode === 'CREATE'
             ? loading

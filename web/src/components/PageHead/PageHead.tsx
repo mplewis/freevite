@@ -17,7 +17,7 @@ const PageHead = ({ title, desc, ogImage }: Props) => {
   return (
     <>
       <Metadata title={ogTitle} description={desc} og={{ image }} />
-      <Typ x="head">{title}</Typ>
+      <Typ x='head'>{title}</Typ>
     </>
   )
 }

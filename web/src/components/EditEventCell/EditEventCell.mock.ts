@@ -1,4 +1,4 @@
-import { Event } from 'types/graphql'
+import type { Event } from 'types/graphql'
 
 // Define your own mock data here:
 export const standard = (/* vars, { ctx, req } */) => ({

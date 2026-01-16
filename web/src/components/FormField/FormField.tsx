@@ -8,11 +8,11 @@ export type Props = {
 
 const FormField = ({ name, text, children }: Props) => {
   return (
-    <div className="field">
-      <label className="label" htmlFor={name}>
+    <div className='field'>
+      <label className='label' htmlFor={name}>
         {text}
-        <div className="control">{children}</div>
-        <FieldError name={name} className="error has-text-danger" />
+        <div className='control'>{children}</div>
+        <FieldError name={name} className='error has-text-danger' />
       </label>
     </div>
   )

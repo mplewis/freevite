@@ -1,7 +1,6 @@
-import { PublicEvent as _PublicEvent } from 'types/graphql'
-
 import dayjs from 'src/apiLibShared/dayjs'
 import { downloadICS, generateICS } from 'src/lib/ics'
+import type { PublicEvent as _PublicEvent } from 'types/graphql'
 
 import GCal from './GcalSVG'
 import ICS from './IcsSVG'
@@ -38,7 +37,7 @@ function gcalLink(event: PublicEvent, descHTML: string) {
 }
 
 const IconBox = ({ children }) => (
-  <div className="mr-3" style={{ width: ICON_WIDTH, display: 'inline-block' }}>
+  <div className='mr-3' style={{ width: ICON_WIDTH, display: 'inline-block' }}>
     {children}
   </div>
 )
@@ -53,14 +52,14 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
   return (
     <>
       <IconBox>
-        <a href={gcalLink(event, htmlDesc)} target="_blank" rel="noreferrer">
-          <GCal aria-label="Add to Google Calendar" />
+        <a href={gcalLink(event, htmlDesc)} target='_blank' rel='noreferrer'>
+          <GCal aria-label='Add to Google Calendar' />
         </a>
       </IconBox>
       <IconBox>
         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#" onClick={handleIcsClick} role="button">
-          <ICS aria-label="Add to Apple Calendar" />
+        <a href='#' onClick={handleIcsClick} role='button'>
+          <ICS aria-label='Add to Apple Calendar' />
         </a>
       </IconBox>
     </>

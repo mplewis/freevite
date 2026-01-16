@@ -1,6 +1,6 @@
 import { render } from '@redwoodjs/testing/web'
 
-import { Loading, Empty, Failure, Success } from './EditEventCell'
+import { Empty, Failure, Loading, Success } from './EditEventCell'
 import { standard } from './EditEventCell.mock'
 
 // Generated boilerplate tests do not account for all circumstances

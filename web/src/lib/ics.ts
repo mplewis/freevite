@@ -48,10 +48,8 @@ async function markdownToText(markdown: string): Promise<string> {
  * Convert an Event to the EventAttributes format required by the ics library.
  */
 async function convertEvent(event: Event): Promise<EventAttributes> {
-  const startDate =
-    typeof event.start === 'string' ? new Date(event.start) : event.start
-  const endDate =
-    typeof event.end === 'string' ? new Date(event.end) : event.end
+  const startDate = typeof event.start === 'string' ? new Date(event.start) : event.start
+  const endDate = typeof event.end === 'string' ? new Date(event.end) : event.end
 
   const description = await markdownToText(event.description)
   const eventAttributes: EventAttributes = {

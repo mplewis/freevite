@@ -5,9 +5,7 @@ function main() {
   // HACK: Redwood+Netlify doesn't seem to be obeying our `includeEnvironmentVariables` setting
   const dsn = process.env.SENTRY_DSN || process.env.REDWOOD_ENV_SENTRY_DSN
   if (!dsn) {
-    console.error(
-      'Missing SENTRY_DSN environment variable. Sentry is disabled.'
-    )
+    console.error('Missing SENTRY_DSN environment variable. Sentry is disabled.')
     return
   }
 

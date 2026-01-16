@@ -1,10 +1,9 @@
+import type { CellFailureProps, CellSuccessProps } from '@redwoodjs/web'
 import type {
   FindPreviewEventQuery,
   FindPreviewEventQueryVariables,
   PublicEvent,
 } from 'types/graphql'
-
-import type { CellSuccessProps, CellFailureProps } from '@redwoodjs/web'
 
 import DeadEnd from '../DeadEnd/DeadEnd'
 import LoadingBuddy from '../LoadingBuddy/LoadingBuddy'
@@ -34,7 +33,7 @@ export const Loading = () => (
 
 export const Empty = () => (
   <DeadEnd
-    title="Event not found"
+    title='Event not found'
     desc={[
       "Sorry, we couldn't find the event you were looking for.",
       'Please double-check that you have the correct link.',
@@ -45,13 +44,11 @@ export const Empty = () => (
   />
 )
 
-export const Failure = ({
-  error,
-}: CellFailureProps<FindPreviewEventQueryVariables>) => {
+export const Failure = ({ error }: CellFailureProps<FindPreviewEventQueryVariables>) => {
   console.error({ error })
   return (
     <DeadEnd
-      title="Something went wrong"
+      title='Something went wrong'
       desc={[
         "Sorry, we weren't able to load your RSVP.",
         "We've notified the engineering team who will work to resolve this issue. " +
@@ -84,7 +81,7 @@ export const Success = ({
 
   /* eslint-disable jsx-a11y/anchor-is-valid */
   const thisLink = (
-    <a href="" target="_blank">
+    <a href='' target='_blank' rel='noopener'>
       this page URL
     </a>
   )
@@ -92,18 +89,17 @@ export const Success = ({
     <>
       <PageHead
         title={`Preview: ${event.title}`}
-        desc="Review your event details before you go live."
+        desc='Review your event details before you go live.'
       />
 
-      <p className="is-italic mb-3">
+      <p className='is-italic mb-3'>
         Below is how your event will appear to the public.
         <br />
-        You can send {thisLink} to friends if you want them to review your event
-        details.
+        You can send {thisLink} to friends if you want them to review your event details.
       </p>
 
       <p>
-        <button className="button link" onClick={() => history.back()}>
+        <button className='button link' onClick={() => history.back()}>
           &laquo; Go back
         </button>
       </p>

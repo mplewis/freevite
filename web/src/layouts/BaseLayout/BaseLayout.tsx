@@ -12,7 +12,7 @@ const BaseLayout = ({ children }: BaseLayoutProps) => {
 
   return (
     <>
-      <div className="is-max-desktop container px-4 pb-4">
+      <div className='is-max-desktop container px-4 pb-4'>
         <Navbar />
         {children}
         <Footer />

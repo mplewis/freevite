@@ -8,7 +8,7 @@ import Typ from './Typ'
 describe('Typ', () => {
   it('renders successfully', () => {
     expect(() => {
-      render(<Typ x="p">your text here</Typ>)
+      render(<Typ x='p'>your text here</Typ>)
     }).not.toThrow()
   })
 })

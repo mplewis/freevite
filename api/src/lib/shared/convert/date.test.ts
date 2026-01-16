@@ -1,9 +1,4 @@
-import {
-  prettyEndWithBetween,
-  prettyStartWithUntil,
-  toLocal,
-  toUTC,
-} from './date'
+import { prettyEndWithBetween, prettyStartWithUntil, toLocal, toUTC } from './date'
 
 const CURRENT_YEAR = 2024
 
@@ -28,9 +23,7 @@ describe('prettyStartWithUntil', () => {
     const start = '2024-12-25T12:00:00Z'
     const tz = 'America/Denver'
     const now = new Date('2024-12-25T08:00:00Z')
-    expect(prettyStartWithUntil(start, tz, now, CURRENT_YEAR)).toBe(
-      'Wed Dec 25, 5:00 AM MST (in 4 hours)'
-    )
+    expect(prettyStartWithUntil(start, tz, now, CURRENT_YEAR)).toBe('Wed Dec 25, 5:00 AM MST (in 4 hours)')
   })
 })
 
@@ -39,8 +32,6 @@ describe('prettyEndWithBetween', () => {
     const start = '2024-12-25T12:00:00Z'
     const end = '2024-12-25T20:00:00Z'
     const tz = 'America/Denver'
-    expect(prettyEndWithBetween(start, end, tz, CURRENT_YEAR)).toBe(
-      'Wed Dec 25, 1:00 PM MST (8 hours long)'
-    )
+    expect(prettyEndWithBetween(start, end, tz, CURRENT_YEAR)).toBe('Wed Dec 25, 1:00 PM MST (8 hours long)')
   })
 })

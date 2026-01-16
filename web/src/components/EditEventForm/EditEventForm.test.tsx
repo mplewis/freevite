@@ -62,9 +62,7 @@ describe('EditEventForm', () => {
     const titleInput = container.querySelector('input[name="title"]')
     const locationInput = container.querySelector('input[name="location"]')
     const slugInput = container.querySelector('input[name="slug"]')
-    const descriptionTextarea = container.querySelector(
-      'textarea[name="description"]'
-    )
+    const descriptionTextarea = container.querySelector('textarea[name="description"]')
 
     expect(titleInput).toBeEnabled()
     expect(locationInput).toBeEnabled()

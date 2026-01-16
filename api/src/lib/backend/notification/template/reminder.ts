@@ -1,14 +1,13 @@
 import { stripIndent } from 'common-tags'
-import { PublicEvent, Response } from 'types/graphql'
-
 import {
   prettyEndWithBetween,
   prettyStartWithUntil,
   prettyUntil,
 } from 'src/lib/shared/convert/date'
 import { SITE_URL } from 'src/lib/shared/shared.config'
+import type { PublicEvent, Response } from 'types/graphql'
 
-import { Notification } from '..'
+import type { Notification } from '..'
 
 /** Notification about an upcoming event for which a user RSVPed. */
 export function notiReminderDue(

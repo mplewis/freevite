@@ -41,10 +41,7 @@ export function setDiscordSendImpl(impl: (embed: Embed) => Promise<void>) {
 async function sendToDiscord(embed: Embed): Promise<void> {
   if (CI || LOCALHOST) return
   const url = process.env.DISCORD_WEBHOOK_URL
-  if (!url)
-    throw new Error(
-      `Missing DISCORD_WEBHOOK_URL, cannot send notification: ${embed}`
-    )
+  if (!url) throw new Error(`Missing DISCORD_WEBHOOK_URL, cannot send notification: ${embed}`)
 
   const hook = new Webhook(url)
   await hook.addEmbed(embed).send()

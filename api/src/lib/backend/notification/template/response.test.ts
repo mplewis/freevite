@@ -1,11 +1,7 @@
-import { send } from '..'
 import { MockNotification } from '../../../test/notification'
+import { send } from '..'
 
-import {
-  notiResponseConfirmed,
-  notiResponseCreated,
-  notiResponseDeleted,
-} from './response'
+import { notiResponseConfirmed, notiResponseCreated, notiResponseDeleted } from './response'
 
 const mockNotification = new MockNotification()
 

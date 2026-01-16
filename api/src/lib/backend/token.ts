@@ -1,5 +1,4 @@
-export const alphanumeric =
-  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+export const alphanumeric = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
 export const alphaLower = 'abcdefghijklmnopqrstuvwxyz'
 
 export type Params = {

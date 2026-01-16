@@ -1,6 +1,6 @@
 import classNames from 'classnames'
 import * as R from 'remeda'
-import { Entries } from 'type-fest'
+import type { Entries } from 'type-fest'
 
 const supportedClasses = ['input', 'textarea', 'checkbox'] as const
 const classes = R.mapToObj(supportedClasses, (key) => [key, classNames(key)])

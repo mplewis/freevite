@@ -1,11 +1,7 @@
 import { sign } from 'src/lib/backend/sign'
 import { db } from 'src/lib/db'
 
-import {
-  createIgnoredEmail,
-  deleteIgnoredEmail,
-  ignoredEmail,
-} from './ignoredEmails'
+import { createIgnoredEmail, deleteIgnoredEmail, ignoredEmail } from './ignoredEmails'
 
 describe('with an email on the ignore list', () => {
   const emailExist = 'joanna@wellick.nl'
@@ -36,9 +32,7 @@ describe('with an email on the ignore list', () => {
     })
 
     it('fails for an invalid token', async () => {
-      await expect(
-        ignoredEmail({ input: { email: emailExist, token: 'invalid' } })
-      ).rejects.toThrow('Could not validate your request')
+      await expect(ignoredEmail({ input: { email: emailExist, token: 'invalid' } })).rejects.toThrow('Could not validate your request')
     })
   })
 

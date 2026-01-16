@@ -1,9 +1,8 @@
-import dns from 'dns'
+import redwood from '@redwoodjs/vite'
 
 import { sentryVitePlugin } from '@sentry/vite-plugin'
-import { defineConfig, UserConfig } from 'vite'
-
-import redwood from '@redwoodjs/vite'
+import dns from 'dns'
+import { defineConfig, type UserConfig } from 'vite'
 
 // See: https://vitejs.dev/config/server-options.html#server-host
 // So that Vite will load on local instead of 127.0.0.1
