@@ -1,6 +1,38 @@
 import { render, screen } from '@redwoodjs/testing/web'
+import { useMutation } from '@redwoodjs/web'
 
 import EditEventForm from './EditEventForm'
+
+// Mock the useMutation hook
+jest.mock('@redwoodjs/web', () => ({
+  ...jest.requireActual('@redwoodjs/web'),
+  useMutation: jest.fn(),
+}))
+
+const mockSave = jest.fn()
+const mockDestroy = jest.fn()
+
+let callCount = 0
+function setupMockUseMutation(loading = false, deleting = false) {
+  callCount = 0
+  ;(useMutation as jest.Mock).mockImplementation(() => {
+    callCount++
+    // First call is UPDATE_EVENT, second call is DELETE_EVENT
+    if (callCount === 1) {
+      return [
+        mockSave,
+        { loading, error: null },
+      ]
+    }
+    if (callCount === 2) {
+      return [
+        mockDestroy,
+        { loading: deleting, error: null },
+      ]
+    }
+    return [jest.fn(), { loading: false, error: null }]
+  })
+}
 
 const mockEvent = {
   editToken: 'editToken',
@@ -19,6 +51,10 @@ const mockEvent = {
 }
 
 describe('EditEventForm', () => {
+  beforeEach(() => {
+    setupMockUseMutation(false, false)
+  })
+
   it('renders successfully', () => {
     expect(() => {
       render(<EditEventForm event={mockEvent} />)
@@ -55,11 +91,19 @@ describe('EditEventForm', () => {
   })
 
   it('disables Delete button while saving', () => {
-    const { container } = render(<EditEventForm event={mockEvent} />)
+    setupMockUseMutation(true, false)
+    render(<EditEventForm event={mockEvent} />)
 
-    // Find the Delete button - it should be enabled initially
     const deleteButton = screen.getByText('Delete Event')
-    expect(deleteButton).toBeEnabled()
+    expect(deleteButton).toBeDisabled()
+  })
+
+  it('disables Save button when deleting', () => {
+    setupMockUseMutation(false, true)
+    render(<EditEventForm event={mockEvent} />)
+
+    const saveButton = screen.getByText('Save Changes')
+    expect(saveButton).toBeDisabled()
   })
 
   it('does not show "Deleting..." text when not deleting', () => {
