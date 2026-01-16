@@ -58,6 +58,7 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
         </a>
       </IconBox>
       <IconBox>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
         <a href="#" onClick={handleIcsClick} role="button">
           <ICS aria-label="Add to Apple Calendar" />
         </a>
