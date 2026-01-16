@@ -57,7 +57,17 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
         </a>
       </IconBox>
       <IconBox>
-        <button onClick={handleIcsClick} type="button">
+        <button
+          onClick={handleIcsClick}
+          type="button"
+          style={{
+            background: 'none',
+            border: 'none',
+            padding: 0,
+            margin: 0,
+            cursor: 'pointer',
+          }}
+        >
           <ICS aria-label="Add to Apple Calendar" />
         </button>
       </IconBox>
