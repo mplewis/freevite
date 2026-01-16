@@ -1,4 +1,5 @@
 import dayjs from 'src/apiLibShared/dayjs'
+import { downloadICS, generateICS } from 'src/lib/ics'
 import type { PublicEvent as _PublicEvent } from 'types/graphql'
 
 import GCal from './GcalSVG'
@@ -9,7 +10,10 @@ export type Props = {
   htmlDesc: string
 }
 
-type PublicEvent = Pick<_PublicEvent, 'title' | 'slug' | 'start' | 'end' | 'location'>
+type PublicEvent = Pick<
+  _PublicEvent,
+  'title' | 'slug' | 'start' | 'end' | 'location' | 'description'
+>
 
 const GCAL_DATE_FORMAT = 'YYYYMMDDTHHmmss[Z]'
 const ICON_WIDTH = '200px'
@@ -39,8 +43,11 @@ const IconBox = ({ children }) => (
 )
 
 const CalButtons = ({ event, htmlDesc }: Props) => {
-  const { slug } = event
-  const icsLink = `${globalThis.RWJS_API_URL}/downloadIcs?event=${slug}`
+  const handleIcsClick = async (e: React.MouseEvent) => {
+    e.preventDefault()
+    const icsContent = await generateICS(event)
+    downloadICS(icsContent, event.title)
+  }
 
   return (
     <>
@@ -50,7 +57,8 @@ const CalButtons = ({ event, htmlDesc }: Props) => {
         </a>
       </IconBox>
       <IconBox>
-        <a href={icsLink} target='_blank' rel='noreferrer'>
+        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+        <a href='#' onClick={handleIcsClick} role='button'>
           <ICS aria-label='Add to Apple Calendar' />
         </a>
       </IconBox>
