@@ -14,10 +14,10 @@ type EventAttributes = {
   title: string
   start: [number, number, number, number, number]
   end: [number, number, number, number, number]
-  startInputType: string
-  startOutputType: string
-  endInputType: string
-  endOutputType: string
+  startInputType: 'utc' | 'local'
+  startOutputType: 'utc' | 'local'
+  endInputType: 'utc' | 'local'
+  endOutputType: 'utc' | 'local'
   location?: string
 }
 
