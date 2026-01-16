@@ -13,7 +13,7 @@ const mockSave = jest.fn()
 const mockDestroy = jest.fn()
 
 let callCount = 0
-function setupMockUseMutation(loading = false, deleting = false) {
+function setupMockUseMutation({ loading = false, deleting = false } = {}) {
   callCount = 0
   ;(useMutation as jest.Mock).mockImplementation(() => {
     callCount++
@@ -52,7 +52,7 @@ const mockEvent = {
 
 describe('EditEventForm', () => {
   beforeEach(() => {
-    setupMockUseMutation(false, false)
+    setupMockUseMutation()
   })
 
   it('renders successfully', () => {
@@ -91,7 +91,7 @@ describe('EditEventForm', () => {
   })
 
   it('disables Delete button while saving', () => {
-    setupMockUseMutation(true, false)
+    setupMockUseMutation({ loading: true })
     render(<EditEventForm event={mockEvent} />)
 
     const deleteButton = screen.getByText('Delete Event')
@@ -99,7 +99,7 @@ describe('EditEventForm', () => {
   })
 
   it('disables Save button when deleting', () => {
-    setupMockUseMutation(false, true)
+    setupMockUseMutation({ deleting: true })
     render(<EditEventForm event={mockEvent} />)
 
     const saveButton = screen.getByText('Save Changes')
