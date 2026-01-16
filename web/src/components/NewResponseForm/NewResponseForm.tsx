@@ -79,7 +79,7 @@ const NewResponseForm = ({ event, responseToken }: Props) => {
             <span className="annoying-noti-hands">👉 👉</span> Check your email!{' '}
             <span className="annoying-noti-hands">👈 👈</span>
           </div>
-          We'll confirm your RSVP when you click the link in the email.
+          We&apos;ll confirm your RSVP when you click the link in the email.
         </Typ>
         <style>
           {`
