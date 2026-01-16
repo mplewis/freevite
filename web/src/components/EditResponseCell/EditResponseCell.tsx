@@ -229,8 +229,7 @@ export const Success = ({
       <DeleteButton
         className="my-4"
         text="Delete my RSVP"
-        disabled={deleting}
-        disabledText="Deleting..."
+        deleting={deleting}
         onClick={async () =>
           await promptConfirm({
             desc: `delete your RSVP to ${event.title}`,
