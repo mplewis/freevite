@@ -3,7 +3,7 @@ import type { Event } from '@prisma/client'
 import { createEvent, deleteEvent, eventByEditToken, eventByPreviewToken, eventBySlug, updateEvent } from './events'
 import type { StandardScenario } from './events.scenarios'
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// biome-ignore lint/suspicious/noExplicitAny: intentionally generic for test helper
 function noMutables(event: any) {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { createdAt, updatedAt, id, ...rest } = event
